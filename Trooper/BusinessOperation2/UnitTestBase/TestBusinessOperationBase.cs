@@ -37,30 +37,40 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         }
 
         [Test]
-        public virtual void TestGetBusinessPack() { }
+        public virtual void TestGetBusinessPack() 
+        {
+            var bc = this.NewBusinessCoreInstance();
+            var bp = bc.GetBusinessPack();
+
+            Assert.IsNotNull(bp.Authorization);
+            Assert.IsNotNull(bp.Authorization.Uow);
+
+            Assert.IsNotNull(bp.Facade);
+            Assert.IsNotNull(bp.Facade.Uow);
+
+            Assert.IsNotNull(bp.Validation);
+            Assert.IsNotNull(bp.Validation.Uow);
+        }
 
         [Test]
         public virtual void TestDeleteAll() 
         {
             var bc = this.NewBusinessCoreInstance();
-            var credential = this.GetInvalidCredential();
+            var credential = this.GetValidCredential();
             var all = bc.GetAll(credential);
 
-            if (!all.Ok)
-            {
-                Assert.Fail();
-            }
+            Assert.IsNotNull(all);
+            Assert.IsTrue(all.Ok);
 
             var delete = bc.DeleteSomeByKey(all.Items, credential);
 
-            if (!delete.Ok)
-            {
-                Assert.Fail();
-            }
+            Assert.IsNotNull(delete);
+            Assert.IsTrue(delete.Ok);
 
             all = bc.GetAll(credential);
 
-            Assert.IsTrue(all.Ok && !all.Items.Any());
+            Assert.IsNotNull(all);
+            Assert.IsFalse(all.Items.Any());
         }
 
         [Test]
@@ -69,23 +79,18 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
             this.TestDeleteAll();
 
             var bc = this.NewBusinessCoreInstance();
-            var credential = this.GetInvalidCredential();
+            var credential = this.GetValidCredential();
 
             var add = bc.Add(this.ItemGenerator.ItemFactory(), credential);
 
-            if (!add.Ok)
-            {
-                Assert.Fail();
-            }
+            Assert.IsNotNull(add);
+            Assert.IsTrue(add.Ok);
 
             var all = bc.GetAll(credential);
 
-            if (!all.Ok)
-            {
-                Assert.Fail();
-            }
-
-            Assert.That(all.Ok && all.Items.Count == 1);
+            Assert.IsNotNull(all);
+            Assert.IsTrue(all.Ok);
+            Assert.That(all.Items.Count, Is.EqualTo(1));
         }
 
         [Test]

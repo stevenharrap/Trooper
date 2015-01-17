@@ -186,24 +186,37 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, ICredential credential)
         {
-            throw new System.NotImplementedException();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = new Response();
+                var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = items as IList<Tc> };
+
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                {
+                    return response;
+                }
+
+                bp.Facade.DeleteSome(items as IList<Tc>);
+
+                return response;
+            }
         }
 
         public virtual IManyResponse<Ti> GetAll(ICredential credential = null)
         {
             using (var bp = this.GetBusinessPack())
             {
-                var response = new ManyResponse<Tc>();
+                var response = new ManyResponse<Ti>();
                 var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
-                    return response as IManyResponse<Ti>;
+                    return response;
                 }
 
-                response.Items = bp.Facade.GetAll().ToList();
+                response.Items = bp.Facade.GetAll().ToList<Ti>();
 
-                return response as IManyResponse<Ti>;
+                return response;
             }
         }
 
@@ -211,17 +224,17 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
-                var response = new ManyResponse<Tc>();
+                var response = new ManyResponse<Ti>();
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
-                    return response as IManyResponse<Ti>;
+                    return response;
                 }
 
-                response.Items = bp.Facade.GetSome(search).ToList<Tc>();
+                response.Items = bp.Facade.GetSome(search).ToList<Ti>();
 
-                return response as IManyResponse<Ti>;
+                return response;
             }
         }
 
@@ -229,12 +242,12 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
-                var response = new SingleResponse<Tc>();
+                var response = new SingleResponse<Ti>();
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
-                    return response as ISingleResponse<Ti>;
+                    return response;
                 }
 
                 var result = bp.Facade.GetById(item);
@@ -242,12 +255,12 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                 if (result == null)
                 {
                     MessageUtility.Errors.Add("The item requested cannot be found.", item, null, response);
-                    return response as ISingleResponse<Ti>;
+                    return response;
                 }
 
                 response.Item = result;
 
-                return response as ISingleResponse<Ti>;
+                return response;
             }
         }
 

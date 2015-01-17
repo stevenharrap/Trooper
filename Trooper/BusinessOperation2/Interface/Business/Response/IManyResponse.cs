@@ -6,13 +6,11 @@
 
 namespace Trooper.BusinessOperation2.Interface.Business.Response
 {
-    using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.ServiceModel;
 
-    using Trooper.BusinessOperation.Business;
-    using Trooper.BusinessOperation.Interface;
+    using Trooper.BusinessOperation2.Interface.OperationResponse;
 
     /// <summary>
     /// The many response is an implementation of the IOperationResponse interface
@@ -21,7 +19,7 @@ namespace Trooper.BusinessOperation2.Interface.Business.Response
     /// <typeparam name="TEntity">The Type of the entities that will be returned.
     /// </typeparam>
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
-    public interface IManyResponse<T> : IOperationResponse
+    public interface IManyResponse<T> : IResponse
     {
         /// <summary>
         /// Gets or sets the items being returned.

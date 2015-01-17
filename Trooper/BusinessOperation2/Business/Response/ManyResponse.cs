@@ -10,7 +10,7 @@ namespace Trooper.BusinessOperation2.Business.Response
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.ServiceModel;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
+    using Trooper.BusinessOperation2.Interface.Business.Response;
 
     /// <summary>
     /// The many response is an implementation of the IOperationResponse interface
@@ -21,7 +21,7 @@ namespace Trooper.BusinessOperation2.Business.Response
     [Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
-    public class ManyResponse<T> : Response, IResponse
+    public class ManyResponse<T> : Response, IManyResponse<T>
     {
         /// <summary>
         /// Gets or sets the items being returned.
