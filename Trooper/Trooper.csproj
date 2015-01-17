@@ -105,6 +105,7 @@
     <Compile Include="BusinessOperation2\Business\Operation\Composite\BusinessCr.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Core\BusinessPack.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Core\BusinessPackEventArgs.cs" />
+    <Compile Include="BusinessOperation2\Business\Operation\Core\Search.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Single\BusinessCreate.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Single\BusinessValidate.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Single\BusinessRequest.cs" />

@@ -10,11 +10,11 @@
     {
         public int ItemObjCount { get; set; }
 
-        public virtual Tc MakeItem(bool identical, Tc entity)
+        public virtual Tc MakeItem(bool identical, Tc item)
         {
             if (identical)
             {
-                return AutoMapper.Mapper.Map<Tc>(entity);
+                return AutoMapper.Mapper.Map<Tc>(item);
             }
 
             var result = new Tc();
@@ -27,7 +27,7 @@
                         p.SetValue(result, string.Format("{0}_{1}", p.Name, ItemObjCount));
                         break;
                     case TypeCode.Boolean:
-                        p.SetValue(result, !((bool)p.GetValue(entity)));
+                        p.SetValue(result, !((bool)p.GetValue(item)));
                         break;
                     case TypeCode.Decimal:
                     case TypeCode.Double:
