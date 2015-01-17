@@ -1,0 +1,22 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="DocumentSearch.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.BusinessOperation.DocumentService
+{
+    using Trooper.App.Business.StdDocument;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document search.
+    /// </summary>
+    public class DocumentSearch : StdDocumentSearch
+    {
+        /// <summary>
+        /// Special properties to search by
+        /// </summary>
+        public int? YourAppId { get; set; }
+    }
+}

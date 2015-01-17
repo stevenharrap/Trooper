@@ -1,0 +1,76 @@
+table.table.trooper tbody tr td {
+  cursor: pointer;
+}
+table.table.trooper tbody tr.bold td {
+  font-weight: bold;
+}
+table.table.trooper tbody tr.rule-over td {
+  border-top-width: 1px;
+  border-top-color: black;
+}
+table.table.trooper tbody tr.rule-over.rule-over-solid td {
+  border-top-style: solid;
+}
+table.table.trooper tbody tr.rule-over.rule-over-dashed td {
+  border-bottom-style: dashed;
+}
+table.table.trooper tbody tr.rule-under td {
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+}
+table.table.trooper tbody tr.rule-under + tr td {
+  border-top: none;
+}
+table.table.trooper tbody tr.rule-under.rule-under-solid td {
+  border-bottom-style: solid;
+}
+table.table.trooper tbody tr.rule-under.rule-under-dashed td {
+  border-bottom-style: dashed;
+}
+table.table.trooper tbody tr td.no-wrap {
+  white-space: nowrap;
+}
+table.table.trooper tbody tr.highlight,
+table.table.trooper tbody tr.highlight td {
+  background-color: #428bca;
+  color: #fff;
+}
+table.table.trooper .table-hover > tbody > tr:hover > td,
+table.table.trooper .table-hover > tbody > tr:hover > th {
+  background-color: #428bca;
+  color: #fff;
+}
+table.table.trooper .table-hover > tbody > tr.warning:hover > td,
+table.table.trooper .table-hover > tbody > tr.warning:hover > th,
+table.table.trooper .table-hover > tbody > tr.danger:hover > td,
+table.table.trooper .table-hover > tbody > tr.danger:hover > th,
+table.table.trooper .table-hover > tbody > tr.success:hover > td,
+table.table.trooper .table-hover > tbody > tr.sucees:hover > th,
+table.table.trooper .table-hover > tbody > tr.active:hover > td,
+table.table.trooper .table-hover > tbody > tr.active:hover > th {
+  color: #000;
+}
+table.table.trooper tfoot .pagination {
+  margin: 0;
+}
+table.table.trooper tfoot .paging .left {
+  float: left;
+  width: 70%;
+}
+table.table.trooper tfoot .paging .right {
+  width: 30%;
+  margin-left: 70%;
+  text-align: right;
+  font-weight: bold;
+}
+table.table.trooper tfoot .items {
+  text-align: right;
+  line-height: 20px;
+  font-weight: bold;
+}
+table.table.trooper tfoot .footer {
+  font-weight: bold;
+}
+table.table.trooper tfoot .footer td.right {
+  text-align: right;
+}

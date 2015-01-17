@@ -1,0 +1,40 @@
+﻿@inherits System.Web.Mvc.WebViewPage<Trooper.App.Ui.StdTemplate.Models.SearchBarModel>
+@using System.Web.Mvc
+@using Trooper.App.Ui.StdTemplate.Models
+@using Trooper.Properties
+@using Trooper.Ui.Mvc.Bootstrap
+@using Trooper.Ui.Mvc.Bootstrap.Controls
+@using Trooper.Ui.Mvc.Cruncher
+
+@{
+    var bsf = new Form<SearchBarModel>(Html);
+    var cruncher = new Cruncher(Html);
+    cruncher.HeaderCss().AddInline(Resources.StdThemeSearchBar_less, less: true, order: StoreItem.OrderOptions.Middle);
+    
+    cruncher.HeaderJs().AddInline(Resources.StdThemeSearchBar_js, order: StoreItem.OrderOptions.Last);
+    cruncher.HeaderJs().AddInline("var stdThemeSearchBar = new StdThemeSearchBar();");
+}
+
+<div class="template-search-row" data-spy="affix" data-offset-top="0" data-offset-bottom="200">
+    <div class="opacity-box"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10">
+                @if (Model.Html != null)
+                {
+                    @MvcHtmlString.Create(@Model.Html.Invoke(null).ToString());
+                }
+            </div>
+            <div class="col-xs-2">
+                    
+                <span class="glyphicon glyphicon-circle-arrow-up close-search-bar"></span>
+
+                <div class="btn-group search-bar-buttons">
+                    @bsf.ButtonFor(m => m.Command, new Button { Value =  Model.SearchCommand, Title = "Search", ButtonType = Options.ButtonTypes.Primary, Icon = "zoom-in"})
+                    @bsf.ButtonFor(m => m.Command, new Button { Value =  Model.SearchCommand, ButtonType = Options.ButtonTypes.Primary, Icon = "zoom-out"})
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+

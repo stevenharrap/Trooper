@@ -1,0 +1,66 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentContentKey.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Key
+{
+    using Trooper.BusinessOperation.Interface;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document content.
+    /// </summary>
+    public class DocumentContentKey : IStdDocumentContentKey
+    {
+        /// <summary>
+        /// Gets or sets the document id.
+        /// </summary>
+        public int DocumentId { get; set; }
+
+        /// <summary>
+        /// Is that key an automatically generated key. You should return false
+        /// if the key of your table is not automatically generated. If you key is not automatically
+        /// generated then IsEntityNew should always return false.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public bool IsKeyAuto()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Does the properties of the class indicate that the entity does not yet exist in the
+        /// DB. I.e. integers are 0 and strings are empty. Any other situation does not indicate that 
+        /// the entity exists. 
+        /// </summary>
+        /// <remarks>
+        /// If IsKeyAuto is false then a value in the property could indicate that entity is to be inserted
+        /// and that is the value for the new key. In such a case this should be made to always return false.
+        /// </remarks>
+        /// <returns>
+        /// Returns true if the entity is considered new.
+        /// </returns>
+        public bool IsEntityNew()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Indicates that the supplied key equals this key. I.e. both entities are representing the same record.
+        /// </summary>
+        /// <param name="otherKey">
+        /// The other key.
+        /// </param>
+        /// <returns>
+        /// Returns true if the keys equal.
+        /// </returns>
+        public bool KeyEquals(IStdDocumentContentKey otherKey)
+        {
+            return this.DocumentId == otherKey.DocumentId;
+        }
+    }
+}

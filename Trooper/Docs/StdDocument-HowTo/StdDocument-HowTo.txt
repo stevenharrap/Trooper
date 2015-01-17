@@ -1,0 +1,37 @@
+﻿=================================================================================
+StdDocument How To
+=================================================================================
+
+The StdDocument (Standard Document) Business and UI classes provide the means of
+recording documents in your application with the minimum of code repition. There
+is the expectation that your application follow certain rules about the database.
+
+Instructions
+---------------------------------------------------------------------------------
+
+1. DB Schema
+You must have the following tables in your application database:
+ - Document
+ - DocumentContent
+The schema is for the 2 tables is in "StdDocument-Schema.txt". You can add extra
+columns but you must maintain the fields and relationsships.
+
+2. Document Entity Classes
+You must include the Model classes (included in the model folder). You can extend
+these with your own fields from your own Database. But your classes must inherrit
+the interfaces as shown in the files.
+
+Your DbContext class must follow the "YourAppContext.cs.txt" example.
+
+3. Document Business Classes
+You must include the BusinessOperation classes in your app (included in the 
+BusinessOperation) folder.
+
+4. Usage from the Business layer
+It is expected that you will have a primary record that references document.
+See the Usage/YourAppRecordBo/* for guidance
+
+4. Usage from the Web layer
+See the Usage/YourAppWeb/* for guidance
+
+

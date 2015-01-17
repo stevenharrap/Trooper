@@ -1,0 +1,53 @@
+﻿@using YourApp.Web.Models
+@using YourApp.Web.LogManager
+@using Trooper.App.Ui.StdTheming.Models
+@using Trooper.Ui.Mvc.Bootstrap
+@using Trooper.Ui.Mvc.Cruncher
+@model ManageRecordModel
+
+@{
+    Layout = "~/Views/Shared/YourAppLayoutView.cshtml";
+    Model.PageName = "Managing records";
+    Model.FormAction = Url.Action("Submit", "ManageRecord");
+
+    var bsf = new Form<ManageRecordModel>(Html);
+}
+
+@section Header
+{
+    @Html.HiddenFor(m => m.Record.RecordId)
+}
+
+@section MainArea
+{
+    <ol class="breadcrumb">
+        @if (Model.Record.IsEntityNew())
+        {
+            <li>New record</li>
+        }
+        else
+        {
+            <li>
+                Managing record #@Model.Record.RecordId
+            </li>
+        }
+    </ol>
+		@bsf.UploadFor(
+            m => m.ClientConsentDocument, 
+            m => m.Record.ClientConsentDocumentId, 
+            "Client consent for exchange or information",
+            errors: Model.GetErrors(), 
+            @readonly: !Model.IsUpdateable)
+
+    }
+}
+
+@section MainNavigationButtons
+{
+    @bsf.SubmitFor(
+        m => m.Command, 
+        specificValue: StdLayoutModel.Commands.Save, 
+        buttonType: Options.ButtonTypes.Primary, 
+        title: "Save",
+        icon: "hdd")
+}

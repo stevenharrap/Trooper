@@ -1,0 +1,17 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentContent.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Entity
+{
+    using YourApp.Model.Prp;
+
+    /// <summary>
+    /// The document content.
+    /// </summary>
+    public class DocumentContent : DocumentContentPrp, IStdDocumentContent
+    {
+    }
+}

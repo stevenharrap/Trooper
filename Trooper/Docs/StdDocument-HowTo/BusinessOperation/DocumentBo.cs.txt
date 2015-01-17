@@ -1,0 +1,31 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="DocumentBo.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.BusinessOperation.DocumentService
+{
+    using YourApp.Model;
+    using YourApp.Model.Entity;
+    using YourApp.Model.Key;
+    using YourApp.Model.Nav;
+    using YourApp.Model.Prp;
+    using Trooper.BusinessOperation.Interface;
+    using Trooper.App.Business.StdDocument;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The doc business operation.
+    /// </summary>
+    public class DocumentBo :
+        StdDocumentBo
+            <AhirContext, DocumentSearch, DocumentNav, Document, DocumentPrp, DocumentKey, DocumentContentNav,
+            DocumentContent, DocumentContentPrp, DocumentContentKey>
+    {
+        protected override IFacade<DocumentSearch, DocumentNav, Document, DocumentPrp, DocumentKey> FacadeFactory()
+        {
+            return new DocumentFacade(this.Username);
+        }
+    }
+}

@@ -1,0 +1,64 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="YourAppContext.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model
+{
+    using System.Data.Entity;
+
+    using YourApp.Model.Map;
+    using YourApp.Model.Models.Mapping;
+    using YourApp.Model.Nav;
+
+    /// <summary>
+    /// The YourApp context.
+    /// </summary>
+    public class YourAppContext : DbContext
+    {
+        /// <summary>
+        /// Initializes static members of the <see cref="AhirContext"/> class.
+        /// </summary>
+        static YourAppContext()
+        {
+            Database.SetInitializer<YourAppContext>(null);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="YourAppContext"/> class.
+        /// </summary>
+        public AhirContext() 
+            : base("Name=YourAppContext")
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the documents.
+        /// </summary>
+        public DbSet<DocumentNav> Documents { get; set; }
+
+        /// <summary>
+        /// Gets or sets the document contents.
+        /// </summary>
+        public DbSet<DocumentContentNav> DocumentContents { get; set; }
+
+        /// <summary>
+        /// Gets or sets the funding types.
+        /// </summary>
+        public DbSet<OtherTypeNav> OtherTypes { get; set; }
+
+        /// <summary>
+        /// The on model creating.
+        /// </summary>
+        /// <param name="modelBuilder">
+        /// The model builder.
+        /// </param>
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new DocumentMap());
+            modelBuilder.Configurations.Add(new DocumentContentMap());
+            modelBuilder.Configurations.Add(new OtherTypeMap());
+        }
+    }
+}

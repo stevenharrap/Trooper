@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActiveDirectoryCn" xml:space="preserve">
+    <value>CN</value>
+  </data>
+  <data name="ActiveDirectoryDefaultNamingContext" xml:space="preserve">
+    <value>defaultNamingContext</value>
+  </data>
+  <data name="ActiveDirectoryDepartment" xml:space="preserve">
+    <value>department</value>
+  </data>
+  <data name="ActiveDirectoryDescription" xml:space="preserve">
+    <value>description</value>
+  </data>
+  <data name="ActiveDirectoryDisplayName" xml:space="preserve">
+    <value>displayName</value>
+  </data>
+  <data name="ActiveDirectoryDn" xml:space="preserve">
+    <value>DN</value>
+  </data>
+  <data name="ActiveDirectoryDnsHostName" xml:space="preserve">
+    <value>dnsHostName</value>
+  </data>
+  <data name="ActiveDirectoryGivenName" xml:space="preserve">
+    <value>givenName</value>
+  </data>
+  <data name="ActiveDirectoryInitials" xml:space="preserve">
+    <value>initials</value>
+  </data>
+  <data name="ActiveDirectoryLdapPathFormat" xml:space="preserve">
+    <value>LDAP://{0}/{1}</value>
+  </data>
+  <data name="ActiveDirectoryMail" xml:space="preserve">
+    <value>mail</value>
+  </data>
+  <data name="ActiveDirectoryMemberOf" xml:space="preserve">
+    <value>memberof</value>
+  </data>
+  <data name="ActiveDirectoryMiddleName" xml:space="preserve">
+    <value>middleName</value>
+  </data>
+  <data name="ActiveDirectoryMobile" xml:space="preserve">
+    <value>mobile</value>
+  </data>
+  <data name="ActiveDirectoryPhysicalDeliveryOfficeName" xml:space="preserve">
+    <value>physicalDeliveryOfficeName</value>
+  </data>
+  <data name="ActiveDirectoryRoot" xml:space="preserve">
+    <value>LDAP://RootDSE</value>
+  </data>
+  <data name="ActiveDirectorySamAccountFormat" xml:space="preserve">
+    <value>(SAMAccountName={0})</value>
+  </data>
+  <data name="ActiveDirectorySn" xml:space="preserve">
+    <value>sn</value>
+  </data>
+  <data name="ActiveDirectoryTelephoneNumber" xml:space="preserve">
+    <value>telephoneNumber</value>
+  </data>
+  <data name="ActiveDirectoryUserPrincipalName" xml:space="preserve">
+    <value>userPrincipalName</value>
+  </data>
+  <data name="MessageServerRestart" xml:space="preserve">
+    <value>Affected server may require a restart.</value>
+  </data>
+  <data name="MessageTitleAdditionalInfo" xml:space="preserve">
+    <value>AdditionalInfo</value>
+  </data>
+  <data name="WindowsIdentityUsernameCannotBeNull" xml:space="preserve">
+    <value>Windows Identity user name cannot be null. User name not found in HttpContext or Windows Identity.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BootstrapDateTimePicker_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapdatetimepicker.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapHtmlHelper_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstraphtmlhelper.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapSearchBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapsearchbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapSearchBox_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstrapsearchbox.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapTable_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstraptable.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapTextBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstraptextbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapUpload_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapupload.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="bootstrap_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\css\bootstrap.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="bootstrap_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\js\bootstrap.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="BootstrapForm_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapform.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapDateTimePicker_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstrapdatetimepicker.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GlyphiconsHalflingsReguarSvg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.svg;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GlyphiconsHalflingsRegularEot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GlyphiconsHalflingsRegularTtf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GlyphiconsHalflingsRegularWoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BootstrapUpload_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstrapupload.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="jquery_ui_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="BootstrapVirtualModalWindow_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapvirtualmodalwindow.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapPanelGroup_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrappanelgroup.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapTable_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstraptable.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapHtml_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstraphtml.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="fonts_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\styles\fonts.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="ProximaNovaSoft_Bold_webfont_eot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Bold_webfont_ttf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Bold_webfont_woff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Medium_webfont_eot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Medium_webfont_ttf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Medium_webfont_woff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Regular_webfont_eot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Regular_webfont_ttf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Regular_webfont_woff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Bold_webfont_svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Medium_webfont_svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProximaNovaSoft_Regular_webfont_svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LayoutView_cshtml" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\Ui\StdTemplate\Views\layoutview.cshtml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SearchBarView_cshtml" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\App\ui\StdTemplate\views\searchbarview.cshtml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="StdThemeTemplate_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\app\ui\StdTemplate\content\scripts\stdthemetemplate.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="StdThemeSearchBar_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\app\ui\stdtemplate\content\scripts\stdthemesearchbar.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="StdThemeSearchBar_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\app\ui\stdtemplate\content\styles\stdthemesearchbar.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="StdThemeTemplate_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\app\ui\stdtemplate\content\styles\stdthemetemplate.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapNumericBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapnumericbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapTextareaBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstraptextareabox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapButton_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapbutton.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapCheckBoxList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapcheckboxlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapCheckBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapcheckbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapSelectList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapselectlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BootstrapRadioList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapradiolist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="trooper_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\app\ui\stdtemplate\content\images\trooper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>

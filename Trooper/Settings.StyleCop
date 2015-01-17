@@ -1,0 +1,50 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>ad</Value>
+      <Value>addon</Value>
+      <Value>Arg</Value>
+      <Value>asax</Value>
+      <Value>aurion</Value>
+      <Value>colspan</Value>
+      <Value>Conery</Value>
+      <Value>Db</Value>
+      <Value>Ef</Value>
+      <Value>glyphicons</Value>
+      <Value>glyphicon-volume-up</Value>
+      <Value>Jquery</Value>
+      <Value>js</Value>
+      <Value>lg</Value>
+      <Value>md</Value>
+      <Value>msg</Value>
+      <Value>mvc</Value>
+      <Value>nav</Value>
+      <Value>navs</Value>
+      <Value>obsolete</Value>
+      <Value>Obsolete</Value>
+      <Value>png</Value>
+      <Value>proxima</Value>
+      <Value>Prp</Value>
+      <Value>Regexp</Value>
+      <Value>sm</Value>
+      <Value>Sql</Value>
+      <Value>std</Value>
+      <Value>Telerik</Value>
+      <Value>Wami</Value>
+      <Value>xs</Value>
+      <Value>overriden</Value>
+    </CollectionProperty>
+  </GlobalSettings>
+  <Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>ad</Value>
+          <Value>fk</Value>
+          <Value>ft</Value>
+          <Value>um</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+  </Analyzers>
+</StyleCopSettings>

@@ -1,0 +1,34 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentNav.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Nav
+{
+    using System.Collections.Generic;
+
+    using YourApp.Model.Entity;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document.
+    /// </summary>
+    public class DocumentNav : Document, IStdDocumentNav<DocumentContentNav>
+    {
+        /// <summary>
+        /// Gets or sets the document content.
+        /// </summary>
+        public virtual DocumentContentNav DocumentContentNav { get; set; }
+
+        /// <summary>
+        /// Gets or sets the other entity classes that the document navigation item referrences.
+        /// </summary>
+        public virtual ICollection<OtherEnityClassInYourApp1> OtherEnityClassInYourApp1s { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entity classes that the document navigation item referrences.
+        /// </summary>
+        public virtual ICollection<OtherEnityClassInYourApp2> OtherEnityClassInYourApp2s { get; set; }
+    }
+}

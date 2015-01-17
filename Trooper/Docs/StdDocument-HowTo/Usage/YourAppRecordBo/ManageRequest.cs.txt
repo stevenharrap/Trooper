@@ -1,0 +1,27 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="ManageRequest.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.BusinessOperation.RecordService
+{
+    using YourApp.Model.Prp;
+    using Trooper.BusinessOperation.Business;
+
+    /// <summary>
+    /// The manage record request.
+    /// </summary>
+    public class ManageRequest
+    {
+        /// <summary>
+        /// Gets or sets the record properties.
+        /// </summary>
+        public RecordPrp RecordPrp { get; set; }
+		
+        /// <summary>
+        /// Gets or sets the record document.
+        /// </summary>
+        public ManageItem<DocumentPrp> RecordDocument { get; set; }
+    }
+}
