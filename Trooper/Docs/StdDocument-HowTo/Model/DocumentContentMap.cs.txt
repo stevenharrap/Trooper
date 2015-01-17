@@ -1,0 +1,33 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentContentMap.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Map
+{
+    using System.Data.Entity.ModelConfiguration;
+
+    using YourApp.Model.Nav;
+
+    /// <summary>
+    /// The document map.
+    /// </summary>
+    public class DocumentContentMap : EntityTypeConfiguration<DocumentContentNav>
+    {
+        public DocumentContentMap()
+        {
+            this.HasKey(t => t.DocumentId);
+
+            // Table & Column Mappings
+            this.ToTable("DocumentConent");
+
+            // Table & Column Mappings
+            this.ToTable("DocumentContent");
+
+            // Relationships
+            this.HasRequired(t => t.DocumentNav)
+                .WithOptional(t => t.DocumentContentNav);
+        }
+    }
+}

@@ -1,0 +1,26 @@
+.bootstrapDateTimePicker table tbody tr td.day {
+  cursor: pointer;
+}
+.bootstrapDateTimePicker table tr td.day:hover {
+  background: #333333;
+  color: #fff;
+}
+.bootstrapDateTimePicker table tr td,
+.bootstrapDateTimePicker table tr th {
+  font-size: 13px;
+}
+.bootstrapDateTimePicker .date-input::-ms-clear {
+  display: none;
+}
+.bootstrapDateTimePicker .month {
+  text-align: right;
+  font-weight: bold;
+}
+.bootstrapDateTimePicker .time select {
+  width: 60px;
+}
+.bootstrapDateTimePicker .time .dots {
+  width: 10px;
+  padding-left: 0;
+  padding-right: 0;
+}

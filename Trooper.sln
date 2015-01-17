@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper", "Trooper\Trooper.csproj", "{27F46F59-C7C9-4E02-93B9-91F7041A7980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CoreShop", "Trooper.Testing.CoreShop\Trooper.Testing.CoreShop.csproj", "{8C65EBF3-0012-44D0-8447-A808706DACD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.TestShopApp", "Trooper.Testing.TestShopApp\Trooper.Testing.TestShopApp.csproj", "{E782159E-B9B9-4AFE-889D-048D2DB180EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Code Analysis|Any CPU = Code Analysis|Any CPU
+		Code Analysis|x86 = Code Analysis|x86
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release Pro|Any CPU = Release Pro|Any CPU
+		Release Pro|x86 = Release Pro|x86
+		Release Testing|Any CPU = Release Testing|Any CPU
+		Release Testing|x86 = Release Testing|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+		Staging|Any CPU = Staging|Any CPU
+		Staging|x86 = Staging|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Release|x86.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{27F46F59-C7C9-4E02-93B9-91F7041A7980}.Staging|x86.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{8C65EBF3-0012-44D0-8447-A808706DACD4}.Staging|x86.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Staging|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal

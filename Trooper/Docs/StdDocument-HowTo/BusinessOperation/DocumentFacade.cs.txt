@@ -1,0 +1,45 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="DocumentFacade.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.BusinessOperation.DocumentService
+{
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using YourApp.Model;
+    using YourApp.Model.Entity;
+    using YourApp.Model.Key;
+    using YourApp.Model.Nav;
+    using YourApp.Model.Prp;
+    using Trooper.App.Business.StdDocument;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The doc facade CRUD.
+    /// </summary>
+    internal class DocumentFacade : StdDocumentFacade<AhirContext, DocumentSearch, 
+        DocumentNav, Document, DocumentPrp, DocumentKey,
+        DocumentContentNav, DocumentContent, DocumentContentPrp, DocumentContentKey>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DocumentFacade"/> class.
+        /// </summary>
+        /// <param name="username">
+        /// The username.
+        /// </param>
+        public DocumentFacade(string username)
+            : base(username)
+        {
+        }
+
+        public override IEnumerable<DocumentNav> GetSome(DocumentSearch search)
+        {
+            var data = /* Your special search functionality here */;
+
+            return this.Limit(data, search);
+        }
+    }
+}

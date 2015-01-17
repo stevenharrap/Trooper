@@ -1,0 +1,25 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentContentPrp.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Prp
+{
+    using System.ComponentModel.DataAnnotations;
+
+    using YourApp.Model.Key;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document content.
+    /// </summary>
+    public class DocumentContentPrp : DocumentContentKey, IStdDocumentContentPrp
+    {
+        /// <summary>
+        /// Gets or sets the data.
+        /// </summary>
+        [Required]
+        public byte[] Data { get; set; }
+    }
+}

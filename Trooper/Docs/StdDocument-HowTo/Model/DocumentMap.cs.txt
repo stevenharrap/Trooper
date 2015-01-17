@@ -1,0 +1,38 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentMap.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Map
+{
+    using System.Data.Entity.ModelConfiguration;
+
+    using YourApp.Model.Nav;
+
+    /// <summary>
+    /// The document map.
+    /// </summary>
+    public class DocumentMap : EntityTypeConfiguration<DocumentNav>
+    {
+        public DocumentMap()
+        {
+            this.HasKey(t => t.DocumentId);
+
+            // Table & Column Mappings
+            this.ToTable("Document");
+
+            // Primary Key
+            this.HasKey(t => t.DocumentId);
+
+            this.HasMany(t => t.RecordNavs)
+            .WithMany(t => t.DocumentNavs)
+            .Map(m =>
+            {
+                m.ToTable("ReferralDocument");
+                m.MapLeftKey("DocumentId");
+                m.MapRightKey("ReferralId");
+            });
+        }
+    }
+}

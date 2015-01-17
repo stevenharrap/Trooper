@@ -1,0 +1,131 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="ManageRecordController.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Web.Controllers
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+
+    using YourApp.BusinessOperation.DocumentService;
+    using YourApp.BusinessOperation.RecordService;
+    using YourApp.Model.Entity;
+    using YourApp.Model.Key;
+    using YourApp.Model.Prp;
+    using YourApp.Web.Models;
+    using YourApp.Web.Utility;
+    using Trooper.BusinessOperation.Business;
+    using Trooper.BusinessOperation.Utility;
+    using Trooper.App.Ui.StdTheming.Models;
+    using Trooper.App.Ui.StdDocument;
+
+    /// <summary>
+    /// Controller for managing a record
+    /// </summary>
+    public class ManageRecordController : Controller
+    {
+        /// <summary>
+        /// The view file.
+        /// </summary>
+        private const string ViewFile = "~/Views/ManageRecordView.cshtml";
+
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <param name="recordId">
+        /// The record Id to optionally load.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpGet]
+        public ActionResult Index(int? recordId)
+        {
+            var m = new ManageRecordModel { Record = new Record() };
+
+            if (recordId > 0)
+            {
+                var rbo = new RecordBo();
+                var response = rbo.GetByKey(new RecordKey { RecordId = (int)recordId });
+                m.OperationResponse = response;
+
+                if (response.Ok)
+                {
+                    m.Record = response.Item;
+                }
+            }
+
+            Persist(m);
+
+            return this.View(ViewFile, m);
+        }
+
+        /// <summary>
+        /// Perform an action based on the command
+        /// </summary>
+        /// <param name="m">
+        /// The HomeModel.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpPost]
+        public ActionResult Submit(ManageRecordModel m)
+        {
+            ModelState.Clear();
+
+            if (m.Command == StdLayoutModel.Commands.Save)
+            {
+                var stdDocUi = new StdDocumentUi();
+                var rbo = new RecordBo();
+                var request = new ManageRequest
+                                  {
+                                      RecordPrp = m.Record,
+                                      RecordDocument =
+                                          stdDocUi.PrepareForBo<DocumentPrp>(
+                                              m.ClientConsentDocument,
+                                              m.Record.ClientConsentDocumentId),
+                                  };
+
+                var response = rbo.Manage(request);
+
+                m.OperationResponse = response;
+
+                if (response.Ok)
+                {
+                    m.RecordDocument = stdDocUi.Clear(m.RecordDocument);
+                    m.Record = response.Item;
+                }
+            }
+
+            Persist(m);
+
+            return this.View(ViewFile, m);
+        }
+
+        /// <summary>
+        /// Persist the existing model.
+        /// </summary>
+        /// <param name="currentModel">
+        /// The current model.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ManageRecordModel"/>.
+        /// </returns>
+        private static void Persist(ManageRecordModel currentModel)
+        {
+            var dbo = new DocumentBo()};
+
+            var stdDocUi = new StdDocumentUi();
+            currentModel.RecordDocument = stdDocUi.PageLoad(
+                currentModel.RecordDocument,
+                currentModel.Record.RecordDocumentId,
+                dbo,
+                currentModel.OperationResponse);
+        }
+
+    }
+}

@@ -1,0 +1,21 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentContentNav.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Nav
+{
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document content.
+    /// </summary>
+    public class DocumentContentNav : DocumentContent, IStdDocumentContentNav<DocumentNav>
+    {
+        /// <summary>
+        /// Gets or sets the document.
+        /// </summary>
+        public virtual DocumentNav DocumentNav { get; set; }
+    }
+}

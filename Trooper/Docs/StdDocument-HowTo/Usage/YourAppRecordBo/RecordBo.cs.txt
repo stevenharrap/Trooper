@@ -1,0 +1,95 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="RecordBo.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.BusinessOperation.RecordService
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using YourApp.BusinessOperation.DocumentService;
+    using YourApp.Model;
+    using YourApp.Model.Entity;
+    using YourApp.Model.Key;
+    using YourApp.Model.Nav;
+    using YourApp.Model.Prp;
+    using Trooper.BusinessOperation;
+    using Trooper.BusinessOperation.Business;
+    using Trooper.BusinessOperation.DataManager;
+    using Trooper.BusinessOperation.Interface;
+    using Trooper.BusinessOperation.Response;
+    using Trooper.BusinessOperation.Utility;
+    using Trooper.App.Business.StdDocument;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    using Microsoft.Practices.EnterpriseLibrary.Validation;
+	
+    public class RecordBo : BusinessCrud<AhirContext, RecordSearch, RecordNav, Record, RecordPrp, RecordKey>
+    {
+        /// <summary>
+        /// Manages a Record add / update along with its associated child objects.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The response from the operation.
+        /// </returns>
+        public SingleResponse<Record> Manage(ManageRequest request)
+        {
+            var response = new SingleResponse<Record> { Ok = true };
+            
+            using (var scope = new UnitOfWorkScope())
+            {
+                var vr = new ValidationResults();
+                var rf = new RecordFacade(this.Username);
+                var df = new DocumentFacade(this.Username);
+
+                if (request.RecordPrp == null)
+                {
+                    return response;
+                }
+
+                var recordNav = request.RecordPrp.IsEntityNew()
+                                      ? rf.Add(rf.Map(request.RecordPrp))
+                                      : rf.Update(rf.Load(request.RecordPrp));
+
+                var cua = this.MakeCanUserArg();
+                cua.Action = request.RecordPrp.IsEntityNew() ? UserAction.AddAction : UserAction.UpdateAction;
+                cua.Entity = recordNav;
+                cua.Response = response;
+
+                if (!rf.CanUser(cua))
+                {
+                    return response;
+                }
+                
+                if (request.ClientConsentDocument != null)
+                {
+                    recordNav.ConsentDocumentNav = df.ManageDocument(
+                        request.ClientConsentDocument,
+                        recordNav.ConsentDocumentNav,
+                        recordNav,
+                        k => k.ClientConsentDocumentId,
+                        vr);
+                }
+
+                rf.ValidateEntity(recordNav, vr);
+
+                ErrorUtility.ConvertValidationResults(vr, response);
+
+                if (response.Ok)
+                {
+                    scope.SaveAllChanges();
+
+                    response.Item = recordNav;
+                }
+            }
+			
+            return response;
+        }
+    }
+}

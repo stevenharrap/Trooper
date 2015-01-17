@@ -1,0 +1,26 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="DocumentPrp.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Prp
+{
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using YourApp.Model.Key;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document.
+    /// </summary>
+    public class DocumentPrp : DocumentKey, IStdDocumentPrp
+    {
+        public string Filename { get; set; }
+
+        public string Extension { get; set; }
+
+        [NotMapped]
+        public byte[] Data { get; set; }
+    }
+}

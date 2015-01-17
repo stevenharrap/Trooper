@@ -1,0 +1,50 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="DocumentController.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Web.Controllers
+{
+    using System.Web.Mvc;
+
+    using YourApp.BusinessOperation.DocumentService;
+    using YourApp.Model.Key;
+    using YourApp.Web.Utility;
+    using Trooper.App.Business.StdDocument.StdModel;
+    using Trooper.App.Ui.StdDocument;
+
+    /// <summary>
+    /// The controller for allowing documents to be retrieved from the system
+    /// </summary>
+    public class DocumentController : Controller
+    {
+        /// <summary>
+        /// View a document
+        /// </summary>
+        /// <param name="documentId">
+        /// The id of the document.
+        /// </param>
+        /// <returns>
+        /// The <see cref="FileResult"/>.
+        /// </returns>
+        [AcceptVerbs(HttpVerbs.Get)]
+        public FileResult View(int documentId)
+        {
+            var dBo = new DocumentBo();
+            var docResult = dBo.GetByKey(new DocumentKey { DocumentId = documentId });
+
+            if (!docResult.Ok)
+            {
+                return null;
+            }
+
+            var result = new FileContentResult(docResult.Item.Data, StdDocumentUi.GetMimeType(docResult.Item.Extension))
+            {
+                FileDownloadName = docResult.Item.Filename + docResult.Item.Extension
+            };
+
+            return result;
+        }
+    }
+}

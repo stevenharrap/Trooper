@@ -1,0 +1,104 @@
+﻿table.table.trooper {
+
+    tbody tr td {
+        cursor: pointer;
+    }
+
+    tbody {
+        tr.bold td {
+            font-weight: bold;
+        }
+
+        tr.rule-over td {
+            border-top-width: 1px;
+            border-top-color: black;
+        }
+
+        tr.rule-over.rule-over-solid td {
+            border-top-style: solid;
+        }
+
+        tr.rule-over.rule-over-dashed td {
+            border-bottom-style: dashed;
+        }
+
+        tr.rule-under td {
+            border-bottom-width: 1px;
+            border-bottom-color: black;
+        }
+
+        tr.rule-under + tr td {
+            border-top: none;            
+        }
+
+        tr.rule-under.rule-under-solid td {
+            border-bottom-style: solid;
+        }
+
+        tr.rule-under.rule-under-dashed td {
+            border-bottom-style: dashed;
+        }
+    }
+
+
+    tbody tr td.no-wrap {
+        white-space: nowrap;
+    }
+
+    tbody tr.highlight,
+    tbody tr.highlight td {
+        background-color: #428bca;
+        color: #fff;
+    }
+
+    .table-hover > tbody > tr:hover > td,
+    .table-hover > tbody > tr:hover > th {
+        background-color: #428bca;
+        color: #fff;
+    }
+
+    .table-hover > tbody > tr.warning:hover > td,
+    .table-hover > tbody > tr.warning:hover > th,
+    .table-hover > tbody > tr.danger:hover > td,
+    .table-hover > tbody > tr.danger:hover > th,
+    .table-hover > tbody > tr.success:hover > td,
+    .table-hover > tbody > tr.sucees:hover > th,
+    .table-hover > tbody > tr.active:hover > td,
+    .table-hover > tbody > tr.active:hover > th {
+        color: #000;
+    }
+
+    tfoot {
+        .pagination {
+            margin: 0;
+        }
+
+        .paging {
+            .left {
+                float: left;
+                width: 70%;
+            }
+
+            .right {
+                width: 30%;
+                margin-left: 70%;
+                text-align: right;
+                font-weight: bold;
+            }
+        }
+
+        .items {
+            text-align: right;
+            line-height: 20px;
+            font-weight: bold;
+        }
+
+        .footer {
+            font-weight: bold;
+
+            td.right {
+                text-align: right;
+            }
+        }
+    }
+}

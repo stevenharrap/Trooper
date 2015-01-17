@@ -1,0 +1,18 @@
+//--------------------------------------------------------------------------------------
+// <copyright file="Document.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Model.Entity
+{
+    using YourApp.Model.Prp;
+    using Trooper.App.Business.StdDocument.StdModel;
+
+    /// <summary>
+    /// The document.
+    /// </summary>
+    public class Document : DocumentPrp, IStdDocument
+    {
+    }
+}

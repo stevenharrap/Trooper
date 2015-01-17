@@ -1,0 +1,36 @@
+﻿//--------------------------------------------------------------------------------------
+// <copyright file="ManageRecordModel.cs" company="Trooper Inc">
+//     Copyright (c) Trooper 2014 - Onwards
+// </copyright>
+//--------------------------------------------------------------------------------------
+
+namespace YourApp.Web.Models
+{
+    using System.Collections.Generic;
+    using System.ComponentModel;
+
+    using YourApp.BusinessOperation.RecordService;
+    using YourApp.Model.Entity;
+    using YourApp.Web.Models.Shared;
+    using Trooper.Ui.Mvc.Bootstrap.Models;
+
+    /// <summary>
+    /// The manage record model.
+    /// </summary>
+    public class ManageRecordModel : AhirLayoutModel
+    {
+        #region Public Properties
+
+        /// <summary>
+        ///     Gets or sets the Record Document.
+        /// </summary>
+        public UploadModel RecordDocument { get; set; }
+
+        /// <summary>
+        /// Gets or sets the record.
+        /// </summary>
+        public Record Record { get; set; }
+
+        #endregion
+    }
+}
