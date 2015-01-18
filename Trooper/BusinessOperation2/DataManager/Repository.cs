@@ -27,6 +27,13 @@
             return _dbset;
         }
 
+        public EntityState GetState(T item)
+        {
+            var entry = this.DbContext.Entry(item);
+
+            return entry.State;
+        }
+
         public virtual T Add(T item)
         {
             return _dbset.Add(item);

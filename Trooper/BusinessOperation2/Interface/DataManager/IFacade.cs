@@ -2,40 +2,48 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
-    public interface IFacade<T> 
-        where T : class, new()
+    public interface IFacade<Tc, Ti> 
+        where Tc : class, Ti, new()
+        where Ti : class
     {
         //bool IsKeyAuto();
 
+        PropertyInfo[] KeyProperties { get; }
+
         IUnitOfWork Uow { get; set; }
 
-        T GetById(T item);
+        Tc GetById(Tc item);
 
-        T GetById(object obj);
+        Tc GetById(object obj);
 
-        bool Exists(T item);
+        bool Exists(Tc item);
 
         bool Exists(object obj);
 
-        bool AreEqual(T item1, T item2);
+        bool AreEqual(Tc item1, Tc item2);
 
-        bool AreEqual(object obj, T item2);
+        bool AreEqual(object obj, Tc item2);
 
-        IQueryable<T> GetAll();
+        IQueryable<Tc> GetAll();
 
-        IQueryable<T> GetSome(ISearch search);
+        IQueryable<Tc> GetSome(ISearch search);
 
-        IQueryable<T> Limit(IQueryable<T> items, ISearch search);
+        IQueryable<Tc> Limit(IQueryable<Tc> items, ISearch search);
 
-        T Add(T item);
+        Tc Add(Tc item);
 
-        void Delete(T item);
+        void Delete(Tc item);
 
-        void DeleteSome(IEnumerable<T> item);
+        void DeleteSome(IEnumerable<Tc> item);
 
-        void Update(T item);
+        void Update(Tc item);
 
         bool Any();
+
+        Tc Map(Ti item);
+
+        IEnumerable<Tc> Map(IEnumerable<Ti> items);
     }
 }

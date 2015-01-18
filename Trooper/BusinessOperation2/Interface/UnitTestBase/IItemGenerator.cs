@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Trooper.BusinessOperation2.Interface.UnitTestBase
+﻿namespace Trooper.BusinessOperation2.Interface.UnitTestBase
 {
+    using Trooper.BusinessOperation2.Interface.DataManager;
+
     /// <summary>
     ///     IItemGenerator creates instance of the generic type Tc
     /// </summary>
@@ -23,42 +19,26 @@ namespace Trooper.BusinessOperation2.Interface.UnitTestBase
         int ItemObjCount { get; set; }
 
         /// <summary>
-        ///     Makes a new instance of Tc
+        ///     Makes a new instance of Tc. The properties of the new item are identical to the supplied item.
         /// </summary>
-        /// <param name="identical">
-        ///     If true then the new item will have properties with the same value as the supplied item.
-        ///     If false then ItemObjCount will be used as the seed for values in the returned instance.
-        /// </param>
         /// <param name="item">
-        ///     If identical is true then the new item will have properties that are identical to this instance.
+        ///     The returned item will have properties that are identical to this instance.
         /// </param>
         /// <returns>
         ///     An instance of Tc
         /// </returns>
-        Tc MakeItem(bool identical, Tc entity);
+        Tc CopyItem(Tc item);
 
         /// <summary>
         ///     Makes a new instance of Tc. The properties of the instance will have values
-        ///     that have not been used before. Asserts that the result will not be null.
+        ///     that have not been used before. Key properties will not be populated.
         /// </summary>
-        /// <returns>
-        ///     An instance of Tc
-        /// </returns>
-        Tc ItemFactory();
-
-        /// <summary>
-        ///     Makes a new instance of Tc and Asserts that the result will not be null.
-        /// </summary>
-        /// <param name="identical">
-        ///     If true then the new item will have properties with the same value as the supplied item.
-        ///     If false then ItemObjCount will be used as the seed for values in the returned instance.
-        /// </param>
-        /// <param name="item">
-        ///     If identical is true then the new item will have properties that are identical to this instance.
+        /// <param name="facade">
+        ///     The facade to get the key properties from.
         /// </param>
         /// <returns>
         ///     An instance of Tc
         /// </returns>
-        Tc ItemFactory(bool identical, Tc item);
+        Tc NewItem(IFacade<Tc, Ti> facade);
     }
 }

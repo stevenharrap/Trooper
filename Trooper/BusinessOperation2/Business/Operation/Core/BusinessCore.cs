@@ -48,34 +48,35 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
-                var response = new AddResponse<Tc>();
-                var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = item as Tc };
+                var itemAsTc = bp.Facade.Map(item);
+                var response = new AddResponse<Ti>();
+                var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = itemAsTc };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
-                    return response as IAddResponse<Ti>;
+                    return response;
                 }                
                 
-                Tc added;
-
-                if (!bp.Facade.Exists(item))
+                if (!bp.Facade.Exists(itemAsTc))
                 {
-                    added = bp.Facade.Add(item as Tc);
+                    var added = bp.Facade.Add(itemAsTc);
 
                     bp.Validation.Validate(added, response);
+
+                    if (response.Ok)
+                    {
+                        bp.Uow.Save();
+                        response.Item = added;
+                    }
+
+                    return response;
                 }
                 else
                 {
                     MessageUtility.Errors.Add(string.Format("The entity ({0}) could not be added.", typeof(Tc)), response);
                 }
 
-                if (response.Ok)
-                {
-                    bp.Uow.Save();
-                    //response.Item = added as Ti; ????????????
-                }
-
-                return response as IAddResponse<Ti>;
+                return response;
             }
         }
 
@@ -188,15 +189,16 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
+                var itemsAsListTc = bp.Facade.Map(items);
                 var response = new Response();
-                var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = items as IList<Tc> };
+                var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
                     return response;
                 }
 
-                bp.Facade.DeleteSome(items as IList<Tc>);
+                bp.Facade.DeleteSome(itemsAsListTc);
 
                 return response;
             }

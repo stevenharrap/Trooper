@@ -30,8 +30,8 @@
             TcBusinessCore, TiBusinessCore, 
             TcBusinessOperation, TiBusinessOperation,
             Tc, Ti>(ContainerBuilder builder)
-            where TcFacade : TiFacade, IFacade<Tc>, new()
-            where TiFacade : IFacade<Tc>
+            where TcFacade : TiFacade, IFacade<Tc, Ti>, new()
+            where TiFacade : IFacade<Tc, Ti>
             where TcAuthorization : TiAuthorization, IAuthorization<Tc>, new()
             where TiAuthorization : IAuthorization<Tc>
             where TcValidation : TiValidation, IValidation<Tc>, new()
@@ -64,7 +64,7 @@
             TiAuthorization,
             TiValidation,
             Tc, Ti>(IComponentContext container)
-            where TiFacade : IFacade<Tc>
+            where TiFacade : IFacade<Tc, Ti>
             where TiAuthorization : IAuthorization<Tc>
             where TiValidation : IValidation<Tc>
             where Tc : class, Ti, new()

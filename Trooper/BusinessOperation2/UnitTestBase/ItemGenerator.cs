@@ -2,24 +2,38 @@
 {
     using NUnit.Framework;
     using System;
+    using System.Linq;
+    using Trooper.BusinessOperation2.Interface.DataManager;
     using Trooper.BusinessOperation2.Interface.UnitTestBase;
 
     public class ItemGenerator<Tc, Ti> : IItemGenerator<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {
+        static ItemGenerator() 
+        {
+            AutoMapper.Mapper.CreateMap<Tc, Tc>();
+        }
+
         public int ItemObjCount { get; set; }
 
-        public virtual Tc MakeItem(bool identical, Tc item)
+        public virtual Tc CopyItem(Tc item)
         {
-            if (identical)
-            {
-                return AutoMapper.Mapper.Map<Tc>(item);
-            }
-
             var result = new Tc();
 
-            foreach (var p in result.GetType().GetProperties())
+            AutoMapper.Mapper.Map<Tc, Tc>(item, result);
+
+            Assert.IsNotNull(result, "CopyItem returned null.");
+
+            return result;
+        }
+
+        public virtual Tc NewItem(IFacade<Tc, Ti> facade)
+        {
+            this.ItemObjCount++;
+            var result = new Tc();
+
+            foreach (var p in result.GetType().GetProperties().Where(p => facade.KeyProperties.All(kp => kp.Name != p.Name)))
             {
                 switch (Type.GetTypeCode(p.PropertyType))
                 {
@@ -27,7 +41,7 @@
                         p.SetValue(result, string.Format("{0}_{1}", p.Name, ItemObjCount));
                         break;
                     case TypeCode.Boolean:
-                        p.SetValue(result, !((bool)p.GetValue(item)));
+                        p.SetValue(result, false);
                         break;
                     case TypeCode.Decimal:
                     case TypeCode.Double:
@@ -44,24 +58,7 @@
                 }
             }
 
-            return result;
-        }
-
-        public Tc ItemFactory()
-        {
-            return this.ItemFactory(false, new Tc()) as Tc;
-        }
-
-        public Tc ItemFactory(bool identical, Tc item)
-        {
-            if (!identical)
-            {
-                this.ItemObjCount++;
-            }
-
-            var result = this.MakeItem(identical, item);
-
-            Assert.IsNotNull(result, "TestEntityFactory returned null.");
+            Assert.IsNotNull(result, "NewItem returned null.");
 
             return result;
         }

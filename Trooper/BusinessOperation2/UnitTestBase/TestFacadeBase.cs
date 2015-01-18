@@ -31,28 +31,38 @@
         [Test]
         public virtual void TestGetById()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var item1 = this.ItemGenerator.ItemFactory();
-                var obj1 = this.ItemGenerator.ItemFactory(true, item1) as object;
-                var item2 = this.ItemGenerator.MakeItem(false, item1);
-                var obj2 = this.ItemGenerator.ItemFactory(true, item2) as object;
-                var copy = AutoMapper.Mapper.Map<Tc>(item1);
+                bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
+                bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
+                bp.Uow.Save();            
 
-                bp.Facade.Add(copy);
+                var all = bp.Facade.GetAll().ToList();
+                Assert.NotNull(all);
+                Assert.That(all.Count(), Is.EqualTo(2));
+
+                var first = this.ItemGenerator.CopyItem(all.ElementAt(0));
+                var second = this.ItemGenerator.CopyItem(all.ElementAt(1));
+
+                bp.Facade.Delete(this.ItemGenerator.CopyItem(second));
                 bp.Uow.Save();
 
-                var item1ByObject = bp.Facade.GetById(obj1);
-                var item1ByEntity = bp.Facade.GetById(item1);
-                var item2ByEntity = bp.Facade.GetById(item2);
-                var item2ByObject = bp.Facade.GetById(obj2);
+                all = bp.Facade.GetAll().ToList();
+                Assert.NotNull(all);
+                Assert.That(all.Count(), Is.EqualTo(1));
+                
+                var item1ByObject = bp.Facade.GetById(first as object);
+                var item1ByEntity = bp.Facade.GetById(first);
+                var item2ByObject = bp.Facade.GetById(second as object);
+                var item2ByEntity = bp.Facade.GetById(second);                
 
                 Assert.IsNotNull(item1ByObject);
                 Assert.IsNotNull(item1ByEntity);
                 Assert.IsNull(item2ByEntity);
                 Assert.IsNull(item2ByObject);
-                Assert.IsTrue(bp.Facade.AreEqual(obj1, item1ByObject));
-                Assert.IsTrue(bp.Facade.AreEqual(item1, item1ByEntity));
+                Assert.IsTrue(bp.Facade.AreEqual(first as object, item1ByObject));
             }
         }
 
@@ -60,28 +70,39 @@
         ///     Test <see cref="IFacade.Exists(T item)"/> and <see cref="IFacade.Exists(object obj)"/>
         /// </summary>
         [Test]
-        public virtual void TestExists()
+        public virtual void TestExists() 
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var item1 = this.ItemGenerator.ItemFactory();
-                var obj1 = this.ItemGenerator.ItemFactory(true, item1) as object;
-                var item2 = this.ItemGenerator.MakeItem(false, item1);
-                var obj2 = this.ItemGenerator.ItemFactory(true, item2) as object;
-                var copy = AutoMapper.Mapper.Map<Tc>(item1);
-
-                bp.Facade.Add(copy);
+                bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
+                bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
                 bp.Uow.Save();
 
-                var item1ByObject = bp.Facade.Exists(obj1);
-                var item1ByEntity = bp.Facade.Exists(item1);
-                var item2ByEntity = bp.Facade.Exists(item2);
-                var item2ByObject = bp.Facade.Exists(obj2);
+                var all = bp.Facade.GetAll().ToList();
+                Assert.NotNull(all);
+                Assert.That(all.Count(), Is.EqualTo(2));
+
+                var first = this.ItemGenerator.CopyItem(all.ElementAt(0));
+                var second = this.ItemGenerator.CopyItem(all.ElementAt(1));
+
+                bp.Facade.Delete(this.ItemGenerator.CopyItem(second));
+                bp.Uow.Save();
+
+                all = bp.Facade.GetAll().ToList();
+                Assert.NotNull(all);
+                Assert.That(all.Count(), Is.EqualTo(1));
+
+                var item1ByObject = bp.Facade.Exists(first as object);
+                var item1ByEntity = bp.Facade.Exists(first);
+                var item2ByObject = bp.Facade.Exists(second as object);
+                var item2ByEntity = bp.Facade.Exists(second);
 
                 Assert.IsTrue(item1ByObject);
                 Assert.IsTrue(item1ByEntity);
-                Assert.IsFalse(item2ByEntity);
                 Assert.IsFalse(item2ByObject);
+                Assert.IsFalse(item2ByEntity);
             }
         }
 
@@ -91,11 +112,21 @@
         [Test]
         public virtual void TestAreEqual()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var first = this.ItemGenerator.ItemFactory();
-                var second = this.ItemGenerator.ItemFactory(true, first);
-                var third = this.ItemGenerator.ItemFactory();
+                bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
+                bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
+                bp.Uow.Save();
+
+                var all = bp.Facade.GetAll().ToList();
+
+                Assert.That(all.Count(), Is.EqualTo(2));
+
+                var first = all[0];
+                var second = this.ItemGenerator.CopyItem(first);
+                var third = all[1];
 
                 Assert.IsTrue(bp.Facade.AreEqual(first, second));
                 Assert.IsTrue(bp.Facade.AreEqual(first as object, second));
@@ -111,10 +142,12 @@
         [Test]
         public virtual void TestGetAll()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                this.DeleteAll();
-                bp.Facade.Add(new Tc());
+                var item = this.ItemGenerator.NewItem(bp.Facade);
+                bp.Facade.Add(item);
                 bp.Uow.Save();
 
                 var result = bp.Facade.GetAll();
@@ -130,16 +163,17 @@
         [Test]
         public virtual void TestGetSome()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var item1 = ItemGenerator.ItemFactory();
-                var item2 = ItemGenerator.ItemFactory();
-                var item3 = ItemGenerator.ItemFactory();
-                var item4 = ItemGenerator.ItemFactory();
-                var item5 = ItemGenerator.ItemFactory();
-                var item6 = ItemGenerator.ItemFactory();
-
-                this.DeleteAll();
+                var item1 = ItemGenerator.NewItem(bp.Facade);
+                var item2 = ItemGenerator.NewItem(bp.Facade);
+                var item3 = ItemGenerator.NewItem(bp.Facade);
+                var item4 = ItemGenerator.NewItem(bp.Facade);
+                var item5 = ItemGenerator.NewItem(bp.Facade);
+                var item6 = ItemGenerator.NewItem(bp.Facade);
+                
                 bp.Facade.Add(item1);
                 bp.Facade.Add(item2);
                 bp.Facade.Add(item3);
@@ -163,16 +197,17 @@
         [Test]
         public virtual void TestLimit()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var item1 = ItemGenerator.ItemFactory();
-                var item2 = ItemGenerator.ItemFactory();
-                var item3 = ItemGenerator.ItemFactory();
-                var item4 = ItemGenerator.ItemFactory();
-                var item5 = ItemGenerator.ItemFactory();
-                var item6 = ItemGenerator.ItemFactory();
-
-                this.DeleteAll();
+                var item1 = ItemGenerator.NewItem(bp.Facade);
+                var item2 = ItemGenerator.NewItem(bp.Facade);
+                var item3 = ItemGenerator.NewItem(bp.Facade);
+                var item4 = ItemGenerator.NewItem(bp.Facade);
+                var item5 = ItemGenerator.NewItem(bp.Facade);
+                var item6 = ItemGenerator.NewItem(bp.Facade);
+                
                 bp.Facade.Add(item1);
                 bp.Facade.Add(item2);
                 bp.Facade.Add(item3);
@@ -215,14 +250,15 @@
         [Test]
         public virtual void DeleteSome()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var item1 = ItemGenerator.ItemFactory();
-                var item2 = ItemGenerator.ItemFactory();
-                var item3 = ItemGenerator.ItemFactory();
-                var item4 = ItemGenerator.ItemFactory();
+                var item1 = ItemGenerator.NewItem(bp.Facade);
+                var item2 = ItemGenerator.NewItem(bp.Facade);
+                var item3 = ItemGenerator.NewItem(bp.Facade);
+                var item4 = ItemGenerator.NewItem(bp.Facade);
                 
-                this.DeleteAll();
                 bp.Facade.Add(item1);
                 bp.Facade.Add(item2);
                 bp.Facade.Add(item3);
@@ -232,11 +268,11 @@
                 bp.Facade.DeleteSome(new List<Tc> { item2, item3 });
                 bp.Uow.Save();
 
-                var all = bp.Facade.GetAll();
+                var all = bp.Facade.GetAll().ToList();
                 Assert.IsNotNull(all);
                 Assert.That(all.Count(), Is.EqualTo(2));
-                Assert.IsTrue(bp.Facade.AreEqual(all.First(), item1));
-                Assert.IsTrue(bp.Facade.AreEqual(all.Last(), item4));
+                Assert.IsTrue(bp.Facade.AreEqual(all[0], item1));
+                Assert.IsTrue(bp.Facade.AreEqual(all[1], item4));
             }
         }
 
@@ -246,12 +282,11 @@
         [Test]
         public virtual void TestAdd()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                this.DeleteAll();
-
-                var item = this.ItemGenerator.ItemFactory();
-                var copy = AutoMapper.Mapper.Map<Tc>(item);
+                var item = this.ItemGenerator.NewItem(bp.Facade);
                 bp.Facade.Add(item);
                 bp.Uow.Save();
 
@@ -259,7 +294,6 @@
 
                 Assert.IsNotNull(result);
                 Assert.That(result.Count(), Is.EqualTo(1));
-                Assert.IsTrue(bp.Facade.AreEqual(copy, result.First()));
             }
         }
 
@@ -269,12 +303,12 @@
         [Test]
         public virtual void TestDelete()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                this.DeleteAll();
-
-                var item1 = this.ItemGenerator.ItemFactory();
-                var item2 = this.ItemGenerator.ItemFactory(false, item1);
+                var item1 = this.ItemGenerator.NewItem(bp.Facade);
+                var item2 = this.ItemGenerator.NewItem(bp.Facade);
 
                 bp.Facade.Add(item1);
                 bp.Facade.Add(item2);
@@ -299,13 +333,13 @@
         [Test]
         public virtual void TestAny()
         {
+            this.DeleteAll();
+
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                this.DeleteAll();
-
                 Assert.IsFalse(bp.Facade.Any());
 
-                var item1 = this.ItemGenerator.ItemFactory();
+                var item1 = this.ItemGenerator.NewItem(bp.Facade);
                 bp.Facade.Add(item1);
                 bp.Uow.Save();
 
