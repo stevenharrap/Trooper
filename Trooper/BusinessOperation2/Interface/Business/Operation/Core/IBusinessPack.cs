@@ -12,7 +12,7 @@
 
         IValidation<Tc> Validation { get; set; }
 
-        IFacade<Tc> Facade { get; set; }
+        IFacade<Tc, Ti> Facade { get; set; }
 
         IUnitOfWork Uow { get; set; }
     }

@@ -2,21 +2,47 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Data.Entity.Core;
     using System.Linq;
     using System.Reflection;
     using Trooper.BusinessOperation2.Interface.DataManager;
 
-    public abstract class Facade<T> : IFacade<T> 
-        where T : class, new()
+    public abstract class Facade<Tc, Ti> : IFacade<Tc, Ti> 
+        where Tc : class, Ti, new()
+        where Ti : class
     {
-        #region public fields
+        #region fields
+
+        #region public
 
         public IUnitOfWork Uow { get; set; }
 
-        private IRepository<T> repository;
+        public PropertyInfo[] KeyProperties
+        {
+            get
+            {
+                if (this.keyProperties == null)
+                {
+                    var entityType = new Tc().GetType();
+                    var oc = this.Repository.ObjectContextAdapter.ObjectContext;
+                    var os = oc.CreateObjectSet<Tc>();
+                    var es = os.EntitySet;
 
-        private IRepository<T> Repository
+                    this.keyProperties = es.ElementType.KeyMembers.Select(km => entityType.GetProperty(km.Name)).ToArray();
+                }
+
+                return this.keyProperties;
+            }
+        }        
+
+        #endregion
+
+        #region private
+
+        private IRepository<Tc> repository;
+
+        private IRepository<Tc> Repository
         {
             get
             {
@@ -27,7 +53,7 @@
 
                 if (this.repository == null)
                 {
-                    this.repository = this.Uow.GetRepository<T>();
+                    this.repository = this.Uow.GetRepository<Tc>();
                 }
 
                 return this.repository;
@@ -38,37 +64,21 @@
 
         #endregion
 
-        #region public methods        
+        #endregion
 
-        private PropertyInfo[] KeyProperties
-        {            
-            get
-            {
-                if (this.keyProperties == null)
-                {
-                    var entityType = new T().GetType();
-                    var oc = this.Repository.ObjectContextAdapter.ObjectContext;
-                    var os = oc.CreateObjectSet<T>();
-                    var es = os.EntitySet;
+        #region methods               
 
-                    this.keyProperties = es.ElementType.KeyMembers.Select(km => entityType.GetProperty(km.Name)).ToArray();
-                }
-
-                return this.keyProperties;
-            }
-        }        
-
-        public virtual IQueryable<T> GetAll()
+        public virtual IQueryable<Tc> GetAll()
         {
             return this.Repository.GetAll();
         }
 
-        public IQueryable<T> GetSome(ISearch search)
+        public IQueryable<Tc> GetSome(ISearch search)
         {
             return this.Limit(this.GetAll(), search);
         }
 
-        public IQueryable<T> Limit(IQueryable<T> items, ISearch search)
+        public IQueryable<Tc> Limit(IQueryable<Tc> items, ISearch search)
         {
             if (search.SkipItems > 0)
             {
@@ -78,10 +88,10 @@
             return search.TakeItems > 0 ? items.Take(search.TakeItems) : items;
         }
 
-        public virtual T GetById(T item)
+        public virtual Tc GetById(Tc item)
         {
             var oc = this.Repository.ObjectContextAdapter.ObjectContext;
-            var os = oc.CreateObjectSet<T>();
+            var os = oc.CreateObjectSet<Tc>();
             var es = os.EntitySet;
             var entitySetName = oc.DefaultContainerName + "." + es.Name;
 
@@ -98,30 +108,32 @@
 
             if (oc.TryGetObjectByKey(key, out result))
             {
-                return result as T;
+                return result as Tc;
             }
 
             return null;
         }
         
-        public T GetById(object obj)
+        public Tc GetById(object obj)
         {
-            var entity = AutoMapper.Mapper.Map<T>(obj);
+            var item = AutoMapper.Mapper.Map<Tc>(obj);
 
-            return this.GetById(entity);
+            return this.GetById(item);
         }
 
-        public bool Exists(T item)
+        public bool Exists(Tc item)
         {
             return this.GetById(item) != null;
         }
 
         public bool Exists(object obj)
         {
-            return this.Exists(obj);
+            var item = AutoMapper.Mapper.Map<Tc>(obj);
+
+            return this.Exists(item);
         }
 
-        public bool AreEqual(T item1, T item2)
+        public bool AreEqual(Tc item1, Tc item2)
         {
             if (item1 == null || item2 == null)
             {
@@ -139,29 +151,37 @@
             return true;
         }
 
-        public bool AreEqual(object obj, T item2)
+        public bool AreEqual(object obj, Tc item2)
         {
-            var entity1 = AutoMapper.Mapper.Map<T>(obj);
+            var entity1 = AutoMapper.Mapper.Map<Tc>(obj);
 
             return this.AreEqual(entity1, item2);
         }
 
-        public virtual T Add(T item)
+        public virtual Tc Add(Tc item)
         {
             return this.Repository.Add(item);
         }
 
-        public virtual void Delete(T item)
+        public virtual void Delete(Tc item)
         {
+            if (this.Repository.GetState(item) == EntityState.Detached)
+            {
+                item = this.GetById(item);
+            }
+
             this.Repository.Delete(item);
         }
 
-        public virtual void DeleteSome(IEnumerable<T> item)
+        public virtual void DeleteSome(IEnumerable<Tc> items)
         {
-            this.Repository.DeleteSome(item);
+            var input = from i in items
+                        select this.Repository.GetState(i) == EntityState.Detached ? this.GetById(i) : i;
+
+            this.Repository.DeleteSome(input);
         }
 
-        public virtual void Update(T item)
+        public virtual void Update(Tc item)
         {
             this.Repository.Update(item);
         }
@@ -169,6 +189,16 @@
         public virtual bool Any()
         {
             return this.Repository.Any();
+        }
+
+        public Tc Map(Ti item)
+        {
+            return AutoMapper.Mapper.Map<Tc>(item);
+        }
+
+        public IEnumerable<Tc> Map(IEnumerable<Ti> items)
+        {
+            return AutoMapper.Mapper.Map<IEnumerable<Tc>>(items);
         }
 
         #endregion

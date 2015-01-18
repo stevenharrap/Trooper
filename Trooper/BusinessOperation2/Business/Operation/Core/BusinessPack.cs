@@ -17,7 +17,7 @@
 
         public IValidation<Tc> Validation { get; set; }
 
-        public IFacade<Tc> Facade { get; set; }
+        public IFacade<Tc, Ti> Facade { get; set; }
 
         public IUnitOfWork Uow { get; set; }
 

@@ -8,6 +8,7 @@
     {
         static ShopAppDbContext()
         {
+            
             //Database.SetInitializer<ShopAppDbContext>(new TestContextInitializer());
         }
 
@@ -20,8 +21,8 @@
         public ShopAppDbContext(string context)
             : base(context)
         {
-            Database.Delete();
-            Database.Create();
+           // Database.Delete();
+            //Database.Create();
         }
 
 
