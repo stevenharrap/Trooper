@@ -7,20 +7,25 @@ using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
 using Trooper.BusinessOperation2.Interface.Business.Security;
 using Trooper.BusinessOperation2.Interface.UnitTestBase;
     using System.Linq;
-
+        
     public class TestBusinessOperationBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
         where TiBusinessCore : IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public override void Setup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
+        public override void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
         {
-            base.Setup(container, itemGenerator); 
+            base.TestFixtureSetup(container, itemGenerator); 
         }
 
-        public override void Setup(IContainer container)
+        public override void TestFixtureSetup(IContainer container)
         {
-            base.Setup(container);
+            base.TestFixtureSetup(container);
+        }
+
+        public override void SetUp()
+        {
+            base.SetUp();
         }
 
         public virtual ICredential GetValidCredential()
@@ -55,6 +60,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         [Test]
         public virtual void TestDeleteAll() 
         {
+            Assert.That(false);
             /*var bc = this.NewBusinessCoreInstance();
             var credential = this.GetValidCredential();
             var all = bc.GetAll(credential);
@@ -76,6 +82,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         [Test]
         public virtual void TestAdd() 
         {
+            Assert.That(false);
             /*this.TestDeleteAll();
 
             var bc = this.NewBusinessCoreInstance();
@@ -94,36 +101,69 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         }
 
         [Test]
-        public virtual void TestAddSome() { }
+        public virtual void TestAddSome() 
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestDeleteByKey() {  }
+        public virtual void TestDeleteByKey() 
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestDeleteSomeByKey() { }
+        public virtual void TestDeleteSomeByKey()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestGetAll() { }
+        public virtual void TestGetAll()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestGetSome() { }
+        public virtual void TestGetSome()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestGetByKey() { }
+        public virtual void TestGetByKey()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestExistsByKey() { }
+        public virtual void TestExistsByKey()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestIsAllowed() { }
+        public virtual void TestIsAllowed()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestUpdate() { }
+        public virtual void TestUpdate()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestSave() { }
+        public virtual void TestSave()
+        {
+            Assert.That(false);
+        }
 
         [Test]
-        public virtual void TestValidate() { }
+        public virtual void TestValidate()
+        {
+            Assert.That(false);
+        }
     }
 }

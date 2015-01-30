@@ -28,10 +28,10 @@
 
         IQueryable<Tc> GetAll();
 
-        IQueryable<Tc> GetSome(ISearch search);
+        IEnumerable<Tc> GetSome(ISearch search);
 
-        IQueryable<Tc> Limit(IQueryable<Tc> items, ISearch search);
-
+        IEnumerable<Tc> Limit(IEnumerable<Tc> items, ISearch search);
+        
         Tc Add(Tc item);
 
         void Delete(Tc item);
