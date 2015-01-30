@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Core;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Reflection;
     using Trooper.BusinessOperation2.Interface.DataManager;
@@ -16,6 +17,14 @@
 
         #region public
 
+        private IObjectContextAdapter ObjectContextAdapter
+        {
+            get
+            {
+                return this.Repository.DbContext as IObjectContextAdapter;
+            }
+        }
+
         public IUnitOfWork Uow { get; set; }
 
         public PropertyInfo[] KeyProperties
@@ -25,7 +34,7 @@
                 if (this.keyProperties == null)
                 {
                     var entityType = new Tc().GetType();
-                    var oc = this.Repository.ObjectContextAdapter.ObjectContext;
+                    var oc = this.ObjectContextAdapter.ObjectContext;
                     var os = oc.CreateObjectSet<Tc>();
                     var es = os.EntitySet;
 
@@ -66,19 +75,19 @@
 
         #endregion
 
-        #region methods               
+        #region methods
 
         public virtual IQueryable<Tc> GetAll()
         {
-            return this.Repository.GetAll();
+            return this.Repository.DbSet;
         }
 
-        public IQueryable<Tc> GetSome(ISearch search)
-        {
-            return this.Limit(this.GetAll(), search);
+        public virtual IEnumerable<Tc> GetSome(ISearch search)
+        {            
+            return this.Limit(this.GetAll().AsEnumerable(), search);
         }
 
-        public IQueryable<Tc> Limit(IQueryable<Tc> items, ISearch search)
+        public IEnumerable<Tc> Limit(IEnumerable<Tc> items, ISearch search)
         {
             if (search.SkipItems > 0)
             {
@@ -90,11 +99,11 @@
 
         public virtual Tc GetById(Tc item)
         {
-            var oc = this.Repository.ObjectContextAdapter.ObjectContext;
+            var oc = this.ObjectContextAdapter.ObjectContext;
             var os = oc.CreateObjectSet<Tc>();
             var es = os.EntitySet;
             var entitySetName = oc.DefaultContainerName + "." + es.Name;
-
+            
             var keyPairs = this.KeyProperties.Select(p => new KeyValuePair<string, object>(p.Name, p.GetValue(item))).ToList();
             var nullKey = keyPairs.FirstOrDefault(kp => kp.Key == null || kp.Value == null);
 
@@ -160,35 +169,37 @@
 
         public virtual Tc Add(Tc item)
         {
-            return this.Repository.Add(item);
+            return this.Repository.DbSet.Add(item);
         }
 
         public virtual void Delete(Tc item)
         {
-            if (this.Repository.GetState(item) == EntityState.Detached)
-            {
-                item = this.GetById(item);
-            }
+            var local = this.Repository.DbContext.Set<Tc>().Local.FirstOrDefault(i => this.AreEqual(i, item));
 
-            this.Repository.Delete(item);
+            var entry = this.Repository.DbContext.Entry(local ?? item);
+
+            entry.State = EntityState.Deleted;
+            //this.Repository.DbSet.Remove(item);
         }
 
-        public virtual void DeleteSome(IEnumerable<Tc> items)
+        public void DeleteSome(IEnumerable<Tc> items)
         {
-            var input = from i in items
-                        select this.Repository.GetState(i) == EntityState.Detached ? this.GetById(i) : i;
-
-            this.Repository.DeleteSome(input);
+            foreach (var item in items)
+            {
+                this.Delete(item);
+            }
         }
 
         public virtual void Update(Tc item)
         {
-            this.Repository.Update(item);
+            var entry = this.Repository.DbContext.Entry(item);
+            this.Repository.DbSet.Attach(item);
+            entry.State = EntityState.Modified;
         }
 
-        public virtual bool Any()
+        public bool Any()
         {
-            return this.Repository.Any();
+            return this.GetAll().Any();
         }
 
         public Tc Map(Ti item)

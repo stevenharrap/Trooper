@@ -1,28 +1,36 @@
 ﻿namespace Trooper.BusinessOperation2.UnitTestBase
 {
     using Autofac;
-    using NUnit.Framework;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Trooper.BusinessOperation2.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.UnitTestBase;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Trooper.BusinessOperation2.Business.Operation.Core;
+using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
+using Trooper.BusinessOperation2.Interface.UnitTestBase;
 
+    
     public abstract class TestFacadeBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
         where TiBusinessCore : IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public override void Setup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
+        public override void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
         {
-            base.Setup(container, itemGenerator);
+            base.TestFixtureSetup(container, itemGenerator);
         }
 
-        public override void Setup(IContainer container) 
+        public override void TestFixtureSetup(IContainer container) 
         {
-            base.Setup(container);
-        }        
+            base.TestFixtureSetup(container);
+        }
 
+        public override void SetUp()
+        {
+            this.DeleteAll();
+        }
+        
         #region ---- Facade Tests ----
 
         /// <summary>
@@ -31,8 +39,6 @@
         [Test]
         public virtual void TestGetById()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
@@ -72,8 +78,6 @@
         [Test]
         public virtual void TestExists() 
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
@@ -112,8 +116,6 @@
         [Test]
         public virtual void TestAreEqual()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
@@ -142,8 +144,6 @@
         [Test]
         public virtual void TestGetAll()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 var item = this.ItemGenerator.NewItem(bp.Facade);
@@ -163,8 +163,6 @@
         [Test]
         public virtual void TestGetSome()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 var item1 = ItemGenerator.NewItem(bp.Facade);
@@ -197,8 +195,6 @@
         [Test]
         public virtual void TestLimit()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 var item1 = ItemGenerator.NewItem(bp.Facade);
@@ -216,7 +212,7 @@
                 bp.Facade.Add(item6);
                 bp.Uow.Save();
 
-                var all = bp.Facade.GetAll();
+                var all = bp.Facade.GetAll().AsEnumerable();
 
                 var some = bp.Facade.Limit(all, new Search { SkipItems = 3, TakeItems = 2 });
 
@@ -250,8 +246,6 @@
         [Test]
         public virtual void DeleteSome()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 var item1 = ItemGenerator.NewItem(bp.Facade);
@@ -282,8 +276,6 @@
         [Test]
         public virtual void TestAdd()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 var item = this.ItemGenerator.NewItem(bp.Facade);
@@ -303,8 +295,6 @@
         [Test]
         public virtual void TestDelete()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 var item1 = this.ItemGenerator.NewItem(bp.Facade);
@@ -333,8 +323,6 @@
         [Test]
         public virtual void TestAny()
         {
-            this.DeleteAll();
-
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
                 Assert.IsFalse(bp.Facade.Any());
@@ -346,6 +334,8 @@
                 Assert.IsTrue(bp.Facade.Any());
             }
         }
+
+        public abstract void TestUpdate();
 
         #endregion        
     }

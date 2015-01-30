@@ -9,15 +9,21 @@
     using Trooper.Testing.CoreShop.Model;
 
     [TestFixture]
+    [Category("BusinessOperation")]
     public class TestShopBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
     {
-        [SetUp]
-        public void Setup()
+        [TestFixtureSetUp]
+        public void TestFixtureSetup()
         {
             var container = BusinessOperationInjection.BuildBusinessApp<ShopAppModule>();
 
-            base.Setup(container);
+            base.TestFixtureSetup(container);
         }
 
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }
     }
 }

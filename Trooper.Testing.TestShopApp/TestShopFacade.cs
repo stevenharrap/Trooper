@@ -12,14 +12,27 @@
     using Trooper.Testing.CoreShop.Model;
 
     [TestFixture]
+    [Category("Facade")]
     public class TestShopFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
     {
-        [SetUp]
-        public void Setup()
+        [TestFixtureSetUp]
+        public void TestFixtureSetup()
         {
             var container = BusinessOperationInjection.BuildBusinessApp<ShopAppModule>();
 
-            base.Setup(container);
+            base.TestFixtureSetup(container);
+        }
+
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+        }        
+
+        [Test]
+        public override void TestUpdate()
+        {
+            Assert.That(true);
         }
     }
 }

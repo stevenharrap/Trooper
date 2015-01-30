@@ -20,20 +20,22 @@ namespace Trooper.BusinessOperation2.UnitTestBase
 
         protected IContainer Container { get; set; }
 
-        public virtual void Setup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator)
+        public virtual void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator)
         {
             this.Container = container;
             this.ItemGenerator = itemGenerator;
         }
 
-        public virtual void Setup(IContainer container)
+        public virtual void TestFixtureSetup(IContainer container)
         {
-            this.Setup(container, new ItemGenerator<Tc, Ti>());
-        }        
+            this.TestFixtureSetup(container, new ItemGenerator<Tc, Ti>());
+        }
+
+        public virtual void SetUp() { }
 
         public TiBusinessCore NewBusinessCoreInstance()
         {
             return this.Container.Resolve<TiBusinessCore>();
-        }
+        }        
     }
 }
