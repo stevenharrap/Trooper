@@ -97,7 +97,7 @@
             return search.TakeItems > 0 ? items.Take(search.TakeItems) : items;
         }
 
-        public virtual Tc GetById(Tc item)
+        public virtual Tc GetByKey(Tc item)
         {
             var oc = this.ObjectContextAdapter.ObjectContext;
             var os = oc.CreateObjectSet<Tc>();
@@ -123,16 +123,16 @@
             return null;
         }
         
-        public Tc GetById(object obj)
+        public Tc GetByKey(object obj)
         {
             var item = AutoMapper.Mapper.Map<Tc>(obj);
 
-            return this.GetById(item);
+            return this.GetByKey(item);
         }
 
         public bool Exists(Tc item)
         {
-            return this.GetById(item) != null;
+            return this.GetByKey(item) != null;
         }
 
         public bool Exists(object obj)
@@ -172,6 +172,14 @@
             return this.Repository.DbSet.Add(item);
         }
 
+        public IList<Tc> AddSome(IEnumerable<Tc> items)
+        {
+            var result = from i in items
+                         select this.Add(i);
+
+            return result.ToList();
+        }
+
         public virtual void Delete(Tc item)
         {
             var local = this.Repository.DbContext.Set<Tc>().Local.FirstOrDefault(i => this.AreEqual(i, item));
@@ -179,7 +187,6 @@
             var entry = this.Repository.DbContext.Entry(local ?? item);
 
             entry.State = EntityState.Deleted;
-            //this.Repository.DbSet.Remove(item);
         }
 
         public void DeleteSome(IEnumerable<Tc> items)
@@ -190,11 +197,13 @@
             }
         }
 
-        public virtual void Update(Tc item)
+        public virtual Tc Update(Tc item)
         {
             var entry = this.Repository.DbContext.Entry(item);
-            this.Repository.DbSet.Attach(item);
+            var attached = this.Repository.DbSet.Attach(item);
             entry.State = EntityState.Modified;
+
+            return attached;
         }
 
         public bool Any()

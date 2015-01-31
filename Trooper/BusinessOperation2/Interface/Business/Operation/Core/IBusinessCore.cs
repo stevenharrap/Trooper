@@ -169,7 +169,10 @@ namespace Trooper.BusinessOperation2.Interface.Business.Operation.Core
         /// <returns>
         /// The <see cref="OperationResponse"/>.
         /// </returns>
-        ISaveResponse<Tc> Save(Ti item, ICredential credential);
+        ISaveResponse<Ti> Save(Ti item, ICredential credential);
+
+        ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, ICredential credential);
+
 
         /// <summary>
         /// The validate operation for validating an item - no changes should be made to the system.

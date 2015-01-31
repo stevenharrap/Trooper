@@ -14,15 +14,15 @@
 
         IUnitOfWork Uow { get; set; }
 
-        Tc GetById(Tc item);
+        Tc GetByKey(Tc item);
 
-        Tc GetById(object obj);
+        Tc GetByKey(object obj);
 
         bool Exists(Tc item);
 
         bool Exists(object obj);
 
-        bool AreEqual(Tc item1, Tc item2);
+        bool AreEqual(Tc item1, Tc item2);        
 
         bool AreEqual(object obj, Tc item2);
 
@@ -34,11 +34,13 @@
         
         Tc Add(Tc item);
 
+        IList<Tc> AddSome(IEnumerable<Tc> items);
+
         void Delete(Tc item);
 
         void DeleteSome(IEnumerable<Tc> item);
 
-        void Update(Tc item);
+        Tc Update(Tc item);
 
         bool Any();
 

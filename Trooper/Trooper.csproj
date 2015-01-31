@@ -114,6 +114,8 @@
     <Compile Include="BusinessOperation2\Business\Response\AddSomeResponse.cs" />
     <Compile Include="BusinessOperation2\Business\Response\ManyResponse.cs" />
     <Compile Include="BusinessOperation2\Business\Response\Response.cs" />
+    <Compile Include="BusinessOperation2\Business\Response\SaveSomeItem.cs" />
+    <Compile Include="BusinessOperation2\Business\Response\SaveSomeResponse.cs" />
     <Compile Include="BusinessOperation2\Business\Response\SaveResponse.cs" />
     <Compile Include="BusinessOperation2\Business\Response\SingleResponse.cs" />
     <Compile Include="BusinessOperation2\Business\Security\AdCredential.cs" />
@@ -139,10 +141,12 @@
     <Compile Include="BusinessOperation2\Interface\Business\Operation\Single\IBusinessDelete.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Operation\Single\IBusinessRead.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Response\IAddResponse.cs" />
+    <Compile Include="BusinessOperation2\Interface\Business\Response\ISaveSomeItem.cs" />
+    <Compile Include="BusinessOperation2\Interface\Business\Response\ISaveSomeResponse.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Response\IAddSomeResponse.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Response\IManyResponse.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Response\ISaveResponse.cs" />
-    <Compile Include="BusinessOperation2\Interface\Business\Response\SingleResponse.cs" />
+    <Compile Include="BusinessOperation2\Interface\Business\Response\ISingleResponse.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\ICredential.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\IUserRole.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\IAuthorization.cs" />

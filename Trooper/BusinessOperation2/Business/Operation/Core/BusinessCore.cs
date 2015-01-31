@@ -47,34 +47,37 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         public virtual IAddResponse<Ti> Add(Ti item, ICredential credential)
         {
             using (var bp = this.GetBusinessPack())
-            {
-                var itemAsTc = bp.Facade.Map(item);
+            {                
                 var response = new AddResponse<Ti>();
-                var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = itemAsTc };
+                var itemAsTc = bp.Facade.Map(item);
+                var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
+
+                if (bp.Facade.Exists(item))
+                {
+                    MessageUtility.Errors.Add(errorMessage, response);
+                    return response;
+                }
+
+                var added = bp.Facade.Add(itemAsTc);
+
+                if (added == null)
+                {
+                    MessageUtility.Errors.Add(errorMessage, response);
+                    return response;
+                }
+
+                bp.Validation.Validate(added, response);
+
+                var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = added };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
                     return response;
-                }                
-                
-                if (!bp.Facade.Exists(itemAsTc))
-                {
-                    var added = bp.Facade.Add(itemAsTc);
-
-                    bp.Validation.Validate(added, response);
-
-                    if (response.Ok)
-                    {
-                        bp.Uow.Save();
-                        response.Item = added;
-                    }
-
-                    return response;
                 }
-                else
-                {
-                    MessageUtility.Errors.Add(string.Format("The entity ({0}) could not be added.", typeof(Tc)), response);
-                }
+
+                bp.Uow.Save();
+
+                response.Item = added;
 
                 return response;
             }
@@ -94,50 +97,33 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
-                var response = new AddSomeResponse<Tc>();
-                var arg = new RequestArg<Tc> { Action = Action.AddAction, /*Items = items.ToList<Tc>()*/ };
-            }
+                var response = new AddSomeResponse<Ti>();
+                var itemsTc = bp.Facade.Map(items);
+                var added = bp.Facade.AddSome(itemsTc);
 
-
-
-
-
-
-            /*var f = this.FacadeFactory();
-            var cua = f.CanUserArgFactory();
-
-            AutoMapper.Mapper.CreateMap<TEntity, TEntityNav>();
-            var entityNavs = AutoMapper.Mapper.Map<List<TEntityNav>>(entities);
-
-            entityNavs = f.AddSome(entityNavs).ToList();
-
-            foreach (var en in entityNavs)
-            {
-                f.ValidateEntity(en, response);
+                foreach (var item in added)
+                {
+                    bp.Validation.Validate(item, response);
+                }
 
                 if (!response.Ok)
                 {
-                    f.GuardFault(response);
-
-                    return null;
+                    return response;
                 }
+
+                var arg = new RequestArg<Tc> { Action = Action.AddSomeAction, Items = added };
+
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                {
+                    return response;
+                }
+
+                bp.Uow.Save();
+
+                response.Items = added;
+
+                return response;
             }
-
-            cua.Action = UserAction.AddSomeAction;
-            cua.Entities = entityNavs;
-
-            //// Check access if data correct
-            if (!f.CanUser(cua, response))
-            {
-                f.GuardFault(response);
-
-                return null;
-            }
-
-
-            return entityNavs;*/
-
-            return null;
         }
 
         public virtual IResponse Validate(Ti item, ICredential credential)
@@ -174,15 +160,31 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                     return response;
                 }
 
-                //response.Item = this.OperationRequest.IsAllowed(argument, this.Credential, response);
-
                 return response;
             }
         }
 
         public virtual IResponse DeleteByKey(Ti item, ICredential credential)
         {
-            throw new System.NotImplementedException();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = new Response();
+                var itemAsTc = bp.Facade.Map(item);
+                var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
+
+                var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
+
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                {
+                    return response;
+                }
+
+                bp.Facade.Delete(itemAsTc);
+
+                bp.Uow.Save();
+
+                return response;
+            }
         }
 
         public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, ICredential credential)
@@ -199,6 +201,8 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                 }
 
                 bp.Facade.DeleteSome(itemsAsListTc);
+
+                bp.Uow.Save();
 
                 return response;
             }
@@ -246,17 +250,18 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             {
                 var response = new SingleResponse<Ti>();
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
+                var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
                 {
                     return response;
                 }
 
-                var result = bp.Facade.GetById(item);
+                var result = bp.Facade.GetByKey(item);
 
                 if (result == null)
                 {
-                    MessageUtility.Errors.Add("The item requested cannot be found.", item, null, response);
+                    MessageUtility.Errors.Add(errorMessage, item, null, response);
                     return response;
                 }
 
@@ -278,7 +283,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                     return response;
                 }
 
-                var result = bp.Facade.GetById(item);
+                var result = bp.Facade.GetByKey(item);
                 response.Item = result != null;
 
                 return response;
@@ -287,14 +292,116 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IResponse Update(Ti item, ICredential credential)
         {
-            throw new System.NotImplementedException();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = new AddResponse<Ti>();
+                var itemAsTc = bp.Facade.Map(item);
+                var errorMessage = string.Format("The ({0}) could not be updated.", typeof(Tc));
+                var updated = bp.Facade.Exists(itemAsTc) ? bp.Facade.Update(itemAsTc) : null;
+
+                if (updated == null)
+                {
+                    MessageUtility.Errors.Add(errorMessage, response);
+                    return response;
+                }
+
+                bp.Validation.Validate(updated, response);
+
+                var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = updated };
+
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                {
+                    return response;
+                }
+
+                bp.Uow.Save();
+
+                response.Item = updated;
+
+                return response;
+            }
         }
 
-        public virtual ISaveResponse<Tc> Save(Ti item, ICredential credential)
+        public virtual ISaveResponse<Ti> Save(Ti item, ICredential credential)
         {
-            throw new System.NotImplementedException();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = new SaveResponse<Ti> { Change = SaveChangeType.None };
+                var itemAsTc = bp.Facade.Map(item);
+                var errorMessage = string.Format("The ({0}) could not be saved.", typeof(Tc));
+                var exists = bp.Facade.Exists(itemAsTc);
+                var saved = exists ? bp.Facade.Update(itemAsTc) : bp.Facade.Add(itemAsTc);
+
+                if (saved == null)
+                {
+                    MessageUtility.Errors.Add(errorMessage, response);
+                    return response;
+                }
+
+                bp.Validation.Validate(saved, response);
+
+                var arg = new RequestArg<Tc> { Action = exists ? Action.UpdateAction :  Action.AddAction, Item = saved };
+
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                {
+                    return response;
+                }
+
+                bp.Uow.Save();
+
+                response.Item = saved;
+                response.Change = exists ? SaveChangeType.Update : SaveChangeType.Add;
+
+                return response;
+            }
         }
 
-        
+        public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, ICredential credential)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = new SaveSomeResponse<Ti>();
+                var itemsTc = bp.Facade.Map(items);
+                var saved = from i in itemsTc
+                            let exists = bp.Facade.Exists(i)
+                            let item = exists ? bp.Facade.Update(i) : bp.Facade.Add(i)
+                            select new { Item = item, Exists = exists };
+
+                foreach (var i in saved)
+                {
+                    bp.Validation.Validate(i.Item, response);
+                }
+
+                if (!response.Ok)
+                {
+                    return response;
+                }
+
+                foreach (var i in saved)
+                {
+                    var arg = new RequestArg<Tc> { Action = i.Exists ? Action.UpdateAction : Action.AddAction, Item = i.Item };
+
+                    if (bp.Authorization != null)
+                    {
+                        bp.Authorization.IsAllowed(arg, credential);
+                    }
+                }
+
+                if (!response.Ok)
+                {
+                    return response;
+                }                
+
+                bp.Uow.Save();
+
+                response.Items = saved.Select(i => new SaveSomeItem<Ti>
+                {
+                    Change = i.Exists ? SaveChangeType.Update : SaveChangeType.Add,
+                    Item = i.Item
+                });
+
+                return response;
+            }
+        }        
     }
 }

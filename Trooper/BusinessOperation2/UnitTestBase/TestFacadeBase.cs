@@ -34,10 +34,10 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         #region ---- Facade Tests ----
 
         /// <summary>
-        ///     Test <see cref="IFacade.GetById(T item)"/> and <see cref="IFacade.GetById(object obj)"/>
+        ///     Test <see cref="IFacade.GetByKey(T item)"/> and <see cref="IFacade.GetByKey(object obj)"/>
         /// </summary>
         [Test]
-        public virtual void TestGetById()
+        public virtual void TestGetByKey()
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
@@ -59,10 +59,10 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
                 Assert.NotNull(all);
                 Assert.That(all.Count(), Is.EqualTo(1));
                 
-                var item1ByObject = bp.Facade.GetById(first as object);
-                var item1ByEntity = bp.Facade.GetById(first);
-                var item2ByObject = bp.Facade.GetById(second as object);
-                var item2ByEntity = bp.Facade.GetById(second);                
+                var item1ByObject = bp.Facade.GetByKey(first as object);
+                var item1ByEntity = bp.Facade.GetByKey(first);
+                var item2ByObject = bp.Facade.GetByKey(second as object);
+                var item2ByEntity = bp.Facade.GetByKey(second);                
 
                 Assert.IsNotNull(item1ByObject);
                 Assert.IsNotNull(item1ByEntity);
@@ -290,6 +290,27 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         }
 
         /// <summary>
+        ///     Tests <see cref="IFacade.AddSome(IEnumerable<T> items)"/>
+        /// </summary>
+        [Test]
+        public virtual void TestAddSome()
+        {
+            using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
+            {
+                var item1 = this.ItemGenerator.NewItem(bp.Facade);
+                var item2 = this.ItemGenerator.NewItem(bp.Facade);
+                var item3 = this.ItemGenerator.NewItem(bp.Facade);
+                bp.Facade.AddSome(new List<Tc>{ item1, item2, item3 });
+                bp.Uow.Save();
+
+                var result = bp.Facade.GetAll();
+
+                Assert.IsNotNull(result);
+                Assert.That(result.Count(), Is.EqualTo(3));
+            }
+        }
+
+        /// <summary>
         ///     Tests <see cref="IFacade.Delete(T item)"/>
         /// </summary>
         [Test]
@@ -314,6 +335,15 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
                 Assert.IsNotNull(result);
                 Assert.AreEqual(result.Count(), 1);
                 Assert.IsTrue(bp.Facade.AreEqual(result.First(), item1));
+
+                var anItem = bp.Facade.GetByKey(item1);
+                bp.Facade.Delete(anItem);
+                bp.Uow.Save();
+
+                result = bp.Facade.GetAll();
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(result.Count(), 0);
             }
         }
 
