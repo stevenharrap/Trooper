@@ -1,4 +1,6 @@
-﻿namespace Trooper.BusinessOperation2.UnitTestBase
+﻿using Trooper.BusinessOperation2.Interface.DataManager;
+
+namespace Trooper.BusinessOperation2.UnitTestBase
 {
     using Autofac;
 using NUnit.Framework;
@@ -34,7 +36,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         #region ---- Facade Tests ----
 
         /// <summary>
-        ///     Test <see cref="IFacade.GetByKey(T item)"/> and <see cref="IFacade.GetByKey(object obj)"/>
+		///     Test <see cref="IFacade{Tc,Ti}.GetByKey(Tc)"/> and <see cref="IFacade{Tc,Ti}.GetByKey(object)"/>
         /// </summary>
         [Test]
         public virtual void TestGetByKey()

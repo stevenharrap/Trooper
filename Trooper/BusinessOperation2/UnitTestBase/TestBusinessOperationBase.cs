@@ -102,6 +102,29 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
             Assert.That(all.Items.Count, Is.EqualTo(1));
         }
 
+	    [Test]
+	    public virtual void TestAddSome(List<Tc> expected)
+	    {
+			Assert.IsNotNull(expected);
+
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var credential = this.GetValidCredential();
+
+		    var addSome = bc.AddSome(expected, credential);
+			Assert.IsNotNull(addSome);
+			Assert.IsTrue(addSome.Ok);
+			Assert.IsNotNull(addSome.Items);
+			Assert.That(addSome.Items.Count(), Is.EqualTo(expected.Count));
+
+			foreach (var expectedItem in expected)
+			{
+				Assert.IsTrue(addSome.Items.Any(foundItem => bp.Facade.AreEqual(foundItem, expectedItem)));
+			}
+
+		    this.TestGetAll(expected);
+	    }
+		
         [Test]
         public virtual void TestAddSome() 
         {
@@ -110,64 +133,49 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
             var item1 = this.ItemGenerator.NewItem(bp.Facade);
             var item2 = this.ItemGenerator.NewItem(bp.Facade);
             var item3 = this.ItemGenerator.NewItem(bp.Facade);
-            var credential = this.GetValidCredential();
 
-            var addSome = bc.AddSome(new List<Tc>{ item1, item2, item3 }, credential);
-
-            Assert.IsNotNull(addSome);
-            Assert.IsTrue(addSome.Ok);
-            Assert.IsNotNull(addSome.Items);
-            Assert.That(addSome.Items.Count(), Is.EqualTo(3));
-           
-            var all = bc.GetAll(credential);
-
-            Assert.IsNotNull(all);
-            Assert.IsTrue(all.Ok);
-            Assert.That(all.Items.Count(), Is.EqualTo(3));
+			this.TestAddSome(new List<Tc> { item1, item2, item3 });
         }
 
         [Test]
         public virtual void TestDeleteByKey() 
         {
-            Assert.That(false);
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var item1 = this.ItemGenerator.NewItem(bp.Facade);
+			var item2 = this.ItemGenerator.NewItem(bp.Facade);
+			var credential = this.GetValidCredential();
 
-            var bc = this.NewBusinessCoreInstance();
-            var bp = bc.GetBusinessPack();
-            var credential = this.GetValidCredential();
-            var item1 = this.ItemGenerator.NewItem(bp.Facade);
-            var item2 = this.ItemGenerator.NewItem(bp.Facade);
+			this.TestAddSome(new List<Tc> { item1, item2 });
 
-            var item1Add = bc.Add(item1, credential);
-            var item2Add = bc.Add(item2, credential);
+	        var deleteByKey = bc.DeleteByKey(item2, credential);
+			Assert.IsNotNull(deleteByKey);
+			Assert.IsTrue(deleteByKey.Ok);
 
-            var getAllResult = bc.GetAll(credential);
-
-            Assert.That(getAllResult.Ok);
-            Assert.IsNotNull(getAllResult.Items);
-            Assert.That(getAllResult.Items.Count(), Is.EqualTo(2));
-
-            var deleteResult = bc.DeleteByKey(item2Add.Item, credential);
-            Assert.That(deleteResult.Ok);
-
-            getAllResult = bc.GetAll(credential);
-            Assert.That(getAllResult.Ok);
-            Assert.IsNotNull(getAllResult.Items);
-            Assert.That(getAllResult.Items.Count(), Is.EqualTo(1));
-            Assert.IsTrue(bp.Facade.AreEqual(bp.Facade.Map(getAllResult.Items.First()), bp.Facade.Map(item1Add.Item)));
-
-            deleteResult = bc.DeleteByKey(item1Add.Item, credential);
-            Assert.That(deleteResult.Ok);
-
-            getAllResult = bc.GetAll(credential);
-            Assert.That(getAllResult.Ok);
-            Assert.IsNotNull(getAllResult.Items);
-            Assert.That(getAllResult.Items.Count(), Is.EqualTo(0));            
+	        this.TestGetAll(new List<Tc> {item1});
         }
 
         [Test]
         public virtual void TestDeleteSomeByKey()
         {
-            Assert.That(false);
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var item1 = ItemGenerator.NewItem(bp.Facade);
+			var item2 = ItemGenerator.NewItem(bp.Facade);
+			var item3 = ItemGenerator.NewItem(bp.Facade);
+			var item4 = ItemGenerator.NewItem(bp.Facade);
+			var credential = this.GetValidCredential();
+
+			this.TestAddSome(new List<Tc> { item1, item2, item3 });
+
+			/*bp.Facade.DeleteSome(new List<Tc> { item2, item3 });
+			
+
+			var all = bp.Facade.GetAll().ToList();
+			Assert.IsNotNull(all);
+			Assert.That(all.Count(), Is.EqualTo(2));
+			Assert.IsTrue(bp.Facade.AreEqual(all[0], item1));
+			Assert.IsTrue(bp.Facade.AreEqual(all[1], item4));*/
         }
 
         [Test]
@@ -175,6 +183,42 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         {
             Assert.That(false);
         }
+
+		[Test]
+		public virtual IList<Ti> TestGetAll(int expected)
+		{
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var credential = this.GetValidCredential();
+
+			Assert.IsNotNull(bc);
+			Assert.IsNotNull(credential);
+			
+			var getAll = bc.GetAll(credential);
+
+			Assert.IsNotNull(getAll);
+			Assert.IsNotNull(getAll.Items);
+			Assert.IsNotNull(getAll.Ok);
+			Assert.That(getAll.Items.Count(), Is.EqualTo(expected));
+
+			return getAll.Items;
+		}
+
+		[Test]
+		public virtual void TestGetAll(List<Tc> expected)
+		{
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+
+			Assert.IsNotNull(expected);
+
+			var all = this.TestGetAll(expected.Count());
+
+			foreach (var expectedItem in expected)
+			{
+				Assert.IsTrue(all.Any(foundItem => bp.Facade.AreEqual(foundItem, expectedItem)));
+			}
+		}
 
         [Test]
         public virtual void TestGetSome()
