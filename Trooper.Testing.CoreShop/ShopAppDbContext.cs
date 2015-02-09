@@ -6,21 +6,17 @@
 
     public class ShopAppDbContext : DbContext, IDbContext
     {
-        static ShopAppDbContext()
-        {
-            
-            //Database.SetInitializer<ShopAppDbContext>(new TestContextInitializer());
-        }
-
         public ShopAppDbContext()
             : this("TrooperUnitTestingDbContext")
         {
-
+			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopAppDbContext>());
+			
         }
         
         public ShopAppDbContext(string context)
             : base(context)
         {
+			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopAppDbContext>());
            // Database.Delete();
             //Database.Create();
         }

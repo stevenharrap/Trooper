@@ -1,16 +1,9 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trooper.BusinessOperation2.Business.Security;
-using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-using Trooper.BusinessOperation2.Interface.Business.Security;
-using Trooper.BusinessOperation2.Interface.UnitTestBase;
-
-namespace Trooper.BusinessOperation2.UnitTestBase
+﻿namespace Trooper.BusinessOperation2.UnitTestBase
 {
+	using Autofac;
+	using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
+	using Trooper.BusinessOperation2.Interface.UnitTestBase;
+
     public class TestBase<TiBusinessCore, Tc, Ti>
         where TiBusinessCore : IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
