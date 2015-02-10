@@ -142,6 +142,26 @@
             return this.Exists(item);
         }
 
+	    public bool IsDefault(Tc item)
+	    {
+			if (item == null)
+			{
+				return true;
+			}
+
+			foreach (var p in this.KeyProperties)
+			{
+				var defaultValue = Activator.CreateInstance(p.PropertyType);
+
+				if (p.GetValue(item).Equals(defaultValue))
+				{
+					return true;
+				}
+			}
+
+			return false;
+	    }
+
         public bool AreEqual(Tc item1, Tc item2)
         {
             if (item1 == null || item2 == null)
@@ -182,6 +202,11 @@
 
         public virtual void Delete(Tc item)
         {
+	        if (this.IsDefault(item))
+	        {
+		        return;
+	        }
+
             var local = this.Repository.DbContext.Set<Tc>().Local.FirstOrDefault(i => this.AreEqual(i, item));
 
             var entry = this.Repository.DbContext.Entry(local ?? item);

@@ -270,7 +270,6 @@
     <Compile Include="Ui\Mvc\Bootstrap\Controls\ButtonDropDown.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\CheckBox.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\Options\EnumParams.cs" />
-    <Compile Include="Ui\Mvc\Bootstrap\Controls\Options\OptionList.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\DateTimePicker.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\ModalWindow.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\Options\Option.cs" />

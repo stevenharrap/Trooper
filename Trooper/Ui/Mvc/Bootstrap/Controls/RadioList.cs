@@ -7,7 +7,7 @@
 
     public class RadioList<TOptionKey, TOptionValue> : FormControl
     {
-        public OptionList<TOptionKey, TOptionValue> Options { get; set; }
+		public List<Option<TOptionKey, TOptionValue>> Options { get; set; }
 
         public TOptionKey SelectedOption { get; set; }
 

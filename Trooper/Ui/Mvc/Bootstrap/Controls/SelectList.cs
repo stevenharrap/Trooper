@@ -1,13 +1,37 @@
-﻿namespace Trooper.Ui.Mvc.Bootstrap.Controls
+﻿using Trooper.Utility;
+
+namespace Trooper.Ui.Mvc.Bootstrap.Controls
 {
     using System.Collections.Generic;
     using System.Linq;
 
     using Trooper.Ui.Mvc.Bootstrap.Controls.Options;
 
+	public class SelectList<TOption> : SelectList<TOption, TOption>
+	{
+		public SelectList()
+		{
+			this.Options = typeof(TOption).IsEnum
+				? Conversion.ConvertEnumToList<TOption>().Select(e => new Option<TOption>()).ToList()
+				: new List<Option<TOption>>();
+		}
+
+		public new List<Option<TOption>> Options { get; set; }
+	}
+
     public class SelectList<TOptionKey, TOptionValue> : FormControl
     {
-        public OptionList<TOptionKey, TOptionValue> Options { get; set; }
+	    public SelectList()
+	    {
+			this.Options = new List<Option<TOptionKey, TOptionValue>>();
+	    }
+
+		public List<Option<TOptionKey, TOptionValue>> Options { get; set; }
+
+		public void Add(TOptionKey key, TOptionValue value)
+		{
+			this.Options.Add(new Option<TOptionKey, TOptionValue>(key, value));
+		}
 
         public List<TOptionKey> SelectedOptions { get; set; }
 

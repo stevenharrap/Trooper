@@ -12,6 +12,8 @@
     [Category("BusinessOperation")]
     public class TestShopBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
     {
+	    private const string ToBeImplemented = "Shop BO Test to be implemented";
+
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
@@ -25,5 +27,40 @@
         {
             base.SetUp();
         }
+
+		[Test]
+		[Ignore(ToBeImplemented)]
+	    public override void TestIsAllowed()
+	    {
+		    Assert.IsTrue(false);
+	    }
+
+		[Test]
+		[Ignore(ToBeImplemented)]
+	    public override void TestUpdate()
+	    {
+			Assert.IsTrue(false);
+	    }
+
+		[Test]
+		[Ignore(ToBeImplemented)]
+	    public override void TestSave()
+	    {
+			Assert.IsTrue(false);
+	    }
+
+		[Test]
+		[Ignore(ToBeImplemented)]
+	    public override void TestSaveSome()
+	    {
+			Assert.IsTrue(false);
+	    }
+
+		[Test]
+		[Ignore(ToBeImplemented)]
+	    public override void TestValidate()
+	    {
+			Assert.IsTrue(false);
+	    }
     }
 }

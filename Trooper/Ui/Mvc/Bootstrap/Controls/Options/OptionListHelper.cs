@@ -1,22 +1,24 @@
-﻿namespace Trooper.Ui.Mvc.Bootstrap.Controls.Options
+﻿using System.Collections.Generic;
+
+namespace Trooper.Ui.Mvc.Bootstrap.Controls.Options
 {
     using System;
     using System.Text.RegularExpressions;
 
     public class OptionListHelper
     {
-        public static OptionList<T?, string> FromEnum<T>(EnumParams ep = null)
+		public static List<Option<T?, string>> FromEnum<T>(EnumParams ep = null)
             where T : struct
         {
             const string Regex = @"/([^A-Za-z0-9\.\$])|([A-Z])(?=[A-Z][a-z])|([^\-\$\.0-9])(?=\$?[0-9]+(?:\.[0-9]+)?)|([0-9])(?=[^\.0-9])|([a-z])(?=[A-Z])/g";
             var regex = new Regex(Regex);
-            var result = new OptionList<T?, string>();
+            var result = new List<Option<T?, string>>();
 
             ep = ep ?? new EnumParams();
 
             if (ep.IncludeBlank)
             {
-                result.Add(null, string.IsNullOrEmpty(ep.BlankValue) ? string.Empty : ep.BlankValue);
+				result.Add(new Option<T?, string>(null, string.IsNullOrEmpty(ep.BlankValue) ? string.Empty : ep.BlankValue));
             }
 
             foreach (int val in Enum.GetValues(typeof(T)))
@@ -37,7 +39,7 @@
                     }
                 }
 
-                result.Add(key, value);
+				result.Add(new Option<T?, string>(key, value));
             }
 
             return result;

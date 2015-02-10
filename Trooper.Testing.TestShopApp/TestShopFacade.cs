@@ -15,6 +15,8 @@
     [Category("Facade")]
     public class TestShopFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
     {
+		private const string ToBeImplemented = "Shop Facade Test to be implemented";
+
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
@@ -27,9 +29,10 @@
         public override void SetUp()
         {
             base.SetUp();
-        }        
+        }
 
-        [Test]
+		[Test]
+		[Ignore(ToBeImplemented)]
         public override void TestUpdate()
         {
             Assert.That(true);

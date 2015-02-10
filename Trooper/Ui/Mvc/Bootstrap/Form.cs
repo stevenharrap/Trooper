@@ -4,6 +4,8 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using System.Web.Mvc.Html;
+
 namespace Trooper.Ui.Mvc.Bootstrap
 {
     using System;
@@ -101,7 +103,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToString(this.GetExpressionValue(expression));
 
-            tbProps.Name = this.GetExpressionAsName(expression);
+	        tbProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             tbProps.Id = this.GetIdFromName(tbProps);
             tbProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             tbProps.Value = value;
@@ -141,7 +143,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToInt(this.GetExpressionValue(expression));
 
-            iProps.Name = this.GetExpressionAsName(expression);
+			iProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             iProps.Id = this.GetIdFromName(iProps);
             iProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             iProps.Value = value;
@@ -182,7 +184,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToDecimal(this.GetExpressionValue(expression));
 
-            dProps.Name = this.GetExpressionAsName(expression);
+			dProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             dProps.Id = this.GetIdFromName(dProps);
             dProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             dProps.Value = value;
@@ -230,7 +232,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToDecimal(this.GetExpressionValue(expression));
 
-            dProps.Name = this.GetExpressionAsName(expression);
+			dProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             dProps.Id = this.GetIdFromName(dProps);
             dProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             dProps.Value = value;
@@ -278,7 +280,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToDecimal(this.GetExpressionValue(expression));
 
-            dProps.Name = this.GetExpressionAsName(expression);
+			dProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             dProps.Id = this.GetIdFromName(dProps);
             dProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             dProps.Value = value;
@@ -353,7 +355,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToString(this.GetExpressionValue(expression));
 
-            tabProp.Name = this.GetExpressionAsName(expression);
+			tabProp.Name = this.HtmlHelper.NameFor(expression).ToString();
             tabProp.Id = this.GetIdFromName(tabProp);
             tabProp.Messages = this.GetMessagesForProperty(expression, this.Messages);
             tabProp.Value = value;
@@ -423,7 +425,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToString(this.GetExpressionValue(expression));
 
-            bProps.Name = this.GetExpressionAsName(expression);
+			bProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             bProps.Id = this.GetIdFromName(bProps);
             bProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             bProps.Value = value;
@@ -518,7 +520,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = this.GetExpressionValue(expression);
 
-            ubProps.Name = this.GetExpressionAsName(expression);
+			ubProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             ubProps.Id = this.GetIdFromName(ubProps);
             ubProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             ubProps.UploadModel = value;
@@ -589,7 +591,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = this.GetExpressionValue(expression);
 
-            cblProps.Name = this.GetExpressionAsName(expression);
+			cblProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             cblProps.Id = this.GetIdFromName(cblProps);
             cblProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             cblProps.SelectedOptions = value;
@@ -637,7 +639,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToBoolean(this.GetExpressionValue(expression));
 
-            cbProps.Name = this.GetExpressionAsName(expression);
+			cbProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             cbProps.Id = this.GetIdFromName(cbProps);
             cbProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             cbProps.Checked = value;
@@ -645,7 +647,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return this.CheckBox(cbProps);
         }
 
-        public MvcHtmlString SelectList<TOptionKey, TOptionValue>(
+	    public MvcHtmlString SelectList<TOption>(
+			SelectList<TOption> sProps)
+	    {
+		    return this.SelectList<TOption, TOption>(sProps);
+	    }
+
+	    public MvcHtmlString SelectList<TOptionKey, TOptionValue>(
             SelectList<TOptionKey, TOptionValue> sProps)
         {
             this.RegisterControl(sProps);
@@ -704,13 +712,20 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return MvcHtmlString.Create(output);
         }
 
+	    public MvcHtmlString SelectListFor<TOption>(
+			Expression<Func<TModel, TOption>> expression,
+			SelectList<TOption> sProps)
+	    {
+		    return this.SelectListFor<TOption, TOption>(expression, sProps);
+	    }
+
         public MvcHtmlString SelectListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, TOptionKey>> expression,
             SelectList<TOptionKey, TOptionValue> sProps)
         {
             var value = this.GetExpressionValue(expression);
 
-            sProps.Name = this.GetExpressionAsName(expression);
+			sProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             sProps.Id = this.GetIdFromName(sProps);
             sProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             sProps.SelectedOption = value;
@@ -724,7 +739,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = this.GetExpressionValue(expression);
 
-            sProps.Name = this.GetExpressionAsName(expression);
+			sProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             sProps.Id = this.GetIdFromName(sProps);
             sProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             sProps.SelectedOptions = value;
@@ -795,7 +810,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = this.GetExpressionValue(expression);
 
-            rlProps.Name = this.GetExpressionAsName(expression);
+			rlProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             rlProps.Id = this.GetIdFromName(rlProps);
             rlProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             rlProps.SelectedOption = value;
@@ -911,7 +926,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var value = Conversion.ConvertToDateTime(this.GetExpressionValue(expression));
 
-            dtpProps.Name = this.GetExpressionAsName(expression);
+			dtpProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             dtpProps.Id = this.GetIdFromName(dtpProps);
             dtpProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
             dtpProps.Value = value;
@@ -973,7 +988,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
         public MvcHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBox sbProps)
         {
-            sbProps.Name = this.GetExpressionAsName(expression);
+			sbProps.Name = this.HtmlHelper.NameFor(expression).ToString();
             sbProps.Id = this.GetIdFromName(sbProps);
             sbProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
 
@@ -1013,7 +1028,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             classes = this.AddClasses(classes, cBase.FormGroupClasses);
 
-            if (this.IsTitleShowing(cBase.ShowTitle))
+            if (this.IsTitleShowing(cBase.ShowTitle, cBase.Title))
             {
                 return
                     string.Format(
@@ -1144,8 +1159,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return true;
         }
 
-        private bool IsTitleShowing(bool? showTitle)
+        private bool IsTitleShowing(bool? showTitle, string title)
         {
+	        if (title == null)
+	        {
+		        return false;
+	        }
+
             if (showTitle != null)
             {
                 return (bool)showTitle;
