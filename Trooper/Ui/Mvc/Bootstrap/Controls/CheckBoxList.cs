@@ -6,7 +6,7 @@
 
     public class CheckBoxList<TOptionKey, TOptionValue> : FormControl
     {
-        public OptionList<TOptionKey, TOptionValue> Options { get; set; }
+		public List<Option<TOptionKey, TOptionValue>> Options { get; set; }
 
         public List<TOptionKey> SelectedOptions { get; set; }
 

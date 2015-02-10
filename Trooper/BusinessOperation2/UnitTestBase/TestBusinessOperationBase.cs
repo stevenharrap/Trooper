@@ -1,4 +1,6 @@
-﻿namespace Trooper.BusinessOperation2.UnitTestBase
+﻿using Trooper.BusinessOperation2.Business.Operation.Core;
+
+namespace Trooper.BusinessOperation2.UnitTestBase
 {
     using Autofac;
 using NUnit.Framework;
@@ -10,7 +12,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
     using System;
     using System.Collections.Generic;
         
-    public class TestBusinessOperationBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
+    public abstract class TestBusinessOperationBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
         where TiBusinessCore : IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
@@ -102,8 +104,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
             Assert.That(all.Items.Count, Is.EqualTo(1));
         }
 
-	    [Test]
-	    public virtual void TestAddSome(List<Tc> expected)
+	    private IEnumerable<Ti> TestAddSome(ICollection<Ti> expected)
 	    {
 			Assert.IsNotNull(expected);
 
@@ -117,12 +118,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
 			Assert.IsNotNull(addSome.Items);
 			Assert.That(addSome.Items.Count(), Is.EqualTo(expected.Count));
 
-			foreach (var expectedItem in expected)
-			{
-				Assert.IsTrue(addSome.Items.Any(foundItem => bp.Facade.AreEqual(foundItem, expectedItem)));
-			}
-
-		    this.TestGetAll(expected);
+		    return addSome.Items;
 	    }
 		
         [Test]
@@ -134,7 +130,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
             var item2 = this.ItemGenerator.NewItem(bp.Facade);
             var item3 = this.ItemGenerator.NewItem(bp.Facade);
 
-			this.TestAddSome(new List<Tc> { item1, item2, item3 });
+			this.TestAddSome(new List<Ti> { item1, item2, item3 });
         }
 
         [Test]
@@ -144,15 +140,20 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
 			var bp = bc.GetBusinessPack();
 			var item1 = this.ItemGenerator.NewItem(bp.Facade);
 			var item2 = this.ItemGenerator.NewItem(bp.Facade);
+			var item3 = this.ItemGenerator.NewItem(bp.Facade);
 			var credential = this.GetValidCredential();
 
-			this.TestAddSome(new List<Tc> { item1, item2 });
+			var addSome = this.TestAddSome(new List<Ti> { item1, item2 }).ToList();
 
-	        var deleteByKey = bc.DeleteByKey(item2, credential);
+			var deleteByKey = bc.DeleteByKey(addSome[1], credential);
 			Assert.IsNotNull(deleteByKey);
 			Assert.IsTrue(deleteByKey.Ok);
 
-	        this.TestGetAll(new List<Tc> {item1});
+			this.TestGetAll(new List<Ti> { addSome[0] });
+
+			deleteByKey = bc.DeleteByKey(item3, credential);
+			Assert.IsNotNull(deleteByKey);
+			Assert.IsTrue(deleteByKey.Ok);
         }
 
         [Test]
@@ -166,26 +167,29 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
 			var item4 = ItemGenerator.NewItem(bp.Facade);
 			var credential = this.GetValidCredential();
 
-			this.TestAddSome(new List<Tc> { item1, item2, item3 });
+			var addSome = this.TestAddSome(new List<Ti> { item1, item2, item3, item4 }).ToList();
 
-			/*bp.Facade.DeleteSome(new List<Tc> { item2, item3 });
-			
+			var deleteSomeByKey = bc.DeleteSomeByKey(new List<Ti> { addSome[1], addSome[2] }, credential);
+			Assert.NotNull(deleteSomeByKey);
+			Assert.IsTrue(deleteSomeByKey.Ok);
 
-			var all = bp.Facade.GetAll().ToList();
-			Assert.IsNotNull(all);
-			Assert.That(all.Count(), Is.EqualTo(2));
-			Assert.IsTrue(bp.Facade.AreEqual(all[0], item1));
-			Assert.IsTrue(bp.Facade.AreEqual(all[1], item4));*/
+			this.TestGetAll(new List<Ti> { addSome[0], addSome[3] });
         }
 
         [Test]
         public virtual void TestGetAll()
         {
-            Assert.That(false);
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var item1 = ItemGenerator.NewItem(bp.Facade);
+			var item2 = ItemGenerator.NewItem(bp.Facade);
+
+	        var addSome = this.TestAddSome(new List<Ti> {item1, item2});
+
+			this.TestGetAll(addSome.ToList());
         }
 
-		[Test]
-		public virtual IList<Ti> TestGetAll(int expected)
+		private IList<Ti> TestGetAll(int expected)
 		{
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
@@ -204,8 +208,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
 			return getAll.Items;
 		}
 
-		[Test]
-		public virtual void TestGetAll(List<Tc> expected)
+		private void TestGetAll(List<Ti> expected)
 		{
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
@@ -216,56 +219,107 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
 
 			foreach (var expectedItem in expected)
 			{
-				Assert.IsTrue(all.Any(foundItem => bp.Facade.AreEqual(foundItem, expectedItem)));
+				var expectedItemTc = bp.Facade.Map(expectedItem);
+
+				Assert.IsTrue(all.Any(
+					foundItem => { 
+						var foundItemTc = bp.Facade.Map(foundItem);
+						return bp.Facade.AreEqual(foundItemTc, expectedItemTc);
+				} ));
 			}
 		}
 
         [Test]
         public virtual void TestGetSome()
         {
-            Assert.That(false);
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var credential = this.GetValidCredential();
+
+			var item1 = ItemGenerator.NewItem(bp.Facade);
+			var item2 = ItemGenerator.NewItem(bp.Facade);
+			var item3 = ItemGenerator.NewItem(bp.Facade);
+			var item4 = ItemGenerator.NewItem(bp.Facade);
+			var item5 = ItemGenerator.NewItem(bp.Facade);
+			var item6 = ItemGenerator.NewItem(bp.Facade);
+
+			var addSome = this.TestAddSome(new List<Ti>{item1, item2, item3, item4, item5, item6}).ToList();
+	        var getSome = bc.GetSome(new Search {SkipItems = 3, TakeItems = 2}, credential);
+
+			Assert.IsNotNull(getSome);
+			Assert.IsTrue(getSome.Ok);
+			Assert.IsNotNull(getSome.Items);
+			Assert.That(getSome.Items.Count(), Is.EqualTo(2));
+			Assert.IsTrue(bp.Facade.AreEqual(getSome.Items.First(), bp.Facade.Map(addSome[3])));
+			Assert.IsTrue(bp.Facade.AreEqual(getSome.Items.Last(), bp.Facade.Map(addSome[4])));
         }
 
         [Test]
         public virtual void TestGetByKey()
         {
-            Assert.That(false);
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var credential = this.GetValidCredential();
+
+			var item1 = ItemGenerator.NewItem(bp.Facade);
+			var item2 = ItemGenerator.NewItem(bp.Facade);
+
+			this.TestAddSome(new List<Ti> { item1, item2 });
+	        var all = this.TestGetAll(2);
+
+			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
+			var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));
+
+	        bc.DeleteByKey(second, credential);
+
+	        this.TestGetAll(1);
+
+	        var getByKey = bc.GetByKey(first, credential);
+			Assert.IsNotNull(getByKey);
+			Assert.IsTrue(getByKey.Ok);
+			Assert.IsNotNull(getByKey.Item);
+			Assert.IsTrue(bp.Facade.AreEqual(getByKey.Item, first));
         }
 
         [Test]
         public virtual void TestExistsByKey()
         {
-            Assert.That(false);
+			var bc = this.NewBusinessCoreInstance();
+			var bp = bc.GetBusinessPack();
+			var credential = this.GetValidCredential();
+
+			var item1 = ItemGenerator.NewItem(bp.Facade);
+			var item2 = ItemGenerator.NewItem(bp.Facade);
+
+			this.TestAddSome(new List<Ti> { item1, item2 });
+			var all = this.TestGetAll(2);
+
+			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
+			var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));
+
+			bc.DeleteByKey(second, credential);
+
+			this.TestGetAll(1);
+
+			var existsByKey = bc.ExistsByKey(first, credential);
+			Assert.IsNotNull(existsByKey);
+			Assert.IsTrue(existsByKey.Ok);
+			Assert.IsTrue(existsByKey.Item);
+
+			existsByKey = bc.ExistsByKey(second, credential);
+			Assert.IsNotNull(existsByKey);
+			Assert.IsTrue(existsByKey.Ok);
+			Assert.IsFalse(existsByKey.Item);
         }
 
-        [Test]
-        public virtual void TestIsAllowed()
-        {
-            Assert.That(false);
-        }
+	    public abstract void TestIsAllowed();
 
-        [Test]
-        public virtual void TestUpdate()
-        {
-            Assert.That(false);
-        }
+	    public abstract void TestUpdate();
 
-        [Test]
-        public virtual void TestSave()
-        {
-            Assert.That(false);
-        }
+	    public abstract void TestSave();
 
-        [Test]
-        public virtual void TestSaveSome()
-        {
-            Assert.That(false);
-        }
+	    public abstract void TestSaveSome();
 
-        [Test]
-        public virtual void TestValidate()
-        {
-            Assert.That(false);
-        }
+	    public abstract void TestValidate();
     }
 }

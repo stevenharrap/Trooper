@@ -448,47 +448,6 @@ namespace Trooper.Ui.Mvc.Bootstrap
         }
         
         /// <summary>
-        /// Gets the name of the expression from the property.
-        /// </summary>
-        /// <param name="expression">
-        /// The expression.
-        /// </param>
-        /// <typeparam name="TValue">
-        /// The data type of the expression
-        /// </typeparam>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public string GetExpressionAsName<TValue>(Expression<Func<TModel, TValue>> expression)
-        {
-            var name = ExpressionHelper.GetExpressionText(expression);
-
-            if (name == null)
-            {
-                return string.Empty;
-            }
-
-            return name;
-        }
-
-        /// <summary>
-        /// Gets the id of the expression from the property.
-        /// </summary>
-        /// <param name="expression">
-        /// The expression.
-        /// </param>
-        /// <typeparam name="TValue">
-        /// The data type of the expression
-        /// </typeparam>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public string GetExpressionAsId<TValue>(Expression<Func<TModel, TValue>> expression)
-        {
-            return this.GetExpressionAsName(expression).Replace(".", "_");
-        }
-
-        /// <summary>
         /// Gets the value of the expression from the property.
         /// </summary>
         /// <param name="expression">

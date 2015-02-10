@@ -1,5 +1,19 @@
 ﻿namespace Trooper.Ui.Mvc.Bootstrap.Controls.Options
 {
+	public class Option<TKey> : Option<TKey, TKey>
+	{
+		public Option()
+		{
+		}
+
+		public Option(TKey key)
+		{
+			this.Key = key;
+			this.Value = key;
+		}
+	}
+
+
     /// <summary>
     /// Option used by select, checkbox and radio. 
     /// Dictionaries don't cut it because the key cant't be null.
