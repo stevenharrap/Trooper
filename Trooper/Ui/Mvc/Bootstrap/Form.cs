@@ -17,9 +17,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
     using System.Web;
     using System.Web.Helpers;
     using System.Web.Mvc;
-
-    using Trooper.BusinessOperation.Business;
-    using Trooper.BusinessOperation.Utility;
+    using Trooper.BusinessOperation2;
+    using Trooper.BusinessOperation2.Interface.OperationResponse;
+    using Trooper.BusinessOperation2.Utility;
     using Trooper.Properties;
     using Trooper.Ui.Mvc.Bootstrap.Controls;
     using Trooper.Ui.Mvc.Bootstrap.Models;
@@ -386,7 +386,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         + "launchLoadingOnClick:{4}, " 
                         + "loadingScreenTitle:'{5}', " 
                         + "confirmOnClick:{6}, " 
-                        + "confirmTitle:'{7}' }});",
+                        + "confirmTitle:'{7}', "
+                        + "submit: {8} }});",
                         bProps.Id,
                         this.Id,
                         bProps.Url ?? string.Empty,
@@ -394,7 +395,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         this.GetJsBool(bProps.LaunchLoadingOnclick),
                         bProps.LoadingScreenTitle ?? string.Empty,
                         this.GetJsBool(bProps.ConfirmOnClick),
-                        bProps.ConfirmTitle ?? string.Empty));
+                        bProps.ConfirmTitle ?? string.Empty,
+                        this.GetJsBool(bProps.Submit)));
 
             var buttonClasses = this.AddClasses(null, bProps.ButtonClasses);
             this.AddClass(buttonClasses, this.ButtonTypeToString(bProps.ButtonType));
@@ -1200,7 +1202,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// <returns>
         /// The list of messages for the property.
         /// </returns>
-        private List<Message> GetMessagesForProperty<TValue>(Expression<Func<TModel, TValue>> expression, IEnumerable<Message> messages)
+        private List<IMessage> GetMessagesForProperty<TValue>(Expression<Func<TModel, TValue>> expression, IEnumerable<IMessage> messages)
         {
             if (messages == null)
             {

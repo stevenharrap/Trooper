@@ -14,9 +14,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
     using System.Web.Mvc;
     using System.Web.Routing;
     using System.Web.WebPages;
-
-    using Trooper.BusinessOperation.Business;
-    using Trooper.BusinessOperation.Utility;
+    using Trooper.BusinessOperation2;
+    using Trooper.BusinessOperation2.Interface.OperationResponse;
     using Trooper.Properties;
     using Trooper.Ui.Mvc.Bootstrap.Controls;
     using Trooper.Ui.Mvc.Cruncher;
@@ -111,7 +110,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// Gets or sets the errors that may be present. Providing errors to
         /// any specific control overrides this.
         /// </summary>
-        public List<Message> Messages { get; set; }
+        public List<IMessage> Messages { get; set; }
 
         /// <summary>
         /// Gets or sets the url helper from your View
@@ -431,18 +430,18 @@ namespace Trooper.Ui.Mvc.Bootstrap
             var idInc = 1;
             var id = control.Id;
 
-            if (!this.ControlsRegister.ContainsKey(id))
+            if (!string.IsNullOrWhiteSpace(id) && !this.ControlsRegister.ContainsKey(id))
             {
                 this.ControlsRegister.Add(id, control);
                 return;
             }
 
-            while (this.ControlsRegister.ContainsKey(string.Format("{0}_{1}", id, idInc)))
+            while (this.ControlsRegister.ContainsKey(string.Format("control_{0}", idInc)))
             {
                 idInc++;
             }
 
-            control.Id = string.Format("{0}_{1}", id, idInc);
+            control.Id = string.Format("control_{0}", idInc);
 
             this.ControlsRegister.Add(control.Id, control);
         }

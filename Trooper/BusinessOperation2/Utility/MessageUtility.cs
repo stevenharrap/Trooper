@@ -28,6 +28,8 @@ namespace Trooper.BusinessOperation2.Utility
 
         public static MessageUtility Notes { get; private set; }
 
+        public static MessageUtility Success { get; private set; }
+
         public static MessageUtility Messages(MessageAlertLevel level)
         {
             switch (level)
@@ -38,6 +40,8 @@ namespace Trooper.BusinessOperation2.Utility
                     return Warnings;
                 case MessageAlertLevel.Note:
                     return Notes;
+                case MessageAlertLevel.Success:
+                    return Success;
             }
 
             return null;
@@ -48,6 +52,7 @@ namespace Trooper.BusinessOperation2.Utility
             Errors = new MessageUtility(MessageAlertLevel.Error);
             Warnings = new MessageUtility(MessageAlertLevel.Warning);
             Notes = new MessageUtility(MessageAlertLevel.Note);
+            Success = new MessageUtility(MessageAlertLevel.Success);
         }
 
         private MessageUtility(MessageAlertLevel level)
@@ -261,6 +266,11 @@ namespace Trooper.BusinessOperation2.Utility
                 return MessageAlertLevel.Note;
             }
 
+            if (messages.Any(m => m != null && m.Level == MessageAlertLevel.Success))
+            {
+                return MessageAlertLevel.Success;
+            }
+
             return null;
         }
 
@@ -284,6 +294,11 @@ namespace Trooper.BusinessOperation2.Utility
             if (levels.Any(m => m != null && m == MessageAlertLevel.Note))
             {
                 return MessageAlertLevel.Note;
+            }
+
+            if (levels.Any(m => m != null && m == MessageAlertLevel.Success))
+            {
+                return MessageAlertLevel.Success;
             }
 
             return null;

@@ -7,13 +7,15 @@
 namespace Trooper.Ui.Mvc.Cruncher
 {
     using System;
+    using System.Collections.Generic;
+    using Trooper.Ui.Interface.Mvc.Cruncher;
 
     /// <summary>
     /// Contains the references to the Scripts and CSS files. When the Controller
     /// wants to create the JavaScript and CSS responses it will look at the file paths
     /// recorded here.
     /// </summary>
-    public class CruncherStore
+    public class CruncherStore : Trooper.Ui.Mvc.Cruncher.ICruncherStore
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CruncherStore"/> class.
@@ -23,9 +25,8 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// </param>
         public CruncherStore(Guid id)
         {
-            this.HeaderJsItems = new StoreItemList();
-            this.FooterJsItems = new StoreItemList();
-            this.HeaderCssItems = new StoreItemList();
+            this.JsItems = new List<IStoreItem>();
+            this.CssItems = new List<IStoreItem>();
             this.Id = id;
         }
          
@@ -35,51 +36,35 @@ namespace Trooper.Ui.Mvc.Cruncher
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets or sets Header JavaScript Items.
+        /// Gets or sets JavaScript Items.
         /// </summary>
-        private StoreItemList HeaderJsItems { get; set; }
+        private IList<IStoreItem> JsItems { get; set; }
 
         /// <summary>
-        /// Gets or sets Footer JavaScript Items.
+        /// Gets or sets CSS Items.
         /// </summary>
-        private StoreItemList FooterJsItems { get; set; }
+        private IList<IStoreItem> CssItems { get; set; }
 
         /// <summary>
-        /// Gets or sets Header CSS Items.
-        /// </summary>
-        private StoreItemList HeaderCssItems { get; set; }
-
-        /// <summary>
-        /// The list of Header JavaScript file references
+        /// The list of JavaScript file references
         /// </summary>
         /// <returns>
         /// Returns a StoreItemList 
         /// </returns>
-        public StoreItemList HeaderJs()
+        public IList<IStoreItem> Js()
         {
-            return this.HeaderJsItems;
+            return this.JsItems;
         }
 
         /// <summary>
-        /// The list of Footer JavaScript file references
+        /// The list of Css file references
         /// </summary>
         /// <returns>
         /// Returns a StoreItemList 
         /// </returns>
-        public StoreItemList FooterJs()
+        public IList<IStoreItem> Css()
         {
-            return this.FooterJsItems;
-        }
-
-        /// <summary>
-        /// The list of Header Less file references
-        /// </summary>
-        /// <returns>
-        /// Returns a StoreItemList 
-        /// </returns>
-        public StoreItemList HeaderCss()
-        {
-            return this.HeaderCssItems;
+            return this.CssItems;
         }
     }
 }

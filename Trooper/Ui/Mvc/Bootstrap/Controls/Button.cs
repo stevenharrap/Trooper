@@ -14,8 +14,16 @@
 
         public ButtonTypes ButtonType { get; set; }
 
+        /// <summary>
+        /// Should the associated form submit when the button is clicked.
+        /// If Url is provided then the form will be submitted to the URL
+        /// </summary>
         public bool Submit { get; set; }
 
+        /// <summary>
+        /// The button will send the page to this URL when clicked.
+        /// If Submit is true then the associated form will be submitted to the URL.
+        /// </summary>
         public string Url { get; set; }
 
         public bool TargetNewWindow { get; set; }

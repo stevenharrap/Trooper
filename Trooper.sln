@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CoreShop", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.TestShopApp", "Trooper.Testing.TestShopApp\Trooper.Testing.TestShopApp.csproj", "{E782159E-B9B9-4AFE-889D-048D2DB180EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.Web", "Trooper.Testing.Web\Trooper.Testing.Web.csproj", "{1F67547F-6E3B-462D-9E89-8F40412EFDE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Code Analysis|Any CPU = Code Analysis|Any CPU
@@ -79,6 +81,24 @@ Global
 		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Staging|Any CPU.ActiveCfg = Release|Any CPU
 		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Staging|Any CPU.Build.0 = Release|Any CPU
 		{E782159E-B9B9-4AFE-889D-048D2DB180EB}.Staging|x86.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Staging|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
