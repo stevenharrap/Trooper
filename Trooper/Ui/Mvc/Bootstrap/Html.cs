@@ -17,6 +17,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
     using Trooper.BusinessOperation2;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
     using Trooper.Properties;
+    using Trooper.Ui.Interface.Mvc.Cruncher;
     using Trooper.Ui.Mvc.Bootstrap.Controls;
     using Trooper.Ui.Mvc.Cruncher;
     using Trooper.Utility;
@@ -50,19 +51,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.Cruncher = new Cruncher(htmlHelper);
 
-            if (!this.Cruncher.HeaderCss().HasItem("BootstrapHtmlHelper_less"))
+            if (!this.Cruncher.HasCssItem("BootstrapHtmlHelper_less"))
             {
                 var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.jquery_min_js, name: "jquery_min_js", order: StoreItem.OrderOptions.First);
+                this.Cruncher.AddJsInline(Resources.jquery_min_js).Set(name: "jquery_min_js", order: OrderOptions.First);
 
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.jquery_ui_min_js, name: "jquery_ui_min_js", order: StoreItem.OrderOptions.First);
+                this.Cruncher.AddJsInline(Resources.jquery_ui_min_js).Set(name: "jquery_ui_min_js", order: OrderOptions.First);
 
-                this.Cruncher.HeaderJs().AddInline(Resources.bootstrap_min_js, name: "bootstrap_min_js", order: StoreItem.OrderOptions.First);
+                this.Cruncher.AddJsInline(Resources.bootstrap_min_js).Set(name: "bootstrap_min_js", order: OrderOptions.First);
 
                 /*var ghw = urlHelper.Action("GetGhw", "Bootstrap");
                 var gh = urlHelper.Action("GetGh", "Bootstrap");*/
@@ -82,20 +79,16 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 css = css.Replace("../fonts/glyphicons-halflings-regular.ttf", ghrt);
                 css = css.Replace("../fonts/glyphicons-halflings-regular.svg", ghrs);
 
-                this.Cruncher.HeaderCss()
-                          .AddInline(css, name: "bootstrap_css", order: StoreItem.OrderOptions.First);
+                this.Cruncher.AddCssInline(css).Set(name: "bootstrap_css", order: OrderOptions.First);
 
-                this.Cruncher.HeaderCss()
-                          .AddInline(Resources.BootstrapHtmlHelper_less, name: "BootstrapHtmlHelper_less", less: true, order: StoreItem.OrderOptions.First);
+                this.Cruncher.AddLessInline(Resources.BootstrapHtmlHelper_less).Set(name: "BootstrapHtmlHelper_less", order: OrderOptions.First);
             }
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapHtml_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapHtml_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapHtml_js, name: "BootstrapHtml_js", order: StoreItem.OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.BootstrapHtml_js).Set(name: "BootstrapHtml_js", order: OrderOptions.Middle);
 
-                this.Cruncher.HeaderJs().AddInline("var bootstrapHtml = new BootstrapHtml();");
+                this.Cruncher.AddJsInline("var bootstrapHtml = new BootstrapHtml();");
             }
         }
 
@@ -159,10 +152,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(pgProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapPanelGroup_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapPanelGroup_js"))
             {
-                this.Cruncher.HeaderJs()
-                    .AddInline(Resources.BootstrapPanelGroup_js, name: "BootstrapPanelGroup_js", order: StoreItem.OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.BootstrapPanelGroup_js).Set(name: "BootstrapPanelGroup_js", order: OrderOptions.Middle);
             }
            
             var result = "<div class=\"panel-group " 
@@ -216,8 +208,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             result += "</div>\n";
 
-            this.Cruncher.HeaderJs()
-                .AddInline(string.Format(
+            this.Cruncher.AddJsInline(string.Format(
                 "var {0}_BootstrapPanelGroup = new BootstrapPanelGroup({{id:'{0}', active:'{1}', hasErrors: {2}}});",
                 pgProps.Id, 
                 active,
@@ -401,10 +392,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(mwProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapVirtualModalWindow_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapVirtualModalWindow_js"))
             {
-                this.Cruncher.HeaderJs()
-                    .AddInline(Resources.BootstrapVirtualModalWindow_js, name: "BootstrapVirtualModalWindow_js", order: StoreItem.OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.BootstrapVirtualModalWindow_js).Set(name: "BootstrapVirtualModalWindow_js", order: OrderOptions.Middle);
             }
 
             var buttonsString = mwProps.Buttons != null
@@ -414,7 +404,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                                       + "')"
                                     : string.Empty;
 
-            this.Cruncher.HeaderJs().AddInline(
+            this.Cruncher.AddJsInline(
                 string.Format(
                 "new BootstrapVirtualModalWindow({{ id:'{0}', title:'{1}', frameUrl:'{2}', buttons: {3}, incCloseButton:{4}, frameHeight:{5}  }});",
                 mwProps.Id,

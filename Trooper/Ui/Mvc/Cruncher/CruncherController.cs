@@ -21,49 +21,14 @@ namespace Trooper.Ui.Mvc.Cruncher
     using dotless.Core;
 
     using Microsoft.Ajax.Utilities;
+    using Trooper.Ui.Interface.Mvc.Cruncher;
 
     /// <summary>
     /// The controller class that handles requests for the JavaScript and Less/CSS files that are collected
     /// by the Cruncher class.
     /// </summary>
-    public class CruncherController : Controller
-    {
-        /// <summary>
-        /// The areas in which it is expected that the Cruncher will be used and its HTML output created.
-        /// </summary>
-        public enum AreaOptions
-        {
-            /// <summary>
-            /// Typically the JavaScript should go in the head
-            /// </summary>
-            HeaderJs = 1,
-
-            /// <summary>
-            /// Sometimes the JavaScript lives in the footer of the page in complex sites
-            /// </summary>
-            FooterJs = 2,
-
-            /// <summary>
-            /// StyleSheet information lives in the head and is (possibly) pre-processed with DotLess.
-            /// </summary>
-            HeaderCss = 3
-        }
-
-        /// <summary>
-        /// The types of content that can be collected
-        /// </summary>
-        private enum MimeTypes
-        {
-            /// <summary>
-            /// JavaScript type
-            /// </summary>
-            Js,
-
-            /// <summary>
-            /// CSS types
-            /// </summary>
-            Css
-        }
+    public class CruncherController : Controller, ICruncherController
+    {      
 
         /// <summary>
         /// Gets the source that should be returned based on the area for the store with the given ID
@@ -79,7 +44,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// </returns>
         [Compress]
         [HttpGet]
-        public ActionResult GetSources(AreaOptions area, Guid id)
+        public ActionResult GetSources(MimeTypes mimeType, Guid id)
         {
             var cruncherStore = Cruncher.GetStore(id);
 
@@ -88,16 +53,13 @@ namespace Trooper.Ui.Mvc.Cruncher
                 return this.Content(string.Format("/* No store found for store {0} */", id), "text/javascript");
             }
 
-            switch (area)
+            switch (mimeType)
             {
-                case AreaOptions.FooterJs:
-                    return this.GetContent(cruncherStore.FooterJs(), MimeTypes.Js);
+                case MimeTypes.Js:
+                    return this.GetContent(cruncherStore.Js(), MimeTypes.Js);
 
-                case AreaOptions.HeaderJs:
-                    return this.GetContent(cruncherStore.HeaderJs(), MimeTypes.Js);
-
-                case AreaOptions.HeaderCss:
-                    return this.GetContent(cruncherStore.HeaderCss(), MimeTypes.Css);
+                case MimeTypes.Css:
+                    return this.GetContent(cruncherStore.Css(), MimeTypes.Css);
             }
 
             return this.Content(string.Empty);
@@ -185,7 +147,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The file content
         /// </returns>
-        private string GetFileContent(StoreItem storeItem, MimeTypes mimeType)
+        private string GetFileContent(IStoreItem storeItem, MimeTypes mimeType)
         {
             var path = this.Server.MapPath(storeItem.File);
 
@@ -258,7 +220,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The content
         /// </returns>
-        private string GetInlineContent(StoreItem storeItem, MimeTypes mineType)
+        private string GetInlineContent(IStoreItem storeItem, MimeTypes mineType)
         {
             var path = string.IsNullOrEmpty(storeItem.File) ? null : this.Server.MapPath(storeItem.File);
 
@@ -319,7 +281,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The concatenated result
         /// </returns>
-        private ContentResult GetContent(IEnumerable<StoreItem> storeItems, MimeTypes mimeType)
+        private ContentResult GetContent(IEnumerable<IStoreItem> storeItems, MimeTypes mimeType)
         {
             var content = new StringBuilder();
             var crucherCompression = Conversion.ConvertToBoolean(
@@ -335,11 +297,11 @@ namespace Trooper.Ui.Mvc.Cruncher
 
                 switch (si.Reference)
                 {
-                    case StoreItem.ReferenceOptions.File:
+                    case ReferenceOptions.File:
                         part = this.GetFileContent(si, mimeType);
                         break;
 
-                    case StoreItem.ReferenceOptions.Inline:
+                    case ReferenceOptions.Inline:
                         part = this.GetInlineContent(si, mimeType);
                         break;
                 }
@@ -348,11 +310,11 @@ namespace Trooper.Ui.Mvc.Cruncher
                 {
                     switch (si.Reference)
                     {
-                        case StoreItem.ReferenceOptions.File:
+                        case ReferenceOptions.File:
                             content.Append(part);
                             break;
 
-                        case StoreItem.ReferenceOptions.Inline:
+                        case ReferenceOptions.Inline:
                             content.Append(part);
                             break;
                     }
@@ -361,14 +323,14 @@ namespace Trooper.Ui.Mvc.Cruncher
                 {
                     switch (si.Reference)
                     {
-                        case StoreItem.ReferenceOptions.File:
+                        case ReferenceOptions.File:
 
                             content.Append(
                                 string.Format(
                                     "\n/* ====================== File: {0} ====================== */\n{1}\n", si.File, part));
                             break;
 
-                        case StoreItem.ReferenceOptions.Inline:
+                        case ReferenceOptions.Inline:
                             content.Append(
                                 string.Format(
                                     "\n/* ====================== {0} ====================== */\n{1}\n",

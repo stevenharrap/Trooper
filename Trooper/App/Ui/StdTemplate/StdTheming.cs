@@ -11,10 +11,10 @@ namespace Trooper.App.Ui.StdTemplate
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
     using System.Web.WebPages;
-
     using Trooper.App.Ui.StdTemplate.Controllers;
     using Trooper.App.Ui.StdTemplate.Models;
     using Trooper.Properties;
+    using Trooper.Ui.Interface.Mvc.Cruncher;
     using Trooper.Ui.Mvc.Cruncher;
 
     /// <summary>
@@ -39,7 +39,7 @@ namespace Trooper.App.Ui.StdTemplate
         {
             var cruncher = new Cruncher(htmlHelper);
 
-            if (cruncher.HeaderCss().HasItem("StdTheming"))
+            if (cruncher.HasCssItem("StdTheming"))
             {
                 return;
             }
@@ -164,7 +164,9 @@ namespace Trooper.App.Ui.StdTemplate
             css = css.Replace("Bold.ttf", boldTtf);
             css = css.Replace("Bold.svg", boldSvg);
 
-            cruncher.HeaderCss().AddInline(css, name: "StdTheming", order: StoreItem.OrderOptions.First, less: true);
+            var item = cruncher.AddLessInline(css);
+            item.Order = OrderOptions.First;
+            item.Name = "StdTheming";
         }
 
         /// <summary>

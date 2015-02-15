@@ -1,5 +1,4 @@
-﻿using System;
-namespace Trooper.Ui.Interface.Mvc.Cruncher
+﻿namespace Trooper.Ui.Interface.Mvc.Cruncher
 {
     /// <summary>
     /// In relation to other items in the store should this one be first or last in the list 
@@ -46,7 +45,7 @@ namespace Trooper.Ui.Interface.Mvc.Cruncher
         Inline = 2
     }
 
-    interface IStoreItem
+    public interface IStoreItem
     {
         /// <summary>
         /// Gets or sets File reference
@@ -79,5 +78,7 @@ namespace Trooper.Ui.Interface.Mvc.Cruncher
         /// Gets or sets Reference.
         /// </summary>
         ReferenceOptions Reference { get; set; }
+
+        IStoreItem Set(string name = null, OrderOptions? order = null);
     }
 }

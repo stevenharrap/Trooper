@@ -15,7 +15,7 @@ namespace Trooper.Ui.Mvc.Cruncher
     /// wants to create the JavaScript and CSS responses it will look at the file paths
     /// recorded here.
     /// </summary>
-    public class CruncherStore : Trooper.Ui.Mvc.Cruncher.ICruncherStore
+    public class CruncherStore : ICruncherStore
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CruncherStore"/> class.
