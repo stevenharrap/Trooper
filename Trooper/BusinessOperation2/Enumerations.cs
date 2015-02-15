@@ -41,7 +41,12 @@
         /// <summary>
         /// Some helpful but none critical information for the user.
         /// </summary>
-        Note
+        Note,
+
+        /// <summary>
+        /// Something occured that should indicate a successful result to the user.
+        /// </summary>
+        Success
     }
 
     /// <summary>

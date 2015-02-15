@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
-    using Trooper.BusinessOperation.Business;
-    using Trooper.BusinessOperation.Utility;
+    using Trooper.BusinessOperation2;
+    using Trooper.BusinessOperation2.Interface.OperationResponse;
+    using Trooper.BusinessOperation2.Utility;
 
     public class HtmlControl
     {
@@ -33,6 +33,6 @@
             }
         }
 
-        public List<Message> Messages { get; set; }
+        public List<IMessage> Messages { get; set; }
     }
 }

@@ -303,12 +303,14 @@
     <Compile Include="Ui\Mvc\Bootstrap\TableClasses\Page.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\TableClasses\RowFormat.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\UploadHelper.cs" />
+    <Compile Include="Ui\Interface\Mvc\Cruncher\IStoreItem.cs" />
+    <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherStore.cs" />
     <Compile Include="Ui\Mvc\Utility\CompressAttribute.cs" />
     <Compile Include="Ui\Mvc\Cruncher\Cruncher.cs" />
     <Compile Include="Ui\Mvc\Cruncher\CruncherController.cs" />
     <Compile Include="Ui\Mvc\Cruncher\CruncherStore.cs" />
     <Compile Include="Ui\Mvc\Cruncher\StoreItem.cs" />
-    <Compile Include="Ui\Mvc\Cruncher\StoreItemList.cs" />
+    <None Include="Ui\Mvc\Cruncher\StoreItemList.cs.disable" />
     <Compile Include="Ui\Mvc\Utility\Helper.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\Logging.cs" />
