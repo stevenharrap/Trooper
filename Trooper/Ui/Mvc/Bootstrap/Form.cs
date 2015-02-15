@@ -21,6 +21,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
     using Trooper.BusinessOperation2.Interface.OperationResponse;
     using Trooper.BusinessOperation2.Utility;
     using Trooper.Properties;
+    using Trooper.Ui.Interface.Mvc.Cruncher;
     using Trooper.Ui.Mvc.Bootstrap.Controls;
     using Trooper.Ui.Mvc.Bootstrap.Models;
     using Trooper.Ui.Mvc.Cruncher;
@@ -64,12 +65,11 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
         private void Init()
         {
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapForm_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapForm_js"))
             {
-                this.Cruncher.HeaderJs()
-                    .AddInline(Resources.BootstrapForm_js, name: "BootstrapForm_js", order: StoreItem.OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.BootstrapForm_js).Set(name: "BootstrapForm_js", order: OrderOptions.Middle);
 
-                this.Cruncher.HeaderJs().AddInline(string.Format("var bootstrapForm = new BootstrapForm({{ id: '{0}' }});", this.Id));
+                this.Cruncher.AddJsInline(string.Format("var bootstrapForm = new BootstrapForm({{ id: '{0}' }});", this.Id));
             }
         }
 
@@ -125,8 +125,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.IncludeNumericJs();
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'int', minimum:{2}, maximum:{3}, decimalDigits:0}});",
                             iProps.Id,
@@ -165,8 +164,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
             
             this.IncludeNumericJs();            
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'int', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                             dProps.Id,
@@ -213,8 +211,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.IncludeNumericJs();            
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'%', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                             pProps.Id,
@@ -261,8 +258,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.IncludeNumericJs();
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'$', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                             cProps.Id,
@@ -292,17 +288,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(tabProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapTextareaBox_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapTextareaBox_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapTextareaBox_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapTextareaBox_js).Set(
                               name: "BootstrapTextareaBox_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                .AddInline(
+            this.Cruncher.AddJsInline(
                     string.Format(
                         "new BootstrapTextareaBox({{id:'{0}', formId:'{1}', maxLength:{2}, warnOnLeave:{3}}});",
                         tabProps.Id,
@@ -367,17 +361,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(bProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapButton_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapButton_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapButton_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapButton_js).Set(
                               name: "BootstrapButton_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                .AddInline(
+            this.Cruncher.AddJsInline(
                     string.Format(
                         "new BootstrapButton({{id:'{0}', "
                         + "formId:'{1}', "
@@ -491,24 +483,20 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             output = this.MakeFormGroup(output, ubProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapUpload_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapUpload_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapUpload_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapUpload_js).Set(
                               name: "BootstrapUpload_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
 
-                this.Cruncher.HeaderCss()
-                          .AddInline(
-                              Resources.BootstrapUpload_less,
+                this.Cruncher.AddLessInline(
+                              Resources.BootstrapUpload_less).Set(
                               name: "BootstrapUpload_less",
-                              less: true,
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapUpload({{id:'{0}', formId:'{1}', warnOnLeave: {2}}});",
                             ubProps.Id,
@@ -566,17 +554,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             output = this.MakeFormGroup(output, cblProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapCheckBoxList_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapCheckBoxList_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapCheckBoxList_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapCheckBoxList_js).Set(
                               name: "BootstrapCheckBoxList_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapCheckBoxList({{id:'{0}', formId:'{1}', name:'{2}', warnOnLeave:{3} }});",
                             cblProps.Id,
@@ -617,17 +603,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 this.MakeAttributesList(inpAttrs),
                 cbProps.Title);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapCheckBox_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapCheckBox_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapCheckBox_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapCheckBox_js).Set(
                               name: "BootstrapCheckBox_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapCheckBox({{id:'{0}', formId:'{1}', warnOnLeave:{2}}});",
                             cbProps.Id,
@@ -694,17 +678,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             output = this.MakeFormGroup(output, sProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapSelectList_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapSelectList_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapSelectList_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapSelectList_js).Set(
                               name: "BootstrapSelectList_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapSelectList({{id:'{0}', formId:'{1}', warnOnLeave:{2}}});",
                             sProps.Id,
@@ -785,17 +767,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             output = this.MakeFormGroup(output, rlProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapRadioList_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapRadioList_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapRadioList_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapRadioList_js).Set(
                               name: "BootstrapRadioList_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            this.Cruncher.HeaderJs()
-                    .AddInline(
+            this.Cruncher.AddJsInline(
                         string.Format(
                             "new BootstrapRadioList({{id:'{0}', formId:'{1}', name:'{2}', warnOnLeave:{3}}});",
                             rlProps.Id,
@@ -824,16 +804,14 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(dtpProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapDateTimePicker_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapDateTimePicker_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapDateTimePicker_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapDateTimePicker_js).Set(
                               name: "BootstrapDateTimePicker_js",
-                              order: StoreItem.OrderOptions.Middle);
-                this.Cruncher.HeaderCss()
-                          .AddInline(
-                              Resources.BootstrapDateTimePicker_less, name: "BootstrapDateTimePicker_less");
+                              order: OrderOptions.Middle);
+                this.Cruncher.AddLessInline(
+                              Resources.BootstrapDateTimePicker_less).Set(name: "BootstrapDateTimePicker_less");
             }
 
             var format = string.Empty;
@@ -905,7 +883,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             result = this.MakeFormGroup(result, dtpProps);
 
-            this.Cruncher.HeaderJs().AddInline(
+            this.Cruncher.AddJsInline(
                 string.Format(
                 "new BootstrapDateTimePicker("
                 + "{{id:'{0}', formId:'{1}', pickDate:{2}, pickTime:{3}, pickSeconds:{4}, warnOnLeave:{5}, popoverPlacement:'{6}', format:'{7}', timezone:'{8}'}});",
@@ -940,14 +918,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(sbProps);
 
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapSearchBox_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapSearchBox_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapSearchBox_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapSearchBox_js).Set(
                               name: "BootstrapSearchBox_js",
-                              order: StoreItem.OrderOptions.Middle);
-                this.Cruncher.HeaderCss().AddInline(Resources.BootstrapSearchBox_less, name: "BootstrapSearchBox_less", less: true);
+                              order: OrderOptions.Middle);
+                this.Cruncher.AddLessInline(Resources.BootstrapSearchBox_less).Set(name: "BootstrapSearchBox_less");
             }
 
             var result = string.Format(
@@ -966,8 +943,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             result = this.MakeFormGroup(result, sbProps);
 
-            this.Cruncher.HeaderJs()
-                      .AddInline(
+            this.Cruncher.AddJsInline(
                           string.Format(
                               "new BootstrapSearchBox("
                               + "{{id:'{0}', formId:'{1}', name: '{2}', selectEvent: {3}, dataSourceUrl: '{4}', "
@@ -1052,19 +1028,17 @@ namespace Trooper.Ui.Mvc.Bootstrap
         private string MakeTextBox(TextBox tbProps, bool incJs)
         {
             //// first lets add our javascript core and control instance
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapTextBox_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapTextBox_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapTextBox_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapTextBox_js).Set(
                               name: "BootstrapTextBox_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
             if (incJs)
             {
-                this.Cruncher.HeaderJs()
-                    .AddInline(
+                this.Cruncher.AddJsInline(
                         string.Format(
                             "var {0}_BootstrapTextbox = new BootstrapTextbox({{id:'{0}', formId:'{1}', maxLength:{2}, warnOnLeave:{3}}});",
                             tbProps.Id,
@@ -1129,13 +1103,12 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
         private void IncludeNumericJs()
         {
-            if (!this.Cruncher.HeaderJs().HasItem("BootstrapNumericBox_js"))
+            if (!this.Cruncher.HasJsItem("BootstrapNumericBox_js"))
             {
-                this.Cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapNumericBox_js,
+                this.Cruncher.AddJsInline(
+                              Resources.BootstrapNumericBox_js).Set(
                               name: "BootstrapNumericBox_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
         }
 

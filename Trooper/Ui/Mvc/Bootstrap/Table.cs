@@ -17,8 +17,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
     using System.Xml;
     using System.Xml.Linq;
     using System.Xml.XPath;
-
     using Trooper.Properties;
+    using Trooper.Ui.Interface.Mvc.Cruncher;
     using Trooper.Ui.Mvc.Bootstrap.TableClasses;
     using Trooper.Ui.Mvc.Bootstrap.TableClasses.Footer;
     using Trooper.Ui.Mvc.Cruncher;
@@ -211,24 +211,20 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var cruncher = new Cruncher(this.HtmlHelper);
 
-            if (!cruncher.HeaderJs().HasItem("BootstrapTable_js"))
+            if (!cruncher.HasJsItem("BootstrapTable_js"))
             {
-                cruncher.HeaderJs()
-                          .AddInline(
-                              Resources.BootstrapTable_js,
+                cruncher.AddJsInline(
+                              Resources.BootstrapTable_js).Set(
                               name: "BootstrapTable_js",
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
 
-                cruncher.HeaderCss()
-                          .AddInline(
-                              Resources.BootstrapTable_less,
+                cruncher.AddLessInline(
+                              Resources.BootstrapTable_less).Set(
                               name: "BootstrapTable_less",
-                              less: true,
-                              order: StoreItem.OrderOptions.Middle);
+                              order: OrderOptions.Middle);
             }
 
-            cruncher.HeaderJs()
-                      .AddInline(
+            cruncher.AddJsInline(
                           string.Format(
                               "var bootstrapTable_{0} = new BootstrapTable({{ id: '{0}', rowSelectionMode: '{1}' }});",
                               this.Id,

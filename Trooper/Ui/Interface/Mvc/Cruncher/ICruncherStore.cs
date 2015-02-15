@@ -1,10 +1,9 @@
-﻿namespace Trooper.Ui.Mvc.Cruncher
+﻿namespace Trooper.Ui.Interface.Mvc.Cruncher
 {
     using System;
     using System.Collections.Generic;
-    using Trooper.Ui.Interface.Mvc.Cruncher;
 
-    interface ICruncherStore
+    public interface ICruncherStore
     {/// <summary>
         /// Gets or sets Id.
         /// </summary>

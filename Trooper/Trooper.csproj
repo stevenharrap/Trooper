@@ -305,6 +305,8 @@
     <Compile Include="Ui\Mvc\Bootstrap\UploadHelper.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\IStoreItem.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherStore.cs" />
+    <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherController.cs" />
+    <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncher.cs" />
     <Compile Include="Ui\Mvc\Utility\CompressAttribute.cs" />
     <Compile Include="Ui\Mvc\Cruncher\Cruncher.cs" />
     <Compile Include="Ui\Mvc\Cruncher\CruncherController.cs" />

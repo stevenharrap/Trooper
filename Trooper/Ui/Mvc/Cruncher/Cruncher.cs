@@ -7,11 +7,14 @@
 namespace Trooper.Ui.Mvc.Cruncher
 {
     using System;
+    using System.Linq;
+    using System.Collections.Generic;
     using System.Web;
     using System.Web.Caching;
     using System.Web.Mvc;
-
+    using Trooper.Ui.Interface.Mvc.Cruncher;
     using Trooper.Utility;
+    using System.Web.WebPages;
 
     /// <summary>
     /// Cruncher crunches your JavaScripts and StyleSheets into 2 single files. The class can be used in
@@ -43,7 +46,7 @@ namespace Trooper.Ui.Mvc.Cruncher
     /// ]]>
     /// </example>
     /// </summary>
-    public class Cruncher
+    public class Cruncher : ICruncher
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Cruncher"/> class.
@@ -63,7 +66,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <summary>
         /// Gets the html helper from your View.
         /// </summary>
-        public HtmlHelper HtmlHelper { get; private set; }
+        private HtmlHelper HtmlHelper { get; set; }
 
         /// <summary>
         /// Gets or sets the url helper from your View.
@@ -79,21 +82,161 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The store id
         /// </returns>
-        public static CruncherStore GetStore(Guid id)
+        public static ICruncherStore GetStore(Guid id)
         {
-            return HttpRuntime.Cache[id.ToString()] as CruncherStore;
+            return HttpRuntime.Cache[id.ToString()] as ICruncherStore;
+        }
+
+        #region Javascript
+
+        public void AddJsItem(IStoreItem item)
+        {
+            AddItem(this.Js(), item);
         }
 
         /// <summary>
-        /// Returns the Footer JavaScript items lists
+        /// Adds the contents of the file to as middle order.
         /// </summary>
-        /// <returns>
-        /// The Footer JavaScript items lists
-        /// </returns>
-        public StoreItemList FooterJs()
+        /// <param name="relativePath"></param>
+        /// <returns></returns>
+        public IStoreItem AddJsFile(string relativePath)
         {
-            return this.GetStore().FooterJs();
+            return AddFile(this.Js(), relativePath);
         }
+
+        public IStoreItem AddJsInline(string content)
+        {
+            return AddInline(this.Js(), content);
+        }
+
+        public IStoreItem AddJsInline(Func<object, IHtmlString> content)
+        {
+            return AddInline(this.Js(), content);
+        }
+
+        /// <summary>
+        /// Determines if a name item exists in the store
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// Returns true if the item exists
+        /// </returns>
+        public bool HasJsItem(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+
+            return this.Js().Any(i => i.Name == name);
+        }
+
+        /// <summary>
+        /// Determines if a file item exists in the store
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// Returns true if the item exists
+        /// </returns>
+        public bool HasJsFile(string file)
+        {
+            if (string.IsNullOrEmpty(file))
+            {
+                return false;
+            }
+
+            return this.Js().Any(i => i.File == file);
+        }
+
+        #endregion
+
+        #region Css
+
+        /// <summary>
+        /// Determines if a name item exists in the store
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// Returns true if the item exists
+        /// </returns>
+        public bool HasCssItem(string name)
+        {
+            return HasItem(this.Css(), name);
+        }
+
+        /// <summary>
+        /// Determines if a file item exists in the store
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// Returns true if the item exists
+        /// </returns>
+        public bool HasCssFile(string file)
+        {
+            return HasFile(this.Css(), file);
+        }
+
+        public void AddCssItem(IStoreItem item)
+        {
+            AddItem(this.Css(), item);
+        }
+
+        public IStoreItem AddCssFile(string relativePath)
+        {
+            return AddFile(this.Css(), relativePath);
+        }
+
+        public IStoreItem AddCssInline(string content)
+        {
+            return AddInline(this.Css(), content);
+        }
+
+        public IStoreItem AddCssInline(Func<object, IHtmlString> content)
+        {
+            return AddInline(this.Css(), content);
+        }
+
+        #endregion
+
+        #region Less
+
+        public IStoreItem AddLessFile(string relativePath)
+        {
+            var item = AddFile(this.Css(), relativePath);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        public IStoreItem AddLessInline(string content)
+        {
+            var item = AddInline(this.Css(), content);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        public IStoreItem AddLessInline(Func<object, IHtmlString> content)
+        {
+            var item = AddInline(this.Css(), content);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        #endregion
+               
 
         /// <summary>
         /// Generates all the HTML required for the header tag of the destination HTML
@@ -101,36 +244,104 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The HTML for the JavaScript and StyleSheet.
         /// </returns>
-        public MvcHtmlString Header()
+        public IHtmlString Header()
         {
             return
                 MvcHtmlString.Create(
                     string.Format(
                         "{0}\n{1}\n",
-                        this.GetHtml(CruncherController.AreaOptions.HeaderCss),
-                        this.GetHtml(CruncherController.AreaOptions.HeaderJs)));
+                        this.GetHtml(MimeTypes.Css),
+                        this.GetHtml(MimeTypes.Js)));
+        }
+
+        private static void AddItem(IList<IStoreItem> items, IStoreItem item)
+        {
+            items.Add(item);
+        }
+
+        private static IStoreItem AddFile(IList<IStoreItem> items, string relativePath)
+        {
+            var item = new StoreItem
+            {
+                File = relativePath,
+                Order = OrderOptions.Middle,
+                Reference = ReferenceOptions.File
+            };
+
+            AddItem(items, item);
+
+            return item;
+        }
+
+        private static IStoreItem AddInline(IList<IStoreItem> items, string content)
+        {
+            var item = new StoreItem
+            {
+                Order = OrderOptions.Last,
+                Reference = ReferenceOptions.Inline,
+                Content = content
+            };
+
+            AddItem(items, item);
+
+            return item;
+        }
+
+        private static IStoreItem AddInline(IList<IStoreItem> items, Func<object, IHtmlString> content)
+        {
+            var item = new StoreItem
+            {
+                Order = OrderOptions.Last,
+                Reference = ReferenceOptions.Inline,
+                Content = content.Invoke(null).ToString()
+            };
+
+            AddItem(items, item);
+
+            return item;
+        }
+
+        private static bool HasItem(IList<IStoreItem> items, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+
+            return items.Any(i => i.Name == name);
+        }
+
+        private static bool HasFile(IList<IStoreItem> items, string file)
+        {
+            if (string.IsNullOrEmpty(file))
+            {
+                return false;
+            }
+
+            return items.Any(i => i.File == file);
+        }
+
+
+        /// <summary>
+        /// Returns the JavaScript items lists
+        /// </summary>
+        /// <returns>
+        /// The JavaScript items lists
+        /// </returns>
+        public IList<IStoreItem> Js()
+        {
+            return this.GetStore().Js();
         }
 
         /// <summary>
-        /// Returns the Header JavaScript items lists
+        /// Returns the StyleSheet CSS items lists
         /// </summary>
         /// <returns>
-        /// The Header JavaScript items lists
+        /// The StyleSheet items lists
         /// </returns>
-        public StoreItemList HeaderJs()
+        public IList<IStoreItem> Css()
         {
-            return this.GetStore().HeaderJs();
-        }
-
-        /// <summary>
-        /// Returns the Header StyleSheet CSS items lists
-        /// </summary>
-        /// <returns>
-        /// The Header StyleSheet items lists
-        /// </returns>
-        public StoreItemList HeaderCss()
-        {
-            return this.GetStore().HeaderCss();
+            return this.GetStore().Css();
         }
 
         /// <summary>
@@ -142,24 +353,23 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The HTML output
         /// </returns>
-        private MvcHtmlString GetHtml(CruncherController.AreaOptions area)
+        private IHtmlString GetHtml(MimeTypes mimeType)
         {
-            switch (area)
+            switch (mimeType)
             {
-                case CruncherController.AreaOptions.HeaderJs:
-                case CruncherController.AreaOptions.FooterJs:
+                case MimeTypes.Js:
                     return
                         MvcHtmlString.Create(
                             string.Format(
                                 "<script type=\"text/javascript\" src=\"{0}\"></script>",
-                                this.GetUrl(area)));
+                                this.GetUrl(mimeType)));
 
-                case CruncherController.AreaOptions.HeaderCss:
+                case MimeTypes.Css:
                     return
                         MvcHtmlString.Create(
                             string.Format(
                                 "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen,print\" href=\"{0}\" />",
-                                this.GetUrl(area)));
+                                this.GetUrl(mimeType)));
             }
 
             return MvcHtmlString.Empty;
@@ -174,9 +384,9 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The URL string
         /// </returns>
-        private string GetUrl(CruncherController.AreaOptions area)
+        private string GetUrl(MimeTypes mimeType)
         {
-            return this.GetUrl("GetSources", "Cruncher", area);
+            return this.GetUrl("GetSources", "Cruncher", mimeType);
         }
 
         /// <summary>
@@ -194,10 +404,10 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The URL string
         /// </returns>
-        private string GetUrl(string actionName, string controllerName, CruncherController.AreaOptions area)
+        private string GetUrl(string actionName, string controllerName, MimeTypes mimeType)
         {
             var store = this.GetStore();
-            return this.UrlHelper.Action(actionName, controllerName, new { area, id = store.Id });
+            return this.UrlHelper.Action(actionName, controllerName, new { mimeType, id = store.Id });
         }
 
         /// <summary>
@@ -206,7 +416,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// <returns>
         /// The store
         /// </returns>
-        private CruncherStore GetStore()
+        private ICruncherStore GetStore()
         {
             Guid id;
             var storename = this.GetStoreName();
