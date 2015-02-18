@@ -25,9 +25,22 @@
             }
         }
 
-        public IUnitOfWork Uow { get; set; }
+	    public IUnitOfWork Uow
+	    {
+		    get
+		    {
+			    if (this.uow == null)
+			    {
+				    throw new NullReferenceException("The Unit of Work (Uow) property is null. Always ensure that this property is populated.");
+			    }
 
-        public PropertyInfo[] KeyProperties
+			    return this.uow;
+		    }
+
+		    set { this.uow = value; }
+	    }
+
+	    public PropertyInfo[] KeyProperties
         {
             get
             {
@@ -70,6 +83,8 @@
         }
 
         private PropertyInfo[] keyProperties;
+
+	    private IUnitOfWork uow;
 
         #endregion
 

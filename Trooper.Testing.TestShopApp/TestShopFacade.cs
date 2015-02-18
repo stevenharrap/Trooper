@@ -1,4 +1,6 @@
-﻿namespace Trooper.NUnitTesting.TestShopApp
+﻿using System.Collections.Generic;
+
+namespace Trooper.NUnitTesting.TestShopApp
 {
     using Autofac;
     using NUnit.Framework;
@@ -17,7 +19,28 @@
     {
 		private const string ToBeImplemented = "Shop Facade Test to be implemented";
 
-        [TestFixtureSetUp]
+	    public override void TestGetByKey()
+	    {
+			using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
+			{
+				var shop1 = new Shop {Name = "Kmart", Address = "Queensland"};
+				var shop2 = new Shop {Name = "Coles", Address = "NSW"};
+
+				bp.Facade.AddSome(new List<Shop> {shop1, shop2});
+				bp.Uow.Save();
+			}
+
+		    using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
+		    {
+				
+		    }
+
+
+
+
+	    }
+
+	    [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
             var container = BusinessOperationInjection.BuildBusinessApp<ShopAppModule>();
