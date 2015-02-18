@@ -58,6 +58,8 @@
     <Compile Include="Business\Support\ShopAuthorization.cs" />
     <Compile Include="Business\Support\ShopBusinessCore.cs" />
     <Compile Include="Business\Support\ShopInjection.cs" />
+    <Compile Include="Business\Support\ShopAddressSearch.cs" />
+    <Compile Include="Business\Support\ShopNameSearch.cs" />
     <Compile Include="Business\Support\ShopValidation.cs" />
     <Compile Include="Interface\Business\Operation\IShopBo.cs" />
     <Compile Include="Interface\Business\Support\IShopAuthorization.cs" />
