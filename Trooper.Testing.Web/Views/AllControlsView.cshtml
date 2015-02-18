@@ -1,0 +1,97 @@
+﻿@using Shop.DemoWeb.Models
+@using Trooper.Ui.Mvc.Bootstrap
+@using Trooper.Ui.Mvc.Bootstrap.Controls
+@using Trooper.Ui.Mvc.Bootstrap.Controls.Options
+@using Trooper.Ui.Mvc.Cruncher
+@using Trooper.Ui.Interface.Mvc.Cruncher
+
+@model AllControlsModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing bootstrap controls</title>
+    @{
+        var cruncher = new Cruncher(Html);
+        var bsf = new Form<AllControlsModel>(Html)
+                      {
+                          ShowTitles = string.IsNullOrEmpty(Model.ShowTitles) ? (bool?)null : Model.ShowTitles == "Show",
+                          Messages = Model.OperationResponse == null ? null : Model.OperationResponse.Messages
+                      };
+
+        cruncher.AddJsFile("~/Content/scripts/AllControls.js").Set(order: OrderOptions.Middle);
+        cruncher.AddJsInline(@<text>var allControls = new AllControls();</text>);
+
+        Trooper.Ui.Mvc.Bootstrap.Html<AllControlsModel>.Init(Html);
+    }
+
+    @cruncher.Header()
+</head>
+
+<body>
+    <div class="container">
+        <h2>BSF Test Area</h2>
+
+        <div class="row">
+            <div class="col-xs-2">
+                @bsf.SelectListFor(m => m.ShowTitles, new SelectList<string, string> { Title = "Titles?", Options = Model.TitleOptions })
+            </div>
+            <div class="col-xs-2">
+                @bsf.SelectListFor(m => m.MessageAlertLevel,
+                        new SelectList<Trooper.BusinessOperation2.MessageAlertLevel?, string>
+                            {
+                                Title = "Error?",
+                                Options = OptionListHelper.FromEnum<Trooper.BusinessOperation2.MessageAlertLevel>(new EnumParams { IncludeBlank = true })
+                            })
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-xs-4">
+                @bsf.IntegerBoxFor(m => m.TestNum01, new IntegerBox { Title = "Free integer" })
+                @bsf.IntegerBoxFor(m => m.TestNum02, new IntegerBox { Title = "Limited integer", Minimum = -5, Maximum = 5 })
+                @bsf.DecimalBoxFor(m => m.TestDec01, new DecimalBox { Title = "Free decimal" })
+                @bsf.DecimalBoxFor(m => m.TestDec02, new DecimalBox { Title = "Limited decimal (0.000)", Minimum = -5, Maximum = 5, DecimalDigits = 3 })
+                @bsf.PercentageBoxFor(m => m.TestDec03, new DecimalBox { Title = "Free percentage" })
+                @bsf.CurrencyBoxFor(m => m.TestDec04, new DecimalBox { Title = "Free currency" })
+            </div>
+            <div class="col-xs-4">
+                @bsf.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Free text" })
+                @bsf.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Limited text", MaxLength = 20 })
+                @bsf.TextareaBoxFor(m => m.TestTx03, new TextareaBox { Title = "Limited text area", MaxLength = 30 })
+                @bsf.CheckBoxFor(m => m.TestBl01, new CheckBox { Title = "Simple tick" })
+                @bsf.RadioListFor(m => m.TestSng02, new RadioList<string, string> { Title = "Radio select", Options = Model.Fruits, ScrollHeight = 150 })
+            </div>
+            <div class="col-xs-4">
+                @bsf.MultiSelectListFor(m => m.TestMlt01, new SelectList<string, string> { Title = "Multi select", Options = Model.Fruits, AllowMultiple = true })
+                @bsf.CheckBoxListFor(m => m.TestMlt02, new CheckBoxList<string, string> { Title = "Check box select", Options = Model.Fruits })
+                @bsf.SelectListFor(m => m.TestSng01, new SelectList<string, string> { Title = "Single select", Options = Model.Fruits })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+                @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker { Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date })
+                @bsf.DateTimePickerFor(m => m.TestDt02, new DateTimePicker { Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime })
+                @bsf.DateTimePickerFor(m => m.TestDt03, new DateTimePicker { Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds })
+            </div>
+            <div class="col-xs-4">
+                @bsf.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Date time: Time", DateTimeFormat = DateTimeFormat.Time })
+                @bsf.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Date time: Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
+            </div>
+            <div class="col-xs-4">
+                @bsf.UploadFor(m => m.TestFl01, new UploadBox { Title = "1st upload file" })
+                @*bsf.UploadFor(m => m.TestFl02, new UploadBox { Title = "2nd upload file"})*@
+            </div>
+        </div>
+
+        @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+        @bsf.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControlsController"), ButtonType = ButtonTypes.Primary, Submit = true })
+        @bsf.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControlsController"), ButtonType = ButtonTypes.Success, Submit = true })
+        </div>
+</body>
+</html>
