@@ -40,13 +40,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
     /// </typeparam>
     public class Form<TModel> : Html<TModel>
     {
-        public Form(HtmlHelper<TModel> htmlHelper, string id)
-            : base(htmlHelper)
-        {
-            this.Id = id;
-
-            this.Init();
-        }
+        public FormHeader FormHeaderProps { get; set; }               
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Form{TModel}"/> class.
@@ -55,25 +49,17 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// <param name="htmlHelper">
         /// The html helper.
         /// </param>
-        public Form(HtmlHelper<TModel> htmlHelper)
+        public Form(HtmlHelper<TModel> htmlHelper, FormHeader fhProps)
             : base(htmlHelper)
         {
-            this.Id = "bootstrapform";
+            this.FormHeaderProps = fhProps;
+
+            this.RegisterControl(this.FormHeaderProps);
 
             this.Init();
         }
 
-        private void Init()
-        {
-            if (!this.Cruncher.HasJsItem("BootstrapForm_js"))
-            {
-                this.Cruncher.AddJsInline(Resources.BootstrapForm_js).Set(name: "BootstrapForm_js", order: OrderOptions.Middle);
-
-                this.Cruncher.AddJsInline(string.Format("var bootstrapForm = new BootstrapForm({{ id: '{0}' }});", this.Id));
-            }
-        }
-
-        public string Id { get; set; }
+        #region public properties
 
         /// <summary>
         /// Gets or sets if all controls that support the disabled or readonly parameter 
@@ -85,6 +71,26 @@ namespace Trooper.Ui.Mvc.Bootstrap
         public bool? ControlsEnabled { get; set; }
 
         public bool? ShowTitles { get; set; }
+
+        #endregion
+
+        #region public methods
+
+        public MvcHtmlString BeginForm()
+        {
+            var tag = string.Format(
+                "<form id=\"{0}\" action=\"{1}\" method=\"{2}\">", 
+                this.FormHeaderProps.Id, 
+                this.FormHeaderProps.Action, 
+                this.FormHeaderProps.Method);
+
+            return new MvcHtmlString(tag);
+        }
+
+        public MvcHtmlString EndForm()
+        {
+            return new MvcHtmlString("</form>");
+        }
 
         public MvcHtmlString TextBox(TextBox tbProps)
         {
@@ -129,7 +135,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'int', minimum:{2}, maximum:{3}, decimalDigits:0}});",
                             iProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             iProps.Minimum == null ? "null" : Conversion.ConvertToString(iProps.Minimum),
                             iProps.Maximum == null ? "null" : Conversion.ConvertToString(iProps.Maximum)));
 
@@ -168,7 +174,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'int', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                             dProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             dProps.Minimum == null ? "null" : Conversion.ConvertToString(dProps.Minimum),
                             dProps.Maximum == null ? "null" : Conversion.ConvertToString(dProps.Maximum),
                             dProps.DecimalDigits ?? 0));
@@ -215,7 +221,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'%', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                             pProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             pProps.Minimum == null ? "null" : Conversion.ConvertToString(pProps.Minimum),
                             pProps.Maximum == null ? "null" : Conversion.ConvertToString(pProps.Maximum),
                             pProps.DecimalDigits));
@@ -262,7 +268,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapNumericBox({{id:'{0}', formId:'{1}', numericType:'$', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                             cProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             cProps.Minimum == null ? "null" : Conversion.ConvertToString(cProps.Minimum),
                             cProps.Maximum == null ? "null" : Conversion.ConvertToString(cProps.Maximum),
                             cProps.DecimalDigits ?? 0));
@@ -300,7 +306,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                     string.Format(
                         "new BootstrapTextareaBox({{id:'{0}', formId:'{1}', maxLength:{2}, warnOnLeave:{3}}});",
                         tabProps.Id,
-                        this.Id,
+                        this.FormHeaderProps.Id,
                         Conversion.ConvertToInt(tabProps.MaxLength, 0),
                         this.GetJsBool(tabProps.WarnOnLeave)));
             
@@ -381,7 +387,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         + "confirmTitle:'{7}', "
                         + "submit: {8} }});",
                         bProps.Id,
-                        this.Id,
+                        this.FormHeaderProps.Id,
                         bProps.Url ?? string.Empty,
                         this.GetJsBool(bProps.TargetNewWindow),
                         this.GetJsBool(bProps.LaunchLoadingOnclick),
@@ -500,7 +506,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapUpload({{id:'{0}', formId:'{1}', warnOnLeave: {2}}});",
                             ubProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             this.GetJsBool(ubProps.WarnOnLeave)));
 
             return MvcHtmlString.Create(output);
@@ -566,7 +572,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapCheckBoxList({{id:'{0}', formId:'{1}', name:'{2}', warnOnLeave:{3} }});",
                             cblProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             cblProps.Name,
                             this.GetJsBool(cblProps.WarnOnLeave)));
 
@@ -615,7 +621,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapCheckBox({{id:'{0}', formId:'{1}', warnOnLeave:{2}}});",
                             cbProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             this.GetJsBool(cbProps.WarnOnLeave)));
 
             return MvcHtmlString.Create(output);
@@ -690,7 +696,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapSelectList({{id:'{0}', formId:'{1}', warnOnLeave:{2}}});",
                             sProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             this.GetJsBool(sProps.WarnOnLeave)));
 
             return MvcHtmlString.Create(output);
@@ -779,7 +785,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "new BootstrapRadioList({{id:'{0}', formId:'{1}', name:'{2}', warnOnLeave:{3}}});",
                             rlProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             rlProps.Name,
                             this.GetJsBool(rlProps.WarnOnLeave)));
 
@@ -888,7 +894,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 "new BootstrapDateTimePicker("
                 + "{{id:'{0}', formId:'{1}', pickDate:{2}, pickTime:{3}, pickSeconds:{4}, warnOnLeave:{5}, popoverPlacement:'{6}', format:'{7}', timezone:'{8}'}});",
                 dtpProps.Id,
-                this.Id,
+                this.FormHeaderProps.Id,
                 pickDate.ToString(CultureInfo.InvariantCulture).ToLower(),
                 pickTime.ToString(CultureInfo.InvariantCulture).ToLower(),
                 pickSeconds.ToString(CultureInfo.InvariantCulture).ToLower(),
@@ -950,7 +956,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                               + "searchValueField: '{5}', searchTextField: '{6}', selectedTextField: '{7}', scrollHeight: {8}, "
                               + "popoverPlacement: '{9}', popoutWidth: {10} }});",
                               sbProps.Id,
-                              this.Id,
+                              this.FormHeaderProps.Id,
                               sbProps.Name,
                               string.IsNullOrEmpty(sbProps.SelectEvent) ? "null" : sbProps.SelectEvent,
                               sbProps.DataSourceUrl,
@@ -972,6 +978,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             return this.SearchBox(sbProps);
         }
+
+        public MvcHtmlString MessagesPannel(MessagesPannel mpProps)
+        {
+            return null;
+        }
+
+        #endregion
+
+        #region private static methods
 
         /// <summary>
         /// Determine the class string for the supplied text size
@@ -1042,7 +1057,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                         string.Format(
                             "var {0}_BootstrapTextbox = new BootstrapTextbox({{id:'{0}', formId:'{1}', maxLength:{2}, warnOnLeave:{3}}});",
                             tbProps.Id,
-                            this.Id,
+                            this.FormHeaderProps.Id,
                             Conversion.ConvertToInt(tbProps.MaxLength, 0),
                             this.GetJsBool(tbProps.WarnOnLeave)));
             }
@@ -1099,6 +1114,20 @@ namespace Trooper.Ui.Mvc.Bootstrap
             var format = string.Format("{{0:F{0}}}", decimalPlaces);
 
             return string.Format(format, value);
+        }
+
+        #endregion
+
+        #region private methods
+
+        private void Init()
+        {
+            if (!this.Cruncher.HasJsItem("BootstrapForm_js"))
+            {
+                this.Cruncher.AddJsInline(Resources.BootstrapForm_js).Set(name: "BootstrapForm_js", order: OrderOptions.Middle);
+
+                this.Cruncher.AddJsInline(string.Format("var bootstrapForm = new BootstrapForm({{ id: '{0}' }});", this.FormHeaderProps.Id));
+            }
         }
 
         private void IncludeNumericJs()
@@ -1205,5 +1234,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             return MessageUtility.GetWorstMessageLevel(levels);
         }
+
+        #endregion
     }
 }

@@ -103,7 +103,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// Gets or sets the errors that may be present. Providing errors to
         /// any specific control overrides this.
         /// </summary>
-        public List<IMessage> Messages { get; set; }
+        public List<IMessage> Messages { get; set; }               
 
         /// <summary>
         /// Gets or sets the url helper from your View

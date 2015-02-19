@@ -17,7 +17,7 @@
     <title>Testing bootstrap controls</title>
     @{
         var cruncher = new Cruncher(Html);
-        var bsf = new Form<AllControlsModel>(Html)
+        var bsf = new Form<AllControlsModel>(Html, new FormHeader { Action = Url.Action("Submit", "AllControls") })
                       {
                           ShowTitles = string.IsNullOrEmpty(Model.ShowTitles) ? (bool?)null : Model.ShowTitles == "Show",
                           Messages = Model.OperationResponse == null ? null : Model.OperationResponse.Messages
@@ -33,8 +33,12 @@
 </head>
 
 <body>
+    @bsf.BeginForm()
+
     <div class="container">
-        <h2>BSF Test Area</h2>
+        <h2>BSF Test Area</h2>       
+
+        @bsf.MessagesPannel(new MessagesPannel { Columns = 3, Messages = bsf.Messages })
 
         <div class="row">
             <div class="col-xs-2">
@@ -94,6 +98,8 @@
         @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
         @bsf.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
         @bsf.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
-        </div>
+    </div>
+
+    @bsf.EndForm()
 </body>
 </html>
