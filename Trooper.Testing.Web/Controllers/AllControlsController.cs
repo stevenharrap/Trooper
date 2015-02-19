@@ -4,13 +4,12 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using Trooper.Testing.Web.Models;
+
 namespace Trooper.Testing.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-
-    using Shop.DemoWeb.Models;
-
     using Trooper.Ui.Mvc.Bootstrap.Models;
     using Trooper.BusinessOperation2.OperationResponse;
     using Trooper.BusinessOperation2;
@@ -108,6 +107,7 @@ namespace Trooper.Testing.Web.Controllers
                     MessageUtility.Messages(level).Make("Test Bl01 message test", () => currentModel.TestBl01),
                     MessageUtility.Messages(level).Make("Test Sng01 message test", () => currentModel.TestSng01),
                     MessageUtility.Messages(level).Make("Test Sng02 message test", () => currentModel.TestSng02),
+					MessageUtility.Messages(level).Make("Test Sng03 message test", () => currentModel.TestSng03),
                     MessageUtility.Messages(level).Make("Test Mlt01 message test", () => currentModel.TestMlt01),
                     MessageUtility.Messages(level).Make("Test Mlt02 message test", () => currentModel.TestMlt02),
                     MessageUtility.Messages(level).Make("Test Dt01 message test", () => currentModel.TestDt01),

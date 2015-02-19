@@ -4,22 +4,26 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Shop.DemoWeb.Models
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using Trooper.BusinessOperation2;
-    using Trooper.BusinessOperation2.Business;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.Ui.Mvc.Bootstrap;
-    using Trooper.Ui.Mvc.Bootstrap.Controls;
-    using Trooper.Ui.Mvc.Bootstrap.Controls.Options;
-    using Trooper.Ui.Mvc.Bootstrap.Models;
-    using Trooper.Utility;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Trooper.BusinessOperation2;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.Ui.Mvc.Bootstrap.Controls.Options;
+using Trooper.Ui.Mvc.Bootstrap.Models;
 
-    public class AllControlsModel
+namespace Trooper.Testing.Web.Models
+{
+
+	public enum Vegetables
+	{
+		Carrot,
+		Potato,
+		Pumpkin,
+		Cabage
+	}
+
+	public class AllControlsModel
     {
         public int? TestNum01 { get; set; }
 
@@ -44,6 +48,8 @@ namespace Shop.DemoWeb.Models
         public string TestSng01 { get; set; }
 
         public string TestSng02 { get; set; }
+
+		public Vegetables TestSng03 { get; set; }
 
         public List<string> TestMlt01 { get; set; }
 
@@ -82,7 +88,6 @@ namespace Shop.DemoWeb.Models
                     new Option<string, string>("Org", "Orange" ),
                     new Option<string, string>( "Apl", "Apple" ),
                     new Option<string, string>( "Str", "Strawberry" ),
-                    new Option<string, string>( "Crt", "Carrot" ),
                     new Option<string, string>( "Pre", "Pare" ),
                     new Option<string, string>( "Grp", "Grape" ),
                     new Option<string, string>( "Bna", "Banana" ),

@@ -1,11 +1,12 @@
-﻿@using Shop.DemoWeb.Models
+﻿@using Trooper.Testing.Web.Models
 @using Trooper.Ui.Mvc.Bootstrap
 @using Trooper.Ui.Mvc.Bootstrap.Controls
 @using Trooper.Ui.Mvc.Bootstrap.Controls.Options
 @using Trooper.Ui.Mvc.Cruncher
 @using Trooper.Ui.Interface.Mvc.Cruncher
+@using Trooper.Utility
 
-@model AllControlsModel
+@model Trooper.Testing.Web.Models.AllControlsModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +71,7 @@
                 @bsf.MultiSelectListFor(m => m.TestMlt01, new SelectList<string, string> { Title = "Multi select", Options = Model.Fruits, AllowMultiple = true })
                 @bsf.CheckBoxListFor(m => m.TestMlt02, new CheckBoxList<string, string> { Title = "Check box select", Options = Model.Fruits })
                 @bsf.SelectListFor(m => m.TestSng01, new SelectList<string, string> { Title = "Single select", Options = Model.Fruits })
+				@bsf.SelectListFor(m => m.TestSng03, new SelectList<Vegetables> { Title = "Single select", Options = OptionListHelper.OptionsAsList<Vegetables>() })
             </div>
         </div>
 
@@ -90,8 +92,8 @@
         </div>
 
         @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
-        @bsf.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControlsController"), ButtonType = ButtonTypes.Primary, Submit = true })
-        @bsf.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControlsController"), ButtonType = ButtonTypes.Success, Submit = true })
+        @bsf.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
+        @bsf.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
         </div>
 </body>
 </html>

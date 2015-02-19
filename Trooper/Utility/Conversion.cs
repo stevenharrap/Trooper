@@ -778,6 +778,23 @@ namespace Trooper.Utility
             }
         }
 
+		/// <summary>
+		/// Converts the Enum type to a list of its values.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns>List of T values</returns>
+		public static List<T> ConvertEnumToList<T>()
+		{
+			try
+			{
+				return Enum.GetValues(typeof (T)).Cast<T>().ToList();
+			}
+			catch
+			{
+				return new List<T>();
+			}
+		}
+
         /// <summary>
         /// Converts to date.
         /// </summary>
