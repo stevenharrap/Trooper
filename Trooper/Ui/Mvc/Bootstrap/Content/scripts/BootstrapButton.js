@@ -40,7 +40,7 @@ BootstrapButton.prototype.init = function () {
 };
 
 BootstrapButton.prototype.clicked = function () {
-    if (this.submit && this.url != null) {
+    if (this.submit && this.url != '') {
         $('#' + this.formId).attr('action', this.url);
         $('#' + this.formId).submit();
         return;
