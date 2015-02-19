@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Trooper.Utility;
 
 namespace Trooper.Ui.Mvc.Bootstrap.Controls.Options
 {
@@ -44,5 +46,15 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls.Options
 
             return result;
         }
+
+		public static List<Option<TOptionKey, TOptionKey>> OptionsAsList<TOptionKey>()
+		{
+			var x = Conversion.ConvertEnumToList<TOptionKey>();
+
+			return x.Select(y => new Option<TOptionKey, TOptionKey> { Key = y, Value = y }).ToList();
+
+		}
     }
+
+
 }
