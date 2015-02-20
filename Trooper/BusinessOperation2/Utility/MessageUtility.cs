@@ -304,6 +304,51 @@ namespace Trooper.BusinessOperation2.Utility
             return null;
         }
 
+		/// <summary>
+		///	Are all the message either sucess or notes
+		/// </summary>
+		/// <param name="messages"></param>
+		/// <returns></returns>
+	    public static bool IsOk(List<IMessage> messages)
+	    {
+		    if (messages == null)
+		    {
+			    return true;
+		    }
+
+		    return messages.All(m => m.Level == MessageAlertLevel.Success || m.Level == MessageAlertLevel.Note);
+	    }
+
+		/// <summary>
+		/// Is at least one of the messages are warning but none error
+		/// </summary>
+		/// <param name="messages"></param>
+		/// <returns></returns>
+		public static bool IsWarning(List<IMessage> messages)
+		{
+			if (messages == null)
+			{
+				return false;
+			}
+
+			return messages.Any(m => m.Level == MessageAlertLevel.Warning) && messages.All(m => m.Level != MessageAlertLevel.Error);
+		}
+
+		/// <summary>
+		/// Is there at least one error
+		/// </summary>
+		/// <param name="messages"></param>
+		/// <returns></returns>
+		public static bool IsError(List<IMessage> messages)
+		{
+			if (messages == null)
+			{
+				return false;
+			}
+
+			return messages.Any(m => m.Level == MessageAlertLevel.Error);
+		}
+
         /// <summary>
         /// The add the errors to the response and set Ok to false if there where actually
         /// anything in the errors parameter.

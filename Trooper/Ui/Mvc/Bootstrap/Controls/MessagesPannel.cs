@@ -11,6 +11,18 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
 {
     public class MessagesPannel : HtmlControl
     {
-        public int Columns { get; set; }
+	    private int columns = 1;
+
+	    public int Columns
+	    {
+		    get { return this.columns; }
+			set 
+			{
+				if (value == 1 || value == 2 || value == 3 || value == 4 || value == 6)
+				{
+					this.columns = value;
+				}
+			}
+	    }
     }
 }
