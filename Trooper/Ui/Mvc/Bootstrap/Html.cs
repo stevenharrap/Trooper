@@ -4,6 +4,9 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using System.Text;
+using Trooper.BusinessOperation2.Utility;
+
 namespace Trooper.Ui.Mvc.Bootstrap
 {
     using System;
@@ -92,7 +95,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
             }
         }
 
-        /// <summary>
+		#region public properties
+
+		/// <summary>
         /// Gets the html helper from your View
         /// </summary>
         public HtmlHelper<TModel> HtmlHelper { get; private set; }
@@ -115,7 +120,11 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// </summary>
         public Cruncher Cruncher { get; set; }
 
-        /// <summary>
+		#endregion
+
+		#region public methods
+
+		/// <summary>
         /// This initiates the HTML class by instantiating it and returning the instance.
         /// Includes all Bootstrap JavaScript and CSS requirements.
         /// </summary>
@@ -415,6 +424,85 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 mwProps.FrameHeight));
         }
 
+		public MvcHtmlString MessagesPannel(MessagesPannel mpProps)
+		{
+			mpProps.Messages = mpProps.Messages ?? this.Messages;
+
+			if (mpProps.Messages == null || !mpProps.Messages.Any())
+			{
+				return null;
+			}
+
+			var html = new StringBuilder();
+			var perColumn = Math.Floor(mpProps.Messages.Count / (double)mpProps.Columns);
+			var remainder = mpProps.Messages.Count - (perColumn * mpProps.Columns);
+			
+			
+			var alertLevel = MessageUtility.IsOk(mpProps.Messages)
+				? "alert-success"
+				: MessageUtility.IsWarning(mpProps.Messages)
+					? "alert-warning"
+					: "alert-danger";
+			
+			html.AppendFormat("<div class=\"submit-results alert {0}\">", alertLevel);
+			html.Append("<div class=\"row\">");
+			
+			html.Append("<div class=\"col-md-10\">");
+			html.AppendFormat("<h4>{0}</h4>", mpProps.Title);
+			html.Append("<div class=\"errors\">");
+			html.Append("<hr />");
+
+			html.Append("<div class=\"row\">");
+
+			var d = 0;
+			for (var c = 0; c < mpProps.Columns; c++)
+			{
+				html.AppendFormat("<div class=\"col-md-{0}\">", 12 / (mpProps.Columns + 1));
+				html.Append("<ul>");
+
+				var thisColumn = c == mpProps.Columns - 1 ? perColumn + remainder : perColumn;
+
+				for (var m = 0; m < thisColumn && d < mpProps.Messages.Count; m++)
+				{
+					switch (mpProps.Messages[d].Level)
+					{
+						case MessageAlertLevel.Error:
+							html.AppendFormat("<li><span class=\"glyphicon glyphicon-wrench text-danger\">{0}</span></li>",
+							mpProps.Messages[d].Content);
+						break;
+
+						case MessageAlertLevel.Warning:
+							html.AppendFormat("<li><span class=\"glyphicon glyphicon-warning-sign text-warning\">{0}</span></li>",
+							mpProps.Messages[d].Content);
+						break;
+
+						case MessageAlertLevel.Note:
+							html.AppendFormat("<li><span class=\"glyphicon glyphicon-info-sign text-success\">{0}</span></li>",
+							mpProps.Messages[d].Content);
+						break;
+					}
+
+					d++;
+				}
+
+				html.Append("</ul>");
+				html.Append("</div>");
+			}
+
+			html.Append("</div>");
+
+			html.Append("</div>");
+			html.Append("</div>");
+
+			html.Append("<div class=\"col-md-2\">");
+			html.Append("</div>");
+
+			html.Append("</div>");
+			html.Append("</div>");
+
+			return new MvcHtmlString(html.ToString());
+		}
+
         public void RegisterControl(HtmlControl control)
         {
             var idInc = 1;
@@ -495,7 +583,11 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return placement.ToString().ToLower();
         }
 
-        protected Dictionary<string, string> AddAttributes(
+		#endregion
+
+		#region protected methods
+
+		protected Dictionary<string, string> AddAttributes(
             Dictionary<string, string> attributes,
             Dictionary<string, string> newAttributes)
         {
@@ -667,6 +759,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
         protected string MakeIcon(string iconImage)
         {
             return string.Format("<span class=\"input-group-addon\">\n<span class=\"glyphicon glyphicon-{0}\"></span>\n</span>\n", iconImage);
-        }
-    }
+		}
+
+		#endregion
+	}
 }

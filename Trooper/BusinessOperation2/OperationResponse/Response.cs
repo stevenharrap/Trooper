@@ -4,6 +4,7 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+
 namespace Trooper.BusinessOperation2.OperationResponse
 {
     using System;
@@ -12,6 +13,7 @@ namespace Trooper.BusinessOperation2.OperationResponse
     using System.Runtime.Serialization;
     using System.ServiceModel;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
+	using Trooper.BusinessOperation2.Utility;
     
     /// <summary>
     /// Implements the OperationResponse interface for replying to requests
@@ -30,10 +32,7 @@ namespace Trooper.BusinessOperation2.OperationResponse
         [DataMember]
         public bool Ok 
         {
-            get
-            {
-                return this.Messages == null || !this.Messages.Any(m => m.Level == MessageAlertLevel.Error);
-            }
+            get { return MessageUtility.IsOk(this.Messages); }
         }
 
         /// <summary>
@@ -48,10 +47,7 @@ namespace Trooper.BusinessOperation2.OperationResponse
         [DataMember]
         public bool Warn
         {
-            get
-            {
-                return this.Messages != null && this.Messages.Any(m => m.Level == MessageAlertLevel.Warning);
-            }
+            get { return MessageUtility.IsWarning(this.Messages); }
         }
     }
 }

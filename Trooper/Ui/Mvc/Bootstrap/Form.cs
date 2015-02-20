@@ -978,12 +978,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             return this.SearchBox(sbProps);
         }
-
-        public MvcHtmlString MessagesPannel(MessagesPannel mpProps)
-        {
-            return null;
-        }
-
+		
         #endregion
 
         #region private static methods
