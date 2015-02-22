@@ -211,24 +211,19 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             var cruncher = new Cruncher(this.HtmlHelper);
 
-            if (!cruncher.HasJsItem("BootstrapTable_js"))
+            if (!cruncher.HasJsItem("table_js"))
             {
-                cruncher.AddJsInline(
-                              Resources.BootstrapTable_js).Set(
-                              name: "BootstrapTable_js",
-                              order: OrderOptions.Middle);
+                cruncher.AddJsInline(Resources.table_js, "table_js", OrderOptions.Middle);
 
-                cruncher.AddLessInline(
-                              Resources.BootstrapTable_less).Set(
-                              name: "BootstrapTable_less",
-                              order: OrderOptions.Middle);
+                cruncher.AddLessInline(Resources.table_less, "table_less", OrderOptions.Middle);
             }
 
-            cruncher.AddJsInline(
-                          string.Format(
-                              "var bootstrapTable_{0} = new BootstrapTable({{ id: '{0}', rowSelectionMode: '{1}' }});",
-                              this.Id,
-                              this.RowSelectionMode));
+            var js = string.Format(
+                "new trooper.ui.control.table({{ id: '{0}', rowSelectionMode: '{1}' }});",
+                this.Id,
+                this.RowSelectionMode);
+
+            cruncher.AddJsInline(js, OrderOptions.Last);
         }
 
         /// <summary>

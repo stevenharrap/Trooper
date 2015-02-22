@@ -82,6 +82,8 @@
   <ItemGroup>
     <Content Include="Content\scripts\AllControls.js" />
     <Content Include="Global.asax" />
+    <Content Include="jquery.min.js" />
+    <Content Include="Test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -242,12 +242,12 @@ namespace Trooper.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to /*!
-        /// * Bootstrap v3.1.1 (http://getbootstrap.com)
-        /// * Copyright 2011-2014 Twitter, Inc.
+        /// * Bootstrap v3.3.2 (http://getbootstrap.com)
+        /// * Copyright 2011-2015 Twitter, Inc.
         /// * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
         /// */
         ///
-        ////*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+        ////*! normalize.css v3.0.2 | MIT License | git.io/normalize */
         ///html {
         ///  font-family: sans-serif;
         ///  -webkit-text-size-adjust: 100%;
@@ -265,6 +265,7 @@ namespace Trooper.Properties {
         ///header,
         ///hgroup,
         ///main,
+        ///menu,
         ///nav,
         ///section,
         ///summary {
@@ -273,8 +274,7 @@ namespace Trooper.Properties {
         ///audio,
         ///canvas,
         ///progress,
-        ///video {
-        ///  d [rest of string was truncated]&quot;;.
+        ///video [rest of string was truncated]&quot;;.
         /// </summary>
         public static string bootstrap_css {
             get {
@@ -283,12 +283,21 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;version&quot;:3,&quot;sources&quot;:[&quot;bootstrap.css&quot;,&quot;less/normalize.less&quot;,&quot;less/print.less&quot;,&quot;less/glyphicons.less&quot;,&quot;less/scaffolding.less&quot;,&quot;less/mixins/vendor-prefixes.less&quot;,&quot;less/mixins/tab-focus.less&quot;,&quot;less/mixins/image.less&quot;,&quot;less/type.less&quot;,&quot;less/mixins/text-emphasis.less&quot;,&quot;less/mixins/background-variant.less&quot;,&quot;less/mixins/text-overflow.less&quot;,&quot;less/code.less&quot;,&quot;less/grid.less&quot;,&quot;less/mixins/grid.less&quot;,&quot;less/mixins/grid-framework.less&quot;,&quot;less/tables.less&quot;,&quot;less/mixins/table-row.less&quot;,&quot;less/forms.less&quot;,&quot;less/mixins/form [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string bootstrap_css_map {
+            get {
+                return ResourceManager.GetString("bootstrap_css_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /*!
-        /// * Bootstrap v3.1.1 (http://getbootstrap.com)
-        /// * Copyright 2011-2014 Twitter, Inc.
+        /// * Bootstrap v3.3.2 (http://getbootstrap.com)
+        /// * Copyright 2011-2015 Twitter, Inc.
         /// * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
         /// */
-        ///if(&quot;undefined&quot;==typeof jQuery)throw new Error(&quot;Bootstrap&apos;s JavaScript requires jQuery&quot;);+function(a){&quot;use strict&quot;;function b(){var a=document.createElement(&quot;bootstrap&quot;),b={WebkitTransition:&quot;webkitTransitionEnd&quot;,MozTransition:&quot;transitionend&quot;,OTransition:&quot;oTransitionEnd otransitionend&quot;,transition:&quot;transitionend&quot;};for(var c in b)if(void 0!==a.s [rest of string was truncated]&quot;;.
+        ///if(&quot;undefined&quot;==typeof jQuery)throw new Error(&quot;Bootstrap&apos;s JavaScript requires jQuery&quot;);+function(a){&quot;use strict&quot;;var b=a.fn.jquery.split(&quot; &quot;)[0].split(&quot;.&quot;);if(b[0]&lt;2&amp;&amp;b[1]&lt;9||1==b[0]&amp;&amp;9==b[1]&amp;&amp;b[2]&lt;1)throw new Error(&quot;Bootstrap&apos;s JavaScript requires jQuery version 1.9.1 or higher&quot;)}(jQuery),+function(a){&quot;use strict&quot;;function b(){var a=docume [rest of string was truncated]&quot;;.
         /// </summary>
         public static string bootstrap_min_js {
             get {
@@ -297,91 +306,84 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapButton(id) {
-        ///    return window[id + &apos;_BootstrapButton&apos;];
-        ///}
-        ///
-        ///function BootstrapTextbox(params) {
+        ///   Looks up a localized string similar to trooper.ui.control.button = (function (params)
+        ///{
         ///    this.id = params.id;
+        ///    this.formId = params.formId;
         ///    this.url = params.url;
         ///    this.targetNewWindow = params.targetNewWindow;
-        ///   
-        ///    $(document).ready($.proxy(this.init, this));
-        ///};
+        ///    this.launchLoadingOnClick = params.launchLoadingOnClick;
+        ///    this.loadingScreenTitle = params.loadingScreenTitle;
+        ///    this.confirmOnClick = params.confirmOnClick;
+        ///    this.confirmTitle = params.confirmTitle;
+        ///    this.submit = params.submit;
         ///
-        ///BootstrapTextbox.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapTextbox.prototype.url = &apos;&apos;;
-        ///
-        ///BootstrapTextbox.prototype.targetNewWindow = &apos;&apos;;
-        ///
-        ///BootstrapTextbox.prototype.getInput = function () {
-        ///    return $(&apos;#&apos; + this.id);
-        ///};
-        ///
-        ///Boo [rest of string was truncated]&quot;;.
+        ///    this.init = function () {        
+        ///        $(&apos;#&apos; + this.id).click [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string BootstrapButton_js {
+        public static string button_js {
             get {
-                return ResourceManager.GetString("BootstrapButton_js", resourceCulture);
+                return ResourceManager.GetString("button_js", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to function BootstrapCheckBox(params) {
+        ///   Looks up a localized string similar to trooper.ui.control.checkBox = (function (params)
+        ///{
         ///    this.id = params.id;
+        ///    this.formId = params.formId;
         ///    this.warnOnLeave = params.warnOnLeave;
         ///
+        ///    this.init = function () {
+        ///        if (this.warnOnLeave) {
+        ///            var form = trooper.ui.registry.getForm(this.formId);
+        ///            form.addVolatileField(this.id);
+        ///        }
+        ///    };
+        ///
+        ///    trooper.ui.registry.addControl(this.id, this, &apos;checkbox&apos;);
         ///    $(document).ready($.proxy(this.init, this));
-        ///}
         ///
-        ///BootstrapCheckBox.prototype.id = &apos;&apos;;
+        ///    return {
         ///
-        ///BootstrapCheckBox.prototype.warnOnLeave = true;
-        ///
-        ///BootstrapCheckBox.prototype.init = function () {
-        ///    if (this.warnOnLeave) {
-        ///        var bsf = GetBootstrapForm();
-        ///        bsf.addVolatileField(this.inputId);
-        ///    }
-        ///};.
+        ///    };
+        ///});.
         /// </summary>
-        public static string BootstrapCheckBox_js {
+        public static string checkBox_js {
             get {
-                return ResourceManager.GetString("BootstrapCheckBox_js", resourceCulture);
+                return ResourceManager.GetString("checkBox_js", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to function BootstrapCheckBoxList(params) {
+        ///   Looks up a localized string similar to trooper.ui.control.checkBoxList = (function (params)
+        ///{
         ///    this.id = params.id;
+        ///    this.formId = params.formId;
         ///    this.name = params.name;
         ///    this.warnOnLeave = params.warnOnLeave;
         ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
+        ///    this.init = function () {
+        ///        if (this.warnOnLeave) {
+        ///            var form = trooper.ui.registry.getForm(this.formId);
+        ///            $(&apos;[name=&apos; + this.name + &apos;]&apos;).each(function (index, value) {
+        ///                form.addVolatileField($(value));
+        ///            });
+        ///        }
+        ///    };
         ///
-        ///BootstrapCheckBoxList.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapCheckBoxList.prototype.name = &apos;&apos;;
-        ///
-        ///BootstrapCheckBoxList.prototype.warnOnLeave = true;
-        ///
-        ///BootstrapCheckBoxList.prototype.init = function () {
-        ///    if (this.warnOnLeave) {
-        ///        var bsf = GetBootstrapForm();
-        ///
-        ///        $(&apos;[name=&apos; + this.name + &apos;]&apos;).each(f [rest of string was truncated]&quot;;.
+        ///    trooper.ui.registry.add [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string BootstrapCheckBoxList_js {
+        public static string checkBoxList_js {
             get {
-                return ResourceManager.GetString("BootstrapCheckBoxList_js", resourceCulture);
+                return ResourceManager.GetString("checkBoxList_js", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to function BootstrapDateTimePicker(params) {
+        ///   Looks up a localized string similar to trooper.ui.control.dateTimePicker = (function (params) {
         ///    this.id = params.id;
+        ///    this.formId = params.formId;
         ///    this.format = params.format;
         ///    this.pickDate = params.pickDate;
         ///    this.pickTime = params.pickTime;
@@ -390,493 +392,47 @@ namespace Trooper.Properties {
         ///    this.popoverPlacement = params.popoverPlacement;
         ///    this.timezone = params.timezone;
         ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapDateTimePicker.prototype.id = null;
-        ///
-        ///BootstrapDateTimePicker.prototype.format = null [rest of string was truncated]&quot;;.
+        ///    this.init = function () {
+        ///        this.getSelectButton().click($.proxy(this.selectButtonClick, th [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string BootstrapDateTimePicker_js {
+        public static string dateTimePicker_js {
             get {
-                return ResourceManager.GetString("BootstrapDateTimePicker_js", resourceCulture);
+                return ResourceManager.GetString("dateTimePicker_js", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .bootstrapDateTimePicker table tbody tr td.day {
+        ///   Looks up a localized string similar to .trooper.dateTimePicker table tbody tr td.day {
         ///    cursor: pointer;   
         ///}
         ///
-        ///.bootstrapDateTimePicker table tr td.day:hover {
+        ///.trooper.dateTimePicker table tr td.day:hover {
         ///    background: #333333;
         ///    color: #fff;
         ///}
         ///
-        ///.bootstrapDateTimePicker table tr td,
-        ///.bootstrapDateTimePicker table tr th {
+        ///.trooper.dateTimePicker table tr td,
+        ///.trooper.dateTimePicker table tr th {
         ///    font-size: 13px;
         ///}
         ///
-        ///.bootstrapDateTimePicker .date-input::-ms-clear {
+        ///.trooper.dateTimePicker .date-input::-ms-clear {
         ///    display: none;
         ///}
         ///
-        ///.bootstrapDateTimePicker .month {
+        ///.trooper.dateTimePicker .month {
         ///    text-align: right;
         ///    font-weight: bold;
         ///}
         ///
-        ///.bootstrapDateTimePicker .year {
+        ///.trooper.dateTimePicker .year {
         ///}
         ///             
-        ///.bootstrapD [rest of string was truncated]&quot;;.
+        ///.trooper.dateTimeP [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string BootstrapDateTimePicker_less {
+        public static string dateTimePicker_less {
             get {
-                return ResourceManager.GetString("BootstrapDateTimePicker_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapForm() {
-        ///    return window[&apos;bootstrapForm&apos;];
-        ///}
-        ///
-        ///function BootstrapForm() {
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapForm.prototype.formIsDirty = false;
-        ///
-        ///BootstrapForm.prototype.init = function() {
-        ///    
-        ///};
-        ///
-        ////**
-        /// * Indicates that the field (which can be a field id or jquery object) is volatile
-        /// * and if it changes and the user has not saved the current record then an alert message
-        /// * should be raised if the user attempts to leave the page.
-        /// */
-        ///Bootst [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapForm_js {
-            get {
-                return ResourceManager.GetString("BootstrapForm_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapHtml() {
-        ///    return window[&apos;bootstrapHtml&apos;];
-        ///}
-        ///
-        ///function BootstrapHtml() {
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapHtml.prototype.init = function () {
-        ///    this.screenModeChangeEvents = new Array();
-        ///    this.currentScreenMode = this.getScreenMode();
-        ///
-        ///    $(window).resize($.proxy(this.screenModeChange, this));
-        ///};
-        ///
-        ////*
-        /// * Provides the last recorded screen mode before the screen.
-        /// */ 
-        ///BootstrapHtml.prototype.currentScreenMode = &apos;&apos;;
-        ///
-        ////*
-        /// * The array o [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapHtml_js {
-            get {
-                return ResourceManager.GetString("BootstrapHtml_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .form-group.has-error .input-group-btn button {
-        ///    border-color: #b94a48;
-        ///    color: #b94a48;
-        ///}
-        ///
-        ///.control-group.has-error legend {
-        ///    color: #b94a48;
-        ///}
-        ///
-        ///.trooper.y-scrolling {
-        ///        overflow-y: scroll;
-        ///        border-top: 1px solid #e5e5e5;
-        ///        border-left: 1px solid #e5e5e5;
-        ///        border-bottom: 1px solid #e5e5e5;
-        ///        border-top-left-radius: 4px;
-        ///        border-bottom-left-radius: 4px;
-        ///        padding-left: 10px;
-        ///    }
-        ///
-        ///fieldset {
-        ///    legend {
-        ///        line-height: 30px;
-        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapHtmlHelper_less {
-            get {
-                return ResourceManager.GetString("BootstrapHtmlHelper_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapNumericBox(id) {
-        ///    return window[id + &apos;_BootstrapTextbox&apos;];
-        ///}
-        ///
-        ///function BootstrapNumericBox(params) {
-        ///    this.id = params.id;
-        ///    this.numericType = params.numericType;
-        ///    this.warnOnLeave = params.warnOnLeave;
-        ///
-        ///    this.minimum = parseFloat(params.minimum);
-        ///
-        ///    if (isNaN(this.minimum)) {
-        ///        this.minimum = null;
-        ///    }
-        ///
-        ///    this.maximum = parseFloat(params.maximum);
-        ///
-        ///    if (isNaN(this.maximum)) {
-        ///        this.maximum = null;
-        ///    }
-        ///
-        ///    this.decimalDigits = [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapNumericBox_js {
-            get {
-                return ResourceManager.GetString("BootstrapNumericBox_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function BootstrapPanelGroup(params) {
-        ///    this.id = params.id;
-        ///    this.active = params.active;
-        ///    this.hasErrors = params.hasErrors;
-        ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapPanelGroup.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapPanelGroup.prototype.active = &apos;&apos;;
-        ///
-        ///BootstrapPanelGroup.prototype.hasErrors = false;
-        ///
-        ///BootstrapPanelGroup.prototype.init = function () {
-        ///    $(&apos;#&apos; + this.id + &apos; .panel .panel-heading a&apos;).click($.proxy(this.panelOpened, this));
-        ///
-        ///    if (this.hasErrors) {
-        ///    [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapPanelGroup_js {
-            get {
-                return ResourceManager.GetString("BootstrapPanelGroup_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function BootstrapRadioList(params) {
-        ///    this.id = params.id;
-        ///    this.name = params.name;
-        ///    this.warnOnLeave = params.warnOnLeave;
-        ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapRadioList.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapRadioList.prototype.name = &apos;&apos;;
-        ///
-        ///BootstrapRadioList.prototype.warnOnLeave = true;
-        ///
-        ///BootstrapRadioList.prototype.init = function () {
-        ///    if (this.warnOnLeave) {
-        ///        var bsf = GetBootstrapForm();
-        ///
-        ///        $(&apos;[name=&quot;&apos; + this.name + &apos;&quot;]&apos;).each(function (inde [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapRadioList_js {
-            get {
-                return ResourceManager.GetString("BootstrapRadioList_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapSearchBox(id) {
-        ///    return window[id + &apos;_BootstrapSearchBox&apos;];
-        ///}
-        ///
-        ///function BootstrapSearchBox(params) {
-        ///    this.inputName = params.inputName;
-        ///    this.dataSourceUrl = params.dataSourceUrl;
-        ///    this.searchTextField = params.searchTextField;
-        ///    this.searchValueField = params.searchValueField;
-        ///    this.selectedTextField = params.selectedTextField;
-        ///    this.scrollHeight = params.scrollHeight;
-        ///    this.popoverPlacement = params.popoverPlacement;
-        ///    this.popoutWidth = params.po [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapSearchBox_js {
-            get {
-                return ResourceManager.GetString("BootstrapSearchBox_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .bs-search-box {
-        ///    .popover-content {
-        ///        padding: 0;
-        ///
-        ///        ul {
-        ///            border: none;
-        ///            outline: none;
-        ///            width: 100%;
-        ///            overflow-y: scroll;
-        ///            margin: 0;
-        ///            padding: 0;
-        ///
-        ///            li {
-        ///                margin: 0;
-        ///                padding: 2px 2px 2px 5px;
-        ///                cursor: pointer;
-        ///                border-bottom: 1px solid #e5e5e5;
-        ///            }
-        ///
-        ///            li:hover {
-        ///                background-color: #e3e3e3;
-        ///          [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapSearchBox_less {
-            get {
-                return ResourceManager.GetString("BootstrapSearchBox_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function BootstrapSelectList(params) {
-        ///    this.id = params.id;
-        ///    this.warnOnLeave = params.warnOnLeave;
-        ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapSelectList.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapSelectList.prototype.warnOnLeave = true;
-        ///
-        ///BootstrapSelectList.prototype.init = function () {
-        ///    if (this.warnOnLeave) {
-        ///        var bsf = GetBootstrapForm();
-        ///        bsf.addVolatileField(this.id);
-        ///    }
-        ///};.
-        /// </summary>
-        public static string BootstrapSelectList_js {
-            get {
-                return ResourceManager.GetString("BootstrapSelectList_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapTable(id) {
-        ///    return window[&apos;bootstrapTable_&apos; + id];
-        ///}
-        ///
-        ///function BootstrapTable(params) {
-        ///    this.id = params.id;
-        ///    this.rowSelectionMode = params.rowSelectionMode;
-        ///    
-        ///    this.rowSelected = new Array();
-        ///    this.rowDblclicked = new Array();
-        ///    this.rowUnselected = new Array();
-        ///    this.selectedRows = new Array();
-        ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapTable.prototype.id = null;
-        ///
-        ///BootstrapTable.prototype.rowSelectionMode = null;
-        ///
-        ////*
-        ///*  [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapTable_js {
-            get {
-                return ResourceManager.GetString("BootstrapTable_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to table.table.trooper {
-        ///
-        ///    tbody tr td {
-        ///        cursor: pointer;
-        ///    }
-        ///
-        ///    tbody {
-        ///        tr.bold td {
-        ///            font-weight: bold;
-        ///        }
-        ///
-        ///        tr.rule-over td {
-        ///            border-top-width: 1px;
-        ///            border-top-color: black;
-        ///        }
-        ///
-        ///        tr.rule-over.rule-over-solid td {
-        ///            border-top-style: solid;
-        ///        }
-        ///
-        ///        tr.rule-over.rule-over-dashed td {
-        ///            border-bottom-style: dashed;
-        ///        }
-        ///
-        ///        tr.rule-under td {
-        ///            border [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapTable_less {
-            get {
-                return ResourceManager.GetString("BootstrapTable_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function BootstrapTextareaBox(id) {
-        ///    return window[id + &apos;_BootstrapTextareaBox&apos;];
-        ///}
-        ///
-        ///function BootstrapTextareaBox(params) {
-        ///    this.id = params.id;
-        ///    this.maxLength = params.maxLength;
-        ///    this.warnOnLeave = params.warnOnLeave;
-        ///   
-        ///    $(document).ready($.proxy(this.init, this));
-        ///};
-        ///
-        ///BootstrapTextareaBox.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapTextareaBox.prototype.maxLength = 0;
-        ///
-        ///BootstrapTextareaBox.prototype.warnOnLeave = true;
-        ///
-        ///BootstrapTextareaBox.prototype.getInput = function () {
-        ///    r [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapTextareaBox_js {
-            get {
-                return ResourceManager.GetString("BootstrapTextareaBox_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapTextbox(id) {
-        ///    return window[id + &apos;_BootstrapTextbox&apos;];
-        ///}
-        ///
-        ///function BootstrapTextbox(params) {
-        ///    this.id = params.id;
-        ///    this.maxLength = params.maxLength;
-        ///    this.warnOnLeave = params.warnOnLeave;
-        ///   
-        ///    $(document).ready($.proxy(this.init, this));
-        ///};
-        ///
-        ///BootstrapTextbox.prototype.id = &apos;&apos;;
-        ///
-        ///BootstrapTextbox.prototype.maxLength = 0;
-        ///
-        ///BootstrapTextbox.prototype.warnOnLeave = true;
-        ///
-        ///BootstrapTextbox.prototype.getInput = function () {
-        ///    return $(&apos;#&apos; + this.id);
-        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapTextBox_js {
-            get {
-                return ResourceManager.GetString("BootstrapTextBox_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to /** 
-        ///* --------------------------------------------------------------------------------------
-        ///* &lt;copyright file=&quot;BootstrapUpload.js&quot; company=&quot;Trooper Inc&quot;&gt;
-        ///*     Copyright (c) Trooper 2014 - Onwards
-        ///* &lt;/copyright&gt;
-        ///* --------------------------------------------------------------------------------------
-        ///*/
-        ///
-        ///function GetBootstrapUpload(id) {
-        ///    return window[id + &apos;_BootstrapUpload&apos;];
-        ///}
-        ///
-        ////**
-        /// * Turns a plain old upload form element into a bootstrap element 
-        /// */
-        ///function BootstrapUpload(params) { [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapUpload_js {
-            get {
-                return ResourceManager.GetString("BootstrapUpload_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .control-group.has-error .bs-upload-for {
-        ///    .uneditable-input,
-        ///    .browse,
-        ///    .clear {
-        ///        border-color: #b94a48;
-        ///    }
-        ///}
-        ///
-        ///.bs-upload-for {
-        ///    .display.pretend-link {
-        ///        color: blue;
-        ///        text-decoration: underline;
-        ///        cursor: pointer;
-        ///    }
-        ///}.
-        /// </summary>
-        public static string BootstrapUpload_less {
-            get {
-                return ResourceManager.GetString("BootstrapUpload_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetBootstrapVirtualModalWindow(id) {
-        ///    return window[id + &apos;_bootstrapVirtualModalWindow&apos;];
-        ///}
-        ///
-        ///function BootstrapVirtualModalWindow(params) {
-        ///    this.id = params.id;
-        ///    this.title = params.title;
-        ///    this.frameUrl = params.frameUrl;
-        ///    this.frameHeight = params.frameHeight;
-        ///    this.incCloseButton = params.incCloseButton;
-        ///    this.buttons = params.buttons;
-        ///    this.closeEvents = new Array();
-        ///    
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///BootstrapVirtualModalWindow.pro [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string BootstrapVirtualModalWindow_js {
-            get {
-                return ResourceManager.GetString("BootstrapVirtualModalWindow_js", resourceCulture);
+                return ResourceManager.GetString("dateTimePicker_less", resourceCulture);
             }
         }
         
@@ -904,6 +460,29 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.form = (function (params) {
+        ///    this.id = params.id;
+        ///    this.formIsDirty = false;
+        ///
+        ///    this.init = function ()
+        ///    {        
+        ///        $(&apos;#&apos; + this.id).click($.proxy(this.clicked, this));
+        ///    };
+        ///
+        ///    /**
+        ///     * Indicates that the field (which can be a field id or jquery object) is volatile
+        ///     * and if it changes and the user has not saved the current record then an alert message
+        ///     * should be raised if the user attempts to leave the page.
+        ///     */
+        ///    this.addVolatileFiel [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string form_js {
+            get {
+                return ResourceManager.GetString("form_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
         ///&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot; &gt;
         ///&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
@@ -912,11 +491,10 @@ namespace Trooper.Properties {
         ///&lt;font id=&quot;glyphicons_halflingsregular&quot; horiz-adv-x=&quot;1200&quot; &gt;
         ///&lt;font-face units-per-em=&quot;1200&quot; ascent=&quot;960&quot; descent=&quot;-240&quot; /&gt;
         ///&lt;missing-glyph horiz-adv-x=&quot;500&quot; /&gt;
-        ///&lt;glyph /&gt;
-        ///&lt;glyph /&gt;
-        ///&lt;glyph unicode=&quot;&amp;#xd;&quot; /&gt;
+        ///&lt;glyph horiz-adv-x=&quot;0&quot; /&gt;
+        ///&lt;glyph horiz-adv-x=&quot;400&quot; /&gt;
         ///&lt;glyph unicode=&quot; &quot; /&gt;
-        ///&lt;glyph unicode=&quot;*&quot; d=&quot;M100 500v200h259l-183 183l141 141l183 -183v259h200v-259l [rest of string was truncated]&quot;;.
+        ///&lt;glyph unicode=&quot;*&quot; d=&quot;M600 1100q15 0 34 -1.5t30 -3.5l11 -1q10 -2 17.5  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string GlyphiconsHalflingsReguarSvg {
             get {
@@ -950,6 +528,16 @@ namespace Trooper.Properties {
         public static byte[] GlyphiconsHalflingsRegularWoff {
             get {
                 object obj = ResourceManager.GetObject("GlyphiconsHalflingsRegularWoff", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] GlyphiconsHalflingsRegularWoff2 {
+            get {
+                object obj = ResourceManager.GetObject("GlyphiconsHalflingsRegularWoff2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -997,11 +585,85 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.messagesPanel = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///
+        ///    this.init = function () {
+        ///        $(&apos;#&apos; + this.id + &apos;.trooper.messages-panel button.close.close-bar&apos;).click(function () {
+        ///            $(&apos;.trooper.messages-panel&apos;).hide(500);
+        ///        });
+        ///
+        ///        $(&apos;#&apos; + this.id + &apos;.trooper.messages-panel button.close.open-messages&apos;).click(function () {
+        ///            $(&apos;.trooper.messages-panel .messages&apos;).show(500);
+        ///            $(&apos;.trooper.messages-panel button.close.open-messages&apos; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string messagesPanel_js {
+            get {
+                return ResourceManager.GetString("messagesPanel_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AdditionalInfo.
         /// </summary>
         public static string MessageTitleAdditionalInfo {
             get {
                 return ResourceManager.GetString("MessageTitleAdditionalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.numericBox = (function (params)
+        ///{
+        ///	this.id = params.id;
+        ///    this.formId = params.formId;
+        ///    this.numericType = params.numericType;
+        ///    this.warnOnLeave = params.warnOnLeave;
+        ///    this.minimum = parseFloat(params.minimum);
+        ///
+        ///    if (isNaN(this.minimum)) {
+        ///        this.minimum = null;
+        ///    }
+        ///
+        ///    this.maximum = parseFloat(params.maximum);
+        ///
+        ///    if (isNaN(this.maximum)) {
+        ///        this.maximum = null;
+        ///    }
+        ///
+        ///    this.decimalDigits = parseFloat(params.decimalDigits);
+        ///
+        ///    if ( [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string numericBox_js {
+            get {
+                return ResourceManager.GetString("numericBox_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.panelGroup = (function (params) {
+        ///    this.id = params.id;
+        ///    this.active = params.active;
+        ///    this.hasErrors = params.hasErrors;
+        ///
+        ///    this.init = function () {
+        ///
+        ///        $(&apos;#&apos; + this.id + &apos; .panel .panel-heading a&apos;).click($.proxy(this.panelOpened, this));
+        ///
+        ///        if (this.hasErrors) {
+        ///            $(&quot;html, body&quot;).animate({ scrollTop: 0 }, &apos;slow&apos;);
+        ///        }
+        ///
+        ///        if (window.location.hash != &apos;&apos;) {
+        ///            var anchoredPannel = $(window.location.hash);
+        ///
+        ///            if [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string panelGroup_js {
+            get {
+                return ResourceManager.GetString("panelGroup_js", resourceCulture);
             }
         }
         
@@ -1126,12 +788,117 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.radioList = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.formId = params.formId;
+        ///    this.name = params.name;
+        ///    this.warnOnLeave = params.warnOnLeave;
+        ///
+        ///    this.init = function () {
+        ///        if (this.warnOnLeave) {
+        ///            var form = trooper.ui.getForm(this.formId);
+        ///			
+        ///            $(&apos;[name=&quot;&apos; + this.name + &apos;&quot;]&apos;).each(function (index, value) {
+        ///                form.addVolatileField($(value));
+        ///            });
+        ///        }
+        ///    };
+        ///
+        ///    trooper.ui.registry.addContr [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string radioList_js {
+            get {
+                return ResourceManager.GetString("radioList_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] SearchBarView_cshtml {
             get {
                 object obj = ResourceManager.GetObject("SearchBarView_cshtml", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.searchBox = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.name = params.name;
+        ///    this.formId = params.formId;
+        ///    this.dataSourceUrl = params.dataSourceUrl;
+        ///    this.searchTextField = params.searchTextField;
+        ///    this.searchValueField = params.searchValueField;
+        ///    this.selectedTextField = params.selectedTextField;
+        ///    this.scrollHeight = params.scrollHeight;
+        ///    this.popoverPlacement = params.popoverPlacement;
+        ///    this.popoutWidth = params.popoutWidth;
+        ///	this.currentD [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string searchBox_js {
+            get {
+                return ResourceManager.GetString("searchBox_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .trooper.searchBox {
+        ///    .popover-content {
+        ///        padding: 0;
+        ///
+        ///        ul {
+        ///            border: none;
+        ///            outline: none;
+        ///            width: 100%;
+        ///            overflow-y: scroll;
+        ///            margin: 0;
+        ///            padding: 0;
+        ///
+        ///            li {
+        ///                margin: 0;
+        ///                padding: 2px 2px 2px 5px;
+        ///                cursor: pointer;
+        ///                border-bottom: 1px solid #e5e5e5;
+        ///            }
+        ///
+        ///            li:hover {
+        ///                background-color: #e3e3e3;
+        ///      [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string searchBox_less {
+            get {
+                return ResourceManager.GetString("searchBox_less", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.selectList = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.formId = params.formId;
+        ///    this.warnOnLeave = params.warnOnLeave;
+        ///
+        ///	this.init = function () {
+        ///        if (this.warnOnLeave) {
+        ///            var form = trooper.ui.registry.getForm(this.formId);
+        ///            form.addVolatileField(this.id);
+        ///        }
+        ///    };
+        ///
+        ///	trooper.ui.registry.addControl(this.id, this, &apos;selectlist&apos;);
+        ///    $(document).ready($.proxy(this.init, this));
+        ///
+        ///    return {
+        ///
+        ///    };
+        ///});.
+        /// </summary>
+        public static string selectList_js {
+            get {
+                return ResourceManager.GetString("selectList_js", resourceCulture);
             }
         }
         
@@ -1201,19 +968,19 @@ namespace Trooper.Properties {
         ///}
         ///
         ///function StdThemeTemplate() {
-        ///    this.ignoreLoadingScreenElements = new Array();
-        ///
         ///    $(document).ready($.proxy(this.init, this));
         ///}
         ///
-        ///StdThemeTemplate.prototype.initCloseResults = 0;
+        ///StdThemeTemplate.prototype.init = function () {
+        ///    $(&apos;[data-toggle=offcanvas]&apos;).click(function () {
+        ///        $(&apos;.row-offcanvas&apos;).toggleClass(&apos;active&apos;);
+        ///    });
         ///
-        ///StdThemeTemplate.prototype.lastClickElement = null;
+        ///    $(&apos;.submit-results button.close.any&apos;).click(function () {
+        ///        $(&apos;.submit-results&apos;).hide(500);
+        ///    });
         ///
-        ////*
-        /// * Links and buttons in the interface will usually show the &quot;Working...&quot;
-        /// * window when clicked. Any elements that are added to this array
-        /// * will not engage the window (when clic [rest of string was truncated]&quot;;.
+        ///    $(&apos;.submit-results button.close.open-errors&apos;).click(function ( [rest of string was truncated]&quot;;.
         /// </summary>
         public static string StdThemeTemplate_js {
             get {
@@ -1255,12 +1022,251 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.table = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.rowSelectionMode = params.rowSelectionMode;
+        ///    
+        ///    this.rowSelected = new Array();
+        ///    this.rowDblclicked = new Array();
+        ///    this.rowUnselected = new Array();
+        ///    this._selectedRows = new Array();	
+        ///	
+        ///    this.init = function () {       
+        ///		
+        ///		$(&apos;#&apos; + this.id + &apos; tbody tr&apos;).click($.proxy(this.rowClick, this));
+        ///		$(&apos;#&apos; + this.id + &apos; tbody tr&apos;).dblclick($.proxy(this.rowDblclick, this));
+        ///
+        ///		this.fixFormAction();
+        ///        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string table_js {
+            get {
+                return ResourceManager.GetString("table_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to table.table.trooper {
+        ///
+        ///    tbody tr td {
+        ///        cursor: pointer;
+        ///    }
+        ///
+        ///    tbody {
+        ///        tr.bold td {
+        ///            font-weight: bold;
+        ///        }
+        ///
+        ///        tr.rule-over td {
+        ///            border-top-width: 1px;
+        ///            border-top-color: black;
+        ///        }
+        ///
+        ///        tr.rule-over.rule-over-solid td {
+        ///            border-top-style: solid;
+        ///        }
+        ///
+        ///        tr.rule-over.rule-over-dashed td {
+        ///            border-bottom-style: dashed;
+        ///        }
+        ///
+        ///        tr.rule-under td {
+        ///            border [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string table_less {
+            get {
+                return ResourceManager.GetString("table_less", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.textareaBox = (function (params)
+        ///{
+        ///	this.id = params.id;
+        ///    this.formId = params.formId;
+        ///    this.maxLength = params.maxLength;
+        ///    this.warnOnLeave = params.warnOnLeave;
+        ///
+        ///	this.init = function () {
+        ///		this.getInput().change($.proxy(this.checkInput, this));
+        ///		
+        ///        if (this.warnOnLeave) {
+        ///            var form = trooper.ui.registry.getForm(this.formId);
+        ///            form.addVolatileField(this.id);
+        ///        }
+        ///    };
+        ///	
+        ///	this.getInput = function () {
+        ///		return $(&apos;#&apos; + this.id [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string textareaBox_js {
+            get {
+                return ResourceManager.GetString("textareaBox_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.textBox = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.formId = params.formId;
+        ///    this.maxLength = params.maxLength;
+        ///    this.warnOnLeave = params.warnOnLeave;
+        ///   
+        ///    this.init = function () {
+        ///		this.getInput().change($.proxy(this.checkInput, this));
+        ///		
+        ///        if (this.warnOnLeave) {
+        ///            var form = trooper.ui.registry.getForm(this.formId);
+        ///            form.addVolatileField(this.id);
+        ///        }
+        ///    };
+        ///	
+        ///	this.getInput = function () {
+        ///		return $(&apos;#&apos; + th [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string textBox_js {
+            get {
+                return ResourceManager.GetString("textBox_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to var trooper = {};
+        ///
+        ///trooper.utility = {};
+        ///
+        ///trooper.utility._browser = (function() {
+        ///	// returns { browser: &apos;name&apos;, version: number }
+        ///	// browser can be: opera | chrome | safari | firefox | msie
+        ///	this.getBrowser = function () {
+        ///		var result = new Object();
+        ///		result.browser = &apos;&apos;;
+        ///		result.version = &apos;&apos;;
+        ///		
+        ///		var ua = navigator.userAgent;
+        ///		var m = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\.?\d+(\.\d+)*)/i);
+        ///
+        ///		if (/trident/i.test(m[1])) {
+        ///			var b = /\brv[ :]+(\d+(\.\d+)? [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string trooper_js {
+            get {
+                return ResourceManager.GetString("trooper_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .trooper.y-scrolling {
+        ///        overflow-y: scroll;
+        ///        border-top: 1px solid #e5e5e5;
+        ///        border-left: 1px solid #e5e5e5;
+        ///        border-bottom: 1px solid #e5e5e5;
+        ///        border-top-left-radius: 4px;
+        ///        border-bottom-left-radius: 4px;
+        ///        padding-left: 10px;
+        ///    }
+        ///
+        ///fieldset {
+        ///    legend {
+        ///        line-height: 30px;
+        ///    }
+        ///
+        ///    fieldset {
+        ///        margin-bottom: 20px;
+        ///
+        ///        legend {
+        ///            font-size: 17px;
+        ///            margin-bottom: 0;
+        ///        }        
+        ///    }     [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string trooper_less {
+            get {
+                return ResourceManager.GetString("trooper_less", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap trooper_png {
             get {
                 object obj = ResourceManager.GetObject("trooper_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /** 
+        ///* --------------------------------------------------------------------------------------
+        ///* &lt;copyright file=&quot;BootstrapUpload.js&quot; company=&quot;Trooper Inc&quot;&gt;
+        ///*     Copyright (c) Trooper 2014 - Onwards
+        ///* &lt;/copyright&gt;
+        ///* --------------------------------------------------------------------------------------
+        ///*/
+        ///
+        /////
+        ///// Turns a plain old upload form element into a bootstrap element 
+        /////
+        ///trooper.ui.control.upload = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.formId = params.formId;
+        ///    this.w [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string upload_js {
+            get {
+                return ResourceManager.GetString("upload_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to control-group.has-error .trooper.upload {
+        ///    .uneditable-input,
+        ///    .browse,
+        ///    .clear {
+        ///        border-color: #b94a48;
+        ///    }
+        ///}
+        ///
+        ///.trooper.upload {
+        ///    .display.pretend-link {
+        ///        color: blue;
+        ///        text-decoration: underline;
+        ///        cursor: pointer;
+        ///    }
+        ///}.
+        /// </summary>
+        public static string upload_less {
+            get {
+                return ResourceManager.GetString("upload_less", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trooper.ui.control.virtualModalWindow = (function (params)
+        ///{
+        ///    this.id = params.id;
+        ///    this.title = params.title;
+        ///    this.frameUrl = params.frameUrl;
+        ///    this.frameHeight = params.frameHeight;
+        ///    this.incCloseButton = params.incCloseButton;
+        ///    this.buttons = params.buttons;
+        ///    this.closeEvents = new Array();
+        ///	
+        ///	this.virtualId = &apos;BootstrapVirtualModalWindow_actual&apos;;
+        ///	this.mainFocus = null;
+        ///	this.focusReturned = false;
+        ///
+        ///    
+        ///	this.init = function () {               
+        ///		this.getInput().ch [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string virtualModalWindow_js {
+            get {
+                return ResourceManager.GetString("virtualModalWindow_js", resourceCulture);
             }
         }
         

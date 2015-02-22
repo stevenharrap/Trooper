@@ -9,9 +9,11 @@ using Trooper.BusinessOperation2.Utility;
 
 namespace Trooper.Ui.Mvc.Bootstrap.Controls
 {
-    public class MessagesPannel : HtmlControl
+    public class MessagesPanel : HtmlControl
     {
 	    private int columns = 1;
+
+        private IResponse operationResponse;
 
 	    public int Columns
 	    {
@@ -24,5 +26,19 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
 				}
 			}
 	    }
+
+        public IResponse OperationResponse
+        {
+            get
+            {
+                return this.operationResponse;
+            }
+
+            set
+            {                
+                this.Messages = value == null ? null : value.Messages;
+                this.operationResponse = value;
+            }
+        }
     }
 }

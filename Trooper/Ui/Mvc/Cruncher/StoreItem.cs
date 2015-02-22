@@ -23,21 +23,6 @@ namespace Trooper.Ui.Mvc.Cruncher
                 
         public OrderOptions Order { get; set; }
                 
-        public ReferenceOptions Reference { get; set; }
-
-        public IStoreItem Set(string name = null, OrderOptions? order = null)
-        {
-            if (name != null)
-            {
-                this.Name = name;
-            }
-
-            if (order != null)
-            {
-                this.Order = (OrderOptions)order;
-            }
-
-            return this;
-        }
+        public ReferenceOptions Reference { get; set; }        
     }
 }

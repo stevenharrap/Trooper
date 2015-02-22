@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>test</title>    
+    <script src="jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <p id="output"></p>
+
+    
+    <script type="text/javascript">
+        var trooper = {};
+
+        trooper.ui = {};
+                
+        trooper.ui._registry = (function ()
+        {
+            this.controls = new Array();
+
+            this.register = function (control) {
+                this.controls.push(control);
+            };
+
+            this.items = function () {
+                return this.controls;
+            };
+
+            return {
+                register: $.proxy(this.register, this),
+                items: $.proxy(this.items, this),
+            };
+        });
+
+        trooper.ui.box = (function (id)
+        {
+            this.boxText = '';
+            this.id = id;
+
+            this.init = function () {
+                alert('I loaded: ' + this.id);
+            };
+
+            this.text = function (value) {
+                if (arguments.length == 1) {
+                    this.boxText = value;                        
+                }
+                else {
+                    return this.boxText;
+                }                
+            };
+
+            trooper.ui.registry.register(this);
+            $(document).ready($.proxy(this.init, this));
+
+            return {
+                text: $.proxy(this.text, this)
+            };            
+        });
+        
+        trooper.ui.registry = new trooper.ui._registry();
+
+        var myBox1 = new trooper.ui.box('b1');
+        myBox1.text(42)
+
+        var myBox2 = new trooper.ui.box('b2');
+        myBox2.text(84);
+
+
+
+        document.getElementById('output').innerHTML = 'b1=' + myBox1.text();
+        document.getElementById('output').innerHTML += '<br />b2=' + myBox2.text();
+        document.getElementById('output').innerHTML += '<br />c=' + trooper.ui.registry.items()[0].id;
+
+
+        /*function Trooper() {
+        };
+
+        Trooper.prototype.Ui = function () {
+            this.register = new Array();
+
+        };
+
+        Trooper.prototype.Ui.prototype.register = null;
+
+        Trooper.prototype.Ui.prototype.Box = function () {
+
+        };
+
+        Trooper.prototype.Ui.prototype.Box.id = '';
+
+        var t1 = new Trooper();
+        var u1 = new t1.Ui();
+        var b1 = new u1.Box();
+        b1.id = 42;
+        
+        var b2 = new u1.Box();
+        b2.id = 84;
+
+        document.getElementById('output').innerHTML = 'b1=' + b1.id;
+        document.getElementById('output').innerHTML += '<br />b2=' + b2.id;*/
+
+    </script>
+
+</body>
+</html>

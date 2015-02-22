@@ -56,7 +56,29 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controllers
         /// </returns>
         public FileResult GetGhrWoff()
         {
-            return new FileContentResult(Resources.GlyphiconsHalflingsRegularTtf, "application/font-woff");
+            return new FileContentResult(Resources.GlyphiconsHalflingsRegularWoff, "application/font-woff");
+        }
+
+        /// <summary>
+        /// Provides the glyphicons_halflings.png image
+        /// </summary>
+        /// <returns>
+        /// The <see cref="FileResult"/>.
+        /// </returns>
+        public FileResult GetGhrWoff2()
+        {
+            return new FileContentResult(Resources.GlyphiconsHalflingsRegularWoff2, "application/font-woff");
+        }
+
+        /// <summary>
+        /// Provides the Bootstrap.css.map image
+        /// </summary>
+        /// <returns>
+        /// The <see cref="FileResult"/>.
+        /// </returns>
+        public ContentResult GetBootstrapCssMap()
+        {
+            return this.Content(Resources.bootstrap_css_map, "application/text");
         }
     }
 }

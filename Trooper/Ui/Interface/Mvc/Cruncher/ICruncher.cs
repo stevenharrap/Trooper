@@ -26,21 +26,25 @@
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddCssFile(string relativePath);
+        IStoreItem AddCssFile(string relativePath, OrderOptions order);
 
         /// <summary>
         /// Adds the contents as last order.
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddCssInline(Func<object, IHtmlString> content);
+        IStoreItem AddCssInline(Func<object, IHtmlString> content, string name, OrderOptions order);
+
+        IStoreItem AddCssInline(Func<object, IHtmlString> content, OrderOptions order);
 
         /// <summary>
         /// Adds the contents as last order.
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddCssInline(string content);
+        IStoreItem AddCssInline(string content, string name, OrderOptions order);
+
+        IStoreItem AddCssInline(string content, OrderOptions order);
 
         void AddCssItem(IStoreItem item);
 
@@ -62,21 +66,25 @@
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddJsFile(string relativePath);
+        IStoreItem AddJsFile(string relativePath, OrderOptions order);
 
         /// <summary>
         /// Adds the contents as last order.
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddJsInline(Func<object, IHtmlString> content);
+        IStoreItem AddJsInline(Func<object, IHtmlString> content, string name, OrderOptions order);
+
+        IStoreItem AddJsInline(Func<object, IHtmlString> content, OrderOptions order);
 
         /// <summary>
         /// Adds the contents as last order.
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddJsInline(string content);
+        IStoreItem AddJsInline(string content, string name, OrderOptions order);
+
+        IStoreItem AddJsInline(string content, OrderOptions order);
 
         void AddJsItem(IStoreItem item);
 
@@ -98,20 +106,24 @@
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddLessFile(string relativePath);
+        IStoreItem AddLessFile(string relativePath, OrderOptions order);
 
         /// <summary>
         /// Adds the contents as last order.
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddLessInline(Func<object, IHtmlString> content);
+        IStoreItem AddLessInline(Func<object, IHtmlString> content, string name, OrderOptions order);
+
+        IStoreItem AddLessInline(Func<object, IHtmlString> content, OrderOptions order);
 
         /// <summary>
         /// Adds the contents as last order.
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        IStoreItem AddLessInline(string content);
+        IStoreItem AddLessInline(string content, string name, OrderOptions order);
+
+        IStoreItem AddLessInline(string content, OrderOptions order);
     }
 }

@@ -78,7 +78,5 @@
         /// Gets or sets Reference.
         /// </summary>
         ReferenceOptions Reference { get; set; }
-
-        IStoreItem Set(string name = null, OrderOptions? order = null);
     }
 }

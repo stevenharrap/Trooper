@@ -61,7 +61,7 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controllers
                         "<html>\n<head>\n<script type=\"text/javascript\">\n" + Resources.jquery_min_js + "\n</script>\n"
                         + "<script type=\"text/javascript\">\n"
                         + "$(document).ready(function(){$('#UploadedFile').change(function(){$('form').submit();});});\n"
-                        + "$(document).ready(function(){parent.window.GetBootstrapHtml().getUpload('" + m.Id + "').iFrameLoad();});\n"
+                        + "$(document).ready(function(){parent.window.trooper.ui.registry.getUpload('" + m.Id + "').iFrameLoad();});\n"
                         + "</script></head>\n<body>\n" + "<form action=\"" + action
                         + "\" method=\"post\" enctype=\"multipart/form-data\">\n"
                         + "<input type=\"textbox\" id=\"DisplayFilename\" name=\"DisplayFilename\" value=\"" + m.DisplayFilename

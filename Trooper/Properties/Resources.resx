@@ -187,38 +187,11 @@
     <value>Windows Identity user name cannot be null. User name not found in HttpContext or Windows Identity.</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BootstrapDateTimePicker_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapdatetimepicker.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapHtmlHelper_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstraphtmlhelper.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapSearchBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapsearchbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapSearchBox_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstrapsearchbox.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapTable_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstraptable.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapTextBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstraptextbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapUpload_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapupload.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="bootstrap_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\bootstrap\css\bootstrap.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="bootstrap_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\bootstrap\js\bootstrap.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="BootstrapForm_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapform.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapDateTimePicker_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstrapdatetimepicker.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="GlyphiconsHalflingsReguarSvg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.svg;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -232,26 +205,11 @@
   <data name="GlyphiconsHalflingsRegularWoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="BootstrapUpload_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstrapupload.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="jquery_ui_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="BootstrapVirtualModalWindow_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrapvirtualmodalwindow.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapPanelGroup_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstrappanelgroup.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapTable_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\styles\bootstraptable.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapHtml_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\scripts\bootstraphtml.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="fonts_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\App\Ui\StdTemplate\content\styles\fonts.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -310,28 +268,79 @@
   <data name="StdThemeTemplate_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\app\ui\stdtemplate\content\styles\stdthemetemplate.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="BootstrapNumericBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapnumericbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapTextareaBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstraptextareabox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapButton_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapbutton.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapCheckBoxList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapcheckboxlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapCheckBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapcheckbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapSelectList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapselectlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="BootstrapRadioList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\bootstrapradiolist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="trooper_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\app\ui\stdtemplate\content\images\trooper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\button.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="checkBoxList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\checkboxlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="checkBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\checkbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="dateTimePicker_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\datetimepicker.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="form_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\form.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="messagesPanel_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\messagespanel.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="numericBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\numericbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="panelGroup_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\panelgroup.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="radioList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\radiolist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="searchBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\searchbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="selectList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\selectlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="table_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\table.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="textareaBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\textareabox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="textBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\textbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="trooper_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\trooper.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="upload_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\upload.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="virtualModalWindow_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\virtualmodalwindow.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="dateTimePicker_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\styles\datetimepicker.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="searchBox_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\styles\searchbox.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="table_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\styles\table.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="trooper_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\styles\trooper.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="upload_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\styles\upload.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="bootstrap_css_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\bootstrap\css\bootstrap.css.map;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GlyphiconsHalflingsRegularWoff2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -270,7 +270,7 @@
     <Compile Include="Ui\Mvc\Bootstrap\Controls\ButtonDropDown.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\CheckBox.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\FormHeader.cs" />
-    <Compile Include="Ui\Mvc\Bootstrap\Controls\MessagesPannel.cs" />
+    <Compile Include="Ui\Mvc\Bootstrap\Controls\MessagesPanel.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\Options\EnumParams.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\DateTimePicker.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\ModalWindow.cs" />
@@ -288,9 +288,12 @@
     <Compile Include="Ui\Mvc\Bootstrap\Controls\DecimalBox.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\IntegerBox.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\TextBox.cs" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapNumericBox.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapTextareaBox.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapButton.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\css\bootstrap.css.map" />
+    <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\messagesPanel.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\numericBox.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\textareaBox.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\button.js" />
     <Content Include="Ui\Mvc\Bootstrap\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Bootstrap\Form.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Html.cs" />
@@ -361,29 +364,19 @@
     <Content Include="Ui\Mvc\Bootstrap\Content\Bootstrap\js\bootstrap.min.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery-ui.min.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery.min.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapDateTimePicker.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapForm.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapHtml.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapPanelGroup.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapRadioList.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapSearchBox.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapSelectList.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapTable.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapTextBox.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapCheckBox.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapCheckBoxList.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapUpload.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\BootstrapVirtualModalWindow.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapDateTimePicker.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapDateTimePicker.min.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapHtmlHelper.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapHtmlHelper.min.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapSearchBox.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapSearchBox.min.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapTable.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapTable.min.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapUpload.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapUpload.min.css" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\dateTimePicker.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\form.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\trooper.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\panelGroup.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\radioList.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\searchBox.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\selectList.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\table.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\textBox.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\checkBox.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\checkBoxList.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\upload.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\virtualModalWindow.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -405,11 +398,11 @@
     <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapDateTimePicker.less" />
-    <None Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapHtmlHelper.less" />
-    <None Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapSearchBox.less" />
-    <None Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapTable.less" />
-    <None Include="Ui\Mvc\Bootstrap\Content\styles\BootstrapUpload.less" />
+    <None Include="Ui\Mvc\Bootstrap\Content\styles\dateTimePicker.less" />
+    <None Include="Ui\Mvc\Bootstrap\Content\styles\trooper.less" />
+    <None Include="Ui\Mvc\Bootstrap\Content\styles\searchBox.less" />
+    <None Include="Ui\Mvc\Bootstrap\Content\styles\table.less" />
+    <None Include="Ui\Mvc\Bootstrap\Content\styles\upload.less" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
