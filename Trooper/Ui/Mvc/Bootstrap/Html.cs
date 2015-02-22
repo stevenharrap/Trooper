@@ -58,11 +58,11 @@ namespace Trooper.Ui.Mvc.Bootstrap
             {
                 var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-                this.Cruncher.AddJsInline(Resources.jquery_min_js).Set(name: "jquery_min_js", order: OrderOptions.First);
+                this.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery_min_js", OrderOptions.First);
 
-                this.Cruncher.AddJsInline(Resources.jquery_ui_min_js).Set(name: "jquery_ui_min_js", order: OrderOptions.First);
+                this.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery_ui_min_js", OrderOptions.First);
 
-                this.Cruncher.AddJsInline(Resources.bootstrap_min_js).Set(name: "bootstrap_min_js", order: OrderOptions.First);
+                this.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap_min_js", OrderOptions.First);
 
                 /*var ghw = urlHelper.Action("GetGhw", "Bootstrap");
                 var gh = urlHelper.Action("GetGh", "Bootstrap");*/
@@ -71,6 +71,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 var ghrs = urlHelper.Action("GetGhrSvg", "Bootstrap");
                 var ghrt = urlHelper.Action("GetGhrTtf", "Bootstrap");
                 var ghrw = urlHelper.Action("GetGhrWoff", "Bootstrap");
+                var ghrw2 = urlHelper.Action("GetGhrWoff2", "Bootstrap");
+                var getBootstrapCssMap = urlHelper.Action("GetBootstrapCssMap", "Bootstrap");
 
                 var css = Resources.bootstrap_css;
 
@@ -79,19 +81,19 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
                 css = css.Replace("../fonts/glyphicons-halflings-regular.eot", ghre);
                 css = css.Replace("../fonts/glyphicons-halflings-regular.woff", ghrw);
+                css = css.Replace("../fonts/glyphicons-halflings-regular.woff2", ghrw2);
                 css = css.Replace("../fonts/glyphicons-halflings-regular.ttf", ghrt);
                 css = css.Replace("../fonts/glyphicons-halflings-regular.svg", ghrs);
+                css = css.Replace("bootstrap.css.map", getBootstrapCssMap);
 
-                this.Cruncher.AddCssInline(css).Set(name: "bootstrap_css", order: OrderOptions.First);
+                this.Cruncher.AddCssInline(css, "bootstrap_css", OrderOptions.First);
 
-                this.Cruncher.AddLessInline(Resources.BootstrapHtmlHelper_less).Set(name: "BootstrapHtmlHelper_less", order: OrderOptions.First);
+                this.Cruncher.AddLessInline(Resources.trooper_less, "trooper_less", OrderOptions.First);
             }
 
-            if (!this.Cruncher.HasJsItem("BootstrapHtml_js"))
+            if (!this.Cruncher.HasJsItem("trooper_js"))
             {
-                this.Cruncher.AddJsInline(Resources.BootstrapHtml_js).Set(name: "BootstrapHtml_js", order: OrderOptions.Middle);
-
-                this.Cruncher.AddJsInline("var bootstrapHtml = new BootstrapHtml();");
+                this.Cruncher.AddJsInline(Resources.trooper_js, "trooper_js", OrderOptions.Middle);
             }
         }
 
@@ -124,20 +126,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
 		#region public methods
 
-		/// <summary>
-        /// This initiates the HTML class by instantiating it and returning the instance.
-        /// Includes all Bootstrap JavaScript and CSS requirements.
-        /// </summary>
-        /// <param name="htmlHelper">
-        /// The html helper.
-        /// </param>
-        /// <returns>
-        /// Returns the new instance.
-        /// </returns>
-        public static Html<TModel> Init(HtmlHelper<TModel> htmlHelper)
-        {
-            return new Html<TModel>(htmlHelper);
-        }
+        #region controls              
         
         /// <summary>
         /// Makes a panel group where each 
@@ -161,9 +150,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(pgProps);
 
-            if (!this.Cruncher.HasJsItem("BootstrapPanelGroup_js"))
+            if (!this.Cruncher.HasJsItem("panelGroup_js"))
             {
-                this.Cruncher.AddJsInline(Resources.BootstrapPanelGroup_js).Set(name: "BootstrapPanelGroup_js", order: OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.panelGroup_js, "panelGroup_js", OrderOptions.Middle);
             }
            
             var result = "<div class=\"panel-group " 
@@ -217,11 +206,12 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             result += "</div>\n";
 
-            this.Cruncher.AddJsInline(string.Format(
-                "var {0}_BootstrapPanelGroup = new BootstrapPanelGroup({{id:'{0}', active:'{1}', hasErrors: {2}}});",
+            var js = string.Format("new trooper.ui.control.panelGroup({{id:'{0}', active:'{1}', hasErrors: {2}}});",
                 pgProps.Id, 
                 active,
-                this.GetJsBool(pgProps.WorstMessageLevel == MessageAlertLevel.Error)));
+                this.GetJsBool(pgProps.WorstMessageLevel == MessageAlertLevel.Error));
+
+            this.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return new MvcHtmlString(result);
         }
@@ -401,9 +391,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(mwProps);
 
-            if (!this.Cruncher.HasJsItem("BootstrapVirtualModalWindow_js"))
+            if (!this.Cruncher.HasJsItem("virtualModalWindow_js"))
             {
-                this.Cruncher.AddJsInline(Resources.BootstrapVirtualModalWindow_js).Set(name: "BootstrapVirtualModalWindow_js", order: OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.virtualModalWindow_js, "virtualModalWindow_js", OrderOptions.Middle);
             }
 
             var buttonsString = mwProps.Buttons != null
@@ -413,18 +403,19 @@ namespace Trooper.Ui.Mvc.Bootstrap
                                       + "')"
                                     : string.Empty;
 
-            this.Cruncher.AddJsInline(
-                string.Format(
-                "new BootstrapVirtualModalWindow({{ id:'{0}', title:'{1}', frameUrl:'{2}', buttons: {3}, incCloseButton:{4}, frameHeight:{5}  }});",
+            var js = string.Format(
+                "new trooper.ui.control.virtualModalWindow({{ id:'{0}', title:'{1}', frameUrl:'{2}', buttons: {3}, incCloseButton:{4}, frameHeight:{5}  }});",
                 mwProps.Id,
                 mwProps.Title,
                 Conversion.ConvertToString(mwProps.FrameUrl, string.Empty),
                 buttonsString,
                 this.GetJsBool(mwProps.IncCloseButton),
-                mwProps.FrameHeight));
+                mwProps.FrameHeight);
+
+            this.Cruncher.AddJsInline(js, OrderOptions.Last);
         }
 
-		public MvcHtmlString MessagesPannel(MessagesPannel mpProps)
+		public MvcHtmlString MessagesPanel(MessagesPanel mpProps)
 		{
 			mpProps.Messages = mpProps.Messages ?? this.Messages;
 
@@ -432,6 +423,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			{
 				return null;
 			}
+
+            this.RegisterControl(mpProps);
+
+            if (!this.Cruncher.HasJsItem("messagesPanel_js"))
+            {
+                this.Cruncher.AddJsInline(Resources.messagesPanel_js, "messagesPanel_js", OrderOptions.Middle);
+            }
 
 			var html = new StringBuilder();
 			var perColumn = Math.Floor(mpProps.Messages.Count / (double)mpProps.Columns);
@@ -444,12 +442,12 @@ namespace Trooper.Ui.Mvc.Bootstrap
 					? "alert-warning"
 					: "alert-danger";
 			
-			html.AppendFormat("<div class=\"submit-results alert {0}\">", alertLevel);
+			html.AppendFormat("<div id=\"{0}\" class=\"trooper messages-panel alert {1}\">", mpProps.Id, alertLevel);
 			html.Append("<div class=\"row\">");
 			
 			html.Append("<div class=\"col-md-10\">");
 			html.AppendFormat("<h4>{0}</h4>", mpProps.Title);
-			html.Append("<div class=\"errors\">");
+			html.Append("<div class=\"messages\">");
 			html.Append("<hr />");
 
 			html.Append("<div class=\"row\">");
@@ -457,30 +455,30 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			var d = 0;
 			for (var c = 0; c < mpProps.Columns; c++)
 			{
-				html.AppendFormat("<div class=\"col-md-{0}\">", 12 / (mpProps.Columns + 1));
+				html.AppendFormat("<div class=\"col-md-{0}\">", 12 / (mpProps.Columns));
 				html.Append("<ul>");
 
 				var thisColumn = c == mpProps.Columns - 1 ? perColumn + remainder : perColumn;
 
 				for (var m = 0; m < thisColumn && d < mpProps.Messages.Count; m++)
 				{
-					switch (mpProps.Messages[d].Level)
-					{
-						case MessageAlertLevel.Error:
-							html.AppendFormat("<li><span class=\"glyphicon glyphicon-wrench text-danger\">{0}</span></li>",
-							mpProps.Messages[d].Content);
-						break;
+                    switch (mpProps.Messages[d].Level)
+                    {
+                        case MessageAlertLevel.Error:
+                            html.AppendFormat("<li><span class=\"glyphicon glyphicon-wrench text-danger\"></span> {0}</li>",
+                            mpProps.Messages[d].Content);
+                            break;
 
-						case MessageAlertLevel.Warning:
-							html.AppendFormat("<li><span class=\"glyphicon glyphicon-warning-sign text-warning\">{0}</span></li>",
-							mpProps.Messages[d].Content);
-						break;
+                        case MessageAlertLevel.Warning:
+                            html.AppendFormat("<li><span class=\"glyphicon glyphicon-warning-sign text-warning\"></span> {0}</li>",
+                                mpProps.Messages[d].Content);
+                            break;
 
-						case MessageAlertLevel.Note:
-							html.AppendFormat("<li><span class=\"glyphicon glyphicon-info-sign text-success\">{0}</span></li>",
-							mpProps.Messages[d].Content);
-						break;
-					}
+                        case MessageAlertLevel.Note:
+                            html.AppendFormat("<li><span class=\"glyphicon glyphicon-info-sign text-success\"></span> {0}</li>",
+                                mpProps.Messages[d].Content);
+                            break;
+                    }
 
 					d++;
 				}
@@ -495,13 +493,45 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			html.Append("</div>");
 
 			html.Append("<div class=\"col-md-2\">");
+            html.Append("<button type=\"button\" class=\"close close-bar\">");
+            html.Append("<span class=\"glyphicon glyphicon-remove-circle\"></span>");
+            html.Append("</button>");
+            html.Append("<button type=\"button\" class=\"close close-messages\">");
+            html.Append("<span class=\"glyphicon glyphicon-chevron-up\"></span>");
+            html.Append("</button>");                                        
+            html.Append("<button type=\"button\" class=\"close open-messages\" style=\"display: none\">");
+            html.Append("<span class=\"glyphicon glyphicon-chevron-down\"></span>");
+            html.Append("</button>");
 			html.Append("</div>");
 
 			html.Append("</div>");
 			html.Append("</div>");
+
+            var js = string.Format("new trooper.ui.control.messagesPanel({{id:'{0}'}});", mpProps.Id);
+
+            this.Cruncher.AddJsInline(js, OrderOptions.Last);
 
 			return new MvcHtmlString(html.ToString());
 		}
+
+        #endregion
+
+        #region support
+
+        /// <summary>
+        /// This initiates the HTML class by instantiating it and returning the instance.
+        /// Includes all Bootstrap JavaScript and CSS requirements.
+        /// </summary>
+        /// <param name="htmlHelper">
+        /// The html helper.
+        /// </param>
+        /// <returns>
+        /// Returns the new instance.
+        /// </returns>
+        public static Html<TModel> Init(HtmlHelper<TModel> htmlHelper)
+        {
+            return new Html<TModel>(htmlHelper);
+        }
 
         public void RegisterControl(HtmlControl control)
         {
@@ -583,11 +613,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return placement.ToString().ToLower();
         }
 
-		#endregion
+        #endregion
 
-		#region protected methods
+        #endregion
 
-		protected Dictionary<string, string> AddAttributes(
+        #region protected methods
+
+        protected Dictionary<string, string> AddAttributes(
             Dictionary<string, string> attributes,
             Dictionary<string, string> newAttributes)
         {

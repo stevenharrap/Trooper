@@ -63,6 +63,8 @@ namespace Trooper.Ui.Mvc.Cruncher
             this.UrlHelper = new UrlHelper(this.HtmlHelper.ViewContext.RequestContext);
         }
 
+        #region private properties
+
         /// <summary>
         /// Gets the html helper from your View.
         /// </summary>
@@ -72,6 +74,10 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// Gets or sets the url helper from your View.
         /// </summary>
         private UrlHelper UrlHelper { get; set; }
+
+        #endregion
+
+        #region public static methods
 
         /// <summary>
         /// Gets the store name for the given id
@@ -87,7 +93,11 @@ namespace Trooper.Ui.Mvc.Cruncher
             return HttpRuntime.Cache[id.ToString()] as ICruncherStore;
         }
 
-        #region Javascript
+        #endregion
+
+        #region public methods
+
+        #region Javascript methods
 
         public void AddJsItem(IStoreItem item)
         {
@@ -99,19 +109,29 @@ namespace Trooper.Ui.Mvc.Cruncher
         /// </summary>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        public IStoreItem AddJsFile(string relativePath)
+        public IStoreItem AddJsFile(string relativePath, OrderOptions order)
         {
-            return AddFile(this.Js(), relativePath);
+            return AddFile(this.Js(), relativePath, order);
         }
 
-        public IStoreItem AddJsInline(string content)
+        public IStoreItem AddJsInline(string content, string name, OrderOptions order)
         {
-            return AddInline(this.Js(), content);
+            return AddInline(this.Js(), content, name, order);
         }
 
-        public IStoreItem AddJsInline(Func<object, IHtmlString> content)
+        public IStoreItem AddJsInline(string content, OrderOptions order)
         {
-            return AddInline(this.Js(), content);
+            return AddInline(this.Js(), content, order);
+        }
+
+        public IStoreItem AddJsInline(Func<object, IHtmlString> content, string name, OrderOptions order)
+        {
+            return AddInline(this.Js(), content, name, order);
+        }
+
+        public IStoreItem AddJsInline(Func<object, IHtmlString> content, OrderOptions order)
+        {
+            return AddInline(this.Js(), content, order);
         }
 
         /// <summary>
@@ -154,7 +174,7 @@ namespace Trooper.Ui.Mvc.Cruncher
 
         #endregion
 
-        #region Css
+        #region Css methods
 
         /// <summary>
         /// Determines if a name item exists in the store
@@ -189,54 +209,81 @@ namespace Trooper.Ui.Mvc.Cruncher
             AddItem(this.Css(), item);
         }
 
-        public IStoreItem AddCssFile(string relativePath)
+        public IStoreItem AddCssFile(string relativePath, OrderOptions order)
         {
-            return AddFile(this.Css(), relativePath);
+            return AddFile(this.Css(), relativePath, order);
         }
 
-        public IStoreItem AddCssInline(string content)
+        public IStoreItem AddCssInline(string content, string name, OrderOptions order)
         {
-            return AddInline(this.Css(), content);
+            return AddInline(this.Css(), content, name, order);
         }
 
-        public IStoreItem AddCssInline(Func<object, IHtmlString> content)
+        public IStoreItem AddCssInline(string content, OrderOptions order)
         {
-            return AddInline(this.Css(), content);
+            return AddInline(this.Css(), content, order);
         }
 
-        #endregion
-
-        #region Less
-
-        public IStoreItem AddLessFile(string relativePath)
+        public IStoreItem AddCssInline(Func<object, IHtmlString> content, string name, OrderOptions order)
         {
-            var item = AddFile(this.Css(), relativePath);
-
-            item.Less = true;
-
-            return item;
+            return AddInline(this.Css(), content, name, order);
         }
 
-        public IStoreItem AddLessInline(string content)
+        public IStoreItem AddCssInline(Func<object, IHtmlString> content, OrderOptions order)
         {
-            var item = AddInline(this.Css(), content);
-
-            item.Less = true;
-
-            return item;
-        }
-
-        public IStoreItem AddLessInline(Func<object, IHtmlString> content)
-        {
-            var item = AddInline(this.Css(), content);
-
-            item.Less = true;
-
-            return item;
+            return AddInline(this.Css(), content, order);
         }
 
         #endregion
-               
+
+        #region Less methods
+
+        public IStoreItem AddLessFile(string relativePath, OrderOptions order)
+        {
+            var item = AddFile(this.Css(), relativePath, order);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        public IStoreItem AddLessInline(string content, string name, OrderOptions order)
+        {
+            var item = AddInline(this.Css(), content, name, order);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        public IStoreItem AddLessInline(string content, OrderOptions order)
+        {
+            var item = AddInline(this.Css(), content, order);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        public IStoreItem AddLessInline(Func<object, IHtmlString> content, string name, OrderOptions order)
+        {
+            var item = AddInline(this.Css(), content, name, order);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        public IStoreItem AddLessInline(Func<object, IHtmlString> content, OrderOptions order)
+        {
+            var item = AddInline(this.Css(), content, order);
+
+            item.Less = true;
+
+            return item;
+        }
+
+        #endregion               
 
         /// <summary>
         /// Generates all the HTML required for the header tag of the destination HTML
@@ -254,17 +301,43 @@ namespace Trooper.Ui.Mvc.Cruncher
                         this.GetHtml(MimeTypes.Js)));
         }
 
+        /// <summary>
+        /// Returns the JavaScript items lists
+        /// </summary>
+        /// <returns>
+        /// The JavaScript items lists
+        /// </returns>
+        public IList<IStoreItem> Js()
+        {
+            return this.GetStore().Js();
+        }
+
+        /// <summary>
+        /// Returns the StyleSheet CSS items lists
+        /// </summary>
+        /// <returns>
+        /// The StyleSheet items lists
+        /// </returns>
+        public IList<IStoreItem> Css()
+        {
+            return this.GetStore().Css();
+        }
+
+        #endregion
+
+        #region private static methods
+
         private static void AddItem(IList<IStoreItem> items, IStoreItem item)
         {
             items.Add(item);
         }
 
-        private static IStoreItem AddFile(IList<IStoreItem> items, string relativePath)
+        private static IStoreItem AddFile(IList<IStoreItem> items, string relativePath, OrderOptions order)
         {
             var item = new StoreItem
             {
                 File = relativePath,
-                Order = OrderOptions.Middle,
+                Order = order,
                 Reference = ReferenceOptions.File
             };
 
@@ -273,11 +346,26 @@ namespace Trooper.Ui.Mvc.Cruncher
             return item;
         }
 
-        private static IStoreItem AddInline(IList<IStoreItem> items, string content)
+        private static IStoreItem AddInline(IList<IStoreItem> items, string content, string name, OrderOptions order)
         {
             var item = new StoreItem
             {
-                Order = OrderOptions.Last,
+                Order = order,
+                Reference = ReferenceOptions.Inline,
+                Content = content,
+                Name = name                
+            };
+
+            AddItem(items, item);
+
+            return item;
+        }
+
+        private static IStoreItem AddInline(IList<IStoreItem> items, string content, OrderOptions order)
+        {
+            var item = new StoreItem
+            {
+                Order = order,
                 Reference = ReferenceOptions.Inline,
                 Content = content
             };
@@ -287,11 +375,26 @@ namespace Trooper.Ui.Mvc.Cruncher
             return item;
         }
 
-        private static IStoreItem AddInline(IList<IStoreItem> items, Func<object, IHtmlString> content)
+        private static IStoreItem AddInline(IList<IStoreItem> items, Func<object, IHtmlString> content, string name, OrderOptions order)
         {
             var item = new StoreItem
             {
-                Order = OrderOptions.Last,
+                Order = order,
+                Reference = ReferenceOptions.Inline,
+                Content = content.Invoke(null).ToString(),
+                Name = name
+            };
+
+            AddItem(items, item);
+
+            return item;
+        }
+
+        private static IStoreItem AddInline(IList<IStoreItem> items, Func<object, IHtmlString> content,  OrderOptions order)
+        {
+            var item = new StoreItem
+            {
+                Order = order,
                 Reference = ReferenceOptions.Inline,
                 Content = content.Invoke(null).ToString()
             };
@@ -321,28 +424,9 @@ namespace Trooper.Ui.Mvc.Cruncher
             return items.Any(i => i.File == file);
         }
 
+        #endregion
 
-        /// <summary>
-        /// Returns the JavaScript items lists
-        /// </summary>
-        /// <returns>
-        /// The JavaScript items lists
-        /// </returns>
-        public IList<IStoreItem> Js()
-        {
-            return this.GetStore().Js();
-        }
-
-        /// <summary>
-        /// Returns the StyleSheet CSS items lists
-        /// </summary>
-        /// <returns>
-        /// The StyleSheet items lists
-        /// </returns>
-        public IList<IStoreItem> Css()
-        {
-            return this.GetStore().Css();
-        }
+        #region private methods
 
         /// <summary>
         /// Generates the HTML for the JavaScript and StyleSheet elements.
@@ -452,5 +536,7 @@ namespace Trooper.Ui.Mvc.Cruncher
         {
             return string.Format("Trooper.Ui.Cruncher");
         }
+
+        #endregion
     }
 }

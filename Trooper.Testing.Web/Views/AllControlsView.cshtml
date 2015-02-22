@@ -23,8 +23,8 @@
                           Messages = Model.OperationResponse == null ? null : Model.OperationResponse.Messages
                       };
 
-        cruncher.AddJsFile("~/Content/scripts/AllControls.js").Set(order: OrderOptions.Middle);
-        cruncher.AddJsInline(@<text>var allControls = new AllControls();</text>);
+        cruncher.AddJsFile("~/Content/scripts/AllControls.js", OrderOptions.Middle);
+        cruncher.AddJsInline(@<text>var allControls = new AllControls();</text>, OrderOptions.Last);
 
         Trooper.Ui.Mvc.Bootstrap.Html<AllControlsModel>.Init(Html);
     }
@@ -38,7 +38,7 @@
     <div class="container">
         <h2>BSF Test Area</h2>       
 
-        @bsf.MessagesPannel(new MessagesPannel { Columns = 3, Title = "Test errors", Messages = bsf.Messages })
+        @bsf.MessagesPanel(new MessagesPanel { Columns = 3, Title = "Test errors", Messages = bsf.Messages })
 
         <div class="row">
             <div class="col-xs-2">

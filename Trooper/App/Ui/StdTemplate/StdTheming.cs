@@ -164,9 +164,7 @@ namespace Trooper.App.Ui.StdTemplate
             css = css.Replace("Bold.ttf", boldTtf);
             css = css.Replace("Bold.svg", boldSvg);
 
-            var item = cruncher.AddLessInline(css);
-            item.Order = OrderOptions.First;
-            item.Name = "StdTheming";
+            var item = cruncher.AddLessInline(css, "StdTheming", OrderOptions.First);
         }
 
         /// <summary>
