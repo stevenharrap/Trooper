@@ -183,7 +183,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 this.FormHeaderProps.Id,
                 dProps.Minimum == null ? "null" : Conversion.ConvertToString(dProps.Minimum),
                 dProps.Maximum == null ? "null" : Conversion.ConvertToString(dProps.Maximum),
-                dProps.DecimalDigits ?? 0);
+				dProps.DecimalDigits == null ? "null" : Conversion.ConvertToString(dProps.DecimalDigits));
 
             this.Cruncher.AddJsInline(js, OrderOptions.Last);
 
