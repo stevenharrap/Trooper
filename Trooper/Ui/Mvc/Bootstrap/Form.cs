@@ -855,8 +855,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
                     level = "default";
                     break;
             }
-
-            var result = "<div id=\"" + dtpProps.Id + "_helper\" class=\"trooper.dateTimePicker\">\n"
+                        
+            var result = "<div id=\"" + dtpProps.Id + "\" class=\"trooper dateTimePicker\">\n"
                          + "<div class=\"input-group\">\n" + "<input class=\"form-control date-input "
                          + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\" id=\"" + dtpProps.Id
                          + "\" name=\"" + dtpProps.Name + "\" value=\"" + (dtpProps.Value == null ? string.Empty : ((DateTime)dtpProps.Value).ToString(format))
@@ -892,6 +892,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.Cruncher.AddJsInline(js, OrderOptions.Last);
 
+            this.Popover(new Popover { Content = "<div>Calander here</div>", Selector = string.Format("#{0} .date-select", dtpProps.Id) });
+
             return MvcHtmlString.Create(result);
         }
 
@@ -919,16 +921,17 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			}
 
 			var js = string.Format(
-				"new trooper.ui.control.popover({{id:'{0}', content:'{1}', title:'{2}', placement:'{3}', selector:'{4}'}});",
+                "new trooper.ui.control.popover({{id:'{0}', content:'{1}', title:'{2}', placement:'{3}', placementAutoAssist: {4}, selector:'{5}'}});",
 				poProps.Id,
-				poProps.Content == null ? string.Empty : (poProps.Content.Invoke(null).ToString()).Replace("'", @"\'"),
+				poProps.Content == null ? string.Empty : poProps.Content.Replace("'", @"\'"),
 				poProps.Title == null ? string.Empty : poProps.Title.Replace("'", @"\'"),
-				poProps.Placement,
+			    PopoverPlacementToString(poProps.Placement),
+                GetJsBool(poProps.PlacementAutoAssist),
 				poProps.Selector);
 
 			this.Cruncher.AddJsInline(js, OrderOptions.Last);
 
-			return null;
+			return new MvcHtmlString(string.Empty);
 	    }
 
         public MvcHtmlString SearchBox(SearchBox sbProps)
