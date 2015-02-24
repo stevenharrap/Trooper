@@ -297,6 +297,7 @@
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\numericBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\textareaBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\button.js" />
+    <None Include="Ui\Mvc\Bootstrap\Content\scripts\dateTimePicker.js.old" />
     <Content Include="Ui\Mvc\Bootstrap\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Bootstrap\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Bootstrap\Form.cs" />

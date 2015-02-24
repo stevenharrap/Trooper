@@ -81,7 +81,7 @@
 
 	    <div class="row">
 		    <div class="col-xs-4">
-			    @bsf.Popover(new Popover {Content = @<text>He's a popover</text>, Title = "It's popping", Selector = "#simple-popover"})
+			    @bsf.Popover(new Popover {ContentFunc = @<text>He's a popover</text>, Title = "It's popping", Selector = "#simple-popover"})
 			    <h4><span class="label label-default" id="simple-popover">I'm a simple popover - click me!</span></h4>
 
 			    @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date})

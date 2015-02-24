@@ -174,13 +174,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// <summary>
         /// On right.
         /// </summary>
-        Right,
-
-		/// <summary>
-		/// Auto placement
-		/// </summary>
-		Auto
-
+        Right
     }
 
     /// <summary>
