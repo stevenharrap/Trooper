@@ -79,12 +79,15 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-4">
-                @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker { Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date })
-                @bsf.DateTimePickerFor(m => m.TestDt02, new DateTimePicker { Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime })
-                @bsf.DateTimePickerFor(m => m.TestDt03, new DateTimePicker { Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds })
-            </div>
+	    <div class="row">
+		    <div class="col-xs-4">
+			    @bsf.Popover(new Popover {Content = @<text>He's a popover</text>, Title = "It's popping", Selector = "#simple-popover"})
+			    <h4><span class="label label-default" id="simple-popover">I'm a simple popover - click me!</span></h4>
+
+			    @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date})
+			    @bsf.DateTimePickerFor(m => m.TestDt02, new DateTimePicker {Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime})
+			    @bsf.DateTimePickerFor(m => m.TestDt03, new DateTimePicker {Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds})
+		    </div>
             <div class="col-xs-4">
                 @bsf.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Date time: Time", DateTimeFormat = DateTimeFormat.Time })
                 @bsf.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Date time: Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
