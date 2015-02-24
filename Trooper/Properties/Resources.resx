@@ -343,4 +343,7 @@
   <data name="GlyphiconsHalflingsRegularWoff2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ui\mvc\bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="popover_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\scripts\popover.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

@@ -268,6 +268,10 @@ trooper.ui._registry = (function () {
         return this.getControl(controlId, "virtualmodalwindow");
     };
 
+    this.getPopover = function (controlId) {
+    	return this.getControl(controlId, "popover");
+    };
+
     return {
         addControl: $.proxy(this.addControl, this),
         getControl: $.proxy(this.getControl, this),

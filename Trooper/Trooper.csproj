@@ -279,6 +279,7 @@
     <Compile Include="Ui\Mvc\Bootstrap\Controls\Options\Option.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\Options\OptionListHelper.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\PannelGroup.cs" />
+    <Compile Include="Ui\Mvc\Bootstrap\Controls\Popover.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\RadioList.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\SearchBox.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Controls\SelectList.cs" />
@@ -296,6 +297,7 @@
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\numericBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\textareaBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\button.js" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Bootstrap\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Bootstrap\Form.cs" />
     <Compile Include="Ui\Mvc\Bootstrap\Html.cs" />

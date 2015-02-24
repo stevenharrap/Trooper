@@ -909,6 +909,28 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return this.DateTimePicker(dtpProps);
         }
 
+		public MvcHtmlString Popover(Popover poProps)
+	    {
+			this.RegisterControl(poProps);
+
+			if (!this.Cruncher.HasJsItem("popover_js"))
+			{
+				this.Cruncher.AddJsInline(Resources.popover_js, "popover_js", OrderOptions.Middle);
+			}
+
+			var js = string.Format(
+				"new trooper.ui.control.popover({{id:'{0}', content:'{1}', title:'{2}', placement:'{3}', selector:'{4}'}});",
+				poProps.Id,
+				poProps.Content == null ? string.Empty : (poProps.Content.Invoke(null).ToString()).Replace("'", @"\'"),
+				poProps.Title == null ? string.Empty : poProps.Title.Replace("'", @"\'"),
+				poProps.Placement,
+				poProps.Selector);
+
+			this.Cruncher.AddJsInline(js, OrderOptions.Last);
+
+			return null;
+	    }
+
         public MvcHtmlString SearchBox(SearchBox sbProps)
         {
             this.RegisterControl(sbProps);

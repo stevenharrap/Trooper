@@ -24,7 +24,6 @@
 
     this.init = function ()
     {
-        debugger;
         this.getInput().change($.proxy(this.checkInput, this));
         
         if (this.warnOnLeave) {
@@ -47,7 +46,6 @@
 	};
 	
 	this.checkInput = function () {
-	    debugger;
 		var value = this.getInput().val().toString();
 
 		switch (this.numericType) {
