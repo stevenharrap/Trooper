@@ -6,19 +6,37 @@
 	this.placement = params.placement;
 	this.placementAutoAssist = params.placementAutoAssist;
 	this.selector = params.selector;
+	this.bsPopover = null;
 
 	this.init = function () {
 	    debugger;
-		$(this.selector).popover(
+		this.bsPopover = $(this.selector).popover(
 		{
 			content: $.proxy(this.content, this),
 			html: true,
 			placement: new Array(this.placementAutoAssist ? 'auto ' : '', this.placement).join(''),
 			title: this.title,
-            trigger: 'click'
+			trigger: 'manual',
 		});
 
+		var show = $.proxy(this.showPopover, this);
+		var hide = $.proxy(this.hidePopover, this);
+
+		this.bsPopover.focus(show);
+		this.bsPopover.blur(hide);
+		this.bsPopover.hover(show, hide);
+
 	};
+
+	this.showPopover = function () {
+	    debugger;
+	    this.bsPopover('show');
+	};
+    
+	this.hidePopover = function () {
+	    debugger;
+        this.bsPopover('hide');
+    };
 
 	this.content = function(value) {
 		if (arguments.length == 1) {
