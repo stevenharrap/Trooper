@@ -13,6 +13,7 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
         {
             this.PlacementAutoAssist = true;
             this.Placement = PopoverPlacements.Bottom;
+			this.Behaviour = PopoverBehaviour.Hover;
         }
 
 		public string Selector { get; set; }
@@ -31,6 +32,8 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
         }
 
 		public PopoverPlacements Placement { get; set; }
+
+		public PopoverBehaviour Behaviour { get; set; }
 
         public bool PlacementAutoAssist { get; set; }
 	}

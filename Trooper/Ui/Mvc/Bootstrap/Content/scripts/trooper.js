@@ -289,7 +289,8 @@ trooper.ui._registry = (function () {
         getTextareaBox: $.proxy(this.getTextareaBox, this),
         getTextbox: $.proxy(this.getTextbox, this),
         getUpload: $.proxy(this.getUpload, this),
-        getVirtualModelWindow: $.proxy(this.getVirtualModelWindow, this)
+        getVirtualModelWindow: $.proxy(this.getVirtualModelWindow, this),
+        getPopover: $.proxy(this.getPopover, this)
     };
 });
  

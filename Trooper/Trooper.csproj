@@ -298,6 +298,8 @@
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\textareaBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\button.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\dateTimePicker.js.old" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jqueryui\jquery-ui.min.css" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jqueryui\jquery-ui.min.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Bootstrap\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Bootstrap\Form.cs" />
@@ -367,7 +369,6 @@
     <Content Include="Ui\Mvc\Bootstrap\Content\Bootstrap\css\bootstrap.css" />
     <Content Include="Ui\Mvc\Bootstrap\Content\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Ui\Mvc\Bootstrap\Content\Bootstrap\js\bootstrap.min.js" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery-ui.min.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery.min.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\dateTimePicker.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\form.js" />
