@@ -177,6 +177,26 @@ namespace Trooper.Ui.Mvc.Bootstrap
         Right
     }
 
+	public enum PopoverBehaviour
+	{
+		/// <summary>
+		/// The popover only appears when the user hovers over the selector.
+		/// </summary>
+		Hover,
+
+		/// <summary>
+		/// The popover appears when the user clicks the selector and disappears when the user 
+		/// clicks anywhere outside the popover.
+		/// </summary>
+		ClickThenClickOutside,
+
+		/// <summary>
+		/// The popover appears when the user clicks the selector and disappears when the user 
+		/// clicks anywhere.
+		/// </summary>
+		ClickThenClickAnywhere
+	}
+
     /// <summary>
     /// The title modes that define how the title is associated with the control
     /// </summary>

@@ -6,37 +6,58 @@
 	this.placement = params.placement;
 	this.placementAutoAssist = params.placementAutoAssist;
 	this.selector = params.selector;
-	this.bsPopover = null;
+	this.behaviour = params.behaviour;
 
 	this.init = function () {
-	    debugger;
-		this.bsPopover = $(this.selector).popover(
+		$(this.selector).popover(
 		{
 			content: $.proxy(this.content, this),
 			html: true,
 			placement: new Array(this.placementAutoAssist ? 'auto ' : '', this.placement).join(''),
 			title: this.title,
-			trigger: 'manual',
+			trigger: this.behaviour == 'Hover' ? 'hover' : 'manual'
+		}).click(function (e) {e.preventDefault();});
+
+		//click : click selector to show/hide
+		//hover: hover over selector to show/hide
+		//focus: ??
+
+		if (this.behaviour == 'ClickThenClickOutside') {
+			$(this.selector).click($.proxy(this.selectorClickToggle, this));
+			$('body').on('click', $.proxy(this.outsideSelectorClickAndHide, this));
+		}
+		else if (this.behaviour == 'ClickThenClickAnywhere') {
+			$(this.selector).click($.proxy(this.selectorClickToggle, this));
+			$(this.selector).on('shown.bs.popover', $.proxy(this.setupAnywhereClickAndHide, this));
+		}
+	};
+
+	this.selectorClickToggle = function (e) {
+		$(this.selector).popover('toggle');
+		e.stopPropagation();
+	}
+
+	this.outsideSelectorClickAndHide = function(e) {
+		$('[data-original-title]').each(function () {
+			if (!$(this).is(e.target)
+				&& $(this).has(e.target).length === 0
+				&& $('.popover').has(e.target).length === 0) {
+				$(this).popover('hide');
+			}
 		});
-
-		var show = $.proxy(this.showPopover, this);
-		var hide = $.proxy(this.hidePopover, this);
-
-		this.bsPopover.focus(show);
-		this.bsPopover.blur(hide);
-		this.bsPopover.hover(show, hide);
-
 	};
 
-	this.showPopover = function () {
-	    debugger;
-	    this.bsPopover('show');
+	this.setupAnywhereClickAndHide = function () {
+		$('body').on('click', $.proxy(this.anywhereClickAndHide, this));
 	};
-    
-	this.hidePopover = function () {
-	    debugger;
-        this.bsPopover('hide');
-    };
+
+	this.anywhereClickAndHide = function () {
+		$(this.selector).popover('hide');
+	};
+
+	this.bsPopover = function () {
+	    return $(this.selector);
+	};
 
 	this.content = function(value) {
 		if (arguments.length == 1) {
@@ -46,10 +67,17 @@
 		}
 	};
 
+	this.isOpen = function() {
+		var element = $(this.selector);
+		return element.parent().find('#' + element.attr('aria-describedby')).hasClass('in');
+	};
+
 	trooper.ui.registry.addControl(this.id, this, 'popover');
 	$(document).ready($.proxy(this.init, this));
 
 	return {
-		content: $.proxy(this.content, this)
+	    content: $.proxy(this.content, this),
+	    isOpen: $.proxy(this.isOpen, this),
+	    bsPopover: $.proxy(this.bsPopover, this)
 	};
 });

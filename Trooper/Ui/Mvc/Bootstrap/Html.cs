@@ -126,7 +126,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
 		#region public methods
 
-        #region controls              
+        #region controls
         
         /// <summary>
         /// Makes a panel group where each 
@@ -514,6 +514,30 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			return new MvcHtmlString(html.ToString());
 		}
 
+		public MvcHtmlString Popover(Popover poProps)
+		{
+			this.RegisterControl(poProps);
+
+			if (!this.Cruncher.HasJsItem("popover_js"))
+			{
+				this.Cruncher.AddJsInline(Resources.popover_js, "popover_js", OrderOptions.Middle);
+			}
+
+			var js = string.Format(
+				"new trooper.ui.control.popover({{id:'{0}', content:'{1}', title:'{2}', placement:'{3}', placementAutoAssist: {4}, selector:'{5}', behaviour:'{6}'}});",
+				poProps.Id,
+				poProps.Content == null ? string.Empty : poProps.Content.Replace("'", @"\'"),
+				poProps.Title == null ? string.Empty : poProps.Title.Replace("'", @"\'"),
+				PopoverPlacementToString(poProps.Placement),
+				GetJsBool(poProps.PlacementAutoAssist),
+				poProps.Selector,
+				poProps.Behaviour);
+
+			this.Cruncher.AddJsInline(js, OrderOptions.Last);
+
+			return new MvcHtmlString(string.Empty);
+		}
+
         #endregion
 
         #region support
@@ -612,6 +636,15 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             return placement.ToString().ToLower();
         }
+
+	    public void IncludeJqueryUi()
+	    {
+			if (!this.Cruncher.HasJsItem("jquery-ui"))
+			{
+				this.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery-ui", OrderOptions.Middle);
+				this.Cruncher.AddCssInline(Resources.jquery_ui_min_css, "jquery-ui-css", OrderOptions.Middle);
+			}
+	    }
 
         #endregion
 

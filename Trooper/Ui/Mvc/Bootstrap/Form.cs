@@ -802,12 +802,6 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(dtpProps);
 
-            if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
-            {
-                this.Cruncher.AddJsInline(Resources.dateTimePicker_js, "dateTimePicker_js", OrderOptions.Middle);
-                this.Cruncher.AddLessInline(Resources.dateTimePicker_less, "dateTimePicker_less", OrderOptions.Middle);
-            }
-
             var format = string.Empty;
             var pickDate = false;
             var pickTime = false;
@@ -877,9 +871,18 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             result = this.MakeFormGroup(result, dtpProps);
 
+            var poProps = new Popover
+	        {
+				Content = "<div class=\"jquery-ui-datepicker\"></div>",
+		        Selector = string.Format("#{0} .date-select", dtpProps.Id),
+		        Behaviour = PopoverBehaviour.ClickThenClickOutside
+	        };
+
+            var popoverControl = this.Popover(poProps);
+
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
-                + "{{id:'{0}', formId:'{1}', pickDate:{2}, pickTime:{3}, pickSeconds:{4}, warnOnLeave:{5}, popoverPlacement:'{6}', format:'{7}', timezone:'{8}'}});",
+                + "{{id:'{0}', formId:'{1}', pickDate:{2}, pickTime:{3}, pickSeconds:{4}, warnOnLeave:{5}, popoverPlacement:'{6}', format:'{7}', timezone:'{8}', popoverId:'{9}'}});",
                 dtpProps.Id,
                 this.FormHeaderProps.Id,
                 pickDate.ToString(CultureInfo.InvariantCulture).ToLower(),
@@ -888,11 +891,20 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 this.GetJsBool(dtpProps.WarnOnLeave),
                 this.PopoverPlacementToString(dtpProps.PopoverPlacement),
                 format,
-                dtpProps.Timezone);
+                dtpProps.Timezone,
+                poProps.Id);
+
+			//this.IncludeJqueryUi();
+			
+			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
+			{
+				this.Cruncher.AddJsInline(Resources.dateTimePicker_js, "dateTimePicker_js", OrderOptions.Middle);
+				this.Cruncher.AddLessInline(Resources.dateTimePicker_less, "dateTimePicker_less", OrderOptions.Middle);
+			}
 
             this.Cruncher.AddJsInline(js, OrderOptions.Last);
 
-            this.Popover(new Popover { Content = "<div>Calander here</div>", Selector = string.Format("#{0} .date-select", dtpProps.Id) });
+	        
 
             return MvcHtmlString.Create(result);
         }
@@ -910,30 +922,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             return this.DateTimePicker(dtpProps);
         }
-
-		public MvcHtmlString Popover(Popover poProps)
-	    {
-			this.RegisterControl(poProps);
-
-			if (!this.Cruncher.HasJsItem("popover_js"))
-			{
-				this.Cruncher.AddJsInline(Resources.popover_js, "popover_js", OrderOptions.Middle);
-			}
-
-			var js = string.Format(
-                "new trooper.ui.control.popover({{id:'{0}', content:'{1}', title:'{2}', placement:'{3}', placementAutoAssist: {4}, selector:'{5}'}});",
-				poProps.Id,
-				poProps.Content == null ? string.Empty : poProps.Content.Replace("'", @"\'"),
-				poProps.Title == null ? string.Empty : poProps.Title.Replace("'", @"\'"),
-			    PopoverPlacementToString(poProps.Placement),
-                GetJsBool(poProps.PlacementAutoAssist),
-				poProps.Selector);
-
-			this.Cruncher.AddJsInline(js, OrderOptions.Last);
-
-			return new MvcHtmlString(string.Empty);
-	    }
-
+		
         public MvcHtmlString SearchBox(SearchBox sbProps)
         {
             this.RegisterControl(sbProps);

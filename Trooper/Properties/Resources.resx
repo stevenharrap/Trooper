@@ -208,9 +208,6 @@
   <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="jquery_ui_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="fonts_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\App\Ui\StdTemplate\content\styles\fonts.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -345,5 +342,11 @@
   </data>
   <data name="popover_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ui\mvc\bootstrap\content\scripts\popover.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="jquery_ui_min_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jqueryui\jquery-ui.min.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="jquery_ui_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jqueryui\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
