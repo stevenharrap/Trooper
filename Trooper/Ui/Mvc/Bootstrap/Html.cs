@@ -62,6 +62,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
                 this.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery_ui_min_js", OrderOptions.First);
 
+				this.Cruncher.AddCssInline(Resources.jquery_ui_min_css, "jquery_ui_min_css", OrderOptions.First);
+
                 this.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap_min_js", OrderOptions.First);
 
                 /*var ghw = urlHelper.Action("GetGhw", "Bootstrap");

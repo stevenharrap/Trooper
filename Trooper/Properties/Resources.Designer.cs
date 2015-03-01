@@ -391,9 +391,10 @@ namespace Trooper.Properties {
         ///    this.warnOnLeave = params.warnOnLeave;
         ///    this.popoverPlacement = params.popoverPlacement;
         ///    this.timezone = params.timezone;
+        ///    this.popoverId = params.popoverId;
         ///
         ///    this.init = function () {
-        ///    	$(&quot;body&quot;).on(&quot;#&quot; + this.id + &quot; .jquery-ui-datepicker&quot;, function () [rest of string was truncated]&quot;;.
+        ///    	this.popover().content(&apos;&lt;d [rest of string was truncated]&quot;;.
         /// </summary>
         public static string dateTimePicker_js {
             get {
@@ -580,6 +581,54 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /* css for timepicker */
+        ///.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+        ///.ui-timepicker-div dl { text-align: left; }
+        ///.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+        ///.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+        ///.ui-timepicker-div td { font-size: 90%; }
+        ///.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+        ///
+        ///.ui-timepicker-rtl{ direction: rtl; }
+        ///.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+        ///.ui-timepicker-r [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string jquery_ui_timepicker_addon_css {
+            get {
+                return ResourceManager.GetString("jquery_ui_timepicker_addon_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /*! jQuery Timepicker Addon - v1.5.0 - 2014-09-01
+        ///* http://trentrichardson.com/examples/timepicker
+        ///* Copyright (c) 2014 Trent Richardson; Licensed MIT */
+        ///(function ($) {
+        ///
+        ///	/*
+        ///	* Lets not redefine timepicker, Prevent &quot;Uncaught RangeError: Maximum call stack size exceeded&quot;
+        ///	*/
+        ///	$.ui.timepicker = $.ui.timepicker || {};
+        ///	if ($.ui.timepicker.version) {
+        ///		return;
+        ///	}
+        ///
+        ///	/*
+        ///	* Extend jQueryUI, get it started with our version number
+        ///	*/
+        ///	$.extend($.ui, {
+        ///		timepicker: {
+        ///			version: &quot;1.5.0&quot;
+        ///		}
+        ///	}) [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string jquery_ui_timepicker_addon_js {
+            get {
+                return ResourceManager.GetString("jquery_ui_timepicker_addon_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] LayoutView_cshtml {
@@ -691,14 +740,13 @@ namespace Trooper.Properties {
         ///	this.placementAutoAssist = params.placementAutoAssist;
         ///	this.selector = params.selector;
         ///	this.behaviour = params.behaviour;
-        ///	this._shownEvents = new Array();
         ///
         ///	this.init = function () {
-        ///		var p = $(this.selector).popover(
+        ///		$(this.selector).popover(
         ///		{
         ///			content: $.proxy(this.content, this),
         ///			html: true,
-        ///			placement: new Array(this.placementAutoA [rest of string was truncated]&quot;;.
+        ///			placement: new Array(this.placementAutoAssist ? &apos;auto &apos; : &apos;&apos;, this.placement).join( [rest of string was truncated]&quot;;.
         /// </summary>
         public static string popover_js {
             get {

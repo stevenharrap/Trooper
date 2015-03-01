@@ -11,15 +11,33 @@
     this.popoverId = params.popoverId;
 
     this.init = function () {
-        this.bsPopover().on('shown.bs.popover', $.proxy(this.showCalendar, this));
+    	this.popover().content('<div></div>');
+    	this.bsPopover().on('show.bs.popover', $.proxy(this.popoverShow, this));
+    	this.bsPopover().on('shown.bs.popover', $.proxy(this.popoverShown, this));
     };
 
-    this.showCalendar = function () {
-        $("#" + this.id + " .jquery-ui-datepicker").datepicker();
+    this.popoverShow = function () {
+    	$('body').append('<div id=\"' + this.id + '_tempArea\"></div>');
+    	var element = $('#' + this.id + '_tempArea');
+    	element.datetimepicker();
+    	var width = element.width();
+    	var height = element.height();
+    	element.remove();
+
+    	this.popover().content('<div style="width:' + width + 'px; height:' + height + 'px" class=\"jquery-ui-datetimepicker\"></div>');
+    };
+
+    this.popoverShown = function () {
+        $('#' + this.id + ' .jquery-ui-datetimepicker').datetimepicker();
+        this.popover().ignoreSelectors(new Array('button'));
+    };
+
+    this.popover = function () {
+    	return trooper.ui.registry.getPopover(this.popoverId);
     };
 
     this.bsPopover = function () {
-        return trooper.ui.registry.getPopover(this.popoverId).bsPopover();
+        return this.popover().bsPopover();
     };
 	
 	trooper.ui.registry.addControl(this.id, this, 'datetimepicker');

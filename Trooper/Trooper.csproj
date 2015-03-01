@@ -298,8 +298,10 @@
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\textareaBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\button.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\dateTimePicker.js.old" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\jqueryui\jquery-ui.min.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\jqueryui\jquery-ui.min.js" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery-ui-timepicker-addon.css" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery-ui-timepicker-addon.js" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery-ui.min.css" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jquery\jquery-ui.min.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Bootstrap\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Bootstrap\Form.cs" />

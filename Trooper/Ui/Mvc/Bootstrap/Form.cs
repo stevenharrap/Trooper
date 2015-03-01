@@ -873,12 +873,11 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var poProps = new Popover
 	        {
-				Content = "<div class=\"jquery-ui-datepicker\"></div>",
 		        Selector = string.Format("#{0} .date-select", dtpProps.Id),
 		        Behaviour = PopoverBehaviour.ClickThenClickOutside
 	        };
 
-            var popoverControl = this.Popover(poProps);
+            this.Popover(poProps);
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
@@ -898,13 +897,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			
 			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
 			{
+				this.Cruncher.AddJsInline(Resources.jquery_ui_timepicker_addon_js, "jquery_ui_timepicker_addon_js", OrderOptions.Middle);
+				this.Cruncher.AddCssInline(Resources.jquery_ui_timepicker_addon_css, "jquery_ui_timepicker_addon_css", OrderOptions.Middle);
 				this.Cruncher.AddJsInline(Resources.dateTimePicker_js, "dateTimePicker_js", OrderOptions.Middle);
 				this.Cruncher.AddLessInline(Resources.dateTimePicker_less, "dateTimePicker_less", OrderOptions.Middle);
 			}
 
             this.Cruncher.AddJsInline(js, OrderOptions.Last);
-
-	        
 
             return MvcHtmlString.Create(result);
         }
