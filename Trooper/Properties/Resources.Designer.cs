@@ -740,13 +740,14 @@ namespace Trooper.Properties {
         ///	this.placementAutoAssist = params.placementAutoAssist;
         ///	this.selector = params.selector;
         ///	this.behaviour = params.behaviour;
+        ///    this._ignoreSelectors = new Array();
         ///
         ///	this.init = function () {
         ///		$(this.selector).popover(
         ///		{
         ///			content: $.proxy(this.content, this),
         ///			html: true,
-        ///			placement: new Array(this.placementAutoAssist ? &apos;auto &apos; : &apos;&apos;, this.placement).join( [rest of string was truncated]&quot;;.
+        ///			placement: new Array(this.placementAutoAs [rest of string was truncated]&quot;;.
         /// </summary>
         public static string popover_js {
             get {
