@@ -35,10 +35,8 @@
 	};
 
 	this.outsideSelectorClickAndHide = function (e) {
-	    debugger;
-
 	    for (var i = 0; i < this._ignoreSelectors.length; i++) {
-	        if ($(e.target).is(i)) {
+	        if ($(e.target).is(this._ignoreSelectors[i])) {
 	            return;
 	        }
 	    }
@@ -54,41 +52,10 @@
 		}
 
 		debugger;
-		
-		var contentElement = $(this.selector).parent().find('.popover')[0];
-		var clickedElement = e.target;
-
-		/*if (contentElement == clickedElement) {
-		    return;
-		}
-        
-		debugger;
-
-		var parent = clickedElement;
-
-		while (parent != null) {
-		    if (parent == contentElement) {
-		        return;
-		    }
-
-		    parent = parent.parentElement;
-		}*/
-
-
-		/*if ($.contains(contentElement, clickElement)) {
-			return;
-		}*/		
 
 		$(this.selector).popover('hide');
 
-		/*$('[data-original-title]').each(function () {
-			if (!$(this).is(e.target)
-				&& $(this).has(e.target).length === 0
-				&& $('.popover').has(e.target).length === 0) {
-				debugger;
-				$(this).popover('hide');
-			}
-		});*/
+		alert($(e.target).html());
 	};
 
 	this.setupAnywhereClickAndHide = function () {

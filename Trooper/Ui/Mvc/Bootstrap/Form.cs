@@ -879,6 +879,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.Popover(poProps);
 
+            this.IncludeJqueryUi();
+
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
                 + "{{id:'{0}', formId:'{1}', pickDate:{2}, pickTime:{3}, pickSeconds:{4}, warnOnLeave:{5}, popoverPlacement:'{6}', format:'{7}', timezone:'{8}', popoverId:'{9}'}});",
@@ -893,8 +895,6 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 dtpProps.Timezone,
                 poProps.Id);
 
-			//this.IncludeJqueryUi();
-			
 			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
 			{
 				this.Cruncher.AddJsInline(Resources.jquery_ui_timepicker_addon_js, "jquery_ui_timepicker_addon_js", OrderOptions.Middle);

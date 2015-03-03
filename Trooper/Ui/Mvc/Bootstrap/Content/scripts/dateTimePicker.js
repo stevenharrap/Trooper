@@ -12,8 +12,9 @@
 
     this.init = function () {
     	this.popover().content('<div></div>');
+    	this.popover().ignoreSelectors(new Array("[data-event='click']"));
     	this.bsPopover().on('show.bs.popover', $.proxy(this.popoverShow, this));
-    	this.bsPopover().on('shown.bs.popover', $.proxy(this.popoverShown, this));
+    	this.bsPopover().on('shown.bs.popover', $.proxy(this.popoverShown, this));        
     };
 
     this.popoverShow = function () {
@@ -29,7 +30,7 @@
 
     this.popoverShown = function () {
         $('#' + this.id + ' .jquery-ui-datetimepicker').datetimepicker();
-        this.popover().ignoreSelectors(new Array('button'));
+        
     };
 
     this.popover = function () {

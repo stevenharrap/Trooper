@@ -60,14 +60,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
                 this.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery_min_js", OrderOptions.First);
 
-                this.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery_ui_min_js", OrderOptions.First);
-
-				this.Cruncher.AddCssInline(Resources.jquery_ui_min_css, "jquery_ui_min_css", OrderOptions.First);
-
                 this.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap_min_js", OrderOptions.First);
-
-                /*var ghw = urlHelper.Action("GetGhw", "Bootstrap");
-                var gh = urlHelper.Action("GetGh", "Bootstrap");*/
 
                 var ghre = urlHelper.Action("GetGhrEot", "Bootstrap");
                 var ghrs = urlHelper.Action("GetGhrSvg", "Bootstrap");
@@ -77,9 +70,6 @@ namespace Trooper.Ui.Mvc.Bootstrap
                 var getBootstrapCssMap = urlHelper.Action("GetBootstrapCssMap", "Bootstrap");
 
                 var css = Resources.bootstrap_css;
-
-                /*css = css.Replace("../img/glyphicons-halflings-white.png", ghw);
-                css = css.Replace("../img/glyphicons-halflings.png", gh);*/
 
                 css = css.Replace("../fonts/glyphicons-halflings-regular.eot", ghre);
                 css = css.Replace("../fonts/glyphicons-halflings-regular.woff", ghrw);
