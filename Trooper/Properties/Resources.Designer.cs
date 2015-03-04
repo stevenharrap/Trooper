@@ -556,6 +556,38 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /*!
+        /// * jQuery UI Bootstrap (0.5)
+        /// * http://addyosmani.github.com/jquery-ui-bootstrap
+        /// *
+        /// * Copyright 2012 - 2013, Addy Osmani
+        /// * Dual licensed under the MIT or GPL Version 2 licenses.
+        /// *
+        /// * Portions copyright jQuery UI &amp; Twitter Bootstrap
+        /// */
+        ///
+        ///
+        ////* Layout helpers
+        ///----------------------------------*/
+        ///.ui-helper-hidden { display: none; }
+        ///.ui-helper-hidden-accessible { 
+        ///  border: 0; clip: rect(0 0 0 0);
+        ///  height: 1px; 
+        ///  margin: -1px; 
+        ///  overflow: hidden; 
+        ///  padding: 0; 
+        ///  position: absolute; 
+        ///  width: 1px; 
+        ///}
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string jquery_ui_1_10_0_custom_css {
+            get {
+                return ResourceManager.GetString("jquery_ui_1_10_0_custom_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /*! jQuery UI - v1.11.3 - 2015-02-26
         ///* http://jqueryui.com
         ///* Includes: core.css, draggable.css, resizable.css, selectable.css, sortable.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, menu.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css
@@ -1282,6 +1314,146 @@ namespace Trooper.Properties {
         public static System.Drawing.Bitmap trooper_png {
             get {
                 object obj = ResourceManager.GetObject("trooper_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_flat_0_aaaaaa_40x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_flat_0_aaaaaa_40x100_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_55_fbf9ee_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_55_fbf9ee_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_65_ffffff_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_65_ffffff_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_75_dadada_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_75_dadada_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_75_e6e6e6_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_75_e6e6e6_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_75_ffffff_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_75_ffffff_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_highlight_soft_75_cccccc_1x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_highlight_soft_75_cccccc_1x100_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_inset_soft_95_fef1ec_1x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_inset_soft_95_fef1ec_1x100_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_222222_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_222222_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_2e83ff_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_2e83ff_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_454545_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_454545_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_888888_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_888888_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_cd0a0a_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_cd0a0a_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_f6cf3b_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_f6cf3b_256x240_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
