@@ -12,7 +12,7 @@
 
     this.init = function () {
     	this.popover().content('<div></div>');
-    	this.popover().ignoreSelectors(new Array("[data-event='click']"));
+    	this.popover().ignoreSelectors(new Array(".jquery-ui-datetimepicker", ".trooper-ui-dtp-component"));
     	this.bsPopover().on('show.bs.popover', $.proxy(this.popoverShow, this));
     	this.bsPopover().on('shown.bs.popover', $.proxy(this.popoverShown, this));        
     };
@@ -29,8 +29,12 @@
     };
 
     this.popoverShown = function () {
-        $('#' + this.id + ' .jquery-ui-datetimepicker').datetimepicker();
-        
+        $('#' + this.id + ' .jquery-ui-datetimepicker').datetimepicker(
+            {
+                onChangeMonthYear: $.proxy(this.addDtpClass, this)
+            });
+
+    	this.addDtpClass();
     };
 
     this.popover = function () {
@@ -39,6 +43,10 @@
 
     this.bsPopover = function () {
         return this.popover().bsPopover();
+    };
+
+    this.addDtpClass = function () {
+        $('#' + this.id + ' .jquery-ui-datetimepicker *').addClass('trooper-ui-dtp-component');
     };
 	
 	trooper.ui.registry.addControl(this.id, this, 'datetimepicker');

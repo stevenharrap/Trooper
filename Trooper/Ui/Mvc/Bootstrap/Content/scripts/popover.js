@@ -51,11 +51,7 @@
 			return;
 		}
 
-		debugger;
-
 		$(this.selector).popover('hide');
-
-		alert($(e.target).html());
 	};
 
 	this.setupAnywhereClickAndHide = function () {

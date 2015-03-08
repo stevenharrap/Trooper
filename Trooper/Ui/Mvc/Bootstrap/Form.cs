@@ -4,30 +4,27 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-using System.Web.Mvc.Html;
-
 namespace Trooper.Ui.Mvc.Bootstrap
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Text.RegularExpressions;
-    using System.Web;
-    using System.Web.Helpers;
-    using System.Web.Mvc;
-    using Trooper.BusinessOperation2;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.BusinessOperation2.Utility;
-    using Trooper.Properties;
-    using Trooper.Ui.Interface.Mvc.Cruncher;
-    using Trooper.Ui.Mvc.Bootstrap.Controls;
-    using Trooper.Ui.Mvc.Bootstrap.Models;
-    using Trooper.Ui.Mvc.Cruncher;
-    using Trooper.Utility;
+	using System;
+	using System.Collections.Generic;
+	using System.Globalization;
+	using System.Linq;
+	using System.Linq.Expressions;
+	using System.Web;
+	using System.Web.Helpers;
+	using System.Web.Mvc;
+	using System.Web.Mvc.Html;
+	using BusinessOperation2;
+	using BusinessOperation2.Interface.OperationResponse;
+	using BusinessOperation2.Utility;
+	using Properties;
+	using Interface.Mvc.Cruncher;
+	using Controls;
+	using Models;
+	using Trooper.Utility;
 
-    /// <summary>
+	/// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides
     /// flexible device independent display. This class provides a list of form controls with
     /// extra help from Bootstrap and JQuery for a better user experience. Using this class 
@@ -40,16 +37,17 @@ namespace Trooper.Ui.Mvc.Bootstrap
     /// </typeparam>
     public class Form<TModel> : Html<TModel>
     {
-        public FormHeader FormHeaderProps { get; set; }               
+        public FormHeader FormHeaderProps { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Form{TModel}"/> class.
-        /// By instantiating this the Html class will inject the JQuery and Bootstrap JS and CSS classes.
-        /// </summary>
-        /// <param name="htmlHelper">
-        /// The html helper.
-        /// </param>
-        public Form(HtmlHelper<TModel> htmlHelper, FormHeader fhProps)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Form{TModel}"/> class.
+		/// By instantiating this the Html class will inject the JQuery and Bootstrap JS and CSS classes.
+		/// </summary>
+		/// <param name="htmlHelper">
+		/// The html helper.
+		/// </param>
+		/// <param name="fhProps"></param>
+		public Form(HtmlHelper<TModel> htmlHelper, FormHeader fhProps)
             : base(htmlHelper)
         {
             this.FormHeaderProps = fhProps;
@@ -219,7 +217,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var output = this.MakeTextBox(tbProps, false);
 
-            output = this.MakeInputGroup(output + "<span class=\"input-group-addon\">%</span>\n", pProps);
+            output = this.MakeInputGroup(output + "<span class=\"input-group-addon\">%</span>\n");
 
             output = this.MakeFormGroup(output, pProps);
 
@@ -267,7 +265,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var output = this.MakeTextBox(tbProps, false);
 
-            output = this.MakeInputGroup("<span class=\"input-group-addon\">$</span>\n" + output, cProps);
+            output = this.MakeInputGroup("<span class=\"input-group-addon\">$</span>\n" + output);
 
             output = this.MakeFormGroup(output, cProps);
 
@@ -1032,7 +1030,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return string.Format("<div {0}>\n{1}</div>\n", this.MakeClassAttribute(classes), contents);
         }
 
-        private string MakeInputGroup(string contents, FormControl cbase) 
+        private string MakeInputGroup(string contents) 
         {
             return string.Format("<div class=\"input-group\">{0}</div>\n", contents);
         }
@@ -1138,7 +1136,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
         /// parameter and class property ControlsEnabled. If disabled
         /// is then class property determines the outcome. 
         /// </summary>
-        /// <param name="disabled">The value passed directly to the method</param>
+        /// <param name="enabled">The value passed directly to the method</param>
         /// <returns>True if the control should be enabled</returns>
         private bool IsControlEnabled(bool? enabled)
         {

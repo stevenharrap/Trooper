@@ -48,45 +48,17 @@ namespace Trooper.Ui.Mvc.Bootstrap
         public Html(HtmlHelper<TModel> htmlHelper)
         {
             this.HtmlHelper = htmlHelper;
-
             this.ControlsRegister = new Dictionary<string, HtmlControl>();
-
             this.UrlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-
             this.Cruncher = new Cruncher(htmlHelper);
 
-            if (!this.Cruncher.HasCssItem("BootstrapHtmlHelper_less"))
+            this.IncludeJquery();
+			this.IncludeBootstrap();
+
+            if (!this.Cruncher.HasJsItem("trooper"))
             {
-                var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-
-                this.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery_min_js", OrderOptions.First);
-
-                this.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap_min_js", OrderOptions.First);
-
-                var ghre = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularEot");
-                var ghrs = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsReguarSvg");
-                var ghrt = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularTtf");
-                var ghrw = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularWoff");
-                var ghrw2 = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularWoff2");
-                var getBootstrapCssMap = BootstrapController.MakeAction(urlHelper, "bootstrap_css_map");
-
-                var css = Resources.bootstrap_css;
-
-                css = css.Replace("../fonts/glyphicons-halflings-regular.eot", ghre);
-                css = css.Replace("../fonts/glyphicons-halflings-regular.woff", ghrw);
-                css = css.Replace("../fonts/glyphicons-halflings-regular.woff2", ghrw2);
-                css = css.Replace("../fonts/glyphicons-halflings-regular.ttf", ghrt);
-                css = css.Replace("../fonts/glyphicons-halflings-regular.svg", ghrs);
-                css = css.Replace("bootstrap.css.map", getBootstrapCssMap);
-
-                this.Cruncher.AddCssInline(css, "bootstrap_css", OrderOptions.First);
-
-                this.Cruncher.AddLessInline(Resources.trooper_less, "trooper_less", OrderOptions.First);
-            }
-
-            if (!this.Cruncher.HasJsItem("trooper_js"))
-            {
-                this.Cruncher.AddJsInline(Resources.trooper_js, "trooper_js", OrderOptions.Middle);
+                this.Cruncher.AddJsInline(Resources.trooper_js, "trooper", OrderOptions.Middle);
+				this.Cruncher.AddLessInline(Resources.trooper_less, "trooper_less", OrderOptions.Middle);
             }
         }
 
@@ -630,6 +602,42 @@ namespace Trooper.Ui.Mvc.Bootstrap
             return placement.ToString().ToLower();
         }
 
+	    public void IncludeJquery()
+	    {
+			if (!this.Cruncher.HasJsItem("jquery"))
+			{
+				this.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery", OrderOptions.First);
+			}
+	    }
+
+	    public void IncludeBootstrap()
+	    {
+			if (!this.Cruncher.HasJsItem("bootstrap"))
+			{
+				var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+
+				this.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap", OrderOptions.First);
+
+				var ghre = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularEot");
+				var ghrs = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsReguarSvg");
+				var ghrt = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularTtf");
+				var ghrw = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularWoff");
+				var ghrw2 = BootstrapController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularWoff2");
+				var getBootstrapCssMap = BootstrapController.MakeAction(urlHelper, "bootstrap_css_map");
+
+				var css = Resources.bootstrap_css;
+
+				css = css.Replace("../fonts/glyphicons-halflings-regular.eot", ghre);
+				css = css.Replace("../fonts/glyphicons-halflings-regular.woff", ghrw);
+				css = css.Replace("../fonts/glyphicons-halflings-regular.woff2", ghrw2);
+				css = css.Replace("../fonts/glyphicons-halflings-regular.ttf", ghrt);
+				css = css.Replace("../fonts/glyphicons-halflings-regular.svg", ghrs);
+				css = css.Replace("bootstrap.css.map", getBootstrapCssMap);
+
+				this.Cruncher.AddCssInline(css, "bootstrap_css", OrderOptions.First);
+			}
+	    }
+
 	    public void IncludeJqueryUi()
 	    {
 			if (!this.Cruncher.HasJsItem("jquery-ui"))
@@ -639,20 +647,20 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
                 var jqueryTheme = Resources.jquery_ui_1_10_0_custom_css;
                                 
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_flat_0_aaaaaa_40x100.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_flat_0_aaaaaa_40x100_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_glass_55_fbf9ee_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_55_fbf9ee_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_glass_65_ffffff_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_65_ffffff_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_glass_75_dadada_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_75_dadada_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_glass_75_e6e6e6_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_75_e6e6e6_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_glass_75_ffffff_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_75_ffffff_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_highlight_soft_75_cccccc_1x100.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_highlight_soft_75_cccccc_1x100_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_bg_inset_soft_95_fef1ec_1x100.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_inset_soft_95_fef1ec_1x100_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_icons_222222_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_222222_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_icons_2e83ff_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_2e83ff_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_icons_454545_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_454545_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_icons_888888_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_888888_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_icons_cd0a0a_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_cd0a0a_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui_icons_f6cf3b_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_f6cf3b_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_flat_0_aaaaaa_40x100.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_flat_0_aaaaaa_40x100_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_55_fbf9ee_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_55_fbf9ee_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_65_ffffff_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_65_ffffff_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_dadada_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_75_dadada_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_e6e6e6_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_75_e6e6e6_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_ffffff_1x400.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_glass_75_ffffff_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_highlight_soft_75_cccccc_1x100.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_highlight_soft_75_cccccc_1x100_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_inset_soft_95_fef1ec_1x100.png", BootstrapController.MakeAction(this.UrlHelper, "ui_bg_inset_soft_95_fef1ec_1x100_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_222222_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_222222_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_2e83ff_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_2e83ff_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_454545_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_454545_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_888888_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_888888_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_cd0a0a_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_cd0a0a_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_f6cf3b_256x240.png", BootstrapController.MakeAction(this.UrlHelper, "ui_icons_f6cf3b_256x240_png"));
 
                 this.Cruncher.AddCssInline(jqueryTheme, "jquery-ui-theme", OrderOptions.Middle);
 			}
