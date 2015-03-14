@@ -82,6 +82,10 @@
 		}
 	};
 
+	this.contentElement = function () {
+	    return $(this.selector).parent().find('.popover .popover-content');
+	};
+
 	this.isOpen = function() {
 		var element = $(this.selector);
 
@@ -93,6 +97,7 @@
 
 	return {
 	    content: $.proxy(this.content, this),
+	    contentElement: $.proxy(this.contentElement, this),
 	    isOpen: $.proxy(this.isOpen, this),
 	    bsPopover: $.proxy(this.bsPopover, this),
 	    ignoreSelectors: $.proxy(this.ignoreSelectors, this)

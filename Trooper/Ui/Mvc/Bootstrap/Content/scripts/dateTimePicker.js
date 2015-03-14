@@ -21,20 +21,24 @@
     	$('body').append('<div id=\"' + this.id + '_tempArea\"></div>');
     	var element = $('#' + this.id + '_tempArea');
     	element.datetimepicker();
-    	var width = element.width();
-    	var height = element.height();
+    	var width = element.find('.ui-datepicker-inline').width();
+    	var height = element.find('.ui-datepicker-inline').height();
     	element.remove();
 
-    	this.popover().content('<div style="width:' + width + 'px; height:' + height + 'px" class=\"jquery-ui-datetimepicker\"></div>');
+    	this.popover().content('<div style="width:' + width + 'px; height:' + height + 'px" class=\"jquery-ui-datetimepicker\"></div>');        
     };
 
     this.popoverShown = function () {
         $('#' + this.id + ' .jquery-ui-datetimepicker').datetimepicker(
             {
-                onChangeMonthYear: $.proxy(this.addDtpClass, this)
+                onChangeMonthYear: $.proxy(this.afterRender, this),
+                onSelect: $.proxy(this.afterRender, this),
+                prevText: '',
+                nextText: ''
             });
-
-    	this.addDtpClass();
+        
+        this.afterRender();
+        //this.popover().contentElement().css('padding', 0);
     };
 
     this.popover = function () {
@@ -45,8 +49,17 @@
         return this.popover().bsPopover();
     };
 
-    this.addDtpClass = function () {
+    this.afterRender = function () {
+        setTimeout($.proxy(this.fixStyling, this), 10);
+    };
+
+    this.fixStyling = function () {
         $('#' + this.id + ' .jquery-ui-datetimepicker *').addClass('trooper-ui-dtp-component');
+
+        $('#' + this.id + ' .ui-icon-circle-triangle-w').addClass('glyphicon glyphicon-chevron-left');
+        $('#' + this.id + ' .ui-icon-circle-triangle-w').removeClass('ui-icon ui-icon-circle-triangle-w');
+        $('#' + this.id + ' .ui-icon-circle-triangle-e').addClass('glyphicon glyphicon-chevron-right')
+        $('#' + this.id + ' .ui-icon-circle-triangle-e').removeClass('ui-icon ui-icon-circle-triangle-e');
     };
 	
 	trooper.ui.registry.addControl(this.id, this, 'datetimepicker');
