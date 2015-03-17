@@ -47,7 +47,17 @@
 
 		var popoverContent = $(this.selector).parent().find('.popover');
 
-		if (popoverContent.length == 0) {
+		if (popoverContent.length === 0) {
+			return;
+		}
+
+		var element = $(e.target)[0];
+
+		while (element != null && element != popoverContent[0]) {
+			element = element.parentElement;
+		}
+
+		if (element != null && element == popoverContent[0]) {
 			return;
 		}
 
@@ -94,6 +104,7 @@
 
 	trooper.ui.registry.addControl(this.id, this, 'popover');
 	$(document).ready($.proxy(this.init, this));
+	//this.content('<div></div>');
 
 	return {
 	    content: $.proxy(this.content, this),

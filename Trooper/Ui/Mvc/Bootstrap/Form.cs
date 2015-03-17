@@ -872,7 +872,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
             var poProps = new Popover
 	        {
 		        Selector = string.Format("#{0} .date-select", dtpProps.Id),
-		        Behaviour = PopoverBehaviour.ClickThenClickOutside
+		        Behaviour = PopoverBehaviour.ClickThenClickOutside,
+				Placement = PopoverPlacements.Top,
+				PlacementAutoAssist = true,
 	        };
 
             this.Popover(poProps);

@@ -315,6 +315,7 @@
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\jquery-ui-1.10.0.custom.css" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui\jquery-ui.min.css" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\moment\moment.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Bootstrap\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Bootstrap\Form.cs" />
