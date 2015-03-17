@@ -400,4 +400,7 @@
   <data name="ui_icons_f6cf3b_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_f6cf3b_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="moment_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\moment\moment.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>
