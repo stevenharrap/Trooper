@@ -877,7 +877,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             this.Popover(poProps);
 
-            this.IncludeJqueryUi();
+			this.IncludeMoment();
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
@@ -895,8 +895,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
 			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
 			{
-				this.Cruncher.AddJsInline(Resources.jquery_ui_timepicker_addon_js, "jquery_ui_timepicker_addon_js", OrderOptions.Middle);
-				this.Cruncher.AddCssInline(Resources.jquery_ui_timepicker_addon_css, "jquery_ui_timepicker_addon_css", OrderOptions.Middle);
+				this.IncludeMoment();
 				this.Cruncher.AddJsInline(Resources.dateTimePicker_js, "dateTimePicker_js", OrderOptions.Middle);
 				this.Cruncher.AddLessInline(Resources.dateTimePicker_less, "dateTimePicker_less", OrderOptions.Middle);
 			}

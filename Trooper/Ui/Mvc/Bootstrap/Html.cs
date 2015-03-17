@@ -666,6 +666,14 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			}
 	    }
 
+	    public void IncludeMoment()
+	    {
+		    if (!this.Cruncher.HasJsItem("moment.js"))
+		    {
+				this.Cruncher.AddJsInline(Resources.moment_js, "moment.js", OrderOptions.Middle);
+		    }
+	    }
+
         #endregion
 
         #endregion

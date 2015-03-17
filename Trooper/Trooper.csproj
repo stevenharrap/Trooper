@@ -313,8 +313,6 @@
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\images\ui-icons_f6cf3b_256x240.png" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\jquery-ui-1.10.0.custom.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-datetimepicker-addon\jquery-ui-timepicker-addon.css" />
-    <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-datetimepicker-addon\jquery-ui-timepicker-addon.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui\jquery-ui.min.css" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui\jquery-ui.min.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\scripts\popover.js" />
