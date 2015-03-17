@@ -50,7 +50,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
 		public Form(HtmlHelper<TModel> htmlHelper, FormHeader fhProps)
             : base(htmlHelper)
         {
-            this.FormHeaderProps = fhProps;
+            this.FormHeaderProps = fhProps;////booooooom!
 
             this.RegisterControl(this.FormHeaderProps);
 
