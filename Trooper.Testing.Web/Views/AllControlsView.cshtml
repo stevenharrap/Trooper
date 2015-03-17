@@ -35,11 +35,6 @@
 <body>
     @bsf.BeginForm()
 
-    <div id="ttt"></div>
-    <script type="text/javascript">
-        $('#ttt').datepicker();
-    </script>
-
     <div class="container">
         <h2>BSF Test Area</h2>       
 
@@ -86,13 +81,13 @@
 
 	    <div class="row">
 		    <div class="col-xs-4">
-			    @bsf.Popover(new Popover {ContentFunc = @<text>He's a popover</text>, Title = "It's popping", Selector = "#simple-popover-1"})
+			    @bsf.Popover(new Popover {ContentFunc = @<text>He's a hover popover</text>, Title = "It's popping", Selector = "#simple-popover-1"})
 			    <h4><span class="label label-default" id="simple-popover-1">I'm a hovering popover - hover me!</span></h4>
 
-			    @bsf.Popover(new Popover {ContentFunc = @<text>He's a popover</text>, Title = "It's popping", Selector = "#simple-popover-2", Behaviour = PopoverBehaviour.ClickThenClickAnywhere})
+			    @bsf.Popover(new Popover {ContentFunc = @<text>He's an anywhere popover</text>, Title = "It's popping", Selector = "#simple-popover-2", Behaviour = PopoverBehaviour.ClickThenClickAnywhere})
 			    <h4><span class="label label-default" id="simple-popover-2">Click me then click anywhere again!</span></h4>
 
-				@bsf.Popover(new Popover {ContentFunc = @<text>He's a popover</text>, Title = "It's popping", Selector = "#simple-popover-3", Behaviour = PopoverBehaviour.ClickThenClickOutside})
+				@bsf.Popover(new Popover {ContentFunc = @<text>He's an outside popover</text>, Title = "It's popping", Selector = "#simple-popover-3", Behaviour = PopoverBehaviour.ClickThenClickOutside})
 			    <h4><span class="label label-default" id="simple-popover-3">Click me then click outside the popover!</span></h4>
 
 			    @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date})

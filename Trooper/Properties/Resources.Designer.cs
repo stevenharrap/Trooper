@@ -391,9 +391,10 @@ namespace Trooper.Properties {
         ///    this.warnOnLeave = params.warnOnLeave;
         ///    this.popoverPlacement = params.popoverPlacement;
         ///    this.timezone = params.timezone;
+        ///    this.popoverId = params.popoverId;
         ///
         ///    this.init = function () {
-        ///    	$(&quot;body&quot;).on(&quot;#&quot; + this.id + &quot; .jquery-ui-datepicker&quot;, function () [rest of string was truncated]&quot;;.
+        ///    	this.popover().content(&apos;&lt;d [rest of string was truncated]&quot;;.
         /// </summary>
         public static string dateTimePicker_js {
             get {
@@ -555,6 +556,38 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /*!
+        /// * jQuery UI Bootstrap (0.5)
+        /// * http://addyosmani.github.com/jquery-ui-bootstrap
+        /// *
+        /// * Copyright 2012 - 2013, Addy Osmani
+        /// * Dual licensed under the MIT or GPL Version 2 licenses.
+        /// *
+        /// * Portions copyright jQuery UI &amp; Twitter Bootstrap
+        /// */
+        ///
+        ///
+        ////* Layout helpers
+        ///----------------------------------*/
+        ///.ui-helper-hidden { display: none; }
+        ///.ui-helper-hidden-accessible { 
+        ///  border: 0; clip: rect(0 0 0 0);
+        ///  height: 1px; 
+        ///  margin: -1px; 
+        ///  overflow: hidden; 
+        ///  padding: 0; 
+        ///  position: absolute; 
+        ///  width: 1px; 
+        ///}
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string jquery_ui_1_10_0_custom_css {
+            get {
+                return ResourceManager.GetString("jquery_ui_1_10_0_custom_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /*! jQuery UI - v1.11.3 - 2015-02-26
         ///* http://jqueryui.com
         ///* Includes: core.css, draggable.css, resizable.css, selectable.css, sortable.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, menu.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css
@@ -576,6 +609,54 @@ namespace Trooper.Properties {
         public static string jquery_ui_min_js {
             get {
                 return ResourceManager.GetString("jquery_ui_min_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /* css for timepicker */
+        ///.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+        ///.ui-timepicker-div dl { text-align: left; }
+        ///.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+        ///.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+        ///.ui-timepicker-div td { font-size: 90%; }
+        ///.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+        ///
+        ///.ui-timepicker-rtl{ direction: rtl; }
+        ///.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+        ///.ui-timepicker-r [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string jquery_ui_timepicker_addon_css {
+            get {
+                return ResourceManager.GetString("jquery_ui_timepicker_addon_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /*! jQuery Timepicker Addon - v1.5.0 - 2014-09-01
+        ///* http://trentrichardson.com/examples/timepicker
+        ///* Copyright (c) 2014 Trent Richardson; Licensed MIT */
+        ///(function ($) {
+        ///
+        ///	/*
+        ///	* Lets not redefine timepicker, Prevent &quot;Uncaught RangeError: Maximum call stack size exceeded&quot;
+        ///	*/
+        ///	$.ui.timepicker = $.ui.timepicker || {};
+        ///	if ($.ui.timepicker.version) {
+        ///		return;
+        ///	}
+        ///
+        ///	/*
+        ///	* Extend jQueryUI, get it started with our version number
+        ///	*/
+        ///	$.extend($.ui, {
+        ///		timepicker: {
+        ///			version: &quot;1.5.0&quot;
+        ///		}
+        ///	}) [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string jquery_ui_timepicker_addon_js {
+            get {
+                return ResourceManager.GetString("jquery_ui_timepicker_addon_js", resourceCulture);
             }
         }
         
@@ -691,14 +772,14 @@ namespace Trooper.Properties {
         ///	this.placementAutoAssist = params.placementAutoAssist;
         ///	this.selector = params.selector;
         ///	this.behaviour = params.behaviour;
-        ///	this._shownEvents = new Array();
+        ///    this._ignoreSelectors = new Array();
         ///
         ///	this.init = function () {
-        ///		var p = $(this.selector).popover(
+        ///		$(this.selector).popover(
         ///		{
         ///			content: $.proxy(this.content, this),
         ///			html: true,
-        ///			placement: new Array(this.placementAutoA [rest of string was truncated]&quot;;.
+        ///			placement: new Array(this.placementAutoAs [rest of string was truncated]&quot;;.
         /// </summary>
         public static string popover_js {
             get {
@@ -1233,6 +1314,146 @@ namespace Trooper.Properties {
         public static System.Drawing.Bitmap trooper_png {
             get {
                 object obj = ResourceManager.GetObject("trooper_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_flat_0_aaaaaa_40x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_flat_0_aaaaaa_40x100_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_55_fbf9ee_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_55_fbf9ee_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_65_ffffff_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_65_ffffff_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_75_dadada_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_75_dadada_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_75_e6e6e6_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_75_e6e6e6_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_glass_75_ffffff_1x400_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_glass_75_ffffff_1x400_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_highlight_soft_75_cccccc_1x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_highlight_soft_75_cccccc_1x100_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_bg_inset_soft_95_fef1ec_1x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_inset_soft_95_fef1ec_1x100_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_222222_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_222222_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_2e83ff_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_2e83ff_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_454545_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_454545_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_888888_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_888888_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_cd0a0a_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_cd0a0a_256x240_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ui_icons_f6cf3b_256x240_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_icons_f6cf3b_256x240_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

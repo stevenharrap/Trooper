@@ -205,9 +205,6 @@
   <data name="GlyphiconsHalflingsRegularWoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="fonts_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\App\Ui\StdTemplate\content\styles\fonts.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -343,10 +340,64 @@
   <data name="popover_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ui\mvc\bootstrap\content\scripts\popover.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="jquery_ui_min_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jqueryui\jquery-ui.min.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\ui\mvc\bootstrap\content\jquery-ui\jquery-ui.min.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="jquery_ui_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jqueryui\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\ui\mvc\bootstrap\content\jquery-ui\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="jquery_ui_timepicker_addon_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-datetimepicker-addon\jquery-ui-timepicker-addon.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="jquery_ui_timepicker_addon_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-datetimepicker-addon\jquery-ui-timepicker-addon.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="jquery_ui_1_10_0_custom_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\jquery-ui-1.10.0.custom.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ui_bg_flat_0_aaaaaa_40x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_flat_0_aaaaaa_40x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_glass_55_fbf9ee_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_55_fbf9ee_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_glass_65_ffffff_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_65_ffffff_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_glass_75_dadada_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_dadada_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_glass_75_e6e6e6_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_e6e6e6_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_glass_75_ffffff_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_ffffff_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_highlight_soft_75_cccccc_1x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_highlight-soft_75_cccccc_1x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_inset_soft_95_fef1ec_1x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_inset-soft_95_fef1ec_1x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_icons_222222_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_222222_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_icons_2e83ff_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_2e83ff_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_icons_454545_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_454545_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_icons_888888_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_888888_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_icons_cd0a0a_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_cd0a0a_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_icons_f6cf3b_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_f6cf3b_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
