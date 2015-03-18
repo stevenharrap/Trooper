@@ -47,7 +47,7 @@
     		html += '<tr>';
 
 			for (var d = 0; d < 7; d++) {
-				html += '<td class="day-'+ i +'"></td>';
+				html += '<td class="day day-'+ i +'"></td>';
 				i++;
 			}
 
@@ -64,46 +64,76 @@
     this.popoverShown = function () {
     	this.contentElement().find('.go-prev-month').click($.proxy(this.goPrevMonth, this));
     	this.contentElement().find('.go-next-month').click($.proxy(this.goNextMonth, this));
+    	this.contentElement().find('.year').change($.proxy(this.yearChanged, this));
 
-    	var now = moment();
-
-	    this.updateCalendar(now);
+	    this.restorCalendar();
     };
 
 	this.updateCalendar = function(value) {
-		var lastMonth = moment(value).subtract(1, 'month');
-		lastMonth.endOf('month');
-		var lastWeekDayLastMonth = lastMonth.day();
-
-		var nextMonth = moment(value).add(1, 'month');
-		nextMonth.set('date', 1);
-		var firstWeekDayNextMonth = nextMonth.day();
-
-		this.contentElement().find('.month').text(value.format('MMMM'));
-
 		this.valAsMoment(value);
+
+		var prevMonthLastWeekDay = moment(value);
+		prevMonthLastWeekDay.subtract(1, 'month');
+		prevMonthLastWeekDay.endOf('month');
+
+		var lastDayOfthisMonth = moment(value);
+		lastDayOfthisMonth.endOf('month');
+		var thisMonthDay = 1;
+
+		var daysBefore = prevMonthLastWeekDay.date() - prevMonthLastWeekDay.day();
+		var nextMonthDay = 1;
+
+		for (var i = 1; i <= 7; i++) {
+			if (i > prevMonthLastWeekDay.day() + 1) {
+				this.dayCell(i, thisMonthDay++, true);
+
+			} else {
+				this.dayCell(i, daysBefore++, false);
+			}
+		}
+
+
+		for (var i = 8; i <= 42; i++) {
+			if (thisMonthDay <= lastDayOfthisMonth.date()) {
+				this.dayCell(i, thisMonthDay++, true);
+			} else {
+				this.dayCell(i, nextMonthDay++, false);
+			}
+		}
+		
+		this.contentElement().find('.month').text(value.format('MMMM'));
+		this.year(value.format('YYYY'));
+	};
+
+	this.restorCalendar = function() {
+		this.updateCalendar(this.valAsMoment());
 	};
 
 	this.goPrevMonth = function () {
-		var current = this.valAsMoment();
+		var newMoment = this.valAsMoment();
 
-		if (current == null) {
-			current = moment();
-		}
-
-		current.subtract(1, 'month');
-		this.updateCalendar(current);
+		newMoment.subtract(1, 'month');
+		this.updateCalendar(newMoment);
 	};
 
 	this.goNextMonth = function() {
-		var current = this.valAsMoment();
+		var newMoment = this.valAsMoment();
 
-		if (current == null) {
-			current = moment();
+		newMoment.add(1, 'month');
+		this.updateCalendar(newMoment);
+	};
+
+	this.yearChanged = function() {
+		var newMoment = this.valAsMoment();
+
+		newMoment.year(this.year());
+
+		if (newMoment.isValid()) {
+			this.updateCalendar(newMoment);
+			return;
 		}
 
-		current.add(1, 'month');
-		this.updateCalendar(current);
+		this.restorCalendar();
 	};
 
 	this.popover = function () {
@@ -118,15 +148,31 @@
 		return this.popover().contentElement();
 	};
 
+	this.dayCell = function (cellId, text, isCurrentMonth) {
+		var cell = this.contentElement().find('.day-' + cellId);
+
+		cell.text(text);
+		
+		if (isCurrentMonth) {
+			cell.removeClass('day-other-month');
+			cell.addClass('day-this-month');
+		} else {
+			cell.addClass('day-other-month');
+			cell.removeClass('day-this-month');
+		}
+
+		return cell;
+	};
+
 	this.val = function(value) {
 		if (arguments.length == 1) {
 			var newValue = moment(value);
 
 			if (newValue.isValid()) {
-				$('#' + this.id).val(newValue.format());
+				this.input(newValue.format());
 			}
 		} else {
-			var current = moment($('#' + this.id).val());
+			var current = moment(this.input());
 
 			if (current.isValid()) {
 				return current;
@@ -139,18 +185,36 @@
 	this.valAsMoment = function (value) {
 		if (arguments.length == 1) {
 			if (value._isAMomentObject && value.isValid()) {
-				$('#' + this.id).val(value.format());
+				this.input(value.format());
 				return;
 			}
 		} else {
-			var current = moment($('#' + this.id).val());
+			var current = moment(this.input());
 
 			if (current.isValid()) {
 				return current;
 			}
 
-			return null;
+			return moment();
 		}
+	}
+
+	this.input = function(value) {
+		if (arguments.length == 1) {
+			$('#' + this.id + ' input.datetime-input').val(value);
+		} else {
+			return $('#' + this.id + ' input.datetime-input').val();
+		}
+	}
+
+	this.year = function(value) {
+		if (arguments.length == 1) {
+			this.contentElement().find('.year').val(value);
+		} else {
+			return this.contentElement().find('.year').val();
+		}
+
+		
 	}
 
 	/*this.popoverShow = function () {

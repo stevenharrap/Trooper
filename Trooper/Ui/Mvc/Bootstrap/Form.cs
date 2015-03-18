@@ -849,8 +849,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
             }
                         
             var result = "<div id=\"" + dtpProps.Id + "\" class=\"trooper dateTimePicker\">\n"
-                         + "<div class=\"input-group\">\n" + "<input class=\"form-control date-input "
-                         + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\" id=\"" + dtpProps.Id
+                         + "<div class=\"input-group\">\n" + "<input class=\"form-control datetime-input "
+                         + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\""
                          + "\" name=\"" + dtpProps.Name + "\" value=\"" + (dtpProps.Value == null ? string.Empty : ((DateTime)dtpProps.Value).ToString(format))
                          + "\" title=\"Entry format is " + format + "\" type=\"text\" "
                          + (this.IsControlEnabled(dtpProps.Enabled) ? string.Empty : "readonly=\"readonly\"") + "/>\n";
