@@ -1,10 +1,4 @@
-﻿.trooper.dateTimePicker table tbody tr td.day {
-    cursor: pointer;   
-}
-
-.trooper.dateTimePicker table tr td.day:hover {
-    background: #333333;
-    color: #fff;
+﻿.trooper.dateTimePicker table tbody tr td.day {    
 }
 
 .trooper.dateTimePicker table tr td,
@@ -13,11 +7,18 @@
 }
 
 .trooper.dateTimePicker table tr td.day-this-month {
-	
+	font-weight: bold;
+	cursor: pointer;   
+}
+
+.trooper.dateTimePicker table tr td.day-this-month:hover {
+    background: #333333;
+    color: #fff;
 }
 
 .trooper.dateTimePicker table tr td.day-other-month {
 	color: lightgray;
+	cursor: default;   
 }
 
 .trooper.dateTimePicker .date-input::-ms-clear {
@@ -32,8 +33,13 @@
 .trooper.dateTimePicker .year {
 }
              
-.trooper.dateTimePicker .time select {
-    width: 60px;
+.trooper.dateTimePicker .time input {
+    
+}
+
+.trooper.dateTimePicker hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .trooper.dateTimePicker .time .dots {

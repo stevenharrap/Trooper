@@ -21,9 +21,15 @@
     	var html = '';
 
 	    html += '<div class="input-group">' +
-		    '<a href="#" class="btn btn-default input-group-addon go-prev-month"><i class="glyphicon glyphicon-arrow-left"></i></a>' +
-		    '<span class="month input-group-addon"></span>' +
-		    '<input class="year form-control" type="text" />' +
+		    '<a href="#" class="btn btn-default input-group-addon go-prev-month"><i class="glyphicon glyphicon-arrow-left"></i></a>';
+
+	    html += '<select class="month form-control" style="width:50%">';
+		for (var m = 0; m < 12; m++) {
+			html += '<option value="' + (m + 1) + '">' + (moment().month(m).format('MMM')) + '</option>';
+		}
+	    html += '</select>';
+    	
+	    html += '<input class="year form-control" type="text" style="width:50%" />' +
 		    '<a href="#" class="btn input-group-addon btn-default go-next-month"><i class="glyphicon glyphicon-arrow-right"></i></a>' +
 		    '</div>';
 
@@ -47,7 +53,7 @@
     		html += '<tr>';
 
 			for (var d = 0; d < 7; d++) {
-				html += '<td class="day day-'+ i +'"></td>';
+				html += '<td class="day day-' + i + '"></td>';
 				i++;
 			}
 
@@ -56,7 +62,19 @@
     	
     	html += '</tbody>';
     	html += '</table>';
-    	html += '<button class="btn btn-sn btn-block">Now</button>';
+    	html += '<hr />';
+
+	    html += '<div class="time input-group">';
+    	html += '<span class="input-group-addon">Time</span>';
+    	html += '<input type="text" maxlength="2" class="hour form-control" />';
+    	html += '<span class="input-group-addon dots"> : </span>';
+    	html += '<input type="text" maxlength="2" class="minute form-control" />';
+    	html += '<span class="input-group-addon dots"> : </span>';
+    	html += '<input type="text" maxlength="2" class="second form-control" />';
+    	html += '</div>';
+
+	    html += '<hr />';
+    	html += '<button class="btn btn-sn btn-block now">Now</button>';
 
     	this.popover().content(html);
     };
@@ -64,7 +82,10 @@
     this.popoverShown = function () {
     	this.contentElement().find('.go-prev-month').click($.proxy(this.goPrevMonth, this));
     	this.contentElement().find('.go-next-month').click($.proxy(this.goNextMonth, this));
-    	this.contentElement().find('.year').change($.proxy(this.yearChanged, this));
+    	this.contentElement().find('.year, .month, .hour, .minute, .second').change($.proxy(this.controlsChanged, this));
+    	this.contentElement().find('.year, .hour, .minute, .second').bind('keypress keydown keyup', $.proxy(this.preventSubmit, this));
+    	this.contentElement().find('table').on('click', '.day-this-month', $.proxy(this.dayClicked, this));
+    	this.contentElement().find('button.now').click($.proxy(this.goNow, this));
 
 	    this.restorCalendar();
     };
@@ -92,7 +113,6 @@
 			}
 		}
 
-
 		for (var i = 8; i <= 42; i++) {
 			if (thisMonthDay <= lastDayOfthisMonth.date()) {
 				this.dayCell(i, thisMonthDay++, true);
@@ -100,9 +120,12 @@
 				this.dayCell(i, nextMonthDay++, false);
 			}
 		}
-		
-		this.contentElement().find('.month').text(value.format('MMMM'));
+
 		this.year(value.format('YYYY'));
+		this.month(value.format('M'));
+		this.hour(value.format('HH'));
+		this.minute(value.format('mm'));
+		this.second(value.format('ss'));
 	};
 
 	this.restorCalendar = function() {
@@ -123,17 +146,46 @@
 		this.updateCalendar(newMoment);
 	};
 
-	this.yearChanged = function() {
-		var newMoment = this.valAsMoment();
+	this.controlsChanged = function() {
+		var current = this.valAsMoment();
 
-		newMoment.year(this.year());
+		var day = current.date();
+
+		var newMoment = moment({ year: this.year(), month: this.month() - 1, day: day, hour: this.hour(), minute: this.minute(), second: this.second() });
 
 		if (newMoment.isValid()) {
+			debugger;
 			this.updateCalendar(newMoment);
 			return;
 		}
 
 		this.restorCalendar();
+		return;
+	};
+	
+	this.dayClicked = function (event) {
+		debugger;
+		var dayOfMonth = parseInt($(event.target).text());
+
+		if (isNaN(dayOfMonth)) {
+			return;
+		}
+
+		var newMoment = this.valAsMoment();
+
+		newMoment.date(dayOfMonth);
+
+		if (newMoment.isValid()) {
+			this.updateCalendar(newMoment);
+		}
+	};
+
+	this.goNow = function() {
+		var now = moment();
+
+		this.updateCalendar(now);
+
+		return false;
 	};
 
 	this.popover = function () {
@@ -148,10 +200,10 @@
 		return this.popover().contentElement();
 	};
 
-	this.dayCell = function (cellId, text, isCurrentMonth) {
+	this.dayCell = function (cellId, dayOfMonth, isCurrentMonth) {
 		var cell = this.contentElement().find('.day-' + cellId);
 
-		cell.text(text);
+		cell.text(dayOfMonth);
 		
 		if (isCurrentMonth) {
 			cell.removeClass('day-other-month');
@@ -213,9 +265,48 @@
 		} else {
 			return this.contentElement().find('.year').val();
 		}
-
-		
 	}
+
+	this.month = function(value) {
+		if (arguments.length == 1) {
+			this.contentElement().find('.month').val(parseInt(value));
+		} else {
+			return parseInt(this.contentElement().find('.month').val());
+		}
+	};
+
+	this.hour = function (value) {
+		if (arguments.length == 1) {
+			this.contentElement().find('.hour').val(value);
+		} else {
+			return parseInt(this.contentElement().find('.hour').val());
+		}
+	};
+
+	this.minute = function (value) {
+		if (arguments.length == 1) {
+			this.contentElement().find('.minute').val(value);
+		} else {
+			return parseInt(this.contentElement().find('.minute').val());
+		}
+	};
+
+	this.second = function (value) {
+		if (arguments.length == 1) {
+			this.contentElement().find('.second').val(value);
+		} else {
+			return parseInt(this.contentElement().find('.second').val());
+		}
+	};
+
+	this.preventSubmit = function (event) {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			return false;
+		}
+	};
+
+
 
 	/*this.popoverShow = function () {
     	$('body').append('<div id=\"' + this.id + '_tempArea\"></div>');
