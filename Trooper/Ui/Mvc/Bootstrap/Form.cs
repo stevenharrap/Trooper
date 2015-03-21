@@ -801,37 +801,12 @@ namespace Trooper.Ui.Mvc.Bootstrap
             this.RegisterControl(dtpProps);
 
             var format = string.Empty;
-            var pickDate = false;
-            var pickTime = false;
-            var pickSeconds = false;
 
-            switch (dtpProps.DateTimeFormat)
-            {
-                case DateTimeFormat.DateAndTime:
-                    format = "dd/MM/yyyy hh:mm:ss";
-                    pickDate = true;
-                    pickTime = true;
-                    pickSeconds = true;
-                    break;
-                case DateTimeFormat.Date:
-                    format = "dd/MM/yyyy";
-                    pickDate = true;
-                    break;
-                case DateTimeFormat.Time:
-                    format = "hh:mm:ss";
-                    pickTime = true;
-                    pickSeconds = true;
-                    break;
-                case DateTimeFormat.TimeNoSeconds:
-                    format = "hh:mm";
-                    pickTime = true;
-                    break;
-                case DateTimeFormat.DateTimeNoSeconds:
-                    format = "dd/MM/yyyy hh:mm";
-                    pickDate = true;
-                    pickTime = true;
-                    break;
-            }
+	        var icon =
+		        new[] {DateTimeFormat.DateAndTime, DateTimeFormat.Date, DateTimeFormat.DateTimeNoSeconds}.Contains(
+			        dtpProps.DateTimeFormat)
+			        ? "calendar"
+			        : "time";
 
             string level;
 
@@ -857,12 +832,12 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             if (this.IsControlEnabled(dtpProps.Enabled))
             {
-                result += "<span class=\"input-group-btn\">\n"
-                          + "<button class=\"btn btn-" + level + " date-select\" type=\"button\">\n"
-                          + "<i class=\"glyphicon " + (pickTime && !pickDate ? "glyphicon-time" : "glyphicon-calendar") + "\">\n</i>"
-                          + "<button class=\"btn btn-" + level + " date-delete\" type=\"button\">\n"
-                          + "<i class=\"glyphicon glyphicon-remove-circle\">"
-                          + "</i>\n</button>\n</span>";
+	            result += "<span class=\"input-group-btn\">\n"
+	                      + "<button class=\"btn btn-" + level + " date-select\" type=\"button\">\n"
+	                      + "<i class=\"glyphicon glyphicon-" + icon + "\">\n</i>"
+	                      + "<button class=\"btn btn-" + level + " date-delete\" type=\"button\">\n"
+	                      + "<i class=\"glyphicon glyphicon-remove-circle\">"
+	                      + "</i>\n</button>\n</span>";
             }
 
             result += "\n</div>\n</div>\n";
@@ -883,12 +858,10 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
-                + "{{id:'{0}', formId:'{1}', pickDate:{2}, pickTime:{3}, pickSeconds:{4}, warnOnLeave:{5}, popoverPlacement:'{6}', format:'{7}', timezone:'{8}', popoverId:'{9}'}});",
+				+ "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', format:'{5}', timezone:'{6}', popoverId:'{7}'}});",
                 dtpProps.Id,
                 this.FormHeaderProps.Id,
-                pickDate.ToString(CultureInfo.InvariantCulture).ToLower(),
-                pickTime.ToString(CultureInfo.InvariantCulture).ToLower(),
-                pickSeconds.ToString(CultureInfo.InvariantCulture).ToLower(),
+				dtpProps.DateTimeFormat,
                 this.GetJsBool(dtpProps.WarnOnLeave),
                 this.PopoverPlacementToString(dtpProps.PopoverPlacement),
                 format,

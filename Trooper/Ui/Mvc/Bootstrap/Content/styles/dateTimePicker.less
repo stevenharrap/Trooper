@@ -1,49 +1,58 @@
-﻿.trooper.dateTimePicker table tbody tr td.day {    
-}
+﻿.trooper.dateTimePicker {
+    table tr th {
+        width: 14%;
+    }
 
-.trooper.dateTimePicker table tr td,
-.trooper.dateTimePicker table tr th {
-    font-size: 13px;
-}
+    table tr {
+        td.day-this-month {
+	        font-weight: bold;
+	        cursor: pointer;   
+        }
 
-.trooper.dateTimePicker table tr td.day-this-month {
-	font-weight: bold;
-	cursor: pointer;   
-}
+        td.day-this-month:hover {
+            background: #333333;
+            color: #fff;
+        }
 
-.trooper.dateTimePicker table tr td.day-this-month:hover {
-    background: #333333;
-    color: #fff;
-}
+        td.day-other-month {
+	        color: lightgray;
+	        cursor: default;   
+        }
 
-.trooper.dateTimePicker table tr td.day-other-month {
-	color: lightgray;
-	cursor: default;   
-}
+        td.day-today {
+            background: #eeeeee;
+        }
 
-.trooper.dateTimePicker .date-input::-ms-clear {
-    display: none;
-}
+        td.day-selected {
+            background: #dddddd;
+        }
 
-.trooper.dateTimePicker .month {
-    text-align: right;
-    font-weight: bold;
-}
+        td.day-today.day-selected {
+            background: #dddddd;
+        }
+    }
 
-.trooper.dateTimePicker .year {
-}
-             
-.trooper.dateTimePicker .time input {
-    
-}
+    .date-input::-ms-clear {
+       display: none;
+    }
 
-.trooper.dateTimePicker hr {
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
+    .month {
+       text-align: right;
+        font-weight: bold;
+    }
 
-.trooper.dateTimePicker .time .dots {
-    width: 10px;
-    padding-left: 0;
-    padding-right: 0;
+    .time .dots {
+        width: 10px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    hr {
+    	margin-top: 10px;
+	    margin-bottom: 10px;
+    }
+
+    .button-now-group {
+        width: 4%;
+    }
 }
