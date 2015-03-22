@@ -102,6 +102,10 @@
 		return element.parent().find('#' + element.attr('aria-describedby')).hasClass('in');
 	};
 
+	this.close = function () {
+	    $(this.selector).popover('hide');
+	};
+
 	trooper.ui.registry.addControl(this.id, this, 'popover');
 	$(document).ready($.proxy(this.init, this));
 	//this.content('<div></div>');
@@ -110,6 +114,7 @@
 	    content: $.proxy(this.content, this),
 	    contentElement: $.proxy(this.contentElement, this),
 	    isOpen: $.proxy(this.isOpen, this),
+	    close: $.proxy(this.close, this),
 	    bsPopover: $.proxy(this.bsPopover, this),
 	    ignoreSelectors: $.proxy(this.ignoreSelectors, this)
 	};

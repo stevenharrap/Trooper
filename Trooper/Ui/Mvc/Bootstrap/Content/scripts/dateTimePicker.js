@@ -8,6 +8,7 @@
     this.timezone = params.timezone;
     this.popoverId = params.popoverId;
     this.potentialValue = null;
+    this.currentMonth = null;
 	
     this.init = function () {
     	this.popover().content('<div></div>');
@@ -17,7 +18,8 @@
 
     this.popoverShow = function () {
         var html = '';
-        this.potentialValue = this.valAsMoment();
+        this.potentialValue = this.val() == null ? moment() : moment(this.val());
+        this.currentMonth = moment(this.potentialValue);
 
         if (this.dateTimeFormat.indexOf('Date') > -1) {
 		    html += '<div class="input-group">' +
@@ -29,7 +31,7 @@
 		    }
 		    html += '</select>';
 
-		    html += '<input class="year form-control" type="text" style="width:50%" />' +
+		    html += '<input class="year form-control" type="text" style="width:50%" maxlength="4" />' +
 			    '<a href="#" class="btn input-group-addon btn-default go-next-month"><i class="glyphicon glyphicon-arrow-right"></i></a>' +
 			    '</div>';
 
@@ -89,21 +91,25 @@
     this.popoverShown = function () {
     	this.contentElement().find('.go-prev-month').click($.proxy(this.goPrevMonth, this));
     	this.contentElement().find('.go-next-month').click($.proxy(this.goNextMonth, this));
-    	this.contentElement().find('.year, .month, .hour, .minute, .second').change($.proxy(this.controlsChanged, this));
-    	this.contentElement().find('.year, .hour, .minute, .second').bind('keypress keydown keyup', $.proxy(this.preventSubmit, this));
+
+    	this.contentElement().find('.year').bind('keypress keydown keyup', $.proxy(this.yearChanged, this));
+    	this.contentElement().find('.month').change($.proxy(this.monthChanged, this));
+    	this.contentElement().find('.hour').bind('keypress keydown keyup',$.proxy(this.hourChanged, this));
+    	this.contentElement().find('.minute').bind('keypress keydown keyup', $.proxy(this.minuteChanged, this));
+    	this.contentElement().find('.second').bind('keypress keydown keyup', $.proxy(this.secondChanged, this));
+
     	this.contentElement().find('table').on('click', '.day-this-month', $.proxy(this.dayClicked, this));
     	this.contentElement().find('button.now').click($.proxy(this.goNow, this));
     	this.contentElement().find('button.ok').click($.proxy(this.okClicked, this));
     	this.contentElement().find('button.cancel').click($.proxy(this.cancelClicked, this));
 
-	    this.restorCalendar();
+    	this.updateCalendar();
     };
 
-    this.updateCalendar = function (value) {
-        this.potentialValue = value;
+    this.updateCalendar = function () {
 		var now = moment();
 
-		var startMoment = moment(value);
+		var startMoment = moment(this.currentMonth);
 		startMoment.startOf('month');
 
 		if (startMoment.day() == 0) {
@@ -115,85 +121,128 @@
 		}
 
 		for (var i = 1; i<= 42; i++) {
-		    var isMonth = value.month() == startMoment.month();
+		    var isMonth = this.currentMonth.month() == startMoment.month();
 		    var date = startMoment.date();
-		    var today = startMoment.isSame(now, 'day');
-		    var selectedDay = startMoment.isSame(value, 'day');
+		    var isToday = this.datesEqual(startMoment, now);
+		    var isSelectedDay = this.datesEqual(this.potentialValue, startMoment);
 
-		    this.dayCell(i, date, isMonth, today, selectedDay);
+		    if (isToday) {
+		        debugger;
+		    }
+
+		    if (isSelectedDay) {
+		        debugger;
+		    }
+
+		    this.dayCell(i, date, isMonth, isToday, isSelectedDay);
 
 		    startMoment.add(1, 'day');
 		}
         
-		this.year(value.format('YYYY'));
-		this.month(value.format('M'));
-		this.hour(value.format('HH'));
-		this.minute(value.format('mm'));
-		this.second(value.format('ss'));
-	};
-
-	this.restorCalendar = function() {
-	    this.updateCalendar(this.potentialValue);
+		this.year(this.currentMonth.format('YYYY'));
+		this.month(this.currentMonth.format('M'));
+		this.hour(this.potentialValue.format('HH'));
+		this.minute(this.potentialValue.format('mm'));
+		this.second(this.potentialValue.format('ss'));
 	};
 
 	this.goPrevMonth = function () {
-	    var newMoment = moment(this.potentialValue);
-
-		newMoment.subtract(1, 'month');
-		this.updateCalendar(newMoment);
+	    this.currentMonth.subtract(1, 'month');
+		this.updateCalendar();
 	};
 
-	this.goNextMonth = function() {
-	    var newMoment = moment(this.valAsMoment());
-
-		newMoment.add(1, 'month');
-		this.updateCalendar(newMoment);
+	this.goNextMonth = function () {
+	    this.currentMonth.add(1, 'month');
+		this.updateCalendar();
 	};
 
-	this.controlsChanged = function() {
-	    var day = this.potentialValue.date();
+	this.yearChanged = function (event) {
+	    if (event.keyCode == 8 || event.keyCode == 46) {
+	        return;
+	    }
 
-		var newMoment = moment({ year: this.year(), month: this.month() - 1, day: day, hour: this.hour(), minute: this.minute(), second: this.second() });
+	    this.currentMonth.year(this.year());
+	    this.updateCalendar();
 
-        if (newMoment.isValid()) {		    
-			this.updateCalendar(newMoment);
-			return;
-		}
-
-		this.restorCalendar();
-		return;
+	    if (event.keyCode == 13) {
+	        //event.preventDefault();
+	        return false;
+	    }
 	};
+
+	this.monthChanged = function (event) {
+	    this.currentMonth.month(this.month() - 1);
+	    this.updateCalendar();
+	};
+
+	this.hourChanged = function (event) {
+	    if (event.keyCode == 8 || event.keyCode == 46) {
+	        return;
+	    }
+
+	    this.potentialValue.hour(this.hour());
+	    this.updateCalendar();
+
+	    if (event.keyCode == 13) {
+	        //event.preventDefault();
+	        return false;
+	    }
+	};
+
+	this.minuteChanged = function (event) {
+	    if (event.keyCode == 8 || event.keyCode == 46) {
+	        return;
+	    }
+
+	    this.potentialValue.minute(this.minute());
+	    this.updateCalendar();
+
+	    if (event.keyCode == 13) {
+	        //event.preventDefault();
+	        return false;
+	    }
+	};
+
+	this.secondChanged = function () {
+	    if (event.keyCode == 8 || event.keyCode == 46) {
+	        return;
+	    }
+
+	    this.potentialValue.second(this.second());
+	    this.updateCalendar();
+
+	    if (event.keyCode == 13) {
+	        //event.preventDefault();
+	        return false;
+	    }
+	};	
 	
 	this.dayClicked = function (event) {
-		var dayOfMonth = parseInt($(event.target).text());
+	    var dayOfMonth = parseInt($(event.target).text());
+	    debugger;
 
 		if (isNaN(dayOfMonth)) {
 			return;
 		}
 
-		var newMoment = moment(this.potentialValue);
-
-		newMoment.date(dayOfMonth);
-
-		if (newMoment.isValid()) {
-			this.updateCalendar(newMoment);
-		}
+		this.potentialValue = moment(this.currentMonth);
+		this.potentialValue.date(dayOfMonth);
+		
+		this.updateCalendar();
 	};
 
 	this.okClicked = function () {
-	    this.valAsMoment(this.potentialValue);
+	    this.val(this.potentialValue.format());
+	    this.popover().close();
 	};
 
 	this.cancelClicked = function () {
-
+	    this.popover().close();
 	};
 
 	this.goNow = function() {
-		var now = moment();
-
-		this.updateCalendar(now);
-
-		return false;
+		this.currentMonth = moment();
+		this.updateCalendar();
 	};
 
 	this.popover = function () {
@@ -242,46 +291,15 @@
 		if (arguments.length == 1) {
 			var newValue = moment(value);
 
-			if (newValue.isValid()) {
-			    this.potentialValue = newValue;
-				this.input(newValue.format(this.format()));
-			}
+			var result = newValue.isValid() ? newValue.format(this.format()) : '';
+			$('#' + this.id + ' input.datetime-input').val(result);
 		} else {
-			var current = moment(this.input(), this.format());
+		    var raw = $('#' + this.id + ' input.datetime-input').val();
 
-			if (current.isValid()) {
-				return current;
-			}
-
-			return '';
+		    var current = moment(raw, this.format());
+		    return current.isValid() ? current : null;
 		}
-	}
-
-	this.valAsMoment = function (value) {
-		if (arguments.length == 1) {
-		    if (value._isAMomentObject && value.isValid()) {
-		        this.potentialValue = value;
-				this.input(value.format(this.format()));
-				return;
-			}
-		} else {
-			var current = moment(this.input(), this.format());
-
-			if (current.isValid()) {
-				return current;
-			}
-
-			return moment();
-		}
-	}
-
-	this.input = function(value) {
-		if (arguments.length == 1) {
-			$('#' + this.id + ' input.datetime-input').val(value);
-		} else {
-			return $('#' + this.id + ' input.datetime-input').val();
-		}
-	}
+	}	
 
 	this.year = function(value) {
 		if (arguments.length == 1) {
@@ -317,9 +335,12 @@
 		} else {
 			var h = parseInt(this.contentElement().find('.hour').val());
 
-			debugger;
 			if (isNaN(h)) {
 				return moment().hour();
+			}
+
+			if (h < 0 || h > 23) {
+			    return this.potentialValue.hour();
 			}
 
 			return h;
@@ -336,6 +357,10 @@
 				return moment().minute();
 			}
 
+			if (m < 0 || m > 59) {
+			    return this.potentialValue.minute();
+			}
+
 			return m;
 		}
 	};
@@ -350,14 +375,11 @@
 				return moment().second();
 			}
 
-			return s;
-		}
-	};
+			if (s < 0 || s > 59) {
+			    return this.potentialValue.second();
+			}
 
-	this.preventSubmit = function (event) {
-		if (event.keyCode == 13) {
-			event.preventDefault();
-			return false;
+			return s;
 		}
 	};
 
@@ -374,6 +396,10 @@
 			case 'TimeNoSeconds':
 				return 'HH:mm';
 		}
+	};
+
+	this.datesEqual = function (moment1, moment2) {
+	    return moment1.isSame(moment2, 'day') && moment1.isSame(moment2, 'month') && moment1.isSame(moment2, 'year');
 	};
 	
 	trooper.ui.registry.addControl(this.id, this, 'datetimepicker');
