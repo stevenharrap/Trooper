@@ -30,7 +30,18 @@
 	};
 
 	this.selectorClickToggle = function(e) {
-		$(this.selector).popover('toggle');
+	    $(this.selector).popover('toggle');
+
+	    var allPopovers = trooper.ui.registry.getControls('popover');
+
+	    debugger;
+
+	    for (var i = 0; i < allPopovers.length; i++) {
+	        if (allPopovers[i].id() != this.id) {
+	            allPopovers[i].close();
+	        }
+	    }
+
 		e.stopPropagation();
 	};
 
@@ -106,11 +117,8 @@
 	    $(this.selector).popover('hide');
 	};
 
-	trooper.ui.registry.addControl(this.id, this, 'popover');
-	$(document).ready($.proxy(this.init, this));
-	//this.content('<div></div>');
-
-	return {
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this),
 	    content: $.proxy(this.content, this),
 	    contentElement: $.proxy(this.contentElement, this),
 	    isOpen: $.proxy(this.isOpen, this),
@@ -118,4 +126,9 @@
 	    bsPopover: $.proxy(this.bsPopover, this),
 	    ignoreSelectors: $.proxy(this.ignoreSelectors, this)
 	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'popover');
+	$(document).ready($.proxy(this.init, this));
+
+	return publicResult;
 });

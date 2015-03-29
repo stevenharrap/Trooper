@@ -50,15 +50,16 @@
         return true;
     };
 
-    trooper.ui.registry.addControl(this.id, this, 'form');
-    $(document).ready($.proxy(this.init, this));
-
-    return {
+    var publicResult = {
+        id: trooper.utility.control.makeIdAccessor(this),
         addVolatileField: $.proxy(this.addVolatileField, this),
         makeFormDirty: $.proxy(this.makeFormDirty, this),
         makeFormClean: $.proxy(this.makeFormClean, this),
         canLeave: $.proxy(this.canLeave, this)
     };
+
+    trooper.ui.registry.addControl(this.id, publicResult, 'form');
+    $(document).ready($.proxy(this.init, this));
 });
 
 

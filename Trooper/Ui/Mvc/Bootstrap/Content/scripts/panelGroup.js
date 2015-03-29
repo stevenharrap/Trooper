@@ -54,10 +54,12 @@
         form.attr('action', GetBootstrapHtml().convertComponentsToUrl(components));
     };
 
-    trooper.ui.registry.addControl(this.id, this, 'panelgroup');
+    var publicResult = {
+        id: trooper.utility.control.makeIdAccessor(this)
+    };
+
+    trooper.ui.registry.addControl(this.id, publicResult, 'panelgroup');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-
-    };
+    return publicResult;
 });

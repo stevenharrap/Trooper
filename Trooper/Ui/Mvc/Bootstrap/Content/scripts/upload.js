@@ -155,14 +155,17 @@ trooper.ui.control.upload = (function (params)
 			this.clearEvents[i]();
 		}
 	};
+
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this),
+	    addSelectEvent: $.proxy(this.addSelectEvent, this),
+	    addClearEvent: $.proxy(this.addClearEvent, this),
+	    val: $.proxy(this.val, this),
+	    clear: $.proxy(this.clear, this)
+	};
 	
-	trooper.ui.registry.addControl(this.id, this, 'upload');
+	trooper.ui.registry.addControl(this.id, publicResult, 'upload');
 	$(document).ready($.proxy(this.init, this));
 
-    return {
-		addSelectEvent: $.proxy(this.addSelectEvent, this),
-		addClearEvent: $.proxy(this.addClearEvent, this),
-		val: $.proxy(this.val, this),
-		clear: $.proxy(this.clear, this)
-    };
+    return publicResult;
 });

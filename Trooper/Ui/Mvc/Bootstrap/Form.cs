@@ -827,8 +827,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
                          + "<div class=\"input-group\">\n" + "<input class=\"form-control datetime-input "
                          + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\""
                          + "\" name=\"" + dtpProps.Name + "\" value=\"" + (dtpProps.Value == null ? string.Empty : ((DateTime)dtpProps.Value).ToString(format))
-                         + "\" title=\"Entry format is " + format + "\" type=\"text\" "
-                         + (this.IsControlEnabled(dtpProps.Enabled) ? string.Empty : "readonly=\"readonly\"") + "/>\n";
+                         + "\" type=\"text\" " + (this.IsControlEnabled(dtpProps.Enabled) ? string.Empty : "readonly=\"readonly\"") + "/>\n";
 
             if (this.IsControlEnabled(dtpProps.Enabled))
             {
@@ -855,6 +854,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
             this.Popover(poProps);
 
 			this.IncludeMoment();
+            this.IncludeJqueryInputMask();
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("

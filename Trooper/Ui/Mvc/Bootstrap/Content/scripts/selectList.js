@@ -11,10 +11,12 @@
         }
     };
 
-	trooper.ui.registry.addControl(this.id, this, 'selectlist');
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this)
+	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'selectlist');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-
-    };
+    return publicResult;
 });

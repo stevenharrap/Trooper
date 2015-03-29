@@ -15,10 +15,12 @@
         }
     };
 
-    trooper.ui.registry.addControl(this.id, this, 'radiolist');
+    var publicResult = {
+        id: trooper.utility.control.makeIdAccessor(this)
+    };
+
+    trooper.ui.registry.addControl(this.id, publicResult, 'radiolist');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-
-    };
+    return publicResult;
 });

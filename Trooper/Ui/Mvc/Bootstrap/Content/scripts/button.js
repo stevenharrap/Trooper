@@ -30,10 +30,12 @@
         }
     };
     
-    trooper.ui.registry.addControl(this.id, this, 'button');
+    var publicResult = {
+        id: trooper.utility.control.makeIdAccessor(this),
+    };
+
+    trooper.ui.registry.addControl(this.id, publicResult, 'button');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-
-    };
+    return publicResult;
 });

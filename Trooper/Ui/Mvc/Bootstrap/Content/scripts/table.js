@@ -250,14 +250,17 @@
 		return true;
 	};
 	
-	trooper.ui.registry.addControl(this.id, this, 'table');
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this),
+	    clearSelection: $.proxy(this.clearSelection, this),
+	    addRowSelectedEvent: $.proxy(this.addRowSelectedEvent, this),
+	    addRowDblclickedEvent: $.proxy(this.addRowDblclickedEvent, this),
+	    addRowUnselectedEvent: $.proxy(this.addRowUnselectedEvent, this),
+	    selectedRows: $.proxy(this.selectedRows, this)
+	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'table');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-		clearSelection: $.proxy(this.clearSelection, this),
-		addRowSelectedEvent: $.proxy(this.addRowSelectedEvent, this),
-		addRowDblclickedEvent: $.proxy(this.addRowDblclickedEvent, this),
-		addRowUnselectedEvent: $.proxy(this.addRowUnselectedEvent, this),
-		selectedRows: $.proxy(this.selectedRows, this)
-    };
+    return publicResult;
 });

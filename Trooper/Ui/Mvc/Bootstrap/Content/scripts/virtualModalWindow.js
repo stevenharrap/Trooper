@@ -136,14 +136,17 @@
 		}
 	};
 	
-	trooper.ui.registry.addControl(this.id, this, 'virtualmodalwindow');
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this),
+	    makeWindow: $.proxy(this.makeWindow, this),
+	    openWindow: $.proxy(this.openWindow, this),
+	    getWindow: $.proxy(this.getWindow, this),
+	    getFrame: $.proxy(this.getFrame, this),
+	    closeWindow: $.proxy(this.closeWindow, this)
+	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'virtualmodalwindow');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-		makeWindow: $.proxy(this.makeWindow, this),
-		openWindow: $.proxy(this.openWindow, this),
-		getWindow: $.proxy(this.getWindow, this),
-		getFrame: $.proxy(this.getFrame, this),
-		closeWindow: $.proxy(this.closeWindow, this)
-    };
+    return publicResult;
 });

@@ -189,6 +189,17 @@ trooper.utility._url = (function ()
     };
 });
 
+trooper.utility._control = (function ()
+{
+    this.makeIdAccessor = function (object) {
+        return $.proxy(function () { return object.id; }, object);
+    };
+
+    return {
+        makeIdAccessor: $.proxy(this.makeIdAccessor, this)
+    };
+});
+
 trooper.ui = {};
 
 trooper.ui._registry = (function () {
@@ -206,6 +217,18 @@ trooper.ui._registry = (function () {
         }
 
         return null;
+    };
+
+    this.getControls = function (controlType) {
+        var result = new Array();
+
+        for (var i = 0; i < this.controls.length; i++) {
+            if (this.controls[i].type == controlType) {
+                result.push(this.controls[i].obj);
+            }
+        }
+
+        return result;
     };
 
     this.getForm = function (controlId) {
@@ -275,6 +298,7 @@ trooper.ui._registry = (function () {
     return {
         addControl: $.proxy(this.addControl, this),
         getControl: $.proxy(this.getControl, this),
+        getControls: $.proxy(this.getControls, this),
         getForm: $.proxy(this.getForm, this),
         getButton: $.proxy(this.getButton, this),
         getCheckBox: $.proxy(this.getCheckBox, this),
@@ -414,5 +438,6 @@ trooper.ui.control = {};
 
 trooper.utility.browser = new trooper.utility._browser();
 trooper.utility.url = new trooper.utility._url();
+trooper.utility.control = new trooper.utility._control();
 trooper.ui.registry = new trooper.ui._registry();
 trooper.ui.html = new trooper.ui._html();

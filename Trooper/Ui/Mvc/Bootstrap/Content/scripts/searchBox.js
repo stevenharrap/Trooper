@@ -177,12 +177,15 @@
 	this.fail = function (error) {
 		////remove comment if debugging
 		////alert('fail: ' + error.responseText);
-	};	
+	};
 
-	trooper.ui.registry.addControl(this.id, this, 'searchbox');
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this),
+	    clear: $.proxy(this.clear, this)
+	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'searchbox');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-		clear: $.proxy(this.clear, this)
-    };
+    return publicResult;
 });

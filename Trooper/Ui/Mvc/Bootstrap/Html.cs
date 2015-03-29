@@ -610,6 +610,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
 			}
 	    }
 
+        public void IncludeJqueryInputMask() {
+            if (!this.Cruncher.HasJsItem("jquery.inputmask.js"))
+            {
+                this.Cruncher.AddJsInline(Resources.jquery_inputmask_js, "jquery.inputmask.js", OrderOptions.Middle);
+            }
+        }
+
 	    public void IncludeBootstrap()
 	    {
 			if (!this.Cruncher.HasJsItem("bootstrap"))

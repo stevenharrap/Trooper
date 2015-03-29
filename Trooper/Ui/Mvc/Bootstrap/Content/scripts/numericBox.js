@@ -133,10 +133,13 @@
 		return parseInt(Math.round(parseFloat(result)));
 	};
 
-	trooper.ui.registry.addControl(this.id, this, 'numericbox');
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this),
+	    val: $.proxy(this.val, this)
+	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'numericbox');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-		val: $.proxy(this.val, this)
-    };
+    return publicResult;
 });

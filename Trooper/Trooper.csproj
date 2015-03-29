@@ -293,11 +293,13 @@
     <Compile Include="Ui\Mvc\Bootstrap\Controls\TextBox.cs" />
     <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\css\bootstrap.css.map" />
     <None Include="Ui\Mvc\Bootstrap\Content\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Ui\Mvc\Bootstrap\Content\jquery-inputmask\RobinHerbots-jquery.inputmask-3.1.62-1-gbbbae31.zip" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\messagesPanel.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\numericBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\textareaBox.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\button.js" />
     <None Include="Ui\Mvc\Bootstrap\Content\scripts\dateTimePicker.js.old" />
+    <Content Include="Ui\Mvc\Bootstrap\Content\jquery-inputmask\jquery.inputmask.js" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Ui\Mvc\Bootstrap\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_65_ffffff_1x400.png" />

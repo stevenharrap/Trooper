@@ -26,10 +26,12 @@
 		return this.getInput().val();
 	};
 
-	trooper.ui.registry.addControl(this.id, this, 'textareabox');
+	var publicResult = {
+	    id: trooper.utility.control.makeIdAccessor(this)
+	};
+
+	trooper.ui.registry.addControl(this.id, publicResult, 'textareabox');
     $(document).ready($.proxy(this.init, this));
 
-    return {
-
-    };
+    return publicResult;
 });
