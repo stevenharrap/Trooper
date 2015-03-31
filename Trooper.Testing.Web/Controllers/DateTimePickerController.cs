@@ -15,6 +15,7 @@ namespace Trooper.Testing.Web.Controllers
     using Trooper.BusinessOperation2;
     using Trooper.BusinessOperation2.Utility;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
+    using System;
 
     /// <summary>
     /// Controller for BSF test page
@@ -36,6 +37,8 @@ namespace Trooper.Testing.Web.Controllers
         public ActionResult Index()
         {
 	        var model = new DateTimePickerModel();
+
+            model.TestDt06 = new DateTime(1977, 1, 26);
 
             Persist(model);
 

@@ -838,8 +838,6 @@ namespace Trooper.Ui.Mvc.Bootstrap
             }
 
             result += "\n</div>\n</div>\n";
-	        result += string.Format("({0})",
-		        (dtpProps.Value == null ? string.Empty : ((DateTime) dtpProps.Value).ToString("yyyy-MM-dd HH:mm:ss")));
 
             result = this.MakeFormGroup(result, dtpProps);
 
@@ -858,13 +856,13 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
-				+ "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', timezone:'{5}', popoverId:'{6}'}});",
+                + "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', utcOffset:{5}, popoverId:'{6}'}});",
                 dtpProps.Id,
                 this.FormHeaderProps.Id,
 				dtpProps.DateTimeFormat,
                 this.GetJsBool(dtpProps.WarnOnLeave),
                 this.PopoverPlacementToString(dtpProps.PopoverPlacement),
-                dtpProps.Timezone,
+                dtpProps.UtcOffset,
                 poProps.Id);
 
 			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))

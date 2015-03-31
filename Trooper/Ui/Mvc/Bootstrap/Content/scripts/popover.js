@@ -34,8 +34,6 @@
 
 	    var allPopovers = trooper.ui.registry.getControls('popover');
 
-	    debugger;
-
 	    for (var i = 0; i < allPopovers.length; i++) {
 	        if (allPopovers[i].id() != this.id) {
 	            allPopovers[i].close();

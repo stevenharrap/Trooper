@@ -4,7 +4,7 @@
     this.dateTimeFormat = params.dateTimeFormat;
     this.warnOnLeave = params.warnOnLeave;
     this.popoverPlacement = params.popoverPlacement;
-    this.timezone = params.timezone;
+    this.utcOffset = params.utcOffset;
     this.popoverId = params.popoverId;
     this.potentialValue = null;
     this.currentMonth = null;
@@ -14,13 +14,13 @@
     	this.bsPopover().on('show.bs.popover', $.proxy(this.popoverShow, this));
     	this.bsPopover().on('shown.bs.popover', $.proxy(this.popoverShown, this));
     	$('#' + this.id + ' .date-delete').click($.proxy(this.deleteClicked, this));
-    	$('#' + this.id + ' .datetime-input').attr('title', 'Entry format is ' + this.format());
+    	$('#' + this.id + ' .datetime-input').attr('title', 'Entry format is ' + this.clientFormat());
 
 		if (this.rawVal() != '') {
-			var loaded = moment(this.rawVal(), 'YYYY-MM-DD HH:mm:ss');
+			var loaded = moment(this.rawVal(), this.serverFormat());
 
 			if (loaded.isValid()) {
-				this.val(loaded.format(this.format()));
+				this.valAsMoment(loaded);
 			} else {
 				this.rawVal('');
 			}
@@ -28,15 +28,17 @@
 
 		$('#' + this.id + ' .datetime-input').inputmask(this.mask());
 
-    	if (this.warnOnLeave) {
-    		var form = trooper.ui.registry.getForm(this.formId);
+		var form = trooper.ui.registry.getForm(this.formId);
+		form.onSubmit($.proxy(this.submitting, this));
+
+    	if (this.warnOnLeave) {    		
     		form.addVolatileField(this.id);
     	}
     };
 
     this.popoverShow = function () {
         var html = '';
-        this.potentialValue = this.val() == null ? moment() : moment(this.val());
+        this.potentialValue = this.valAsMomentOrNow();
         this.currentMonth = moment(this.potentialValue);
 
         html += '<div class="format-' + this.dateTimeFormat + '">';
@@ -119,7 +121,7 @@
     	this.contentElement().find('.go-prev-month').click($.proxy(this.goPrevMonth, this));
     	this.contentElement().find('.go-next-month').click($.proxy(this.goNextMonth, this));
 
-    	this.contentElement().find('.year').bind('keypress keydown keyup', $.proxy(this.yearChanged, this));
+    	this.contentElement().find('.year').bind('change keydown keyup paste', $.proxy(this.yearChanged, this));
     	this.contentElement().find('.month').change($.proxy(this.monthChanged, this));
     	this.contentElement().find('.hour').bind('keypress keydown keyup',$.proxy(this.hourChanged, this));
     	this.contentElement().find('.minute').bind('keypress keydown keyup', $.proxy(this.minuteChanged, this));
@@ -132,14 +134,14 @@
 
     	this.disableSelection();
 
-    	var current = this.val() == null ? moment() : moment(this.val(), this.format());
+    	var current = this.valAsMomentOrNow();
         
-    	this.updateCalendar(current);
+    	this.updateCalendar();
     	this.updateTime(current);
     };
 
     this.updateCalendar = function () {
-		var now = moment();
+		var now = this.newMoment();
 
 		var startMoment = moment(this.currentMonth);
 		startMoment.startOf('month');
@@ -183,18 +185,25 @@
 		this.updateCalendar();
 	};
 
-	this.yearChanged = function (event) {
+    this.yearChanged = function (event) {
 	    if (event.keyCode == 13) {
+            event.preventDefault()
 	        return false;
-	    }            
+	    }
+
+	    var val = this.year();
+
+	    if (val == null) {
+	        return true;
+	    }
 
 	    var test = moment(this.currentMonth);
-	    test.year(this.year());
+	    test.year(val);
 
 	    if (test.isValid()) {
 	        this.currentMonth = test;
 	        this.updateCalendar();
-	    }
+	    }	    
 	};
 
 	this.monthChanged = function (event) {
@@ -255,7 +264,7 @@
 	    var form = trooper.ui.registry.getForm(this.formId);
 	    form.makeFormDirty();
 
-	    this.val(this.potentialValue.format());
+	    this.valAsMoment(this.potentialValue);
 	    this.popover().close();
 	};
 
@@ -269,15 +278,29 @@
 		var form = trooper.ui.registry.getForm(this.formId);
 		form.makeFormDirty();
 
-	    this.val('');
+	    this.rawVal('');
 	};	
 
 	this.cancelClicked = function () {
 	    this.popover().close();
 	};
 
+	this.submitting = function () {
+	    if (this.rawVal() == '') {
+	        return true;
+	    }
+
+	    var raw = this.valAsServerFormat();
+
+	    $('#' + this.id + ' .datetime-input').inputmask('remove');
+
+	    this.rawVal(raw);
+
+	    return true;
+	};
+
 	this.goNow = function() {
-		this.currentMonth = moment();
+		this.currentMonth = this.newMoment();
 		this.updateCalendar();
 		this.updateTime(this.currentMonth);
 	};
@@ -323,21 +346,7 @@
 
 		return cell;
 	};
-
-	this.val = function(value) {
-		if (arguments.length == 1) {
-			var newValue = moment(value);
-
-			var result = newValue.isValid() ? newValue.format(this.format()) : '';
-			this.rawVal(result);
-		} else {
-			var raw = this.rawVal();
-
-		    var current = moment(raw, this.format());
-		    return current.isValid() ? current : null;
-		}
-	}
-
+    
 	this.rawVal = function (value) {
 		if (arguments.length == 1) {
 			$('#' + this.id + ' input.datetime-input').val(value);
@@ -347,6 +356,64 @@
 			return raw;
 		}
 	};
+
+	this.valAsClientFormat = function (value) {
+	    if (arguments.length == 1) {
+	        var newValue = moment(value, this.clientFormat());
+
+	        if (newValue.isValid()) {
+	            this.valAsMoment(newValue);
+	        }
+	    } else {
+	        var result = this.valAsMoment();
+
+	        if (result != null) {
+	            return result.format(this.clientFormat());
+	        }
+
+	        return '';
+	    }
+	}
+
+	this.valAsServerFormat = function (value) {
+	    if (arguments.length == 1) {
+	        var newValue = moment(value, this.serverFormat());
+
+	        if (newValue.isValid()) {
+	            this.valAsMoment(newValue);
+	        }
+	    } else {
+	        var result = this.valAsMoment();
+
+	        if (result != null) {
+	            return result.format(this.serverFormat());
+	        }
+
+	        return '';
+	    }
+	}
+
+	this.valAsMoment = function (value) {
+	    if (arguments.length == 1 && moment.isMoment(value) && value.isValid()) {	        
+	        var result = value.format(this.clientFormat());
+	        this.rawVal(result);
+	    } else {
+	        var raw = this.rawVal();
+
+	        var current = moment(raw, this.clientFormat());
+	        return current.isValid() ? current : null;
+	    }
+	}
+
+	this.valAsMomentOrNow = function () {
+	    var m = this.valAsMoment();
+
+	    if (m != null) {
+	        return m;
+	    }
+
+	    return this.newMoment();
+	}
 
 	this.year = function(value) {
 		if (arguments.length == 1) {
@@ -453,7 +520,15 @@
 		}
 	};
 
-	this.format = function() {
+	this.newMoment = function () {
+	    var result = moment();
+
+	    result.utcOffset(this.utcOffset);
+
+	    return result;
+	};
+
+	this.clientFormat = function() {
 		switch (this.dateTimeFormat) {
 			case 'DateAndTime':
 				return 'DD-MM-YYYY HH:mm:ss';
@@ -483,6 +558,10 @@
 	    }
 	};
 
+	this.serverFormat = function () {
+	    return 'YYYY-MM-DD HH:mm:ss';
+	};
+
 	this.datesEqual = function (moment1, moment2) {
 	    return moment1.isSame(moment2, 'day') && moment1.isSame(moment2, 'month') && moment1.isSame(moment2, 'year');
 	};
@@ -495,7 +574,10 @@
 	
 	var publicResult = {
 	    id: trooper.utility.control.makeIdAccessor(this),
-	    date: $.proxy(this.date, this)
+	    val: $.proxy(this.val, this),
+	    valAsClientFormat: $.proxy(this.valAsClientFormat, this),
+	    valAsServerFormat: $.proxy(this.valAsServerFormat, this),
+	    valAsMoment: $.proxy(this.valAsMoment, this),
 	};
 
 	trooper.ui.registry.addControl(this.id, publicResult, 'datetimepicker');

@@ -10,7 +10,7 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
     {
         public DateTimePicker()
         {
-            this.Timezone = "+10:00";
+            this.UtcOffset = 600;
 
             this.PopoverPlacement = PopoverPlacements.Bottom;
 
@@ -21,7 +21,7 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
 
         public DateTimeFormat DateTimeFormat { get; set; }
 
-        public string Timezone { get; set; }
+        public int UtcOffset { get; set; }
 
         public InputTextSizes? TextSize { get; set; }
 

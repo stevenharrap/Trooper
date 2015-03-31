@@ -25,5 +25,9 @@ namespace Trooper.Testing.Web.Models
         public DateTime? TestDt04 { get; set; }
 
         public DateTime? TestDt05 { get; set; }
+
+        public DateTime? TestDt06 { get; set; }
+
+        public DateTime? TestDt07 { get; set; }
     }
 }
