@@ -800,8 +800,6 @@ namespace Trooper.Ui.Mvc.Bootstrap
         {
             this.RegisterControl(dtpProps);
 
-            var format = string.Empty;
-
 	        var icon =
 		        new[] {DateTimeFormat.DateAndTime, DateTimeFormat.Date, DateTimeFormat.DateTimeNoSeconds}.Contains(
 			        dtpProps.DateTimeFormat)
@@ -826,7 +824,7 @@ namespace Trooper.Ui.Mvc.Bootstrap
             var result = "<div id=\"" + dtpProps.Id + "\" class=\"trooper dateTimePicker\">\n"
                          + "<div class=\"input-group\">\n" + "<input class=\"form-control datetime-input "
                          + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\""
-                         + "\" name=\"" + dtpProps.Name + "\" value=\"" + (dtpProps.Value == null ? string.Empty : ((DateTime)dtpProps.Value).ToString(format))
+                         + "\" name=\"" + dtpProps.Name + "\" value=\"" + (dtpProps.Value == null ? string.Empty : ((DateTime)dtpProps.Value).ToString("yyyy-MM-dd HH:mm:ss"))
                          + "\" type=\"text\" " + (this.IsControlEnabled(dtpProps.Enabled) ? string.Empty : "readonly=\"readonly\"") + "/>\n";
 
             if (this.IsControlEnabled(dtpProps.Enabled))
@@ -840,6 +838,8 @@ namespace Trooper.Ui.Mvc.Bootstrap
             }
 
             result += "\n</div>\n</div>\n";
+	        result += string.Format("({0})",
+		        (dtpProps.Value == null ? string.Empty : ((DateTime) dtpProps.Value).ToString("yyyy-MM-dd HH:mm:ss")));
 
             result = this.MakeFormGroup(result, dtpProps);
 
@@ -858,13 +858,12 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
-				+ "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', format:'{5}', timezone:'{6}', popoverId:'{7}'}});",
+				+ "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', timezone:'{5}', popoverId:'{6}'}});",
                 dtpProps.Id,
                 this.FormHeaderProps.Id,
 				dtpProps.DateTimeFormat,
                 this.GetJsBool(dtpProps.WarnOnLeave),
                 this.PopoverPlacementToString(dtpProps.PopoverPlacement),
-                format,
                 dtpProps.Timezone,
                 poProps.Id);
 

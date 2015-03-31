@@ -1,7 +1,6 @@
 ﻿trooper.ui.control.dateTimePicker = (function (params) {
     this.id = params.id;
     this.formId = params.formId;
-    this.format = params.format;
     this.dateTimeFormat = params.dateTimeFormat;
     this.warnOnLeave = params.warnOnLeave;
     this.popoverPlacement = params.popoverPlacement;
@@ -15,8 +14,24 @@
     	this.bsPopover().on('show.bs.popover', $.proxy(this.popoverShow, this));
     	this.bsPopover().on('shown.bs.popover', $.proxy(this.popoverShown, this));
     	$('#' + this.id + ' .date-delete').click($.proxy(this.deleteClicked, this));
-    	$('#' + this.id + ' .datetime-input').inputmask(this.mask());
     	$('#' + this.id + ' .datetime-input').attr('title', 'Entry format is ' + this.format());
+
+		if (this.rawVal() != '') {
+			var loaded = moment(this.rawVal(), 'YYYY-MM-DD HH:mm:ss');
+
+			if (loaded.isValid()) {
+				this.val(loaded.format(this.format()));
+			} else {
+				this.rawVal('');
+			}
+		}
+
+		$('#' + this.id + ' .datetime-input').inputmask(this.mask());
+
+    	if (this.warnOnLeave) {
+    		var form = trooper.ui.registry.getForm(this.formId);
+    		form.addVolatileField(this.id);
+    	}
     };
 
     this.popoverShow = function () {
@@ -213,7 +228,6 @@
 	
 	this.dayClicked = function (event) {
 	    var dayOfMonth = parseInt($(event.target).text());
-	    debugger;
 
 		if (isNaN(dayOfMonth)) {
 			return;
@@ -238,6 +252,9 @@
 	        this.potentialValue.second(this.second());
 	    }
 
+	    var form = trooper.ui.registry.getForm(this.formId);
+	    form.makeFormDirty();
+
 	    this.val(this.potentialValue.format());
 	    this.popover().close();
 	};
@@ -249,6 +266,9 @@
 	};
 
 	this.deleteClicked = function () {
+		var form = trooper.ui.registry.getForm(this.formId);
+		form.makeFormDirty();
+
 	    this.val('');
 	};	
 
@@ -309,14 +329,24 @@
 			var newValue = moment(value);
 
 			var result = newValue.isValid() ? newValue.format(this.format()) : '';
-			$('#' + this.id + ' input.datetime-input').val(result);
+			this.rawVal(result);
 		} else {
-		    var raw = $('#' + this.id + ' input.datetime-input').val();
+			var raw = this.rawVal();
 
 		    var current = moment(raw, this.format());
 		    return current.isValid() ? current : null;
 		}
-	}	
+	}
+
+	this.rawVal = function (value) {
+		if (arguments.length == 1) {
+			$('#' + this.id + ' input.datetime-input').val(value);
+		} else {
+			var raw = $('#' + this.id + ' input.datetime-input').val();
+
+			return raw;
+		}
+	};
 
 	this.year = function(value) {
 		if (arguments.length == 1) {

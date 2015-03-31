@@ -17,7 +17,7 @@
     <title>Testing bootstrap controls</title>
     @{
         var cruncher = new Cruncher(Html);
-	    var bsf = new Form<DateTimePickerModel>(Html, new FormHeader {Action = Url.Action("Submit", "AllControls")});
+	    var bsf = new Form<DateTimePickerModel>(Html, new FormHeader {Action = Url.Action("Submit", "DateTimePicker")});
 
 		Trooper.Ui.Mvc.Bootstrap.Html<DateTimePickerModel>.Init(Html);
     }
@@ -46,8 +46,6 @@
         </div>
 
         @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
-        @bsf.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
-        @bsf.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
     </div>
 
     @bsf.EndForm()
