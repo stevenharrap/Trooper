@@ -820,12 +820,16 @@ namespace Trooper.Ui.Mvc.Bootstrap
                     level = "default";
                     break;
             }
-                        
-            var result = "<div id=\"" + dtpProps.Id + "\" class=\"trooper dateTimePicker\">\n"
-                         + "<div class=\"input-group\">\n" + "<input class=\"form-control datetime-input "
-                         + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\""
-                         + "\" name=\"" + dtpProps.Name + "\" value=\"" + (dtpProps.Value == null ? string.Empty : ((DateTime)dtpProps.Value).ToString("yyyy-MM-dd HH:mm:ss"))
-                         + "\" type=\"text\" " + (this.IsControlEnabled(dtpProps.Enabled) ? string.Empty : "readonly=\"readonly\"") + "/>\n";
+
+	        var value = dtpProps.Value == null
+		        ? string.Empty
+		        : ((DateTime) dtpProps.Value).ToString("yyyy-MM-dd HH:mm:ss");
+
+	        var result = "<div id=\"" + dtpProps.Id + "\" class=\"trooper dateTimePicker\">\n"
+	                     + "<input type=\"hidden\" type=\"text\" name=\"" + dtpProps.Name + "\" value=\"" + value + "\"/>"
+	                     + "<div class=\"input-group\">\n" + "<div class=\"form-control datetime-input "
+	                     + (dtpProps.TextSize == null ? string.Empty : FormatInputTextSize(dtpProps.TextSize)) + "\""
+						 + (this.IsControlEnabled(dtpProps.Enabled) ? " contentEditable =\"true\"" : string.Empty) + "></div>\n";
 
             if (this.IsControlEnabled(dtpProps.Enabled))
             {
