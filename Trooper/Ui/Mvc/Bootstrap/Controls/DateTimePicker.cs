@@ -19,6 +19,10 @@ namespace Trooper.Ui.Mvc.Bootstrap.Controls
 
         public DateTime? Value { get; set; }
 
+		public DateTime? Minimum { get; set; }
+
+		public DateTime? Maximum { get; set; }
+
         public DateTimeFormat DateTimeFormat { get; set; }
 
         public int UtcOffset { get; set; }

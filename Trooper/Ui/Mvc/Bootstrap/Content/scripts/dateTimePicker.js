@@ -6,6 +6,8 @@
     this.popoverPlacement = params.popoverPlacement;
     this.utcOffset = params.utcOffset;
     this.popoverId = params.popoverId;
+    this.minimum = params.minimum;
+	this.maximum = params.maximum;
     this.potentialValue = null;
     this.currentMonth = null;
 	
@@ -16,24 +18,21 @@
     	$('#' + this.id + ' .date-delete').click($.proxy(this.deleteClicked, this));
     	$('#' + this.id + ' .datetime-input').attr('title', 'Entry format is ' + this.clientFormat());
 
-		if (this.rawVal() != '') {
-			var loaded = moment(this.rawVal(), this.serverFormat());
+	    $('#' + this.id + ' .datetime-input').inputmask(
+		    this.mask(),
+		    {
+		    	'oncomplete': $.proxy(this.userInputChanged, this),
+		    	'onincomplete': $.proxy(this.userInputChanged, this),
+		    	'oncleared': $.proxy(this.userInputCleared, this)
+		    });
 
-			if (loaded.isValid()) {
-				this.valAsMoment(loaded);
-			} else {
-				this.rawVal('');
-			}
-		}
+	    var val = this.minimum == null ? null : moment(this.minimum, this.serverFormat());
+	    this.minimum = val == null ? null : this.minimum;
 
-		$('#' + this.id + ' .datetime-input').inputmask(this.mask());
+	    val = this.maximum == null ? null : moment(this.maximum, this.serverFormat());
+	    this.maximum = val == null ? null : this.maximum;
 
-		var form = trooper.ui.registry.getForm(this.formId);
-		form.onSubmit($.proxy(this.submitting, this));
-
-    	if (this.warnOnLeave) {    		
-    		form.addVolatileField(this.id);
-    	}
+	    this.resetUserInput();
     };
 
     this.popoverShow = function () {
@@ -127,7 +126,7 @@
     	this.contentElement().find('.minute').bind('keypress keydown keyup', $.proxy(this.minuteChanged, this));
     	this.contentElement().find('.second').bind('keypress keydown keyup', $.proxy(this.secondChanged, this));
 
-    	this.contentElement().find('table').on('click', '.day-this-month', $.proxy(this.dayClicked, this));
+    	this.contentElement().find('table').on('click', '.day-is-selectable', $.proxy(this.dayClicked, this));
     	this.contentElement().find('button.now').click($.proxy(this.goNow, this));
     	this.contentElement().find('button.ok').click($.proxy(this.okClicked, this));
     	this.contentElement().find('button.cancel').click($.proxy(this.cancelClicked, this));
@@ -159,8 +158,9 @@
 		    var date = startMoment.date();
 		    var isToday = this.datesEqual(startMoment, now);
 		    var isSelectedDay = this.datesEqual(this.potentialValue, startMoment);
+		    var isSelectable = isMonth;
 
-		    this.dayCell(i, date, isMonth, isToday, isSelectedDay);
+		    this.dayCell(i, date, isMonth, isToday, isSelectedDay, isSelectable);
 
 		    startMoment.add(1, 'day');
 		}
@@ -187,7 +187,7 @@
 
     this.yearChanged = function (event) {
 	    if (event.keyCode == 13) {
-            event.preventDefault()
+		    event.preventDefault();
 	        return false;
 	    }
 
@@ -265,6 +265,7 @@
 	    form.makeFormDirty();
 
 	    this.valAsMoment(this.potentialValue);
+		this.resetUserInput();
 	    this.popover().close();
 	};
 
@@ -278,25 +279,12 @@
 		var form = trooper.ui.registry.getForm(this.formId);
 		form.makeFormDirty();
 
-	    this.rawVal('');
+		this.valAsMoment(null);
+		this.resetUserInput();
 	};	
 
 	this.cancelClicked = function () {
 	    this.popover().close();
-	};
-
-	this.submitting = function () {
-	    if (this.rawVal() == '') {
-	        return true;
-	    }
-
-	    var raw = this.valAsServerFormat();
-
-	    $('#' + this.id + ' .datetime-input').inputmask('remove');
-
-	    this.rawVal(raw);
-
-	    return true;
 	};
 
 	this.goNow = function() {
@@ -317,7 +305,7 @@
 		return this.popover().contentElement();
 	};
 
-	this.dayCell = function (cellId, dayOfMonth, isCurrentMonth, isToday, isSelectedDay) {
+	this.dayCell = function (cellId, dayOfMonth, isCurrentMonth, isToday, isSelectedDay, isSelectable) {
 		var cell = this.contentElement().find('.day-' + cellId);
 
 		cell.text(dayOfMonth);
@@ -328,6 +316,13 @@
 		} else {
 			cell.addClass('day-other-month');
 			cell.removeClass('day-this-month');
+		}
+
+		if (isSelectable) {
+			cell.addClass('day-is-selectable');
+		}
+		else {
+			cell.removeClass('day-is-selectable');
 		}
 
 		if (isToday) {
@@ -349,38 +344,86 @@
     
 	this.rawVal = function (value) {
 		if (arguments.length == 1) {
-			$('#' + this.id + ' input.datetime-input').val(value);
+			$('#' + this.id + ' input[type="hidden"]').val(value);
 		} else {
-			var raw = $('#' + this.id + ' input.datetime-input').val();
+			var raw = $('#' + this.id + ' input[type="hidden"]').val();
 
 			return raw;
 		}
 	};
 
-	this.valAsClientFormat = function (value) {
-	    if (arguments.length == 1) {
-	        var newValue = moment(value, this.clientFormat());
-
-	        if (newValue.isValid()) {
-	            this.valAsMoment(newValue);
-	        }
-	    } else {
-	        var result = this.valAsMoment();
-
-	        if (result != null) {
-	            return result.format(this.clientFormat());
-	        }
-
-	        return '';
-	    }
+	this.userInput = function (value) {
+		if (arguments.length == 1) {
+			$('#' + this.id + ' .datetime-input').val(value);
+		} else {
+			return $('#' + this.id + ' .datetime-input').text();
+		}
 	}
 
+	this.resetUserInput = function()
+	{
+		var val = this.valAsMoment();
+
+		if (val == null) {
+			this.userInput('');
+			return;
+		}
+
+		this.userInput(val.format(this.clientFormat()));
+	};
+
+	this.userInputChanged = function () {
+		var val = moment(this.userInput(), this.clientFormat());
+
+		if (!val.isValid()) {
+			this.resetUserInput();
+			return;
+		}
+
+		var format = this.clientFormat();
+		var result = this.valAsMomentOrNow();
+
+		if (format.indexOf('YYYY') > -1) {
+			result.year(val.year());
+		}
+
+		if (format.indexOf('MM') > -1) {
+			result.month(val.month());
+		}
+
+		if (format.indexOf('DD') > -1) {
+			result.date(val.date());
+		}
+
+		if (format.indexOf('HH') > -1) {
+			result.hour(val.hour());
+		}
+
+		if (format.indexOf('mm') > -1) {
+			result.minute(val.minute());
+		}
+
+		if (format.indexOf('ss') > -1) {
+			result.second(val.second());
+		}
+
+		this.valAsMoment(result);
+	};
+
+	this.userInputCleared = function () {
+		this.valAsMoment(null);
+	};
+
 	this.valAsServerFormat = function (value) {
-	    if (arguments.length == 1) {
+		if (arguments.length == 1) {
+			if (value == null || value == '') {
+				this.rawVal('');
+			}
+
 	        var newValue = moment(value, this.serverFormat());
 
 	        if (newValue.isValid()) {
-	            this.valAsMoment(newValue);
+	        	this.valAsMoment(newValue);
 	        }
 	    } else {
 	        var result = this.valAsMoment();
@@ -394,13 +437,17 @@
 	}
 
 	this.valAsMoment = function (value) {
-	    if (arguments.length == 1 && moment.isMoment(value) && value.isValid()) {	        
-	        var result = value.format(this.clientFormat());
-	        this.rawVal(result);
-	    } else {
+		if (arguments.length == 1) {
+			if (moment.isMoment(value) && value.isValid()) {
+				var result = value.format(this.serverFormat());
+				this.rawVal(result);
+			} else {
+				this.rawVal('');
+			}
+		} else {
 	        var raw = this.rawVal();
 
-	        var current = moment(raw, this.clientFormat());
+	        var current = moment(raw, this.serverFormat());
 	        return current.isValid() ? current : null;
 	    }
 	}
@@ -575,7 +622,6 @@
 	var publicResult = {
 	    id: trooper.utility.control.makeIdAccessor(this),
 	    val: $.proxy(this.val, this),
-	    valAsClientFormat: $.proxy(this.valAsClientFormat, this),
 	    valAsServerFormat: $.proxy(this.valAsServerFormat, this),
 	    valAsMoment: $.proxy(this.valAsMoment, this),
 	};

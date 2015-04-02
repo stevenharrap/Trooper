@@ -821,9 +821,9 @@ namespace Trooper.Ui.Mvc.Bootstrap
                     break;
             }
 
-	        var value = dtpProps.Value == null
-		        ? string.Empty
-		        : ((DateTime) dtpProps.Value).ToString("yyyy-MM-dd HH:mm:ss");
+	        const string serverFormat = "yyyy-MM-dd HH:mm:ss";
+
+	        var value = dtpProps.Value == null ? string.Empty : ((DateTime) dtpProps.Value).ToString(serverFormat);
 
 	        var result = "<div id=\"" + dtpProps.Id + "\" class=\"trooper dateTimePicker\">\n"
 	                     + "<input type=\"hidden\" type=\"text\" name=\"" + dtpProps.Name + "\" value=\"" + value + "\"/>"
@@ -860,14 +860,16 @@ namespace Trooper.Ui.Mvc.Bootstrap
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
-                + "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', utcOffset:{5}, popoverId:'{6}'}});",
+                + "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', utcOffset:{5}, popoverId:'{6}', minimum:{7}, maximum:{8}}});",
                 dtpProps.Id,
                 this.FormHeaderProps.Id,
 				dtpProps.DateTimeFormat,
                 this.GetJsBool(dtpProps.WarnOnLeave),
                 this.PopoverPlacementToString(dtpProps.PopoverPlacement),
                 dtpProps.UtcOffset,
-                poProps.Id);
+                poProps.Id,
+				dtpProps.Minimum == null ? "null" : string.Format("'{0:" + serverFormat + "}'", dtpProps.Minimum),
+				dtpProps.Maximum == null ? "null" : string.Format("'{0:"+ serverFormat+"}'", dtpProps.Maximum));
 
 			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
 			{
