@@ -188,216 +188,156 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="bootstrap_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\css\bootstrap.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\css\bootstrap.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="bootstrap_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\js\bootstrap.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\js\bootstrap.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="GlyphiconsHalflingsReguarSvg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.svg;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\fonts\glyphicons-halflings-regular.svg;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="GlyphiconsHalflingsRegularEot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\fonts\glyphicons-halflings-regular.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="GlyphiconsHalflingsRegularTtf" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\fonts\glyphicons-halflings-regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="GlyphiconsHalflingsRegularWoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ui\Mvc\Bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="fonts_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\styles\fonts.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="ProximaNovaSoft_Bold_webfont_eot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Bold_webfont_ttf" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Bold_webfont_woff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Medium_webfont_eot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Medium_webfont_ttf" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Medium_webfont_woff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Regular_webfont_eot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.eot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Regular_webfont_ttf" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Regular_webfont_woff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Bold_webfont_svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-bold-webfont.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Medium_webfont_svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-medium-webfont.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProximaNovaSoft_Regular_webfont_svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\content\fonts\proximanovasoft-regular-webfont.svg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LayoutView_cshtml" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\Ui\StdTemplate\Views\layoutview.cshtml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SearchBarView_cshtml" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\App\ui\StdTemplate\views\searchbarview.cshtml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="StdThemeTemplate_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\app\ui\StdTemplate\content\scripts\stdthemetemplate.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="StdThemeSearchBar_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\app\ui\stdtemplate\content\scripts\stdthemesearchbar.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="StdThemeSearchBar_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\app\ui\stdtemplate\content\styles\stdthemesearchbar.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="StdThemeTemplate_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\app\ui\stdtemplate\content\styles\stdthemetemplate.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="trooper_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\app\ui\stdtemplate\content\images\trooper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\fonts\glyphicons-halflings-regular.woff;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="button_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\button.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\button.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="checkBoxList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\checkboxlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\checkboxlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="checkBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\checkbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\checkbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="dateTimePicker_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\datetimepicker.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\datetimepicker.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="form_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\form.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\form.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="messagesPanel_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\messagespanel.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\messagespanel.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="numericBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\numericbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\numericbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="panelGroup_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\panelgroup.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\panelgroup.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="radioList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\radiolist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\radiolist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="searchBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\searchbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\searchbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="selectList_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\selectlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\selectlist.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="table_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\table.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\table.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="textareaBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\textareabox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\textareabox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="textBox_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\textbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\textbox.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="trooper_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\trooper.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\trooper.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="upload_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\upload.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\upload.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="virtualModalWindow_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\virtualmodalwindow.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\virtualmodalwindow.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="dateTimePicker_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\styles\datetimepicker.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\styles\datetimepicker.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="searchBox_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\styles\searchbox.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\styles\searchbox.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="table_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\styles\table.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\styles\table.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="trooper_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\styles\trooper.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\styles\trooper.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="upload_less" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\styles\upload.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\styles\upload.less;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="bootstrap_css_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\bootstrap\css\bootstrap.css.map;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\css\bootstrap.css.map;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="GlyphiconsHalflingsRegularWoff2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\bootstrap\fonts\glyphicons-halflings-regular.woff2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Ui\Mvc\Rabbit\content\bootstrap\fonts\glyphicons-halflings-regular.woff2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="popover_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\scripts\popover.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\scripts\popover.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery\jquery.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="jquery_ui_min_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui\jquery-ui.min.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui\jquery-ui.min.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="jquery_ui_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui\jquery-ui.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="jquery_ui_1_10_0_custom_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\jquery-ui-1.10.0.custom.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\jquery-ui-1.10.0.custom.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ui_bg_flat_0_aaaaaa_40x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_flat_0_aaaaaa_40x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_flat_0_aaaaaa_40x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_glass_55_fbf9ee_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_55_fbf9ee_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_55_fbf9ee_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_glass_65_ffffff_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_65_ffffff_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_65_ffffff_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_glass_75_dadada_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_dadada_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_dadada_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_glass_75_e6e6e6_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_e6e6e6_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_e6e6e6_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_glass_75_ffffff_1x400_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_ffffff_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_ffffff_1x400.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_highlight_soft_75_cccccc_1x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_highlight-soft_75_cccccc_1x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_highlight-soft_75_cccccc_1x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_bg_inset_soft_95_fef1ec_1x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-bg_inset-soft_95_fef1ec_1x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-bg_inset-soft_95_fef1ec_1x100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_icons_222222_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_222222_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-icons_222222_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_icons_2e83ff_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_2e83ff_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-icons_2e83ff_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_icons_454545_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_454545_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-icons_454545_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_icons_888888_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_888888_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-icons_888888_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_icons_cd0a0a_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_cd0a0a_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-icons_cd0a0a_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ui_icons_f6cf3b_256x240_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-ui-bootstrap-theme\images\ui-icons_f6cf3b_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-ui-bootstrap-theme\images\ui-icons_f6cf3b_256x240.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="moment_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\moment\moment.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Ui\Mvc\Rabbit\content\moment\moment.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="jquery_inputmask_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ui\mvc\bootstrap\content\jquery-inputmask\jquery.inputmask.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\Ui\Mvc\Rabbit\content\jquery-inputmask\jquery.inputmask.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

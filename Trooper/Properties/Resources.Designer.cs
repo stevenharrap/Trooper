@@ -341,13 +341,11 @@ namespace Trooper.Properties {
         ///        }
         ///    };
         ///
-        ///    trooper.ui.registry.addControl(this.id, this, &apos;checkbox&apos;);
-        ///    $(document).ready($.proxy(this.init, this));
-        ///
-        ///    return {
-        ///
+        ///    var publicResult = {
+        ///        id: trooper.utility.control.makeIdAccessor(this),
         ///    };
-        ///});.
+        ///
+        ///    trooper.ui.registry.addControl(this.id, publicResult, &apos;che [rest of string was truncated]&quot;;.
         /// </summary>
         public static string checkBox_js {
             get {
@@ -372,7 +370,8 @@ namespace Trooper.Properties {
         ///        }
         ///    };
         ///
-        ///    trooper.ui.registry.add [rest of string was truncated]&quot;;.
+        ///    var publicResult = {
+        ///  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string checkBoxList_js {
             get {
@@ -384,17 +383,17 @@ namespace Trooper.Properties {
         ///   Looks up a localized string similar to trooper.ui.control.dateTimePicker = (function (params) {
         ///    this.id = params.id;
         ///    this.formId = params.formId;
-        ///    this.format = params.format;
         ///    this.dateTimeFormat = params.dateTimeFormat;
         ///    this.warnOnLeave = params.warnOnLeave;
         ///    this.popoverPlacement = params.popoverPlacement;
-        ///    this.timezone = params.timezone;
+        ///    this.utcOffset = params.utcOffset;
         ///    this.popoverId = params.popoverId;
+        ///    this.minimum = params.minimum;
+        ///	this.maximum = params.maximum;
         ///    this.potentialValue = null;
         ///    this.currentMonth = null;
         ///	
-        ///    this.init = function () {
-        ///    	this.popover().content(&apos;&lt;div&gt;&lt;/ [rest of string was truncated]&quot;;.
+        ///    this.init = function () {        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string dateTimePicker_js {
             get {
@@ -411,52 +410,27 @@ namespace Trooper.Properties {
         ///    table tr {
         ///        td.day-this-month {
         ///	        font-weight: bold;
-        ///	        cursor: pointer;   
+        ///            color: lightgray;	        
+        ///            cursor: default;
         ///        }
         ///
-        ///        td.day-this-month:hover {
+        ///        td.day-is-selectable {
+        ///            color: black;
+        ///            cursor: pointer;
+        ///        }
+        ///
+        ///        td.day-is-selectable:hover {
         ///            background: #333333;
         ///            color: #fff;
         ///        }
         ///
         ///        td.day-other-month {
         ///	        color: lightgray;
-        ///	        cursor: default;   
-        ///        }
-        ///
-        ///        td.day-today {
-        ///            background: #eeeeee;
-        ///        }
-        ///
-        ///        td.day-selected {
-        ///             [rest of string was truncated]&quot;;.
+        ///	        [rest of string was truncated]&quot;;.
         /// </summary>
         public static string dateTimePicker_less {
             get {
                 return ResourceManager.GetString("dateTimePicker_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @font-face {
-        ///    font-family: &apos;ProximaNovaRegular&apos;;
-        ///    src: url(&apos;Regular.eot&apos;);
-        ///    src: url(&apos;Regular.eot?#iefix&apos;) format(&apos;embedded-opentype&apos;),
-        ///         url(&apos;Regular.woff&apos;) format(&apos;woff&apos;),
-        ///         url(&apos;Regular.ttf&apos;) format(&apos;truetype&apos;),
-        ///         url(&apos;Regular.svg#ProximaNovaSoftRegular&apos;) format(&apos;svg&apos;);
-        ///    font-weight: normal;
-        ///    font-style: normal;
-        ///}
-        ///
-        ///@font-face {
-        ///    font-family: &apos;ProximaNovaMedium&apos;;
-        ///    src: url(&apos;Medium.eot&apos;);
-        ///    src: url(&apos;Medium.eot?#iefix&apos;) format(&apos;embedded-opentype&apos;),        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string fonts_less {
-            get {
-                return ResourceManager.GetString("fonts_less", resourceCulture);
             }
         }
         
@@ -638,16 +612,6 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] LayoutView_cshtml {
-            get {
-                object obj = ResourceManager.GetObject("LayoutView_cshtml", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Affected server may require a restart..
         /// </summary>
         public static string MessageServerRestart {
@@ -780,126 +744,6 @@ namespace Trooper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Bold_webfont_eot {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Bold_webfont_eot", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Bold_webfont_svg {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Bold_webfont_svg", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Bold_webfont_ttf {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Bold_webfont_ttf", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Bold_webfont_woff {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Bold_webfont_woff", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Medium_webfont_eot {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Medium_webfont_eot", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Medium_webfont_svg {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Medium_webfont_svg", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Medium_webfont_ttf {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Medium_webfont_ttf", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Medium_webfont_woff {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Medium_webfont_woff", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Regular_webfont_eot {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Regular_webfont_eot", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Regular_webfont_svg {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Regular_webfont_svg", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Regular_webfont_ttf {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Regular_webfont_ttf", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ProximaNovaSoft_Regular_webfont_woff {
-            get {
-                object obj = ResourceManager.GetObject("ProximaNovaSoft_Regular_webfont_woff", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to trooper.ui.control.radioList = (function (params)
         ///{
         ///    this.id = params.id;
@@ -917,21 +761,12 @@ namespace Trooper.Properties {
         ///        }
         ///    };
         ///
-        ///    trooper.ui.registry.addContr [rest of string was truncated]&quot;;.
+        ///    var publicResult = {
+        ///       [rest of string was truncated]&quot;;.
         /// </summary>
         public static string radioList_js {
             get {
                 return ResourceManager.GetString("radioList_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] SearchBarView_cshtml {
-            get {
-                object obj = ResourceManager.GetObject("SearchBarView_cshtml", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
@@ -1000,136 +835,16 @@ namespace Trooper.Properties {
         ///        }
         ///    };
         ///
-        ///	trooper.ui.registry.addControl(this.id, this, &apos;selectlist&apos;);
-        ///    $(document).ready($.proxy(this.init, this));
+        ///	var publicResult = {
+        ///	    id: trooper.utility.control.makeIdAccessor(this)
+        ///	};
         ///
-        ///    return {
-        ///
-        ///    };
-        ///});.
+        ///	trooper.ui.registry.addControl(this.id, publicResult, &apos;selectlist&apos;);
+        ///   [rest of string was truncated]&quot;;.
         /// </summary>
         public static string selectList_js {
             get {
                 return ResourceManager.GetString("selectList_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function StdThemeSearchBar() {
-        ///    return window[&apos;stdThemeSearchBar&apos;];
-        ///}
-        ///
-        ///function StdThemeSearchBar() {
-        ///    this.ignoreLoadingScreenElements = new Array();
-        ///
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///StdThemeSearchBar.prototype.searchRowOpen = false;
-        ///
-        ///StdThemeSearchBar.prototype.searchRowChanging = false;
-        ///
-        ///StdThemeSearchBar.prototype.searchRowNormalBg = &apos;#f0f0f0&apos;;
-        ///
-        ///StdThemeSearchBar.prototype.searchRowHightlightBg = &apos;#e8e8e8&apos;;
-        ///
-        ///StdThemeSearchBar.prototype.searchRowDefaultHeight = [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string StdThemeSearchBar_js {
-            get {
-                return ResourceManager.GetString("StdThemeSearchBar_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .template-search-row {
-        ///    border-bottom: 1px solid #af4e8b;
-        ///    margin-top: -81px;
-        ///    padding-top: 8px;
-        ///    z-index: 1000;
-        ///    width: 100%;
-        ///    overflow: hidden;
-        ///
-        ///    .opacity-box {
-        ///        background-color: #f0f0f0;
-        ///        width: 100%;
-        ///        height: 100%;
-        ///        position: absolute;
-        ///        opacity: .9;
-        ///        top: 0;
-        ///    }
-        ///
-        ///    .search-bar-buttons {
-        ///        text-align: right;
-        ///    }
-        ///
-        ///    .close-search-bar {
-        ///        text-align: center;
-        ///        display: block;
-        ///        width: 100 [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string StdThemeSearchBar_less {
-            get {
-                return ResourceManager.GetString("StdThemeSearchBar_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to function GetStdThemeTemplate() {
-        ///    return window[&apos;stdThemeTemplate&apos;];
-        ///}
-        ///
-        ///function StdThemeTemplate() {
-        ///    $(document).ready($.proxy(this.init, this));
-        ///}
-        ///
-        ///StdThemeTemplate.prototype.init = function () {
-        ///    $(&apos;[data-toggle=offcanvas]&apos;).click(function () {
-        ///        $(&apos;.row-offcanvas&apos;).toggleClass(&apos;active&apos;);
-        ///    });
-        ///
-        ///    $(&apos;.submit-results button.close.any&apos;).click(function () {
-        ///        $(&apos;.submit-results&apos;).hide(500);
-        ///    });
-        ///
-        ///    $(&apos;.submit-results button.close.open-errors&apos;).click(function ( [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string StdThemeTemplate_js {
-            get {
-                return ResourceManager.GetString("StdThemeTemplate_js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @heroColor: #f18e00;
-        ///@heroHightlightColor: #af4e8b;
-        ///
-        ///html {
-        ///  overflow-x: hidden; /* Prevent scroll on narrow devices */
-        ///}
-        ///body {
-        ///  padding-bottom: 70px;
-        ///}
-        ///
-        ////*
-        /// * Off Canvas
-        /// * --------------------------------------------------
-        /// */
-        ///@media screen and (max-width: 767px) {
-        ///  .row-offcanvas {
-        ///    position: relative;
-        ///    -webkit-transition: all 0.25s ease-out;
-        ///    -moz-transition: all 0.25s ease-out;
-        ///    transition: all 0.25s ease-out;
-        ///  }
-        ///
-        ///  .row-offcanvas-left
-        ///  .sidebar-offcanvas {
-        ///    [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string StdThemeTemplate_less {
-            get {
-                return ResourceManager.GetString("StdThemeTemplate_less", resourceCulture);
             }
         }
         
@@ -1297,16 +1012,6 @@ namespace Trooper.Properties {
         public static string trooper_less {
             get {
                 return ResourceManager.GetString("trooper_less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap trooper_png {
-            get {
-                object obj = ResourceManager.GetObject("trooper_png", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

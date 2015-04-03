@@ -13,7 +13,7 @@ namespace Trooper.App.Ui.StdDocument
     using Trooper.BusinessOperation.Business;
     using Trooper.BusinessOperation.Interface;
     using Trooper.BusinessOperation.Utility;
-    using Trooper.Ui.Mvc.Bootstrap.Models;
+    using Trooper.Ui.Mvc.Rabbit.Models;
     using Trooper.Utility;
 
     /// <summary>

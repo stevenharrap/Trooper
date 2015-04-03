@@ -1,0 +1,55 @@
+﻿@using Trooper.Testing.Web.Models
+@using Trooper.Ui.Mvc.Rabbit
+@using Trooper.Ui.Mvc.Rabbit.Controls
+@using Trooper.Ui.Mvc.Rabbit.Controls.Options
+@using Trooper.Ui.Mvc.Cruncher
+@using Trooper.Ui.Interface.Mvc.Cruncher
+@using Trooper.Utility
+
+@model Trooper.Testing.Web.Models.TestUploadModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Rabbit controls</title>
+    @{
+        var cruncher = new Cruncher(Html);
+        var bsf = new Form<TestUploadModel>(Html, new FormHeader { Action = Url.Action("Submit", "UploadControl") });
+
+        Trooper.Ui.Mvc.Rabbit.Html<TestUploadModel>.Init(Html);
+    }
+
+    @cruncher.Header()
+</head>
+
+<body>
+    @bsf.BeginForm()
+
+    <div class="container">
+        <h2>Upload Test Area</h2>
+
+	    <hr/>
+
+	    <div class="row">
+		    <div class="col-xs-4">
+			    @bsf.UploadFor(m => m.TestFl01, new UploadBox {Title = "Upload 1" })
+                @bsf.UploadFor(m => m.TestFl02, new UploadBox { Title = "Upload 2" })
+                @bsf.UploadFor(m => m.TestFl03, new UploadBox { Title = "Upload 3" })
+		    </div>
+
+            <div class="col-xs-4">
+                @bsf.UploadFor(m => m.TestFl04, new UploadBox { Title = "Upload 4" })
+                @bsf.UploadFor(m => m.TestFl05, new UploadBox { Title = "Upload 5" })
+            </div>
+
+        </div>
+
+        @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+    </div>
+
+    @bsf.EndForm()
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿.trooper.dateTimePicker {
+    table tr th {
+        width: 14%;
+    }
+
+    table tr {
+        td.day-this-month {
+	        font-weight: bold;
+            color: lightgray;	        
+            cursor: default;
+        }
+
+        td.day-is-selectable {
+            color: black;
+            cursor: pointer;
+        }
+
+        td.day-is-selectable:hover {
+            background: #333333;
+            color: #fff;
+        }
+
+        td.day-other-month {
+	        color: lightgray;
+	        cursor: default;   
+        }
+
+        td.day-today {
+            background: #eeeeee;
+        }
+
+        td.day-selected {
+            background: #dddddd;
+        }
+
+        td.day-today.day-selected {
+            background: #dddddd;
+        }
+    }
+
+    .date-input::-ms-clear {
+       display: none;
+    }
+
+    .month {
+       text-align: right;
+       font-weight: bold;
+    }
+
+    .time .dots {
+        width: 10px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .format-TimeNoSeconds .time input,
+    .format-Time .time input {
+        width: 45px;
+    }
+
+    hr {
+    	margin-top: 10px;
+	    margin-bottom: 10px;
+    }
+
+    .format-TimeNoSeconds .button-now-group    
+    {
+        width: 2%;
+    }
+
+    .format-Time .button-now-group 
+    {
+        width: 3%;
+    }
+
+    .button-now-group {
+        width: 4%;
+    }
+}

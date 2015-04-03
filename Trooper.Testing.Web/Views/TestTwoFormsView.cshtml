@@ -1,0 +1,59 @@
+﻿@using Trooper.Testing.Web.Models
+@using Trooper.Ui.Mvc.Rabbit
+@using Trooper.Ui.Mvc.Rabbit.Controls
+@using Trooper.Ui.Mvc.Rabbit.Controls.Options
+@using Trooper.Ui.Mvc.Cruncher
+@using Trooper.Ui.Interface.Mvc.Cruncher
+@using Trooper.Utility
+
+@model Trooper.Testing.Web.Models.TestTwoFormsModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Two Forms in one View</title>
+    @{
+        var cruncher = new Cruncher(Html);
+        var form1 = new Form<TestTwoFormsModel>(Html, new FormHeader { Action = Url.Action("Submit", "TwoForms") });
+        var form2 = new Form<TestTwoFormsModel>(Html, new FormHeader { Action = Url.Action("Submit", "TwoForms") });
+
+        Trooper.Ui.Mvc.Rabbit.Html<TestTwoFormsModel>.Init(Html);
+    }
+
+    @cruncher.Header()
+</head>
+
+<body>
+    
+
+    <div class="container">
+        <h2>Two forms test area</h2>
+
+	    <hr/>
+
+	    <div class="row">
+		    <div class="col-xs-4">
+                <h3>Left Form</h3>
+                @form1.BeginForm()
+			    @form1.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Text box 1" })
+                @form1.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Text box 2" })
+                @form1.TextBoxFor(m => m.TestTx03, new TextBox { Title = "Text box 3" })
+                @form1.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+                @form1.EndForm()
+		    </div>
+            <div class="col-xs-4">
+                <h3>Right Form</h3>
+                @form2.BeginForm()
+                @form2.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Text box 1" })
+                @form2.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Text box 2" })
+                @form2.TextBoxFor(m => m.TestTx03, new TextBox { Title = "Text box 3" })
+                @form2.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+                @form2.EndForm()
+            </div>
+        </div>
+    </div>
+</body>
+</html>

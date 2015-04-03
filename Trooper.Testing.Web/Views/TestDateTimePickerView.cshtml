@@ -1,0 +1,96 @@
+﻿@using Trooper.Testing.Web.Models
+@using Trooper.Ui.Mvc.Rabbit
+@using Trooper.Ui.Mvc.Rabbit.Controls
+@using Trooper.Ui.Mvc.Rabbit.Controls.Options
+@using Trooper.Ui.Mvc.Cruncher
+@using Trooper.Ui.Interface.Mvc.Cruncher
+@using Trooper.Utility
+
+@model Trooper.Testing.Web.Models.TestDateTimePickerModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Rabbit controls</title>
+    @{
+        var cruncher = new Cruncher(Html);
+        var bsf = new Form<TestDateTimePickerModel>(Html, new FormHeader { Action = Url.Action("Submit", "TestDateTimePicker") });
+
+        Trooper.Ui.Mvc.Rabbit.Html<TestDateTimePickerModel>.Init(Html);
+    }
+
+    @cruncher.Header()
+</head>
+
+<body>
+    @bsf.BeginForm()
+
+    <div class="container">
+        <h2>DateTimePicker Test Area</h2>
+
+	    <hr/>
+
+	    <div class="row">
+		    <div class="col-xs-4">
+			    @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date", DateTimeFormat = DateTimeFormat.Date})
+			    @bsf.DateTimePickerFor(m => m.TestDt02, new DateTimePicker {Title = "Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime})
+			    @bsf.DateTimePickerFor(m => m.TestDt03, new DateTimePicker {Title = "Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds})
+		    </div>
+            <div class="col-xs-4">
+                @bsf.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Time", DateTimeFormat = DateTimeFormat.Time })
+                @bsf.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
+                @bsf.DateTimePickerFor(m => m.TestDt06, new DateTimePicker { Title = "Preset date time", DateTimeFormat = DateTimeFormat.DateAndTime })
+                @bsf.DateTimePickerFor(m => m.TestDt07, new DateTimePicker { Title = "UTC +8:00  Date time", DateTimeFormat = DateTimeFormat.DateAndTime, UtcOffset = 8 * 60 })
+            </div>
+            <div class="col-xs-4">
+                <p><strong>These are not bound to the model.</strong></p>
+
+                @bsf.DateTimePicker(
+                new DateTimePicker 
+                { 
+                    Title = "Between 2010-4-3 10:00 and 2010-4-13 14:00", 
+                    DateTimeFormat = DateTimeFormat.DateAndTime,
+                    Value = new DateTime(2010, 4, 8, 10, 0, 0),
+                    Minimum = new DateTime(2010, 4, 3, 10, 0, 0),
+                    Maximum = new DateTime(2010, 4, 13, 14, 0, 0)
+                })
+
+                @bsf.DateTimePicker(
+                new DateTimePicker
+                {
+                    Title = "After 2010-4-3 10:00",
+                    DateTimeFormat = DateTimeFormat.DateAndTime,
+                    Value = new DateTime(2010, 4, 8, 10, 0, 0),
+                    Minimum = new DateTime(2010, 4, 3, 10, 0, 0)
+                })
+
+                @bsf.DateTimePicker(
+                new DateTimePicker
+                {
+                    Title = "Before 2010-4-13 14:00",
+                    DateTimeFormat = DateTimeFormat.DateAndTime,
+                    Value = new DateTime(2010, 4, 8, 10, 0, 0),
+                    Maximum = new DateTime(2010, 4, 13, 14, 0, 0)
+                })
+
+                @bsf.DateTimePicker(
+                new DateTimePicker
+                {
+                    Title = "Default out of range",
+                    DateTimeFormat = DateTimeFormat.DateAndTime,
+                    Value = new DateTime(2010, 3, 8, 10, 0, 0),
+                    Minimum = new DateTime(2010, 4, 3, 10, 0, 0),
+                    Maximum = new DateTime(2010, 4, 13, 14, 0, 0)
+                })
+            </div>
+        </div>
+
+        @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+    </div>
+
+    @bsf.EndForm()
+</body>
+</html>

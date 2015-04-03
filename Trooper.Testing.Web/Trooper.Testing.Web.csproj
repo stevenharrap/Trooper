@@ -40,6 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.11.1.1\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -89,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\scripts\AllControls.js" />
+    <Content Include="Content\UploadTest\TestFile1.jpg" />
+    <Content Include="Content\UploadTest\TestFile2.jpg" />
     <Content Include="Global.asax" />
     <Content Include="jquery.min.js" />
     <Content Include="Test.html" />
@@ -96,20 +101,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DateTimePickerController.cs" />
-    <Compile Include="Controllers\AllControlsController.cs" />
+    <Compile Include="Controllers\TestTwoFormsController.cs" />
+    <Compile Include="Controllers\TestTableController.cs" />
+    <Compile Include="Controllers\TestUploadController.cs" />
+    <Compile Include="Controllers\TestDateTimePickerController.cs" />
+    <Compile Include="Controllers\TestAllControlsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DateTimePickerModel.cs" />
-    <Compile Include="Models\AllControlsModel.cs" />
+    <Compile Include="Models\BaseballMaster.cs" />
+    <Compile Include="Models\TestTableModel.cs" />
+    <Compile Include="Models\TestTwoFormsModel.cs" />
+    <Compile Include="Models\TestUploadModel.cs" />
+    <Compile Include="Models\TestDateTimePickerModel.cs" />
+    <Compile Include="Models\TestAllControlsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\AllControlsView.cshtml" />
-    <Content Include="Views\DateTimePickerView.cshtml" />
+    <Content Include="Views\TestAllControlsView.cshtml" />
+    <Content Include="Views\TestDateTimePickerView.cshtml" />
+    <Content Include="Views\TestUploadView.cshtml" />
+    <Content Include="Views\TestTwoFormsView.cshtml" />
+    <Content Include="Content\BaseballTestData\lahman-csv_2015-01-24.zip" />
+    <Content Include="Content\BaseballTestData\Master.csv" />
+    <Content Include="Views\TestTableView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,56 @@
+﻿@using Trooper.Testing.Web.Models
+@using Trooper.Ui.Mvc.Rabbit
+@using Trooper.Ui.Mvc.Rabbit.Controls
+@using Trooper.Ui.Mvc.Rabbit.Controls.Options
+@using Trooper.Ui.Mvc.Cruncher
+@using Trooper.Ui.Interface.Mvc.Cruncher
+@using Trooper.Ui.Mvc.Rabbit.TableClasses
+@using Trooper.Utility
+
+@model Trooper.Testing.Web.Models.TestTableModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing table controls</title>
+    @{
+        var cruncher = new Cruncher(Html);
+        var bsf = new Form<TestTableModel>(Html, new FormHeader { Action = Url.Action("Submit", "TestTable") });
+
+        Trooper.Ui.Mvc.Rabbit.Html<TestTableModel>.Init(Html);
+    }
+
+    @cruncher.Header()
+</head>
+
+<body>
+    @bsf.BeginForm()
+
+    <div class="container">
+        <h2>Upload Test Area</h2>
+
+	    <hr/>
+
+        @{
+            var tProps = new TableControl<BaseballMaster>
+            {
+                Source = Model.BaseballMasters,
+                Caption = "Baseball masters"
+            };
+
+            tProps.AddColumn(c => c.PlayerID);
+            tProps.AddColumn(c => c.NameFirst);
+            tProps.AddColumn(c => c.NameLast);
+            
+            bsf.Table<BaseballMaster>(tProps);
+        }
+
+        @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+    </div>
+
+    @bsf.EndForm()
+</body>
+</html>
