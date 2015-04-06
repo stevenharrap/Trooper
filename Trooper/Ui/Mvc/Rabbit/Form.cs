@@ -902,7 +902,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         {
             tProps.FormId = this.FormHeaderProps.Id;
 
-            return new Table<T>(tProps).Render();
+            return new Table<T>(tProps, this.Cruncher).Render();
         }
 		
         public MvcHtmlString SearchBox(SearchBox sbProps)

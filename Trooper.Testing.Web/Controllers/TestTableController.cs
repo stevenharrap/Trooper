@@ -69,6 +69,7 @@ namespace Trooper.Testing.Web.Controllers
             var reader = new StreamReader(Server.MapPath(@"~\Content\BaseballTestData\Master.csv"));
             var csv = new CsvReader(reader);
             csv.Configuration.IsHeaderCaseSensitive = false;
+            csv.Configuration.RegisterClassMap<BaseballMasterMap>();
             currentModel.BaseballMasters = csv.GetRecords<BaseballMaster>();
             //currentModel.BaseballMasters
 

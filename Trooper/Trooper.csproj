@@ -77,6 +77,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -338,8 +341,6 @@
     <Compile Include="Ui\Mvc\Utility\Helper.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\Logging.cs" />
-    <Compile Include="Utility\PagedList\IPagedList.cs" />
-    <Compile Include="Utility\PagedList\PagedList.cs" />
     <Compile Include="Utility\Reflection.cs" />
   </ItemGroup>
   <ItemGroup>

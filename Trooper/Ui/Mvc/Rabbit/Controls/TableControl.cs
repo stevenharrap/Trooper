@@ -10,6 +10,12 @@ namespace Trooper.Ui.Mvc.Rabbit.Controls
 {
     public class TableControl<T> where T : class
     {
+        public TableControl()
+        {
+            this.CanPage = true;
+            this.RowsPerPage = 50;
+        }
+
         /// <summary>
         /// Gets or sets the data source.
         /// </summary>

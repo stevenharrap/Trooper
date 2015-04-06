@@ -44,9 +44,9 @@
             tProps.AddColumn(c => c.PlayerID);
             tProps.AddColumn(c => c.NameFirst);
             tProps.AddColumn(c => c.NameLast);
-            
-            bsf.Table<BaseballMaster>(tProps);
         }
+
+        @(bsf.Table<BaseballMaster>(tProps))
 
         @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
     </div>
