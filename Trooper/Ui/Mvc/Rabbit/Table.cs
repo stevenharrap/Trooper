@@ -11,6 +11,9 @@ using System.Web.Mvc;
 using Trooper.Properties;
 using Trooper.Ui.Interface.Mvc.Cruncher;
 using Trooper.Ui.Mvc.Rabbit.Controls;
+using Trooper.Ui.Mvc.Rabbit.TableClasses;
+using Humanizer;
+using System.Web.Helpers;
 
 namespace Trooper.Ui.Mvc.Rabbit
 {
@@ -24,9 +27,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         public Table(TableControl<T> tProps, ICruncher cruncher)
         {
             this.tProps = tProps;
-            this.cruncher = cruncher;
-
-            this.JsLessLinkage();
+            this.cruncher = cruncher;            
         }
 
         public MvcHtmlString Render()
@@ -34,67 +35,114 @@ namespace Trooper.Ui.Mvc.Rabbit
             var result = new StringBuilder();
             var pagedSource = new PagedList<T>(this.tProps.Source.ToList(), 1, this.tProps.RowsPerPage);
 
-            result.Append("<table class=\"trooper table\">");
+            result.Append("<table class=\"trooper table\">\r\n");
 
             if (!string.IsNullOrWhiteSpace(this.tProps.Caption))
             {
-                result.AppendFormat("<caption>{0}</caption>", this.tProps.Caption);
+                result.AppendFormat("<caption>{0}</caption>\r\n", this.tProps.Caption);
             }
 
-            result.Append("<thead>");
-            result.Append("<tr>");
-            foreach (var col in this.tProps.Columns)
-            {
-                MemberExpression body = col.Mapping.Body as MemberExpression;
+            this.RenderHeader(result);
 
-                result.AppendFormat("<th>{0}</th>", body.Member.Name);
-            }
-            result.Append("</tr>");
-            result.Append("</thead>");
+            this.RenderBody(result, pagedSource);            
 
-            result.Append("<tbody>");
+            this.RenderFooter(result, pagedSource);
 
-            
-            foreach (var row in pagedSource)
-            {
-                result.Append("<tr>");
-                foreach (var col in this.tProps.Columns)
-                {
-                    var compiled = col.Mapping.Compile();
+            result.Append("</table>\r\n");
 
-                    result.AppendFormat("<td>{0}</td>", compiled(row));
-                }
-
-                result.Append("</tr>");
-            }
-
-            result.Append("</tbody>");
-            
-            result.Append("<tfoot>");
-
-            if (this.tProps.CanPage && pagedSource.PageCount > 1)
-            {
-                result.AppendFormat("<tr><td colspan=\"{0}\">{1}</td></tr>", this.tProps.Columns.Count(), this.FooterLinkage(pagedSource));
-            }
-
-            result.Append("</tfoot>");
-
-            result.Append("</table>");
+            this.JsLessLinkage();
 
             return new MvcHtmlString(result.ToString());
         }
 
-        private string FooterLinkage(PagedList<T> pagedSource)
+        private void RenderHeader(StringBuilder result)
         {
-            var result = new StringBuilder();
+            result.Append("<thead>\r\n");
+            result.Append("<tr>\r\n");
 
-            result.Append("<div class=\"paging\">");
-            result.Append("<div class=\"left\">");
-            result.Append("<ul class=\"pagination\">");
+            foreach (var col in this.tProps.Columns)
+            {
+                var header = this.GetColumnTitle(col);
+
+                result.AppendFormat("<th>{0}</th>\r\n", header);
+            }
+
+            result.Append("</tr>\r\n");
+            result.Append("</thead>\r\n");
+        }
+
+        private void RenderBody(StringBuilder result, PagedList<T> pagedSource)
+        {
+            result.Append("<tbody>\r\n");
+
+            foreach (var row in pagedSource)
+            {
+                var keyResult = this.GetKeyAsJson(row);                
+
+                result.AppendFormat("<tr data-value=\"{0}\">\r\n", keyResult);
+
+                foreach (var col in this.tProps.Columns)
+                {
+                    var compiledValue = col.ValueExpression.Compile();
+                    var value = compiledValue(row);
+
+                    if (!string.IsNullOrEmpty(col.Format))
+                    {
+                        value = string.Format(col.Format, value);
+                    }
+
+                    result.AppendFormat("<td>{0}</td>", value);
+                }
+
+                result.Append("\r\n</tr>\r\n");
+            }
+
+            result.Append("</tbody>\r\n");
+        }
+
+        private string GetKeyAsJson(T row)
+        {
+            if (this.tProps.Keys == null || !this.tProps.Keys.Any())
+            {
+                return null;
+            }
+
+            var keyResult = new Dictionary<string, object>();
+
+            foreach (var k in this.tProps.Keys)
+            {
+                var name = this.GetNameFromExpression(k);
+
+                if (name == null)
+                {
+                    continue;
+                }
+
+                var compiledKey = k.Compile();
+                keyResult.Add(name, compiledKey(row));
+            }
+
+            return Json.Encode(keyResult).Replace("\"", "&quot;");
+        }
+
+        private void RenderFooter(StringBuilder result, PagedList<T> pagedSource)
+        {
+            if (!this.tProps.CanPage || pagedSource.PageCount == 1) {
+                return;
+            }
+
+            result.Append("<tfoot>\r\n");
+
+            result.AppendFormat("<tr>\r\n");
+            result.AppendFormat("<td colspan=\"{0}\">", this.tProps.Columns.Count());
+
+            result.Append("<div class=\"paging\">\r\n");
+            result.Append("<div class=\"left\">\r\n");
+            result.Append("<ul class=\"pagination\">\r\n");
 
             if (pagedSource.PageNumber > 10)
             {
-                result.Append("<li><a><span class=\"glyphicon glyphicon-triangle-left\"></span></a></li>");
+                result.Append("<li><a><span class=\"glyphicon glyphicon-triangle-left\"></span></a></li>\r\n");
             }
 
             for (var p = pagedSource.PageNumber; p < pagedSource.PageCount && p < pagedSource.PageNumber + 10; p++)
@@ -109,12 +157,54 @@ namespace Trooper.Ui.Mvc.Rabbit
                 result.AppendFormat("<li><a>{0} pages <span class=\"glyphicon glyphicon-triangle-right\"></span></a></li>", pagedSource.PageCount);
             }
 
-            result.Append("</ul>");
-            result.Append("</div>");
-            result.AppendFormat("<div class=\"right\">{0} items</div>", pagedSource.Count());
-            result.Append("</div>");
+            result.Append("\r\n</ul>\r\n");
+            result.Append("</div>\r\n");
+            result.AppendFormat("<div class=\"right\">{0} items</div>\r\n", pagedSource.Count());
+            result.Append("</div>\r\n");
+            result.Append("</td>\r\n");
+            result.Append("</tr>\r\n");
 
-            return result.ToString();
+            result.Append("</tfoot>\r\n");
+        }
+
+        private string GetColumnTitle(Column<T> column)
+        {
+            if (!string.IsNullOrEmpty(column.Header))
+            {
+                return column.Header;
+            }
+
+            string result = this.GetNameFromExpression(column.ValueExpression);
+
+            if (result == null)
+            {
+                return string.Empty;
+            }                       
+
+            if ((this.tProps.HumanizeHeaders && column.Humanize == null) || (column.Humanize != null && (bool)column.Humanize))
+            {
+                result = result.Humanize();
+            }
+
+            return result;
+        }
+
+        private string GetNameFromExpression(Expression<Func<T, object>> expression)
+        {
+            var me = expression.Body as MemberExpression;
+            var ue = expression.Body as UnaryExpression;
+            string result = null;
+
+            if (me != null)
+            {
+                result = me.Member.Name;
+            }
+            else if (ue != null)
+            {
+                result = (ue.Operand as MemberExpression).Member.Name;
+            }
+
+            return result;
         }
 
         private void JsLessLinkage()

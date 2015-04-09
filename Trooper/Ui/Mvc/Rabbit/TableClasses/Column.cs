@@ -15,8 +15,8 @@ using System.Web.Helpers;
     /// </summary>
     public class Column<T> where T : class 
     {
-        public Expression<Func<T, object>> Mapping { get; set; }
-
+        public Expression<Func<T, object>> ValueExpression { get; set; }
+                
         /// <summary>
         /// Gets or sets a value indicating whether content in the column is allowed to wrap.
         /// By default header large is used.
@@ -36,6 +36,12 @@ using System.Web.Helpers;
                     || !string.IsNullOrEmpty(this.HeaderPrint);
             }
         }
+
+        public bool? Humanize { get; set; }
+
+        public string Format { get; set; }
+
+        public string Header { get; set; }
 
         /// <summary>
         /// Gets or sets the column header text when the screen is in the medium mode.

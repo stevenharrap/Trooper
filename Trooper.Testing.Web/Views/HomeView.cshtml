@@ -1,0 +1,51 @@
+﻿@using Trooper.Testing.Web.Models
+@using Trooper.Ui.Mvc.Rabbit
+@using Trooper.Ui.Mvc.Rabbit.Controls
+@using Trooper.Ui.Mvc.Rabbit.Controls.Options
+@using Trooper.Ui.Mvc.Cruncher
+@using Trooper.Ui.Interface.Mvc.Cruncher
+@using Trooper.Utility
+
+@model Trooper.Testing.Web.Models.HomeModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    @{
+        var cruncher = new Cruncher(Html);
+        var bsf = new Form<HomeModel>(Html, new FormHeader { Action = Url.Action("Submit", "Home") });
+
+        Trooper.Ui.Mvc.Rabbit.Html<HomeModel>.Init(Html);
+    }
+
+    @cruncher.Header()
+</head>
+
+<body>
+    @bsf.BeginForm()
+
+    <div class="container">
+        <h2>Test Area</h2>
+
+	    <hr/>
+
+	    <div class="row">
+		    <div class="col-xs-4">
+                <ul class="list-group">
+                    <li class ="list-group-item"><a href="~/TestAllControls">Test all controls</a></li>
+                    <li class="list-group-item"><a href="~/TestDateTimePicker">Test datetime picker</a></li>
+                    <li class="list-group-item"><a href="~/TestTable">Test table</a></li>
+                    <li class="list-group-item"><a href="~/TestTwoForms">Test two forms on one page</a></li>
+                    <li class="list-group-item"><a href="~/TestUpload">Test uploading</a></li>
+                </ul>
+            </div>            
+        </div>
+    </div>
+
+    @bsf.EndForm()
+</body>
+</html>

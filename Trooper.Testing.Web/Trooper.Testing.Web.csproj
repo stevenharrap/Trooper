@@ -103,6 +103,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\TestTwoFormsController.cs" />
     <Compile Include="Controllers\TestTableController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestUploadController.cs" />
     <Compile Include="Controllers\TestDateTimePickerController.cs" />
     <Compile Include="Controllers\TestAllControlsController.cs" />
@@ -110,6 +111,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseballMaster.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\TestTableModel.cs" />
     <Compile Include="Models\TestTwoFormsModel.cs" />
     <Compile Include="Models\TestUploadModel.cs" />
@@ -127,6 +129,7 @@
     <Content Include="Content\BaseballTestData\lahman-csv_2015-01-24.zip" />
     <Content Include="Content\BaseballTestData\Master.csv" />
     <Content Include="Views\TestTableView.cshtml" />
+    <Content Include="Views\HomeView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -32,7 +32,7 @@ namespace Trooper.Ui.Mvc.Rabbit.TableClasses
                     || !string.IsNullOrEmpty(this.HeaderPrint);
             }
         }
-
+		
         /// <summary>
         /// Gets or sets the column header text when the screen is in the medium mode.
         /// </summary>

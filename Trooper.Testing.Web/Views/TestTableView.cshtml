@@ -6,6 +6,7 @@
 @using Trooper.Ui.Interface.Mvc.Cruncher
 @using Trooper.Ui.Mvc.Rabbit.TableClasses
 @using Trooper.Utility
+@using System.Linq.Expressions;
 
 @model Trooper.Testing.Web.Models.TestTableModel
 
@@ -38,12 +39,24 @@
             var tProps = new TableControl<BaseballMaster>
             {
                 Source = Model.BaseballMasters,
-                Caption = "Baseball masters"
+                Caption = "Baseball masters",
+                HumanizeHeaders = true                
             };
 
+            tProps.AddKey(k => k.PlayerID);                       
+
             tProps.AddColumn(c => c.PlayerID);
-            tProps.AddColumn(c => c.NameFirst);
-            tProps.AddColumn(c => c.NameLast);
+            
+            var col1 = tProps.AddColumn(c => string.Format("{0}, {1}", c.NameLast, c.NameFirst));
+            col1.Header = "Player name";
+            
+            tProps.AddColumn(c => c.BirthDay);
+            
+            var col2 = tProps.AddColumn(c => c.BirthYear);
+            col2.Humanize = false;
+            
+            tProps.AddColumn(c => c.BirthCity, "lives in {0}");
+            
         }
 
         @(bsf.Table<BaseballMaster>(tProps))

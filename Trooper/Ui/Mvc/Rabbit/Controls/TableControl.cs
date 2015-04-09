@@ -16,6 +16,18 @@ namespace Trooper.Ui.Mvc.Rabbit.Controls
             this.RowsPerPage = 50;
         }
 
+        public List<Expression<Func<T, object>>> Keys { get; set; }
+
+        public void AddKey(Expression<Func<T, object>> keyExpression)
+        {
+            if (this.Keys == null)
+            {
+                this.Keys = new List<Expression<Func<T, object>>>();
+            }
+
+            this.Keys.Add(keyExpression);
+        }
+
         /// <summary>
         /// Gets or sets the data source.
         /// </summary>
@@ -23,21 +35,32 @@ namespace Trooper.Ui.Mvc.Rabbit.Controls
 
         public IList<Column<T>> Columns {get; set;}
 
-        public Column<T> AddColumn(Expression<Func<T, object>> mapping)
+        public Column<T> AddColumn(Expression<Func<T, object>> columnExpression)
         {
             if (this.Columns == null)
             {
                 this.Columns = new List<Column<T>>();
             }
 
-            var column = new Column<T> { Mapping = mapping };
+            var column = new Column<T> { ValueExpression = columnExpression };
 
             this.Columns.Add(column);
 
             return column;
         }
 
+        public Column<T> AddColumn(Expression<Func<T, object>> mapping, string format)
+        {
+            var column = this.AddColumn(mapping);
+
+            column.Format = format;
+
+            return column;
+        }
+
         public string FormId { get; set; }
+
+        public bool HumanizeHeaders { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the table can be sorted.

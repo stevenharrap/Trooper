@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using Trooper.Utility;
 
 namespace Trooper.Testing.Web.Models
 {
@@ -11,6 +12,8 @@ namespace Trooper.Testing.Web.Models
     {
         public BaseballMasterMap()
         {
+            AutoMap();
+
             Map(m => m.Debut).ConvertUsing<DateTime?>(row => {
                 var value = row.GetField("debut");
                 DateTime result;
@@ -33,6 +36,11 @@ namespace Trooper.Testing.Web.Models
 
                 return null;
             });
+
+            Map(m => m.BirthYear).ConvertUsing<int>(row => 
+            {
+                return Conversion.ConvertToInt(row.GetField("birthYear"), 0);
+            });
         }
     }
 
@@ -40,7 +48,7 @@ namespace Trooper.Testing.Web.Models
     {
         public string PlayerID { get; set; }
 
-        public int? BirthYear { get; set; }
+        public int BirthYear { get; set; }
 
         public int? BirthMonth { get; set; }
 
