@@ -18,14 +18,14 @@ namespace Trooper.Ui.Mvc.Rabbit.Controls
 			this.Options = new List<Option<TOptionKey, TOptionValue>>();
 	    }
 
-		public List<Option<TOptionKey, TOptionValue>> Options { get; set; }
+		public IList<Option<TOptionKey, TOptionValue>> Options { get; set; }
 
 		public void Add(TOptionKey key, TOptionValue value)
 		{
 			this.Options.Add(new Option<TOptionKey, TOptionValue>(key, value));
 		}
 
-        public List<TOptionKey> SelectedOptions { get; set; }
+        public IList<TOptionKey> SelectedOptions { get; set; }
 
         public TOptionKey SelectedOption
         {

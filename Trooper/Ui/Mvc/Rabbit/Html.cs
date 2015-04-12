@@ -25,6 +25,9 @@ namespace Trooper.Ui.Mvc.Rabbit
     using Trooper.Ui.Mvc.Rabbit.Controls;
     using Trooper.Ui.Mvc.Cruncher;
     using Trooper.Utility;
+    using Trooper.Ui.Interface.Mvc.Rabbit;
+    using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
+    using Trooper.Ui.Mvc.Utility;
 
     /// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides
@@ -36,11 +39,13 @@ namespace Trooper.Ui.Mvc.Rabbit
     /// <typeparam name="TModel">
     /// The model type in your view
     /// </typeparam>
-    public class Html<TModel>
+    public class Html<TModel> : IHtml
     {
         #region private fields
 
         private const string registerName = "RabbitControlsRegister";
+
+        private IGoRabbit<TModel> goRabbit;
 
         #endregion
 
@@ -51,42 +56,34 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <param name="htmlHelper">
         /// The html helper.
         /// </param>
-        public Html(HtmlHelper<TModel> htmlHelper)
+        public Html(IGoRabbit<TModel> goRabbit)
         {
-            this.HtmlHelper = htmlHelper;            
-            this.UrlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            this.Cruncher = new Cruncher(htmlHelper);
+            this.goRabbit = goRabbit;
 
             this.IncludeJquery();
 			this.IncludeBootstrap();
 
-
-            if (!this.Cruncher.HasJsItem("trooper"))
+            if (!this.goRabbit.Cruncher.HasJsItem("trooper"))
             {
-                this.Cruncher.AddJsInline(Resources.trooper_js, "trooper", OrderOptions.Middle);
-				this.Cruncher.AddLessInline(Resources.trooper_less, "trooper_less", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.trooper_js, "trooper", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddLessInline(Resources.trooper_less, "trooper_less", OrderOptions.Middle);
             }
         }
 
 		#region public properties
 
-		/// <summary>
-        /// Gets the html helper from your View
-        /// </summary>
-        public HtmlHelper<TModel> HtmlHelper { get; private set; }
-
-        public Dictionary<string, HtmlControl> ControlsRegister
+        public Dictionary<string, IHtmlControl> ControlsRegister
         {
             get
             {
                 if (HttpContext.Current.Items.Contains(registerName))
                 {
-                    return HttpContext.Current.Items[registerName] as Dictionary<string, HtmlControl>;
+                    return HttpContext.Current.Items[registerName] as Dictionary<string, IHtmlControl>;
                 }
 
-                HttpContext.Current.Items[registerName] = new Dictionary<string, HtmlControl>();
+                HttpContext.Current.Items[registerName] = new Dictionary<string, IHtmlControl>();
 
-                return HttpContext.Current.Items[registerName] as Dictionary<string, HtmlControl>;
+                return HttpContext.Current.Items[registerName] as Dictionary<string, IHtmlControl>;
             }
 
             private set
@@ -99,17 +96,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// Gets or sets the errors that may be present. Providing errors to
         /// any specific control overrides this.
         /// </summary>
-        public List<IMessage> Messages { get; set; }        
-       
-        /// <summary>
-        /// Gets or sets the url helper from your View
-        /// </summary>
-        public UrlHelper UrlHelper { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Cruncher instance into which methods may inject JavaScript and CSS
-        /// </summary>
-        public Cruncher Cruncher { get; set; }
+        public IList<IMessage> Messages { get; set; }        
 
 		#endregion
 
@@ -135,13 +122,13 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <returns>
         /// The <see cref="MvcHtmlString"/>.
         /// </returns>
-        public MvcHtmlString PannelGroup(PannelGroup pgProps)
+        public IHtmlString PannelGroup(PannelGroup pgProps)
         {
             this.RegisterControl(pgProps);
 
-            if (!this.Cruncher.HasJsItem("panelGroup_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("panelGroup_js"))
             {
-                this.Cruncher.AddJsInline(Resources.panelGroup_js, "panelGroup_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.panelGroup_js, "panelGroup_js", OrderOptions.Middle);
             }
            
             var result = "<div class=\"panel-group " 
@@ -198,9 +185,9 @@ namespace Trooper.Ui.Mvc.Rabbit
             var js = string.Format("new trooper.ui.control.panelGroup({{id:'{0}', active:'{1}', hasErrors: {2}}});",
                 pgProps.Id, 
                 active,
-                this.GetJsBool(pgProps.WorstMessageLevel == MessageAlertLevel.Error));
+                RabbitHelper.GetJsBool(pgProps.WorstMessageLevel == MessageAlertLevel.Error));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return new MvcHtmlString(result);
         }
@@ -226,7 +213,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <returns>
         /// The <see cref="MvcHtmlString"/>.
         /// </returns>
-        public MvcHtmlString ButtonDropDown(ButtonDropDown bddProps)
+        public IHtmlString ButtonDropDown(ButtonDropDown bddProps)
         {
             this.RegisterControl(bddProps);
 
@@ -235,7 +222,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             result +=
                 string.Format(
                     "<button type=\"button\" class=\"btn {0} dropdown-toggle\" data-toggle=\"dropdown\">",
-                    this.ButtonTypeToString(bddProps.ButtonType));
+                    RabbitHelper.ButtonTypeToString(bddProps.ButtonType));
 
             if (!string.IsNullOrEmpty(bddProps.Icon))
             {
@@ -298,7 +285,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <returns>
         /// The <see cref="MvcHtmlString"/> html for the window.
         /// </returns>
-        public MvcHtmlString ModalWindow(ModalWindow mwProps)
+        public IHtmlString ModalWindow(ModalWindow mwProps)
         {
             this.RegisterControl(mwProps);
 
@@ -380,9 +367,9 @@ namespace Trooper.Ui.Mvc.Rabbit
         {
             this.RegisterControl(mwProps);
 
-            if (!this.Cruncher.HasJsItem("virtualModalWindow_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("virtualModalWindow_js"))
             {
-                this.Cruncher.AddJsInline(Resources.virtualModalWindow_js, "virtualModalWindow_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.virtualModalWindow_js, "virtualModalWindow_js", OrderOptions.Middle);
             }
 
             var buttonsString = mwProps.Buttons != null
@@ -398,13 +385,13 @@ namespace Trooper.Ui.Mvc.Rabbit
                 mwProps.Title,
                 Conversion.ConvertToString(mwProps.FrameUrl, string.Empty),
                 buttonsString,
-                this.GetJsBool(mwProps.IncCloseButton),
+                RabbitHelper.GetJsBool(mwProps.IncCloseButton),
                 mwProps.FrameHeight);
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
         }
 
-		public MvcHtmlString MessagesPanel(MessagesPanel mpProps)
+		public IHtmlString MessagesPanel(MessagesPanel mpProps)
 		{
 			mpProps.Messages = mpProps.Messages ?? this.Messages;
 
@@ -415,9 +402,9 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             this.RegisterControl(mpProps);
 
-            if (!this.Cruncher.HasJsItem("messagesPanel_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("messagesPanel_js"))
             {
-                this.Cruncher.AddJsInline(Resources.messagesPanel_js, "messagesPanel_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.messagesPanel_js, "messagesPanel_js", OrderOptions.Middle);
             }
 
 			var html = new StringBuilder();
@@ -498,18 +485,18 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             var js = string.Format("new trooper.ui.control.messagesPanel({{id:'{0}'}});", mpProps.Id);
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
 			return new MvcHtmlString(html.ToString());
 		}
 
-		public MvcHtmlString Popover(Popover poProps)
+		public IHtmlString Popover(Popover poProps)
 		{
 			this.RegisterControl(poProps);
 
-			if (!this.Cruncher.HasJsItem("popover_js"))
+			if (!this.goRabbit.Cruncher.HasJsItem("popover_js"))
 			{
-				this.Cruncher.AddJsInline(Resources.popover_js, "popover_js", OrderOptions.Middle);
+				this.goRabbit.Cruncher.AddJsInline(Resources.popover_js, "popover_js", OrderOptions.Middle);
 			}
 
 			var js = string.Format(
@@ -517,12 +504,12 @@ namespace Trooper.Ui.Mvc.Rabbit
 				poProps.Id,
 				poProps.Content == null ? string.Empty : poProps.Content.Replace("'", @"\'"),
 				poProps.Title == null ? string.Empty : poProps.Title.Replace("'", @"\'"),
-				PopoverPlacementToString(poProps.Placement),
-				GetJsBool(poProps.PlacementAutoAssist),
+				RabbitHelper.PopoverPlacementToString(poProps.Placement),
+                RabbitHelper.GetJsBool(poProps.PlacementAutoAssist),
 				poProps.Selector,
 				poProps.Behaviour);
 
-			this.Cruncher.AddJsInline(js, OrderOptions.Last);
+			this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
 			return new MvcHtmlString(string.Empty);
 		}
@@ -531,22 +518,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         #region support
 
-        /// <summary>
-        /// This initiates the HTML class by instantiating it and returning the instance.
-        /// Includes all Bootstrap JavaScript and CSS requirements.
-        /// </summary>
-        /// <param name="htmlHelper">
-        /// The html helper.
-        /// </param>
-        /// <returns>
-        /// Returns the new instance.
-        /// </returns>
-        public static Html<TModel> Init(HtmlHelper<TModel> htmlHelper)
-        {
-            return new Html<TModel>(htmlHelper);
-        }
-
-        public void RegisterControl(HtmlControl control)
+        public void RegisterControl(IHtmlControl control)
         {
             var idInc = 1;
             var id = control.Id;
@@ -565,89 +537,30 @@ namespace Trooper.Ui.Mvc.Rabbit
             control.Id = string.Format("control_{0}", idInc);
 
             this.ControlsRegister.Add(control.Id, control);
-        }
-        
-        /// <summary>
-        /// Gets the value of the expression from the property.
-        /// </summary>
-        /// <param name="expression">
-        /// The expression.
-        /// </param>
-        /// <typeparam name="TValue">
-        /// The data type of the expression
-        /// </typeparam>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public TValue GetExpressionValue<TValue>(Expression<Func<TModel, TValue>> expression)
-        {
-            var metaData = ModelMetadata.FromLambdaExpression(expression, this.HtmlHelper.ViewData);
-
-            if (metaData == null || metaData.Model == null)
-            {
-                return default(TValue);
-            }
-
-            var value = (TValue)metaData.Model;
-
-            return value;
-        }
-
-        /// <summary>
-        /// Converts the buttonType to a string suitable for Bootstrap classes
-        /// </summary>
-        /// <param name="buttonType">
-        /// The button type.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public string ButtonTypeToString(ButtonTypes buttonType)
-        {
-            if (buttonType == ButtonTypes.None)
-            {
-                return string.Empty;
-            }
-
-            return "btn-" + buttonType.ToString().ToLower();
-        }
-
-        /// <summary>
-        /// Converts the placement to a string suitable for Bootstrap classes
-        /// </summary>
-        /// <param name="placement">
-        /// The placement.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public string PopoverPlacementToString(PopoverPlacements placement)
-        {
-            return placement.ToString().ToLower();
-        }
+        }               
 
 	    public void IncludeJquery()
 	    {
-			if (!this.Cruncher.HasJsItem("jquery"))
+			if (!this.goRabbit.Cruncher.HasJsItem("jquery"))
 			{
-				this.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery", OrderOptions.First);
+				this.goRabbit.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery", OrderOptions.First);
 			}
 	    }
 
         public void IncludeJqueryInputMask() {
-            if (!this.Cruncher.HasJsItem("jquery.inputmask.js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("jquery.inputmask.js"))
             {
-                this.Cruncher.AddJsInline(Resources.jquery_inputmask_js, "jquery.inputmask.js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.jquery_inputmask_js, "jquery.inputmask.js", OrderOptions.Middle);
             }
         }
 
 	    public void IncludeBootstrap()
 	    {
-			if (!this.Cruncher.HasJsItem("bootstrap"))
+			if (!this.goRabbit.Cruncher.HasJsItem("bootstrap"))
 			{
 				var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-				this.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap", OrderOptions.First);
+				this.goRabbit.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap", OrderOptions.First);
 
 				var ghre = RabbitController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularEot");
 				var ghrs = RabbitController.MakeAction(urlHelper, "GlyphiconsHalflingsReguarSvg");
@@ -665,226 +578,48 @@ namespace Trooper.Ui.Mvc.Rabbit
 				css = css.Replace("../fonts/glyphicons-halflings-regular.svg", ghrs);
 				css = css.Replace("bootstrap.css.map", getBootstrapCssMap);
 
-				this.Cruncher.AddCssInline(css, "bootstrap_css", OrderOptions.First);
+				this.goRabbit.Cruncher.AddCssInline(css, "bootstrap_css", OrderOptions.First);
 			}
 	    }
 
 	    public void IncludeJqueryUi()
 	    {
-			if (!this.Cruncher.HasJsItem("jquery-ui"))
+			if (!this.goRabbit.Cruncher.HasJsItem("jquery-ui"))
 			{
-				this.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery-ui", OrderOptions.Middle);
-				this.Cruncher.AddCssInline(Resources.jquery_ui_min_css, "jquery-ui-css", OrderOptions.Middle);
+				this.goRabbit.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery-ui", OrderOptions.Middle);
+				this.goRabbit.Cruncher.AddCssInline(Resources.jquery_ui_min_css, "jquery-ui-css", OrderOptions.Middle);
 
                 var jqueryTheme = Resources.jquery_ui_1_10_0_custom_css;
                                 
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_flat_0_aaaaaa_40x100.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_flat_0_aaaaaa_40x100_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_55_fbf9ee_1x400.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_glass_55_fbf9ee_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_65_ffffff_1x400.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_glass_65_ffffff_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_dadada_1x400.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_glass_75_dadada_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_e6e6e6_1x400.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_glass_75_e6e6e6_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_ffffff_1x400.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_glass_75_ffffff_1x400_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_highlight_soft_75_cccccc_1x100.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_highlight_soft_75_cccccc_1x100_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-bg_inset_soft_95_fef1ec_1x100.png", RabbitController.MakeAction(this.UrlHelper, "ui_bg_inset_soft_95_fef1ec_1x100_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-icons_222222_256x240.png", RabbitController.MakeAction(this.UrlHelper, "ui_icons_222222_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-icons_2e83ff_256x240.png", RabbitController.MakeAction(this.UrlHelper, "ui_icons_2e83ff_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-icons_454545_256x240.png", RabbitController.MakeAction(this.UrlHelper, "ui_icons_454545_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-icons_888888_256x240.png", RabbitController.MakeAction(this.UrlHelper, "ui_icons_888888_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-icons_cd0a0a_256x240.png", RabbitController.MakeAction(this.UrlHelper, "ui_icons_cd0a0a_256x240_png"));
-                jqueryTheme = jqueryTheme.Replace("images/ui-icons_f6cf3b_256x240.png", RabbitController.MakeAction(this.UrlHelper, "ui_icons_f6cf3b_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_flat_0_aaaaaa_40x100.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_flat_0_aaaaaa_40x100_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_55_fbf9ee_1x400.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_glass_55_fbf9ee_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_65_ffffff_1x400.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_glass_65_ffffff_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_dadada_1x400.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_glass_75_dadada_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_e6e6e6_1x400.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_glass_75_e6e6e6_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_75_ffffff_1x400.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_glass_75_ffffff_1x400_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_highlight_soft_75_cccccc_1x100.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_highlight_soft_75_cccccc_1x100_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-bg_inset_soft_95_fef1ec_1x100.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_inset_soft_95_fef1ec_1x100_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_222222_256x240.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_icons_222222_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_2e83ff_256x240.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_icons_2e83ff_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_454545_256x240.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_icons_454545_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_888888_256x240.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_icons_888888_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_cd0a0a_256x240.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_icons_cd0a0a_256x240_png"));
+                jqueryTheme = jqueryTheme.Replace("images/ui-icons_f6cf3b_256x240.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_icons_f6cf3b_256x240_png"));
 
-                this.Cruncher.AddCssInline(jqueryTheme, "jquery-ui-theme", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddCssInline(jqueryTheme, "jquery-ui-theme", OrderOptions.Middle);
 			}
 	    }
 
 	    public void IncludeMoment()
 	    {
-		    if (!this.Cruncher.HasJsItem("moment.js"))
+		    if (!this.goRabbit.Cruncher.HasJsItem("moment.js"))
 		    {
-				this.Cruncher.AddJsInline(Resources.moment_js, "moment.js", OrderOptions.Middle);
+				this.goRabbit.Cruncher.AddJsInline(Resources.moment_js, "moment.js", OrderOptions.Middle);
 		    }
 	    }
 
         #endregion
 
-        #endregion
-
-        #region protected methods
-
-        protected Dictionary<string, string> AddAttributes(
-            Dictionary<string, string> attributes,
-            Dictionary<string, string> newAttributes)
-        {
-            if (attributes == null)
-            {
-                attributes = new Dictionary<string, string>();
-            }
-
-            if (newAttributes != null)
-            {
-                foreach (var i in newAttributes.Where(i => i.Key != null && !attributes.ContainsKey(i.Key)))
-                {
-                    attributes.Add(i.Key, i.Value);
-                }
-            }
-
-            return attributes;
-        }
-
-        protected Dictionary<string, string> AddAttribute(Dictionary<string, string> attributes, string name, string value)
-        {
-            if (attributes == null)
-            {
-                attributes = new Dictionary<string, string>();
-            }
-
-            if (attributes.ContainsKey(name))
-            {
-                attributes[name] = value;
-            }
-
-            attributes.Add(name, value);
-
-            return attributes;
-        }
-
-        protected Dictionary<string, string> AddNotEmptyAttribute(Dictionary<string, string> attributes, string name, string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return attributes ?? new Dictionary<string, string>();
-            }
-
-            return this.AddAttribute(attributes, name, value);
-        }
-        
-        protected string MakeAttributesList(Dictionary<string, string> attributes)
-        {
-            if (attributes == null)
-            {
-                return string.Empty;
-            }
-
-            return string.Join(" ", attributes.Select(i => string.Format("{0}=\"{1}\"", i.Key, i.Value)));
-        }
-
-        /// <summary>
-        /// The add class to the classes and return the result.
-        /// If the supplied classes is null then a new classes is created.
-        /// </summary>
-        /// <param name="classes">
-        /// The classes.
-        /// </param>
-        /// <param name="className">
-        /// The class name.
-        /// </param>
-        /// <returns>
-        /// The <see cref="List"/>.
-        /// </returns>
-        protected List<string> AddClass(List<string> classes, string className)
-        {
-            if (classes == null)
-            {
-                classes = new List<string>();
-            }
-
-            if (!string.IsNullOrEmpty(className) && !classes.Contains(className))
-            {
-                classes.Add(className);
-            }
-
-            return classes;
-        }
-
-        /// <summary>
-        /// Add the new classes to the classes and return the result.
-        /// If the supplied classes is null then a new classes is created.
-        /// </summary>
-        /// <param name="classes">
-        /// The classes.
-        /// </param>
-        /// <param name="newClasses">
-        /// The class names to add.
-        /// </param>
-        /// <returns>
-        /// The result list.
-        /// </returns>
-        protected List<string> AddClasses(List<string> classes, List<string> newClasses)
-        {
-            if (classes == null)
-            {
-                classes = new List<string>();
-            }
-
-            if (newClasses == null || !newClasses.Any())
-            {
-                return classes;
-            }
-
-            classes.AddRange(newClasses);
-
-            return classes.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Generates a class attribute content with the given classes. Duplicates are removed.
-        /// </summary>
-        /// <param name="classes">
-        /// The classes.
-        /// </param>
-        /// <returns>
-        /// The class <see cref="string"/>.
-        /// </returns>
-        protected string MakeClassAttributeContent(List<string> classes)
-        {
-            if (classes == null || !classes.Any())
-            {
-                return string.Empty;
-            }
-
-            return string.Join(" ", classes.Distinct());
-        }
-
-        /// <summary>
-        /// Generates a class attribute with the given classes. Duplicates are removed.
-        /// </summary>
-        /// <param name="classes">
-        /// The classes.
-        /// </param>
-        /// <returns>
-        /// The class <see cref="string"/>.
-        /// </returns>
-        protected string MakeClassAttribute(List<string> classes)
-        {
-            if (classes == null || !classes.Any())
-            {
-                return "class=\"\"";
-            }
-
-            return string.Format("class=\"{0}\"", this.MakeClassAttributeContent(classes));
-        }
-
-        protected string GetJsBool(bool? value)
-        {
-            return Conversion.ConvertToBoolean(value, false).ToString().ToLower();
-        }
-
-        /// <summary>
-        /// Makes an icon using the supplied icon image from the BootStrap library. 
-        /// <see cref="http://getbootstrap.com/components/"/>
-        /// Only use the last part of the icon name. E.g.'volume-up' from 'glyphicon-volume-up'
-        /// </summary>
-        /// <param name="iconImage">
-        /// The icon image name.
-        /// </param>
-        /// <returns>
-        /// The html string.
-        /// </returns>
-        protected string MakeIcon(string iconImage)
-        {
-            return string.Format("<span class=\"input-group-addon\">\n<span class=\"glyphicon glyphicon-{0}\"></span>\n</span>\n", iconImage);
-		}
-
-		#endregion
+        #endregion       
 	}
 }

@@ -21,26 +21,30 @@ namespace Trooper.Utility
     /// </code> 
     /// <see cref="http://www.martinwilley.com/net/code/reflection/staticreflection.html"/>
     /// </summary>
-    public static class Reflection
+    public static class ReflectionHelper
     {
-        /// <summary>
-        /// Gets the type for the specified entity property or field. 
-        /// <code>
-        /// <![CDATA[
-        /// string name = Property.Name<string>(x => x.Length);
-        /// ]]>
-        /// </code> 
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity (interface or class).</typeparam>
-        /// <param name="expression">The expression returning the entity property, in the form x =&gt; x.Id</param>
-        /// <returns>The name of the property as a string</returns>
-        public static string GetName<T>(Expression<Func<T, object>> expression)
+        public static string GetNameFromExpression<T>(Expression<Func<T, object>> expression)
         {
-            var memberExpression = GetMemberExpression(expression);
+            if (expression == null)
+            {
+                return null;
+            }
 
-            var propertyInfo = memberExpression.Member;
-            return propertyInfo.Name;
-        }
+            var me = expression.Body as MemberExpression;
+            var ue = expression.Body as UnaryExpression;
+            string result = null;
+
+            if (me != null)
+            {
+                result = me.Member.Name;
+            }
+            else if (ue != null)
+            {
+                result = (ue.Operand as MemberExpression).Member.Name;
+            }
+
+            return result;
+        }                
 
         /// <summary>
         /// Gets the type for the specified entity property or field. 
@@ -53,9 +57,14 @@ namespace Trooper.Utility
         /// <typeparam name="TEntity">The type of the entity (interface or class).</typeparam>
         /// <param name="expression">The expression returning the entity property, in the form x =&gt; x.Id</param>
         /// <returns>A type.</returns>
-        public static Type GetType<T>(Expression<Func<T, object>> expression)
+        public static Type GetTypeFromExpression<T>(Expression<Func<T, object>> expression)
         {
-            var memberExpression = GetMemberExpression(expression);
+            if (expression == null)
+            {
+                return null;
+            }
+
+            var memberExpression = GetMemberFromExpression(expression);
 
             var propertyInfo = memberExpression.Member as PropertyInfo;
             if (propertyInfo != null)
@@ -88,8 +97,13 @@ namespace Trooper.Utility
         /// <returns>
         /// Returns the MemberExpression for the expression
         /// </returns>
-        public static MemberExpression GetMemberExpression<TClass, TProperty>(Expression<Func<TClass, TProperty>> expression)
+        public static MemberExpression GetMemberFromExpression<TClass, TProperty>(Expression<Func<TClass, TProperty>> expression)
         {
+            if (expression == null)
+            {
+                return null;
+            }
+
             ///// originally from Fluent NHibernate
             MemberExpression memberExpression = null;
             if (expression.Body.NodeType == ExpressionType.Convert)
@@ -143,7 +157,12 @@ namespace Trooper.Utility
 
         public static TValue GetValueFromObject<TClass, TValue>(object item, Expression<Func<TClass, object>> expression)
         {
-            var name = GetName(expression);
+            if (expression == null)
+            {
+                return default(TValue);
+            }
+
+            var name = ReflectionHelper.GetNameFromExpression(expression);
 
             return GetValueFromObject<TValue>(item, name);
         }

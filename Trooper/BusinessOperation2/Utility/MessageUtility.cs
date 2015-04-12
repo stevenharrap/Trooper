@@ -244,7 +244,7 @@ namespace Trooper.BusinessOperation2.Utility
             return response;
         }
 
-        public static MessageAlertLevel? GetWorstMessageLevel(List<IMessage> messages)
+        public static MessageAlertLevel? GetWorstMessageLevel(IList<IMessage> messages)
         {
             if (messages == null || !messages.Any())
             {
@@ -274,7 +274,7 @@ namespace Trooper.BusinessOperation2.Utility
             return null;
         }
 
-        public static MessageAlertLevel? GetWorstMessageLevel(List<MessageAlertLevel?> levels)
+        public static MessageAlertLevel? GetWorstMessageLevel(IList<MessageAlertLevel?> levels)
         {
             if (levels == null || !levels.Any())
             {
@@ -309,7 +309,7 @@ namespace Trooper.BusinessOperation2.Utility
 		/// </summary>
 		/// <param name="messages"></param>
 		/// <returns></returns>
-	    public static bool IsOk(List<IMessage> messages)
+	    public static bool IsOk(IList<IMessage> messages)
 	    {
 		    if (messages == null)
 		    {
@@ -324,7 +324,7 @@ namespace Trooper.BusinessOperation2.Utility
 		/// </summary>
 		/// <param name="messages"></param>
 		/// <returns></returns>
-		public static bool IsWarning(List<IMessage> messages)
+		public static bool IsWarning(IList<IMessage> messages)
 		{
 			if (messages == null)
 			{
@@ -339,7 +339,7 @@ namespace Trooper.BusinessOperation2.Utility
 		/// </summary>
 		/// <param name="messages"></param>
 		/// <returns></returns>
-		public static bool IsError(List<IMessage> messages)
+		public static bool IsError(IList<IMessage> messages)
 		{
 			if (messages == null)
 			{
@@ -362,7 +362,7 @@ namespace Trooper.BusinessOperation2.Utility
         /// <returns>
         /// Returns the operation response.
         /// </returns>
-        public static IResponse Add(List<IMessage> messages, IResponse response)
+        public static IResponse Add(IList<IMessage> messages, IResponse response)
         {
             if (response == null || messages == null || !messages.Any())
             {

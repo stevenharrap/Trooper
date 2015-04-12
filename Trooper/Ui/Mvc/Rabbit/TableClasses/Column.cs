@@ -15,7 +15,9 @@ using System.Web.Helpers;
     /// </summary>
     public class Column<T> where T : class 
     {
-        public Expression<Func<T, object>> ValueExpression { get; set; }
+        public Expression<Func<T, object>> SortIdentity { get; set; }
+
+        public Expression<Func<T, object>> Value { get; set; }
                 
         /// <summary>
         /// Gets or sets a value indicating whether content in the column is allowed to wrap.

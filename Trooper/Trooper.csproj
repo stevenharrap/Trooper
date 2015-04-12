@@ -267,7 +267,7 @@
     <Compile Include="Ui\Mvc\Rabbit\Controls\Button.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controls\ButtonDropDown.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controls\CheckBox.cs" />
-    <Compile Include="Ui\Mvc\Rabbit\Controls\FormHeader.cs" />
+    <Compile Include="Ui\Interface\Mvc\Rabbit\Controls\IHtmlControl.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controls\MessagesPanel.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controls\Options\EnumParams.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controls\DateTimePicker.cs" />
@@ -315,10 +315,16 @@
     <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui\jquery-ui.min.js" />
     <Content Include="Ui\Mvc\Rabbit\Content\moment\moment.js" />
     <Content Include="Ui\Mvc\Rabbit\Content\scripts\popover.js" />
+    <Content Include="Ui\Mvc\Rabbit\Content\scripts\table.js.txt" />
     <Content Include="Ui\Mvc\Rabbit\Form.cs.txt" />
+    <Compile Include="Ui\Mvc\Rabbit\GoRabbit.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Form.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Html.cs" />
+    <Compile Include="Ui\Interface\Mvc\Rabbit\IHtml.cs" />
+    <Compile Include="Ui\Interface\Mvc\Rabbit\IForm.cs" />
+    <Compile Include="Ui\Interface\Mvc\Rabbit\IGoRabbit.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Models\FrameModel.cs" />
+    <Compile Include="Ui\Mvc\Rabbit\Models\TableModel.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Models\UploadModel.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Enumerations.cs" />
     <Compile Include="Ui\Mvc\Rabbit\PanelGroupItem.cs" />
@@ -341,10 +347,10 @@
     <Compile Include="Ui\Mvc\Cruncher\CruncherStore.cs" />
     <Compile Include="Ui\Mvc\Cruncher\StoreItem.cs" />
     <None Include="Ui\Mvc\Cruncher\StoreItemList.cs.disable" />
-    <Compile Include="Ui\Mvc\Utility\Helper.cs" />
+    <Compile Include="Ui\Mvc\Utility\RabbitHelper.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\Logging.cs" />
-    <Compile Include="Utility\Reflection.cs" />
+    <Compile Include="Utility\ReflectionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ui\Mvc\Rabbit\Content\Bootstrap\Controllers\" />

@@ -18,17 +18,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing table controls</title>
     @{
-        var cruncher = new Cruncher(Html);
-        var bsf = new Form<TestTableModel>(Html, new FormHeader { Action = Url.Action("Submit", "TestTable") });
-
-        Trooper.Ui.Mvc.Rabbit.Html<TestTableModel>.Init(Html);
+        var goRabbit = new GoRabbit<TestTableModel>(Html);
+        var form = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TestTable") });
     }
 
-    @cruncher.Header()
+    @goRabbit.Header();
 </head>
 
 <body>
-    @bsf.BeginForm()
+    @form.BeginForm()
 
     <div class="container">
         <h2>Upload Test Area</h2>
@@ -40,30 +38,42 @@
             {
                 Source = Model.BaseballMasters,
                 Caption = "Baseball masters",
-                HumanizeHeaders = true                
+                HumanizeHeaders = true,
+                PageSize = 20,
+                Striped = true,
+                Hover = true
             };
 
             tProps.AddKey(k => k.PlayerID);                       
 
-            tProps.AddColumn(c => c.PlayerID);
+            tProps.AddColumn(new Column<BaseballMaster> { 
+                Value = c => c.PlayerID, 
+                SortIdentity = c => c.PlayerID,
+                HeaderMedium = "PID" 
+            });
             
-            var col1 = tProps.AddColumn(c => string.Format("{0}, {1}", c.NameLast, c.NameFirst));
-            col1.Header = "Player name";
-            
-            tProps.AddColumn(c => c.BirthDay);
-            
-            var col2 = tProps.AddColumn(c => c.BirthYear);
-            col2.Humanize = false;
-            
-            tProps.AddColumn(c => c.BirthCity, "lives in {0}");
-            
+            tProps.AddColumn(new Column<BaseballMaster> { 
+                Value = c => string.Format("{0}, {1}", 
+                c.NameLast, c.NameFirst), 
+                Header = "Player name", 
+                SortIdentity = c => c.NameLast,
+                HeaderSmall = "Name" 
+            });
+
+            tProps.AddColumn(new Column<BaseballMaster> { 
+                Value = c => c.BirthYear, 
+                Humanize = false,
+                HeaderExtraSmall = "Bth Y"
+            });
+
+            tProps.AddColumn(new Column<BaseballMaster> { Value = c => c.BirthCity, Format = "lives in {0}" });            
         }
 
-        @(bsf.Table<BaseballMaster>(tProps))
+        @(form.TableFor<BaseballMaster>(m => m.TbMdl001, tProps))
 
-        @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+        @form.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
     </div>
 
-    @bsf.EndForm()
+    @form.EndForm()
 </body>
 </html>

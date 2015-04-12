@@ -15,37 +15,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Rabbit controls</title>
+
     @{
-        var cruncher = new Cruncher(Html);
-        var bsf = new Form<TestAllControlsModel>(Html, new FormHeader { Action = Url.Action("Submit", "TestAllControls") })
-                      {
-                          ShowTitles = string.IsNullOrEmpty(Model.ShowTitles) ? (bool?)null : Model.ShowTitles == "Show",
-                          Messages = Model.OperationResponse == null ? null : Model.OperationResponse.Messages
-                      };
+        var goRabbit = new GoRabbit<TestAllControlsModel>(Html);
+        var formProps = new FormControl
+        {
+            Action = Url.Action("Submit", "TestAllControls"),
+            ShowTitles = string.IsNullOrEmpty(Model.ShowTitles) ? (bool?)null : Model.ShowTitles == "Show",
+            Messages = Model.OperationResponse == null ? null : Model.OperationResponse.Messages
+        };
+        var form = goRabbit.NewForm(formProps);
 
-        cruncher.AddJsFile("~/Content/scripts/AllControls.js", OrderOptions.Middle);
-        cruncher.AddJsInline(@<text>var allControls = new AllControls();</text>, OrderOptions.Last);
-
-        Trooper.Ui.Mvc.Rabbit.Html<TestAllControlsModel>.Init(Html);
+        goRabbit.Cruncher.AddJsFile("~/Content/scripts/AllControls.js", OrderOptions.Middle);
+        goRabbit.Cruncher.AddJsInline(@<text>var allControls = new AllControls();</text>, OrderOptions.Last);
     }
 
-    @cruncher.Header()
+    @goRabbit.Header();
 </head>
 
 <body>
-    @bsf.BeginForm()
+    @form.BeginForm()
 
     <div class="container">
         <h2>Test Area</h2>       
 
-        @bsf.MessagesPanel(new MessagesPanel { Columns = 3, Title = "Test errors", Messages = bsf.Messages })
+        @goRabbit.Html.MessagesPanel(new MessagesPanel { Columns = 3, Title = "Test errors", Messages = formProps.Messages })
 
         <div class="row">
             <div class="col-xs-2">
-                @bsf.SelectListFor(m => m.ShowTitles, new SelectList<string, string> { Title = "Titles?", Options = Model.TitleOptions })
+                @form.SelectListFor(m => m.ShowTitles, new SelectList<string, string> { Title = "Titles?", Options = Model.TitleOptions })
             </div>
             <div class="col-xs-2">
-                @bsf.SelectListFor(m => m.MessageAlertLevel,
+                @form.SelectListFor(m => m.MessageAlertLevel,
                         new SelectList<Trooper.BusinessOperation2.MessageAlertLevel?, string>
                             {
                                 Title = "Error?",
@@ -57,58 +58,58 @@
 
         <div class="row">
             <div class="col-xs-4">
-                @bsf.IntegerBoxFor(m => m.TestNum01, new IntegerBox { Title = "Free integer" })
-                @bsf.IntegerBoxFor(m => m.TestNum02, new IntegerBox { Title = "Limited integer", Minimum = -5, Maximum = 5 })
-                @bsf.DecimalBoxFor(m => m.TestDec01, new DecimalBox { Title = "Free decimal" })
-                @bsf.DecimalBoxFor(m => m.TestDec02, new DecimalBox { Title = "Limited decimal (0.000)", Minimum = -5, Maximum = 5, DecimalDigits = 3 })
-                @bsf.PercentageBoxFor(m => m.TestDec03, new DecimalBox { Title = "Free percentage" })
-                @bsf.CurrencyBoxFor(m => m.TestDec04, new DecimalBox { Title = "Free currency" })
+                @form.IntegerBoxFor(m => m.TestNum01, new IntegerBox { Title = "Free integer" })
+                @form.IntegerBoxFor(m => m.TestNum02, new IntegerBox { Title = "Limited integer", Minimum = -5, Maximum = 5 })
+                @form.DecimalBoxFor(m => m.TestDec01, new DecimalBox { Title = "Free decimal" })
+                @form.DecimalBoxFor(m => m.TestDec02, new DecimalBox { Title = "Limited decimal (0.000)", Minimum = -5, Maximum = 5, DecimalDigits = 3 })
+                @form.PercentageBoxFor(m => m.TestDec03, new DecimalBox { Title = "Free percentage" })
+                @form.CurrencyBoxFor(m => m.TestDec04, new DecimalBox { Title = "Free currency" })
             </div>
             <div class="col-xs-4">
-                @bsf.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Free text" })
-                @bsf.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Limited text", MaxLength = 20 })
-                @bsf.TextareaBoxFor(m => m.TestTx03, new TextareaBox { Title = "Limited text area", MaxLength = 30 })
-                @bsf.CheckBoxFor(m => m.TestBl01, new CheckBox { Title = "Simple tick" })
-                @bsf.RadioListFor(m => m.TestSng02, new RadioList<string, string> { Title = "Radio select", Options = Model.Fruits, ScrollHeight = 150 })
+                @form.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Free text" })
+                @form.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Limited text", MaxLength = 20 })
+                @form.TextareaBoxFor(m => m.TestTx03, new TextareaBox { Title = "Limited text area", MaxLength = 30 })
+                @form.CheckBoxFor(m => m.TestBl01, new CheckBox { Title = "Simple tick" })
+                @form.RadioListFor(m => m.TestSng02, new RadioList<string, string> { Title = "Radio select", Options = Model.Fruits, ScrollHeight = 150 })
             </div>
             <div class="col-xs-4">
-                @bsf.MultiSelectListFor(m => m.TestMlt01, new SelectList<string, string> { Title = "Multi select", Options = Model.Fruits, AllowMultiple = true })
-                @bsf.CheckBoxListFor(m => m.TestMlt02, new CheckBoxList<string, string> { Title = "Check box select", Options = Model.Fruits })
-                @bsf.SelectListFor(m => m.TestSng01, new SelectList<string, string> { Title = "Single select", Options = Model.Fruits })
-				@bsf.SelectListFor(m => m.TestSng03, new SelectList<Vegetables> { Title = "Single select", Options = OptionListHelper.OptionsAsList<Vegetables>() })
+                @form.MultiSelectListFor(m => m.TestMlt01, new SelectList<string, string> { Title = "Multi select", Options = Model.Fruits, AllowMultiple = true })
+                @form.CheckBoxListFor(m => m.TestMlt02, new CheckBoxList<string, string> { Title = "Check box select", Options = Model.Fruits })
+                @form.SelectListFor(m => m.TestSng01, new SelectList<string, string> { Title = "Single select", Options = Model.Fruits })
+				@form.SelectListFor(m => m.TestSng03, new SelectList<Vegetables> { Title = "Single select", Options = OptionListHelper.OptionsAsList<Vegetables>() })
             </div>
         </div>
 
 	    <div class="row">
 		    <div class="col-xs-4">
-			    @bsf.Popover(new Popover {ContentFunc = @<text>He's a hover popover</text>, Title = "It's popping", Selector = "#simple-popover-1"})
+			    @form.Html.Popover(new Popover {ContentFunc = @<text>He's a hover popover</text>, Title = "It's popping", Selector = "#simple-popover-1"})
 			    <h4><span class="label label-default" id="simple-popover-1">I'm a hovering popover - hover me!</span></h4>
 
-			    @bsf.Popover(new Popover {ContentFunc = @<text>He's an anywhere popover</text>, Title = "It's popping", Selector = "#simple-popover-2", Behaviour = PopoverBehaviour.ClickThenClickAnywhere})
+			    @form.Html.Popover(new Popover {ContentFunc = @<text>He's an anywhere popover</text>, Title = "It's popping", Selector = "#simple-popover-2", Behaviour = PopoverBehaviour.ClickThenClickAnywhere})
 			    <h4><span class="label label-default" id="simple-popover-2">Click me then click anywhere again!</span></h4>
 
-				@bsf.Popover(new Popover {ContentFunc = @<text>He's an outside popover</text>, Title = "It's popping", Selector = "#simple-popover-3", Behaviour = PopoverBehaviour.ClickThenClickOutside})
+				@form.Html.Popover(new Popover {ContentFunc = @<text>He's an outside popover</text>, Title = "It's popping", Selector = "#simple-popover-3", Behaviour = PopoverBehaviour.ClickThenClickOutside})
 			    <h4><span class="label label-default" id="simple-popover-3">Click me then click outside the popover!</span></h4>
 
-			    @bsf.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date})
-			    @bsf.DateTimePickerFor(m => m.TestDt02, new DateTimePicker {Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime})
-			    @bsf.DateTimePickerFor(m => m.TestDt03, new DateTimePicker {Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds})
+			    @form.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date})
+			    @form.DateTimePickerFor(m => m.TestDt02, new DateTimePicker {Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime})
+			    @form.DateTimePickerFor(m => m.TestDt03, new DateTimePicker {Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds})
 		    </div>
             <div class="col-xs-4">
-                @bsf.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Date time: Time", DateTimeFormat = DateTimeFormat.Time })
-                @bsf.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Date time: Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
+                @form.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Date time: Time", DateTimeFormat = DateTimeFormat.Time })
+                @form.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Date time: Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
             </div>
             <div class="col-xs-4">
-                @bsf.UploadFor(m => m.TestFl01, new UploadBox { Title = "1st upload file" })
-                @bsf.UploadFor(m => m.TestFl02, new UploadBox { Title = "2nd upload file"})
+                @form.UploadFor(m => m.TestFl01, new UploadBox { Title = "1st upload file" })
+                @form.UploadFor(m => m.TestFl02, new UploadBox { Title = "2nd upload file"})
             </div>
         </div>
 
-        @bsf.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
-        @bsf.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
-        @bsf.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
+        @form.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+        @form.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
+        @form.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
     </div>
 
-    @bsf.EndForm()
+    @form.EndForm()
 </body>
 </html>

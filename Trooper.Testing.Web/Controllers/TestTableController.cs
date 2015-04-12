@@ -40,6 +40,8 @@ namespace Trooper.Testing.Web.Controllers
         public ActionResult Index()
         {
             var model = new TestTableModel();
+
+            model.TbMdl001 = new TableModel();
             
             Persist(model);
 

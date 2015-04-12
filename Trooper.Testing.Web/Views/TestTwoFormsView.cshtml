@@ -16,14 +16,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Two Forms in one View</title>
     @{
-        var cruncher = new Cruncher(Html);
-        var form1 = new Form<TestTwoFormsModel>(Html, new FormHeader { Action = Url.Action("Submit", "TwoForms") });
-        var form2 = new Form<TestTwoFormsModel>(Html, new FormHeader { Action = Url.Action("Submit", "TwoForms") });
-
-        Trooper.Ui.Mvc.Rabbit.Html<TestTwoFormsModel>.Init(Html);
+        var goRabbit = new GoRabbit<TestTwoFormsModel>(Html);
+        var form1 = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TwoForms") });
+        var form2 = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TwoForms") });
     }
 
-    @cruncher.Header()
+    @goRabbit.Header();
 </head>
 
 <body>

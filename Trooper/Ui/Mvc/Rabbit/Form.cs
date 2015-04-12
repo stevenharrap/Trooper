@@ -23,6 +23,8 @@ namespace Trooper.Ui.Mvc.Rabbit
 	using Controls;
 	using Models;
 	using Trooper.Utility;
+    using Trooper.Ui.Interface.Mvc.Rabbit;
+    using Trooper.Ui.Mvc.Utility;
 
 	/// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides
@@ -35,9 +37,13 @@ namespace Trooper.Ui.Mvc.Rabbit
     /// <typeparam name="TModel">
     /// The model type in your view
     /// </typeparam>
-    public class Form<TModel> : Html<TModel>
+    public class Form<TModel> : IForm<TModel>
     {
-        public FormHeader FormHeaderProps { get; set; }
+        public IHtml Html { get; private set; }
+
+        private IGoRabbit<TModel> goRabbit;
+
+        public FormControl FormProps { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Form{TModel}"/> class.
@@ -47,28 +53,18 @@ namespace Trooper.Ui.Mvc.Rabbit
 		/// The html helper.
 		/// </param>
 		/// <param name="fhProps"></param>
-		public Form(HtmlHelper<TModel> htmlHelper, FormHeader fhProps)
-            : base(htmlHelper)
+        public Form(FormControl fhProps, IGoRabbit<TModel> goRabbit, IHtml html)
         {
-            this.FormHeaderProps = fhProps;
+            this.goRabbit = goRabbit;
+            this.FormProps = fhProps;
+            this.Html = html;
 
-            this.RegisterControl(this.FormHeaderProps);
+            this.Html.RegisterControl(this.FormProps);
 
             this.Init();
         }
 
-        #region public properties
-
-        /// <summary>
-        /// Gets or sets if all controls that support the disabled or readonly parameter 
-        /// enabled or disabled (readonly in some cases) by default.
-        /// Giving a control a specific disabled or readonly value will over-ride this.
-        /// By default this is null and so are the enabled/readonly properties so
-        /// result state of a control will be that it is access-able by default.
-        /// </summary>
-        public bool? ControlsEnabled { get; set; }
-
-        public bool? ShowTitles { get; set; }
+        #region public properties        
 
         #endregion
 
@@ -76,18 +72,18 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         #region form
 
-        public MvcHtmlString BeginForm()
+        public IHtmlString BeginForm()
         {
             var tag = string.Format(
                 "<form id=\"{0}\" action=\"{1}\" method=\"{2}\">", 
-                this.FormHeaderProps.Id, 
-                this.FormHeaderProps.Action, 
-                this.FormHeaderProps.Method);
+                this.FormProps.Id, 
+                this.FormProps.Action, 
+                this.FormProps.Method);
 
             return new MvcHtmlString(tag);
         }
 
-        public MvcHtmlString EndForm()
+        public IHtmlString EndForm()
         {
             return new MvcHtmlString("</form>");
         }
@@ -96,9 +92,9 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         #region controls
 
-        public MvcHtmlString TextBox(TextBox tbProps)
+        public IHtmlString TextBox(TextBox tbProps)
         {
-            this.RegisterControl(tbProps);
+            this.Html.RegisterControl(tbProps);
 
             var result = this.MakeTextBox(tbProps, true);
 
@@ -107,23 +103,23 @@ namespace Trooper.Ui.Mvc.Rabbit
             return MvcHtmlString.Create(result);
         }
 
-        public MvcHtmlString TextBoxFor<TValue>(
+        public IHtmlString TextBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression, 
             TextBox tbProps)
         {
-            var value = Conversion.ConvertToString(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToString(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-	        tbProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+	        tbProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             tbProps.Id = this.GetIdFromName(tbProps);
-            tbProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            tbProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             tbProps.Value = value;
 
             return this.TextBox(tbProps);
         }
-        
-        public MvcHtmlString IntegerBox(IntegerBox iProps)
+
+        public IHtmlString IntegerBox(IntegerBox iProps)
         {
-            this.RegisterControl(iProps);
+            this.Html.RegisterControl(iProps);
 
             var tbProps = iProps as TextBox;
 
@@ -138,32 +134,32 @@ namespace Trooper.Ui.Mvc.Rabbit
             var js = string.Format(
                 "new trooper.ui.control.numericBox({{id:'{0}', formId:'{1}', numericType:'Integer', minimum:{2}, maximum:{3}, decimalDigits:0}});",
                 iProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 iProps.Minimum == null ? "null" : Conversion.ConvertToString(iProps.Minimum),
                 iProps.Maximum == null ? "null" : Conversion.ConvertToString(iProps.Maximum));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(result);
         }
 
-        public MvcHtmlString IntegerBoxFor<TValue>(
+        public IHtmlString IntegerBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
             IntegerBox iProps)
         {
-            var value = Conversion.ConvertToInt(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToInt(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			iProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			iProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             iProps.Id = this.GetIdFromName(iProps);
-            iProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            iProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             iProps.Value = value;
 
             return this.IntegerBox(iProps);
         }
 
-        public MvcHtmlString DecimalBox(DecimalBox dProps)
+        public IHtmlString DecimalBox(DecimalBox dProps)
         {
-            this.RegisterControl(dProps);
+            this.Html.RegisterControl(dProps);
 
             var tbProps = dProps as TextBox;
 
@@ -178,33 +174,33 @@ namespace Trooper.Ui.Mvc.Rabbit
             var js = string.Format(
                 "new trooper.ui.control.numericBox({{id:'{0}', formId:'{1}', numericType:'Decimal', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                 dProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 dProps.Minimum == null ? "null" : Conversion.ConvertToString(dProps.Minimum),
                 dProps.Maximum == null ? "null" : Conversion.ConvertToString(dProps.Maximum),
 				dProps.DecimalDigits == null ? "null" : Conversion.ConvertToString(dProps.DecimalDigits));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString DecimalBoxFor<TValue>(
+        public IHtmlString DecimalBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
             DecimalBox dProps)
         {
-            var value = Conversion.ConvertToDecimal(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToDecimal(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			dProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			dProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             dProps.Id = this.GetIdFromName(dProps);
-            dProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            dProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             dProps.Value = value;
 
             return this.DecimalBox(dProps);
         }
 
-        public MvcHtmlString PercentageBox(DecimalBox pProps)
+        public IHtmlString PercentageBox(DecimalBox pProps)
         {
-            this.RegisterControl(pProps);
+            this.Html.RegisterControl(pProps);
             
             if (pProps.DecimalDigits == null)
             {
@@ -226,33 +222,33 @@ namespace Trooper.Ui.Mvc.Rabbit
             var js = string.Format(
                 "new trooper.ui.control.numericBox({{id:'{0}', formId:'{1}', numericType:'Percentage', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                 pProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 pProps.Minimum == null ? "null" : Conversion.ConvertToString(pProps.Minimum),
                 pProps.Maximum == null ? "null" : Conversion.ConvertToString(pProps.Maximum),
                 pProps.DecimalDigits);
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString PercentageBoxFor<TValue>(
+        public IHtmlString PercentageBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
             DecimalBox dProps)
         {
-            var value = Conversion.ConvertToDecimal(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToDecimal(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			dProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			dProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             dProps.Id = this.GetIdFromName(dProps);
-            dProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            dProps.Messages = this.GetMessagesForProperty(expression, this.Html.Messages);
             dProps.Value = value;
 
             return this.PercentageBox(dProps);
         }
 
-        public MvcHtmlString CurrencyBox(DecimalBox cProps)
+        public IHtmlString CurrencyBox(DecimalBox cProps)
         {
-            this.RegisterControl(cProps);
+            this.Html.RegisterControl(cProps);
 
             if (cProps.DecimalDigits == null)
             {
@@ -274,51 +270,51 @@ namespace Trooper.Ui.Mvc.Rabbit
             var js = string.Format(
                 "new trooper.ui.control.numericBox({{id:'{0}', formId:'{1}', numericType:'Currency', minimum:{2}, maximum:{3}, decimalDigits:{4}}});",
                 cProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 cProps.Minimum == null ? "null" : Conversion.ConvertToString(cProps.Minimum),
                 cProps.Maximum == null ? "null" : Conversion.ConvertToString(cProps.Maximum),
                 cProps.DecimalDigits ?? 0);
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString CurrencyBoxFor<TValue>(
+        public IHtmlString CurrencyBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
             DecimalBox dProps)
         {
-            var value = Conversion.ConvertToDecimal(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToDecimal(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			dProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			dProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             dProps.Id = this.GetIdFromName(dProps);
-            dProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            dProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             dProps.Value = value;
 
             return this.CurrencyBox(dProps);
         }
 
-        public MvcHtmlString TextareaBox(TextareaBox tabProps)
+        public IHtmlString TextareaBox(TextareaBox tabProps)
         {
-            this.RegisterControl(tabProps);
+            this.Html.RegisterControl(tabProps);
 
-            if (!this.Cruncher.HasJsItem("textareaBox_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("textareaBox_js"))
             {
-                this.Cruncher.AddJsInline(Resources.textareaBox_js, "textareaBox_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.textareaBox_js, "textareaBox_js", OrderOptions.Middle);
             }
 
             var js = string.Format(
                 "new trooper.ui.control.textareaBox({{id:'{0}', formId:'{1}', maxLength:{2}, warnOnLeave:{3}}});",
                 tabProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 Conversion.ConvertToInt(tabProps.MaxLength, 0),
-                this.GetJsBool(tabProps.WarnOnLeave));
+                RabbitHelper.GetJsBool(tabProps.WarnOnLeave));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);            
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);            
 
             var textBoxAttrs = new Dictionary<string, object>();
 
-            var cssClasses = this.AddClass(null, "form-control");
+            var cssClasses = RabbitHelper.AddClass(null, "form-control");
 
             if (!this.IsControlEnabled(tabProps.Enabled))
             {
@@ -341,7 +337,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 tabProps.Id,
                 tabProps.Name,
                 HttpUtility.HtmlAttributeEncode(tabProps.Value),
-                this.MakeClassAttribute(cssClasses),
+                RabbitHelper.MakeClassAttribute(cssClasses),
                 textBoxAttrs.Aggregate(
                     string.Empty,
                     (current, next) =>
@@ -354,27 +350,27 @@ namespace Trooper.Ui.Mvc.Rabbit
             return MvcHtmlString.Create(result);
         }
 
-        public MvcHtmlString TextareaBoxFor<TValue>(
+        public IHtmlString TextareaBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
             TextareaBox tabProp)
         {
-            var value = Conversion.ConvertToString(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToString(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			tabProp.Name = this.HtmlHelper.NameFor(expression).ToString();
+			tabProp.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             tabProp.Id = this.GetIdFromName(tabProp);
-            tabProp.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            tabProp.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             tabProp.Value = value;
 
             return this.TextareaBox(tabProp);
         }
 
-        public MvcHtmlString Button(Button bProps)
+        public IHtmlString Button(Button bProps)
         {
-            this.RegisterControl(bProps);
+            this.Html.RegisterControl(bProps);
 
-            if (!this.Cruncher.HasJsItem("button_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("button_js"))
             {
-                this.Cruncher.AddJsInline(Resources.button_js, "button_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.button_js, "button_js", OrderOptions.Middle);
             }
 
             var js = string.Format(
@@ -388,64 +384,64 @@ namespace Trooper.Ui.Mvc.Rabbit
                 + "confirmTitle:'{7}', "
                 + "submit: {8} }});",
                 bProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 bProps.Url ?? string.Empty,
-                this.GetJsBool(bProps.TargetNewWindow),
-                this.GetJsBool(bProps.LaunchLoadingOnclick),
+                RabbitHelper.GetJsBool(bProps.TargetNewWindow),
+                RabbitHelper.GetJsBool(bProps.LaunchLoadingOnclick),
                 bProps.LoadingScreenTitle ?? string.Empty,
-                this.GetJsBool(bProps.ConfirmOnClick),
+                RabbitHelper.GetJsBool(bProps.ConfirmOnClick),
                 bProps.ConfirmTitle ?? string.Empty,
-                this.GetJsBool(bProps.Submit));
+                RabbitHelper.GetJsBool(bProps.Submit));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
-            var buttonClasses = this.AddClasses(null, bProps.ButtonClasses);
-            this.AddClass(buttonClasses, this.ButtonTypeToString(bProps.ButtonType));
-            this.AddClass(buttonClasses, "btn");
-            this.AddClass(buttonClasses, bProps.Visible ? string.Empty : "hidden");
+            var buttonClasses = RabbitHelper.AddClasses(null, bProps.ButtonClasses);
+            RabbitHelper.AddClass(buttonClasses, RabbitHelper.ButtonTypeToString(bProps.ButtonType));
+            RabbitHelper.AddClass(buttonClasses, "btn");
+            RabbitHelper.AddClass(buttonClasses, bProps.Visible ? string.Empty : "hidden");
 
-            var attrs = this.AddAttributes(null, bProps.Attrs);
-            this.AddAttribute(attrs, "type", bProps.Submit ? "submit" : "button");
-            this.AddAttribute(attrs, "id", bProps.Id);
-            this.AddAttribute(attrs, "name", bProps.Name);
-            this.AddAttribute(attrs, "value", bProps.Value);
-            this.AddNotEmptyAttribute(attrs, "disabled", this.IsControlEnabled(bProps.Enabled) ? string.Empty : "disabled");
-            this.AddNotEmptyAttribute(attrs, "title", bProps.ToolTip);
-            this.AddAttribute(attrs, "class", this.MakeClassAttributeContent(buttonClasses));
+            var attrs = RabbitHelper.AddAttributes(null, bProps.Attrs);
+            RabbitHelper.AddAttribute(attrs, "type", bProps.Submit ? "submit" : "button");
+            RabbitHelper.AddAttribute(attrs, "id", bProps.Id);
+            RabbitHelper.AddAttribute(attrs, "name", bProps.Name);
+            RabbitHelper.AddAttribute(attrs, "value", bProps.Value);
+            RabbitHelper.AddNotEmptyAttribute(attrs, "disabled", this.IsControlEnabled(bProps.Enabled) ? string.Empty : "disabled");
+            RabbitHelper.AddNotEmptyAttribute(attrs, "title", bProps.ToolTip);
+            RabbitHelper.AddAttribute(attrs, "class", RabbitHelper.MakeClassAttributeContent(buttonClasses));
 
             var output = string.Format(
                 "<button {0}>{1}{2}</a>",
-                this.MakeAttributesList(attrs),
+                RabbitHelper.MakeAttributesList(attrs),
                 string.IsNullOrEmpty(bProps.Icon)
                     ? string.Empty
-                    : string.Format("{0} ", this.MakeIcon(bProps.Icon)),
+                    : string.Format("{0} ", RabbitHelper.MakeIcon(bProps.Icon)),
                 bProps.Title);
 
             return MvcHtmlString.Create(output);
         }
-        
-        public MvcHtmlString ButtonFor<TValue>(Expression<Func<TModel, TValue>> expression, Button bProps)
-        {
-            var value = Conversion.ConvertToString(this.GetExpressionValue(expression));
 
-			bProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+        public IHtmlString ButtonFor<TValue>(Expression<Func<TModel, TValue>> expression, Button bProps)
+        {
+            var value = Conversion.ConvertToString(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
+
+			bProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             bProps.Id = this.GetIdFromName(bProps);
-            bProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            bProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             bProps.Value = value;
 
             return this.Button(bProps);
         }
 
-        public MvcHtmlString Upload(UploadBox ubProps)
+        public IHtmlString Upload(UploadBox ubProps)
         {
-            this.RegisterControl(ubProps);
+            this.Html.RegisterControl(ubProps);
 
             if (ubProps.UploadModel == null)
             {
                 return MvcHtmlString.Create(string.Empty);
             }
 
-            var action = this.UrlHelper.Action("OpenIframe", "RabbitUpload", new { id = ubProps.Id });
+            var action = this.goRabbit.UrlHelper.Action("OpenIframe", "RabbitUpload", new { id = ubProps.Id });
 
             var output = string.Format("<div class=\"trooper upload\" id=\"{0}_container\">", ubProps.Id);
 
@@ -492,39 +488,39 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             output = this.MakeFormGroup(output, ubProps);
 
-            if (!this.Cruncher.HasJsItem("upload_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("upload_js"))
             {
-                this.Cruncher.AddJsInline(Resources.upload_js, "upload_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.upload_js, "upload_js", OrderOptions.Middle);
 
-                this.Cruncher.AddLessInline(Resources.upload_less, "upload_less", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddLessInline(Resources.upload_less, "upload_less", OrderOptions.Middle);
             }
 
             var js = string.Format(
                 "new trooper.ui.control.upload({{id:'{0}', formId:'{1}', warnOnLeave: {2}}});",
                 ubProps.Id,
-                this.FormHeaderProps.Id,
-                this.GetJsBool(ubProps.WarnOnLeave));
+                this.FormProps.Id,
+                RabbitHelper.GetJsBool(ubProps.WarnOnLeave));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString UploadFor(Expression<Func<TModel, UploadModel>> expression, UploadBox ubProps)
+        public IHtmlString UploadFor(Expression<Func<TModel, UploadModel>> expression, UploadBox ubProps)
         {
-            var value = this.GetExpressionValue(expression);
+            var value = RabbitHelper.GetExpressionValue<TModel, UploadModel>(expression, this.goRabbit.HtmlHelper);
 
-			ubProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			ubProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             ubProps.Id = this.GetIdFromName(ubProps);
-            ubProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            ubProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             ubProps.UploadModel = value;
 
             return this.Upload(ubProps);
         }
 
-        public MvcHtmlString CheckBoxList<TOptionKey, TOptionValue>(CheckBoxList<TOptionKey, TOptionValue> cblProps)
+        public IHtmlString CheckBoxList<TOptionKey, TOptionValue>(CheckBoxList<TOptionKey, TOptionValue> cblProps)
         {
-            this.RegisterControl(cblProps);
+            this.Html.RegisterControl(cblProps);
 
             var output = cblProps.ScrollHeight > 0
                 ? string.Format("<div id=\"{0}\" class=\"trooper y-scrolling\" style=\"height: {1}px\">", cblProps.Id, cblProps.ScrollHeight)
@@ -534,14 +530,14 @@ namespace Trooper.Ui.Mvc.Rabbit
             {
                 foreach (var item in cblProps.Options)
                 {
-                    var inpAttrs = this.AddAttribute(null, "type", "checkbox");
-                    this.AddAttribute(inpAttrs, "name", cblProps.Name);
-                    this.AddAttribute(inpAttrs, "value", item.Key.ToString());
-                    this.AddNotEmptyAttribute(
+                    var inpAttrs = RabbitHelper.AddAttribute(null, "type", "checkbox");
+                    RabbitHelper.AddAttribute(inpAttrs, "name", cblProps.Name);
+                    RabbitHelper.AddAttribute(inpAttrs, "value", item.Key.ToString());
+                    RabbitHelper.AddNotEmptyAttribute(
                         inpAttrs,
                         "checked",
                         item.Value != null && cblProps.SelectedOptions != null && cblProps.SelectedOptions.Contains(item.Key) ? "checked" : null);
-                    this.AddNotEmptyAttribute(
+                    RabbitHelper.AddNotEmptyAttribute(
                         inpAttrs,
                         "disabled",
                         this.IsControlEnabled(cblProps.Enabled) ? null : "disabled");
@@ -549,7 +545,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                     output += string.Format(
                         "<div class=\"checkbox\"><label class=\"{0}\"><input {1} />{2}</label></div>\n",
                         cblProps.Inline ? "checkbox-inline" : string.Empty, 
-                        this.MakeAttributesList(inpAttrs), 
+                        RabbitHelper.MakeAttributesList(inpAttrs), 
                         item.Value);
                 }
             }
@@ -558,102 +554,103 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             output = this.MakeFormGroup(output, cblProps);
 
-            if (!this.Cruncher.HasJsItem("checkBoxList_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("checkBoxList_js"))
             {
-                this.Cruncher.AddJsInline(Resources.checkBoxList_js, "checkBoxList_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.checkBoxList_js, "checkBoxList_js", OrderOptions.Middle);
             }
 
             var js = string.Format(
                 "new trooper.ui.control.checkBoxList({{id:'{0}', formId:'{1}', name:'{2}', warnOnLeave:{3} }});",
                 cblProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 cblProps.Name,
-                this.GetJsBool(cblProps.WarnOnLeave));
+                RabbitHelper.GetJsBool(cblProps.WarnOnLeave));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Middle);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Middle);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString CheckBoxListFor<TOptionKey, TOptionValue>(
-            Expression<Func<TModel, List<TOptionKey>>> expression,
+        public IHtmlString CheckBoxListFor<TOptionKey, TOptionValue>(
+            Expression<Func<TModel, IList<TOptionKey>>> expression,
             CheckBoxList<TOptionKey, TOptionValue> cblProps)
         {
-            var value = this.GetExpressionValue(expression);
+            var value = RabbitHelper.GetExpressionValue<TModel, IList<TOptionKey>>(expression, this.goRabbit.HtmlHelper);
 
-			cblProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			cblProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             cblProps.Id = this.GetIdFromName(cblProps);
-            cblProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            cblProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             cblProps.SelectedOptions = value;
 
             return this.CheckBoxList(cblProps);
         }
 
-        public MvcHtmlString CheckBox(CheckBox cbProps)
+        public IHtmlString CheckBox(CheckBox cbProps)
         {
-            this.RegisterControl(cbProps);
+            this.Html.RegisterControl(cbProps);
 
-            var inpAttrs = this.AddAttribute(null, "type", "checkbox");
-            this.AddAttribute(inpAttrs, "name", cbProps.Name);
-            this.AddAttribute(inpAttrs, "value", cbProps.Value);
-            this.AddNotEmptyAttribute(inpAttrs, "checked", (cbProps.Checked ?? false) ? "checked" : null);
-            this.AddNotEmptyAttribute(inpAttrs, "disabled", this.IsControlEnabled(cbProps.Enabled) ? null : "disabled");
+            var inpAttrs = RabbitHelper.AddAttribute(null, "type", "checkbox");
+            RabbitHelper.AddAttribute(inpAttrs, "name", cbProps.Name);
+            RabbitHelper.AddAttribute(inpAttrs, "value", cbProps.Value);
+            RabbitHelper.AddNotEmptyAttribute(inpAttrs, "checked", (cbProps.Checked ?? false) ? "checked" : null);
+            RabbitHelper.AddNotEmptyAttribute(inpAttrs, "disabled", this.IsControlEnabled(cbProps.Enabled) ? null : "disabled");
 
             var output = string.Format(
                 "<div class=\"checkbox\"><label class=\"{0}\"><input {1} />{2}</label></div>\n",
                 cbProps.Inline ? "checkbox-inline" : string.Empty,
-                this.MakeAttributesList(inpAttrs),
+                RabbitHelper.MakeAttributesList(inpAttrs),
                 cbProps.Title);
 
-            if (!this.Cruncher.HasJsItem("checkBox_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("checkBox_js"))
             {
-                this.Cruncher.AddJsInline(Resources.checkBox_js, "checkBox_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.checkBox_js, "checkBox_js", OrderOptions.Middle);
             }
 
             var js = string.Format(
                 "new trooper.ui.control.checkBox({{id:'{0}', formId:'{1}', warnOnLeave:{2}}});",
                 cbProps.Id,
-                this.FormHeaderProps.Id,
-                this.GetJsBool(cbProps.WarnOnLeave));
+                this.FormProps.Id,
+                RabbitHelper.GetJsBool(cbProps.WarnOnLeave));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString CheckBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, CheckBox cbProps)
+        public IHtmlString CheckBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, CheckBox cbProps)
         {
-            var value = Conversion.ConvertToBoolean(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToBoolean(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			cbProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			cbProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             cbProps.Id = this.GetIdFromName(cbProps);
-            cbProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            cbProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             cbProps.Checked = value;
 
             return this.CheckBox(cbProps);
         }
 
-	    public MvcHtmlString SelectList<TOption>(
+
+        public IHtmlString SelectList<TOption>(
 			SelectList<TOption> sProps)
 	    {
 		    return this.SelectList<TOption, TOption>(sProps);
 	    }
 
-	    public MvcHtmlString SelectList<TOptionKey, TOptionValue>(
+        public IHtmlString SelectList<TOptionKey, TOptionValue>(
             SelectList<TOptionKey, TOptionValue> sProps)
         {
-            this.RegisterControl(sProps);
+            this.Html.RegisterControl(sProps);
 
-            var classes = this.AddClass(null, "form-control");
-            this.AddClass(classes, FormatInputTextSize(sProps.TextSize));
+            var classes = RabbitHelper.AddClass(null, "form-control");
+            RabbitHelper.AddClass(classes, FormatInputTextSize(sProps.TextSize));
 
-            var attrs = this.AddAttribute(null, "id", sProps.Id);
-            this.AddAttribute(attrs, "name", sProps.Name);
-            this.AddNotEmptyAttribute(attrs, "disabled", this.IsControlEnabled(sProps.Enabled) ? null : "disabled");
-            this.AddNotEmptyAttribute(attrs, "multiple", sProps.AllowMultiple ? "multiple" : null);
-            this.AddAttribute(attrs, "class", this.MakeClassAttributeContent(classes));
+            var attrs = RabbitHelper.AddAttribute(null, "id", sProps.Id);
+            RabbitHelper.AddAttribute(attrs, "name", sProps.Name);
+            RabbitHelper.AddNotEmptyAttribute(attrs, "disabled", this.IsControlEnabled(sProps.Enabled) ? null : "disabled");
+            RabbitHelper.AddNotEmptyAttribute(attrs, "multiple", sProps.AllowMultiple ? "multiple" : null);
+            RabbitHelper.AddAttribute(attrs, "class", RabbitHelper.MakeClassAttributeContent(classes));
 
-            var output = string.Format("<select {0}>\n", this.MakeAttributesList(attrs));
+            var output = string.Format("<select {0}>\n", RabbitHelper.MakeAttributesList(attrs));
 
             if (sProps.IncludeBlank)
             {
@@ -678,60 +675,60 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             output = this.MakeFormGroup(output, sProps);
 
-            if (!this.Cruncher.HasJsItem("selectList_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("selectList_js"))
             {
-                this.Cruncher.AddJsInline(Resources.selectList_js, "selectList_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.selectList_js, "selectList_js", OrderOptions.Middle);
             }
 
             var js = string.Format(
                 "new trooper.ui.control.selectList({{id:'{0}', formId:'{1}', warnOnLeave:{2}}});",
                 sProps.Id,
-                this.FormHeaderProps.Id,
-                this.GetJsBool(sProps.WarnOnLeave));
+                this.FormProps.Id,
+                RabbitHelper.GetJsBool(sProps.WarnOnLeave));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-	    public MvcHtmlString SelectListFor<TOption>(
+        public IHtmlString SelectListFor<TOption>(
 			Expression<Func<TModel, TOption>> expression,
 			SelectList<TOption> sProps)
 	    {
 		    return this.SelectListFor<TOption, TOption>(expression, sProps);
 	    }
 
-        public MvcHtmlString SelectListFor<TOptionKey, TOptionValue>(
+        public IHtmlString SelectListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, TOptionKey>> expression,
             SelectList<TOptionKey, TOptionValue> sProps)
         {
-            var value = this.GetExpressionValue(expression);
+            var value = RabbitHelper.GetExpressionValue<TModel, TOptionKey>(expression, this.goRabbit.HtmlHelper);
 
-			sProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			sProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             sProps.Id = this.GetIdFromName(sProps);
-            sProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            sProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             sProps.SelectedOption = value;
 
             return this.SelectList(sProps);
         }
 
-        public MvcHtmlString MultiSelectListFor<TOptionKey, TOptionValue>(
-            Expression<Func<TModel, List<TOptionKey>>> expression,
+        public IHtmlString MultiSelectListFor<TOptionKey, TOptionValue>(
+            Expression<Func<TModel, IList<TOptionKey>>> expression,
             SelectList<TOptionKey, TOptionValue> sProps)
         {
-            var value = this.GetExpressionValue(expression);
+            var value = RabbitHelper.GetExpressionValue<TModel, IList<TOptionKey>>(expression, this.goRabbit.HtmlHelper);
 
-			sProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			sProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             sProps.Id = this.GetIdFromName(sProps);
-            sProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            sProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             sProps.SelectedOptions = value;
 
             return this.SelectList(sProps);
         }
 
-        public MvcHtmlString RadioList<TOptionKey, TOptionValue>(RadioList<TOptionKey, TOptionValue> rlProps)
+        public IHtmlString RadioList<TOptionKey, TOptionValue>(RadioList<TOptionKey, TOptionValue> rlProps)
         {
-            this.RegisterControl(rlProps);
+            this.Html.RegisterControl(rlProps);
 
             var output = rlProps.ScrollHeight > 0
                 ? string.Format("<div id=\"{0}\" class=\"trooper y-scrolling\" style=\"height: {1}px\">", rlProps.Id, rlProps.ScrollHeight)
@@ -741,14 +738,14 @@ namespace Trooper.Ui.Mvc.Rabbit
             {
                 foreach (var item in rlProps.Options)
                 {
-                    var inpAttrs = this.AddAttribute(null, "type", "radio");
-                    this.AddAttribute(inpAttrs, "name", rlProps.Name);
-                    this.AddAttribute(inpAttrs, "value", item.Key.ToString());
-                    this.AddNotEmptyAttribute(
+                    var inpAttrs = RabbitHelper.AddAttribute(null, "type", "radio");
+                    RabbitHelper.AddAttribute(inpAttrs, "name", rlProps.Name);
+                    RabbitHelper.AddAttribute(inpAttrs, "value", item.Key.ToString());
+                    RabbitHelper.AddNotEmptyAttribute(
                         inpAttrs,
                         "checked",
                         item.Value != null && item.Key.Equals(rlProps.SelectedOption) ? "checked" : null);
-                    this.AddNotEmptyAttribute(
+                    RabbitHelper.AddNotEmptyAttribute(
                         inpAttrs,
                         "disabled",
                         this.IsControlEnabled(rlProps.Enabled) ? null : "disabled");
@@ -756,7 +753,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                     output += string.Format(
                         "<div class=\"radio\"><label class=\"{0}\"><input {1} />{2}</label></div>\n",
                         rlProps.Inline ? "radio-inline" : string.Empty,
-                        this.MakeAttributesList(inpAttrs),
+                        RabbitHelper.MakeAttributesList(inpAttrs),
                         item.Value);
                 }
             }
@@ -765,40 +762,40 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             output = this.MakeFormGroup(output, rlProps);
 
-            if (!this.Cruncher.HasJsItem("radioList_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("radioList_js"))
             {
-                this.Cruncher.AddJsInline(Resources.radioList_js, "radioList_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.radioList_js, "radioList_js", OrderOptions.Middle);
             }
 
             var js = string.Format(
                 "new trooper.ui.control.radioList({{id:'{0}', formId:'{1}', name:'{2}', warnOnLeave:{3}}});",
                 rlProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 rlProps.Name,
-                this.GetJsBool(rlProps.WarnOnLeave));
+                RabbitHelper.GetJsBool(rlProps.WarnOnLeave));
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(output);
         }
 
-        public MvcHtmlString RadioListFor<TOptionKey, TOptionValue>(
+        public IHtmlString RadioListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, TOptionKey>> expression,
             RadioList<TOptionKey, TOptionValue> rlProps)
         {
-            var value = this.GetExpressionValue(expression);
+            var value = RabbitHelper.GetExpressionValue<TModel, TOptionKey>(expression, this.goRabbit.HtmlHelper);
 
-			rlProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			rlProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             rlProps.Id = this.GetIdFromName(rlProps);
-            rlProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            rlProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             rlProps.SelectedOption = value;
 
             return this.RadioList(rlProps);
         }
 
-        public MvcHtmlString DateTimePicker(DateTimePicker dtpProps)
+        public IHtmlString DateTimePicker(DateTimePicker dtpProps)
         {
-            this.RegisterControl(dtpProps);
+            this.Html.RegisterControl(dtpProps);
 
 	        var icon =
 		        new[] {DateTimeFormat.DateAndTime, DateTimeFormat.Date, DateTimeFormat.DateTimeNoSeconds}.Contains(
@@ -853,66 +850,79 @@ namespace Trooper.Ui.Mvc.Rabbit
 				PlacementAutoAssist = true,
 	        };
 
-            this.Popover(poProps);
+            this.Html.Popover(poProps);
 
-			this.IncludeMoment();
-            this.IncludeJqueryInputMask();
+			this.Html.IncludeMoment();
+            this.Html.IncludeJqueryInputMask();
 
             var js = string.Format(
                 "new trooper.ui.control.dateTimePicker("
                 + "{{id:'{0}', formId:'{1}', dateTimeFormat:'{2}', warnOnLeave:{3}, popoverPlacement:'{4}', utcOffset:{5}, popoverId:'{6}', minimum:{7}, maximum:{8}}});",
                 dtpProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
 				dtpProps.DateTimeFormat,
-                this.GetJsBool(dtpProps.WarnOnLeave),
-                this.PopoverPlacementToString(dtpProps.PopoverPlacement),
+                RabbitHelper.GetJsBool(dtpProps.WarnOnLeave),
+                RabbitHelper.PopoverPlacementToString(dtpProps.PopoverPlacement),
                 dtpProps.UtcOffset,
                 poProps.Id,
 				dtpProps.Minimum == null ? "null" : string.Format("'{0:" + serverFormat + "}'", dtpProps.Minimum),
 				dtpProps.Maximum == null ? "null" : string.Format("'{0:"+ serverFormat+"}'", dtpProps.Maximum));
 
-			if (!this.Cruncher.HasJsItem("dateTimePicker_js"))
+			if (!this.goRabbit.Cruncher.HasJsItem("dateTimePicker_js"))
 			{
-				this.IncludeMoment();
-				this.Cruncher.AddJsInline(Resources.dateTimePicker_js, "dateTimePicker_js", OrderOptions.Middle);
-				this.Cruncher.AddLessInline(Resources.dateTimePicker_less, "dateTimePicker_less", OrderOptions.Middle);
+				this.Html.IncludeMoment();
+				this.goRabbit.Cruncher.AddJsInline(Resources.dateTimePicker_js, "dateTimePicker_js", OrderOptions.Middle);
+				this.goRabbit.Cruncher.AddLessInline(Resources.dateTimePicker_less, "dateTimePicker_less", OrderOptions.Middle);
 			}
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(result);
         }
 
-        public MvcHtmlString DateTimePickerFor<TValue>(
+        public IHtmlString DateTimePickerFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
             DateTimePicker dtpProps)
         {
-            var value = Conversion.ConvertToDateTime(this.GetExpressionValue(expression));
+            var value = Conversion.ConvertToDateTime(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
-			dtpProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			dtpProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             dtpProps.Id = this.GetIdFromName(dtpProps);
-            dtpProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            dtpProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
             dtpProps.Value = value;
 
             return this.DateTimePicker(dtpProps);
         }
 
-        public MvcHtmlString Table<T>(TableControl<T> tProps)
+        public IHtmlString Table<T>(TableControl<T> tProps)
             where T : class
         {
-            tProps.FormId = this.FormHeaderProps.Id;
+            tProps.FormId = this.FormProps.Id;
 
-            return new Table<T>(tProps, this.Cruncher).Render();
+            return new Table<T>(tProps, this.Html, this.goRabbit.Cruncher).Render();
         }
-		
-        public MvcHtmlString SearchBox(SearchBox sbProps)
-        {
-            this.RegisterControl(sbProps);
 
-            if (!this.Cruncher.HasJsItem("searchBox_js"))
+        public IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableControl<T> tProps)
+            where T : class
+        {
+            var value = RabbitHelper.GetExpressionValue<TModel, TableModel>(expression, this.goRabbit.HtmlHelper);
+
+            tProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
+            tProps.Id = this.GetIdFromName(tProps);
+            tProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
+            tProps.TableModel = value;
+
+            return this.Table(tProps);
+        }
+
+        public IHtmlString SearchBox(SearchBox sbProps)
+        {
+            this.Html.RegisterControl(sbProps);
+
+            if (!this.goRabbit.Cruncher.HasJsItem("searchBox_js"))
             {
-                this.Cruncher.AddJsInline(Resources.searchBox_js, "searchBox_js", OrderOptions.Middle);
-                this.Cruncher.AddLessInline(Resources.searchBox_less, "searchBox_less", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.searchBox_js, "searchBox_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddLessInline(Resources.searchBox_less, "searchBox_less", OrderOptions.Middle);
             }
 
             var result = string.Format(
@@ -937,7 +947,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 + "searchValueField: '{5}', searchTextField: '{6}', selectedTextField: '{7}', scrollHeight: {8}, "
                 + "popoverPlacement: '{9}', popoutWidth: {10} }});",
                 sbProps.Id,
-                this.FormHeaderProps.Id,
+                this.FormProps.Id,
                 sbProps.Name,
                 string.IsNullOrEmpty(sbProps.SelectEvent) ? "null" : sbProps.SelectEvent,
                 sbProps.DataSourceUrl,
@@ -945,19 +955,19 @@ namespace Trooper.Ui.Mvc.Rabbit
                 sbProps.SearchTextField,
                 sbProps.SelectedTextField,
                 sbProps.ScrollHeight,
-                this.PopoverPlacementToString(sbProps.PopoverPlacement),
+                RabbitHelper.PopoverPlacementToString(sbProps.PopoverPlacement),
                 sbProps.PopoutWidth == null ? "null" : sbProps.PopoutWidth.ToString());
 
-            this.Cruncher.AddJsInline(js, OrderOptions.Last);
+            this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
 
             return MvcHtmlString.Create(result);
         }
 
-        public MvcHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBox sbProps)
+        public IHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBox sbProps)
         {
-			sbProps.Name = this.HtmlHelper.NameFor(expression).ToString();
+			sbProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             sbProps.Id = this.GetIdFromName(sbProps);
-            sbProps.Messages = this.GetMessagesForProperty(expression, this.Messages);
+            sbProps.Messages = this.GetMessagesForProperty(expression, this.FormProps.Messages);
 
             return this.SearchBox(sbProps);
         }
@@ -996,23 +1006,23 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             if (cBase.WorstMessageLevel != null)
             {
-                classes = this.AddClass(classes, string.Format("has-{0}", worstLevel.ToString().ToLower()));
+                classes = RabbitHelper.AddClass(classes, string.Format("has-{0}", worstLevel.ToString().ToLower()));
             }
 
-            classes = this.AddClasses(classes, cBase.FormGroupClasses);
+            classes = RabbitHelper.AddClasses(classes, cBase.FormGroupClasses);
 
             if (this.IsTitleShowing(cBase.ShowTitle, cBase.Title))
             {
                 return
                     string.Format(
                         "<div {0}>\n" + "<label class=\"control-label\" for=\"{1}\">{2}</label>\n" + "{3}" + "</div>\n",
-                        this.MakeClassAttribute(classes),
+                        RabbitHelper.MakeClassAttribute(classes),
                         cBase.Id,
                         cBase.Title,
                         contents);
             }
 
-            return string.Format("<div {0}>\n{1}</div>\n", this.MakeClassAttribute(classes), contents);
+            return string.Format("<div {0}>\n{1}</div>\n", RabbitHelper.MakeClassAttribute(classes), contents);
         }
 
         private string MakeInputGroup(string contents) 
@@ -1023,9 +1033,9 @@ namespace Trooper.Ui.Mvc.Rabbit
         private string MakeTextBox(TextBox tbProps, bool incJs)
         {
             //// first lets add our javascript core and control instance
-            if (!this.Cruncher.HasJsItem("textBox_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("textBox_js"))
             {
-                this.Cruncher.AddJsInline(Resources.textBox_js, "textBox_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.textBox_js, "textBox_js", OrderOptions.Middle);
             }
 
             if (incJs)
@@ -1033,21 +1043,21 @@ namespace Trooper.Ui.Mvc.Rabbit
                 var js = string.Format(
                     "new trooper.ui.control.textBox({{id:'{0}', formId:'{1}', maxLength:{2}, warnOnLeave:{3}}});",
                     tbProps.Id,
-                    this.FormHeaderProps.Id,
+                    this.FormProps.Id,
                     Conversion.ConvertToInt(tbProps.MaxLength, 0),
-                    this.GetJsBool(tbProps.WarnOnLeave));
+                    RabbitHelper.GetJsBool(tbProps.WarnOnLeave));
 
-                this.Cruncher.AddJsInline(js, OrderOptions.Last);
+                this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
             }
 
             //// Then lets get our text box attributes 
             var textBoxAttrs = new Dictionary<string, object>();
 
-            var cssClasses = this.AddClass(null, "form-control");
+            var cssClasses = RabbitHelper.AddClass(null, "form-control");
 
             if (tbProps.TextSize != null)
             {
-                cssClasses = this.AddClass(cssClasses, FormatInputTextSize(tbProps.TextSize));
+                cssClasses = RabbitHelper.AddClass(cssClasses, FormatInputTextSize(tbProps.TextSize));
             }
 
             if (!this.IsControlEnabled(tbProps.Enabled))
@@ -1066,7 +1076,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 tbProps.Id,
                 tbProps.Name,
                 HttpUtility.HtmlAttributeEncode(tbProps.Value),
-                this.MakeClassAttribute(cssClasses),
+                RabbitHelper.MakeClassAttribute(cssClasses),
                 textBoxAttrs.Aggregate(
                     string.Empty,
                     (current, next) =>
@@ -1100,19 +1110,19 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         private void Init()
         {
-            if (!this.Cruncher.HasJsItem("form_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("form_js"))
             {
-                this.Cruncher.AddJsInline(Resources.form_js, "form_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.form_js, "form_js", OrderOptions.Middle);
 
-                this.Cruncher.AddJsInline(string.Format("new trooper.ui.control.form({{ id: '{0}' }});", this.FormHeaderProps.Id), OrderOptions.Last);
+                this.goRabbit.Cruncher.AddJsInline(string.Format("new trooper.ui.control.form({{ id: '{0}' }});", this.FormProps.Id), OrderOptions.Last);
             }
         }
 
         private void IncludeNumericJs()
         {
-            if (!this.Cruncher.HasJsItem("numericBox_js"))
+            if (!this.goRabbit.Cruncher.HasJsItem("numericBox_js"))
             {
-                this.Cruncher.AddJsInline(Resources.numericBox_js, "numericBox_js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(Resources.numericBox_js, "numericBox_js", OrderOptions.Middle);
             }
         }
 
@@ -1130,9 +1140,9 @@ namespace Trooper.Ui.Mvc.Rabbit
                 return (bool)enabled;
             }
 
-            if (this.ControlsEnabled != null)
+            if (this.FormProps.ControlsEnabled != null)
             {
-                return (bool)this.ControlsEnabled;
+                return (bool)this.FormProps.ControlsEnabled;
             }
 
             return true;
@@ -1150,9 +1160,9 @@ namespace Trooper.Ui.Mvc.Rabbit
                 return (bool)showTitle;
             }
 
-            if (this.ShowTitles != null)
+            if (this.FormProps.ShowTitles != null)
             {
-                return (bool)this.ShowTitles;
+                return (bool)this.FormProps.ShowTitles;
             }
 
             return true;
@@ -1186,7 +1196,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 return null;
             }
 
-            var metaData = ModelMetadata.FromLambdaExpression(expression, this.HtmlHelper.ViewData);
+            var metaData = ModelMetadata.FromLambdaExpression(expression, this.goRabbit.HtmlHelper.ViewData);
 
             if (metaData == null)
             {
@@ -1200,16 +1210,16 @@ namespace Trooper.Ui.Mvc.Rabbit
         {
             var worstControlLevel = cBase.WorstMessageLevel;
 
-            var worstPageLevel = this.Messages == null
+            var worstPageLevel = this.FormProps.Messages == null
                                      ? null
                                      : MessageUtility.GetWorstMessageLevel(
-                                         this.Messages.Where(m => m != null && m.Property == cBase.Name).ToList());
+                                         this.FormProps.Messages.Where(m => m != null && m.Property == cBase.Name).ToList());
 
             var levels = new List<MessageAlertLevel?> { worstControlLevel, worstPageLevel };
 
             return MessageUtility.GetWorstMessageLevel(levels);
         }
 
-        #endregion
+        #endregion        
     }
 }

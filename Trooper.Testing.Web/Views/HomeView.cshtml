@@ -16,18 +16,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing</title>
     @{
-        var cruncher = new Cruncher(Html);
-        var bsf = new Form<HomeModel>(Html, new FormHeader { Action = Url.Action("Submit", "Home") });
-
-        Trooper.Ui.Mvc.Rabbit.Html<HomeModel>.Init(Html);
+        var goRabbit = new GoRabbit<HomeModel>(Html);
     }
 
-    @cruncher.Header()
+    @goRabbit.Header()
 </head>
 
 <body>
-    @bsf.BeginForm()
-
     <div class="container">
         <h2>Test Area</h2>
 
@@ -45,7 +40,5 @@
             </div>            
         </div>
     </div>
-
-    @bsf.EndForm()
 </body>
 </html>

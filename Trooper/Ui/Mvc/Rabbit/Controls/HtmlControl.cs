@@ -5,8 +5,9 @@
     using Trooper.BusinessOperation2;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
     using Trooper.BusinessOperation2.Utility;
+    using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
 
-    public class HtmlControl
+    public class HtmlControl : IHtmlControl
     {
         public HtmlControl()
         {
@@ -33,6 +34,6 @@
             }
         }
 
-        public List<IMessage> Messages { get; set; }
+        public IList<IMessage> Messages { get; set; }
     }
 }

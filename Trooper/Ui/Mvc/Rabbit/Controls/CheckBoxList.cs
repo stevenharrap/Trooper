@@ -6,9 +6,9 @@
 
     public class CheckBoxList<TOptionKey, TOptionValue> : FormControl
     {
-		public List<Option<TOptionKey, TOptionValue>> Options { get; set; }
+		public IList<Option<TOptionKey, TOptionValue>> Options { get; set; }
 
-        public List<TOptionKey> SelectedOptions { get; set; }
+        public IList<TOptionKey> SelectedOptions { get; set; }
 
         public bool Inline { get; set; }
 

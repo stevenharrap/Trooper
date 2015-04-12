@@ -14,28 +14,54 @@ using Trooper.Ui.Mvc.Rabbit.Controls;
 using Trooper.Ui.Mvc.Rabbit.TableClasses;
 using Humanizer;
 using System.Web.Helpers;
+using Trooper.Ui.Interface.Mvc.Rabbit;
+using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
+using Trooper.Utility;
 
 namespace Trooper.Ui.Mvc.Rabbit
 {
-    public class Table<T> : HtmlControl
+    public class Table<T>
         where T : class
     {
         private TableControl<T> tProps;
 
+        private IHtml html;
+
         private ICruncher cruncher;
 
-        public Table(TableControl<T> tProps, ICruncher cruncher)
+        public Table(TableControl<T> tProps, IHtml html, ICruncher cruncher)
         {
+            this.cruncher = cruncher;
             this.tProps = tProps;
-            this.cruncher = cruncher;            
+            this.html = html;
+
+            this.html.RegisterControl(tProps);
         }
 
         public MvcHtmlString Render()
         {
             var result = new StringBuilder();
-            var pagedSource = new PagedList<T>(this.tProps.Source.ToList(), 1, this.tProps.RowsPerPage);
+            var pagedSource = new PagedList<T>(this.tProps.Source.ToList(), this.tProps.TableModel.PageNumber, this.tProps.PageSize);
 
-            result.Append("<table class=\"trooper table\">\r\n");
+            var tableStyle = string.Format(
+                "trooper table {0} {1} {2} {3}",
+                this.tProps.Striped ? "table-striped" : null,
+                this.tProps.Bordered ? "table-bordered" : null,
+                this.tProps.Hover ? "table-hover" : null,
+                this.tProps.Condensed ? "table-condensed" : null);
+
+            var persistData =
+                new
+                {
+                    this.tProps.TableModel.PageNumber,
+                };
+
+            result.AppendFormat(
+                "<textarea style=\"display:none\" name=\"{0}.PersistedData\"/>{1}</textarea>\r\n",
+                this.tProps.Name,
+                Json.Encode(persistData));
+
+            result.AppendFormat("<table id=\"{0}\" class=\"{1}\">\r\n", this.tProps.Id, tableStyle);
 
             if (!string.IsNullOrWhiteSpace(this.tProps.Caption))
             {
@@ -64,7 +90,18 @@ namespace Trooper.Ui.Mvc.Rabbit
             {
                 var header = this.GetColumnTitle(col);
 
-                result.AppendFormat("<th>{0}</th>\r\n", header);
+                var dictionary = new Dictionary<string, string> {
+                    { "si", ReflectionHelper.GetNameFromExpression(col.SortIdentity) },
+                    { "h", header },
+                    { "hm", col.HeaderMedium },
+                    { "hs", col.HeaderSmall },
+                    { "hes", col.HeaderExtraSmall },
+                    { "hp", col.HeaderPrint }
+                };
+                                
+                var dataValue = Json.Encode(dictionary).Replace("\"", "&quot;");
+
+                result.AppendFormat("<th data-value=\"{0}\">{1}</th>\r\n", dataValue, header);
             }
 
             result.Append("</tr>\r\n");
@@ -83,7 +120,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
                 foreach (var col in this.tProps.Columns)
                 {
-                    var compiledValue = col.ValueExpression.Compile();
+                    var compiledValue = col.Value.Compile();
                     var value = compiledValue(row);
 
                     if (!string.IsNullOrEmpty(col.Format))
@@ -111,7 +148,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             foreach (var k in this.tProps.Keys)
             {
-                var name = this.GetNameFromExpression(k);
+                var name = ReflectionHelper.GetNameFromExpression(k);
 
                 if (name == null)
                 {
@@ -142,24 +179,33 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             if (pagedSource.PageNumber > 10)
             {
-                result.Append("<li><a><span class=\"glyphicon glyphicon-triangle-left\"></span></a></li>\r\n");
+                result.AppendFormat(
+                    "<li data-value=\"{0}\"><a><span class=\"glyphicon glyphicon-triangle-left\"></span></a></li>\r\n", 
+                    pagedSource.PageNumber - 10);
             }
 
             for (var p = pagedSource.PageNumber; p < pagedSource.PageCount && p < pagedSource.PageNumber + 10; p++)
             {
-                result.Append("<li>");
-                result.AppendFormat("<a>{0}</a>", p);
-                result.Append("</li>");
+                if (p == pagedSource.PageNumber)
+                {
+                    result.AppendFormat("<li class=\"active\" data-value=\"{0}\"><a>{0} <span class=\"sr-only\">(current)</span></a></li>", p);
+                }
+                else {
+                    result.AppendFormat("<li data-value=\"{0}\"><a>{0}</a></li>", p);
+                }                
             }
 
             if (pagedSource.PageNumber + 10 < pagedSource.PageCount)
             {
-                result.AppendFormat("<li><a>{0} pages <span class=\"glyphicon glyphicon-triangle-right\"></span></a></li>", pagedSource.PageCount);
+                result.AppendFormat(
+                    "<li data-value=\"{0}\"><a>{1} pages <span class=\"glyphicon glyphicon-triangle-right\"></span></a></li>", 
+                    pagedSource.PageNumber + 10, 
+                    pagedSource.PageCount);
             }
 
             result.Append("\r\n</ul>\r\n");
             result.Append("</div>\r\n");
-            result.AppendFormat("<div class=\"right\">{0} items</div>\r\n", pagedSource.Count());
+            result.AppendFormat("<div class=\"right\">{0} items</div>\r\n", pagedSource.TotalItemCount);
             result.Append("</div>\r\n");
             result.Append("</td>\r\n");
             result.Append("</tr>\r\n");
@@ -174,7 +220,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 return column.Header;
             }
 
-            string result = this.GetNameFromExpression(column.ValueExpression);
+            string result = ReflectionHelper.GetNameFromExpression(column.Value);
 
             if (result == null)
             {
@@ -187,41 +233,23 @@ namespace Trooper.Ui.Mvc.Rabbit
             }
 
             return result;
-        }
-
-        private string GetNameFromExpression(Expression<Func<T, object>> expression)
-        {
-            var me = expression.Body as MemberExpression;
-            var ue = expression.Body as UnaryExpression;
-            string result = null;
-
-            if (me != null)
-            {
-                result = me.Member.Name;
-            }
-            else if (ue != null)
-            {
-                result = (ue.Operand as MemberExpression).Member.Name;
-            }
-
-            return result;
-        }
+        }        
 
         private void JsLessLinkage()
         {
-            if (!cruncher.HasJsItem("table_js"))
+            if (!this.cruncher.HasJsItem("table_js"))
             {
-                //cruncher.AddJsInline(Resources.table_js, "table_js", OrderOptions.Middle);
+                this.cruncher.AddJsInline(Resources.table_js, "table_js", OrderOptions.Middle);
 
-                cruncher.AddLessInline(Resources.table_less, "table_less", OrderOptions.Middle);
+                this.cruncher.AddLessInline(Resources.table_less, "table_less", OrderOptions.Middle);
             }
 
-            /*var js = string.Format(
+            var js = string.Format(
                 "new trooper.ui.control.table({{ id: '{0}', rowSelectionMode: '{1}' }});",
-                this.Id,
+                this.tProps.Id,
                 this.tProps.RowSelectionMode);
 
-            cruncher.AddJsInline(js, OrderOptions.Last);*/
+            this.cruncher.AddJsInline(js, OrderOptions.Last);
         }
     }
 }
