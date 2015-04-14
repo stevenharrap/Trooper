@@ -1006,10 +1006,10 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             if (cBase.WorstMessageLevel != null)
             {
-                classes = RabbitHelper.AddClass(classes, string.Format("has-{0}", worstLevel.ToString().ToLower()));
+                RabbitHelper.AddClass(classes, string.Format("has-{0}", worstLevel.ToString().ToLower()));
             }
 
-            classes = RabbitHelper.AddClasses(classes, cBase.FormGroupClasses);
+            RabbitHelper.AddClasses(classes, cBase.FormGroupClasses);
 
             if (this.IsTitleShowing(cBase.ShowTitle, cBase.Title))
             {

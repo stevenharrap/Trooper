@@ -7,6 +7,7 @@
 @using Trooper.Ui.Mvc.Rabbit.TableClasses
 @using Trooper.Utility
 @using System.Linq.Expressions;
+@using Trooper.Ui.Mvc.Rabbit.TableClasses.Footer;
 
 @model Trooper.Testing.Web.Models.TestTableModel
 
@@ -22,7 +23,7 @@
         var form = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TestTable") });
     }
 
-    @goRabbit.Header();
+    @goRabbit.Header()
 </head>
 
 <body>
@@ -41,7 +42,8 @@
                 HumanizeHeaders = true,
                 PageSize = 20,
                 Striped = true,
-                Hover = true
+                Hover = true,
+                FooterRows = new[] { new Row { Cells = new [] { new Cell { Content = "A year Sum!" } }  }  }
             };
 
             tProps.AddKey(k => k.PlayerID);                       
@@ -57,13 +59,15 @@
                 c.NameLast, c.NameFirst), 
                 Header = "Player name", 
                 SortIdentity = c => c.NameLast,
-                HeaderSmall = "Name" 
+                HeaderMedium = "Name",
+				VisibleInModes = new[] { ScreenMode.Large, ScreenMode.Medium } 
             });
 
             tProps.AddColumn(new Column<BaseballMaster> { 
                 Value = c => c.BirthYear, 
                 Humanize = false,
-                HeaderExtraSmall = "Bth Y"
+                HeaderExtraSmall = "Bth Y",
+				VisibleInModes = new []{ ScreenMode.Large }
             });
 
             tProps.AddColumn(new Column<BaseballMaster> { Value = c => c.BirthCity, Format = "lives in {0}" });            

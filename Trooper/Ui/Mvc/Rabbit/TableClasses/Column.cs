@@ -4,16 +4,18 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+
 namespace Trooper.Ui.Mvc.Rabbit.TableClasses
 {
     using System;
-using System.Linq.Expressions;
-using System.Web.Helpers;
+	using System.Linq.Expressions;
+	using System.Collections.Generic;
+	using Interface.Mvc.Rabbit.Table;
 
-    /// <summary>
+	/// <summary>
     /// 
     /// </summary>
-    public class Column<T> where T : class 
+    public class Column<T> : IColumn<T> where T : class 
     {
         public Expression<Func<T, object>> SortIdentity { get; set; }
 
@@ -24,20 +26,6 @@ using System.Web.Helpers;
         /// By default header large is used.
         /// </summary>
         public bool NoWrap { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether the column has screen mode specific headers.
-        /// </summary>
-        public bool HasSpecificHeaders
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(this.HeaderMedium)
-                    || !string.IsNullOrEmpty(this.HeaderSmall)
-                    || !string.IsNullOrEmpty(this.HeaderExtraSmall)
-                    || !string.IsNullOrEmpty(this.HeaderPrint);
-            }
-        }
 
         public bool? Humanize { get; set; }
 
@@ -64,5 +52,7 @@ using System.Web.Helpers;
         /// Gets or sets the column header text when the screen is in the print mode.
         /// </summary>
         public string HeaderPrint { get; set; }
+
+	    public IList<ScreenMode> VisibleInModes { get; set; }
     }
 }

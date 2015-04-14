@@ -95,9 +95,9 @@ namespace Trooper.Ui.Mvc.Utility
             return GetController() == controller;
         }
 
-        public static Dictionary<string, string> AddAttributes(
-           Dictionary<string, string> attributes,
-           Dictionary<string, string> newAttributes)
+        public static IDictionary<string, string> AddAttributes(
+           IDictionary<string, string> attributes,
+           IDictionary<string, string> newAttributes)
         {
             if (attributes == null)
             {
@@ -115,7 +115,7 @@ namespace Trooper.Ui.Mvc.Utility
             return attributes;
         }
 
-        public static Dictionary<string, string> AddAttribute(Dictionary<string, string> attributes, string name, string value)
+        public static IDictionary<string, string> AddAttribute(IDictionary<string, string> attributes, string name, string value)
         {
             if (attributes == null)
             {
@@ -132,17 +132,17 @@ namespace Trooper.Ui.Mvc.Utility
             return attributes;
         }
 
-        public static Dictionary<string, string> AddNotEmptyAttribute(Dictionary<string, string> attributes, string name, string value)
+        public static IDictionary<string, string> AddNotEmptyAttribute(IDictionary<string, string> attributes, string name, string value)
         {
             if (string.IsNullOrEmpty(value))
             {
                 return attributes ?? new Dictionary<string, string>();
             }
 
-            return RabbitHelper.AddAttribute(attributes, name, value);
+            return AddAttribute(attributes, name, value);
         }
 
-        public static string MakeAttributesList(Dictionary<string, string> attributes)
+        public static string MakeAttributesList(IDictionary<string, string> attributes)
         {
             if (attributes == null)
             {
@@ -165,7 +165,7 @@ namespace Trooper.Ui.Mvc.Utility
         /// <returns>
         /// The <see cref="List"/>.
         /// </returns>
-        public static List<string> AddClass(List<string> classes, string className)
+        public static IList<string> AddClass(IList<string> classes, string className)
         {
             if (classes == null)
             {
@@ -193,7 +193,7 @@ namespace Trooper.Ui.Mvc.Utility
         /// <returns>
         /// The result list.
         /// </returns>
-        public static List<string> AddClasses(List<string> classes, List<string> newClasses)
+        public static IList<string> AddClasses(IList<string> classes, IList<string> newClasses)
         {
             if (classes == null)
             {
@@ -205,7 +205,10 @@ namespace Trooper.Ui.Mvc.Utility
                 return classes;
             }
 
-            classes.AddRange(newClasses);
+			foreach (var c in newClasses)
+	        {
+		        classes.Add(c);
+	        }
 
             return classes.Distinct().ToList();
         }
@@ -219,7 +222,7 @@ namespace Trooper.Ui.Mvc.Utility
         /// <returns>
         /// The class <see cref="string"/>.
         /// </returns>
-        public static string MakeClassAttributeContent(List<string> classes)
+        public static string MakeClassAttributeContent(IList<string> classes)
         {
             if (classes == null || !classes.Any())
             {
@@ -238,14 +241,14 @@ namespace Trooper.Ui.Mvc.Utility
         /// <returns>
         /// The class <see cref="string"/>.
         /// </returns>
-        public static string MakeClassAttribute(List<string> classes)
+        public static string MakeClassAttribute(IList<string> classes)
         {
             if (classes == null || !classes.Any())
             {
                 return "class=\"\"";
             }
 
-            return string.Format("class=\"{0}\"", RabbitHelper.MakeClassAttributeContent(classes));
+            return string.Format("class=\"{0}\"", MakeClassAttributeContent(classes));
         }
 
         public static string GetJsBool(bool? value)

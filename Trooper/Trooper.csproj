@@ -262,6 +262,7 @@
     <Compile Include="Ui\Common\VirtualPath\SimpleVirtualPath.cs" />
     <Compile Include="Ui\Common\VirtualPath\VirtualPathFactory.cs" />
     <Compile Include="Ui\Common\VirtualPath\VirtualPathFactoryFile.cs" />
+    <Compile Include="Ui\Interface\Mvc\Rabbit\Table\IColumn.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controllers\RabbitController.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controllers\RabbitUploadController.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controls\Button.cs" />

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Trooper.Ui.Interface.Mvc.Rabbit.Table;
 using Trooper.Ui.Mvc.Rabbit.Models;
 using Trooper.Ui.Mvc.Rabbit.TableClasses;
+using Trooper.Ui.Mvc.Rabbit.TableClasses.Footer;
 
 namespace Trooper.Ui.Mvc.Rabbit.Controls
 {
@@ -35,15 +37,22 @@ namespace Trooper.Ui.Mvc.Rabbit.Controls
         /// </summary>
         public IEnumerable<T> Source { get; set; }
 
-        public IList<Column<T>> Columns {get; set;}
+        public IList<IColumn<T>> Columns {get; set;}
+
+		/// <summary>
+		/// Gets or sets the footer rows that appear above the paging options. This is just a collection
+		/// of rows and columns - there is no relationship to the data types or data source that has been 
+		/// provided to the table.
+		/// </summary>
+		public IList<Row> FooterRows { get; set; }
 
         public TableModel TableModel { get; set; }
 
-        public Column<T> AddColumn(Column<T> column)
+        public IColumn<T> AddColumn(IColumn<T> column)
         {
             if (this.Columns == null)
             {
-                this.Columns = new List<Column<T>>();
+                this.Columns = new List<IColumn<T>>();
             }
 
             this.Columns.Add(column);

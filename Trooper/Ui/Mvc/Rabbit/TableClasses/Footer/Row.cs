@@ -23,6 +23,6 @@ namespace Trooper.Ui.Mvc.Rabbit.TableClasses.Footer
         /// <summary>
         /// Gets or sets the cells that go in the row.
         /// </summary>
-        public List<Cell> Cells { get; set; }
+        public IList<Cell> Cells { get; set; }
     }
 }

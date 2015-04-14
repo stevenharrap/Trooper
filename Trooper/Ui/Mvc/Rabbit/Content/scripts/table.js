@@ -2,7 +2,8 @@
 {
     this.id = params.id;
     this.rowSelectionMode = params.rowSelectionMode;
-    
+	this.columns = params.columns;
+
     this.rowSelected = new Array();
     this.rowDblclicked = new Array();
     this.rowUnselected = new Array();
@@ -39,30 +40,34 @@
 	};
 	
 	this.screenModeChanged = function (screenMode) {
-	    var headers = $('#' + this.id + ' thead th[data-value]');
+		for (var c = 0; c < this.columns.length; c++) {
+			var data = this.columns[c];
+			var element = $('#' + this.id + ' thead th.col-' + data.ci);
 
-	    for (var i = 0; i < headers.length; i++) {	        
-	        var element = $(headers[i]);
-	        var data = JSON.parse(element.attr('data-value'));
-	        var text = data.h;
+			var text = data.h;
 
-	        if (screenMode == 'Print' && data.hp != null) {
-	            element.text(data.hp);
-	            return;
-	        }
+			if (screenMode == 'Print' && data.hp != null) {
+				text = data.hp;
+			} else if (screenMode == 'ExtraSmall') {
+				text = this.coalesc(data.hes, data.hs, data.hm, data.h);
+			}
+			else if (screenMode == 'Small') {
+				text = this.coalesc(data.hs, data.hm, data.h);
+			}
+			else if (screenMode == 'Medium') {
+				text = this.coalesc(data.hm, data.h);
+			}
 
-	        if (screenMode == 'ExtraSmall') {
-	            text = this.coalesc(data.hes, data.hs, data.hm, data.h);
-	        }
-	        else if (screenMode == 'Small') {
-	            text = this.coalesc(data.hs, data.hm, data.h);
-	        }
-	        else if (screenMode == 'Medium') {
-	            text = this.coalesc(data.hm, data.h);
-	        }
+			if (data.vim != null) {
+				if (jQuery.inArray(screenMode, data.vim) == -1) {
+					$('#' + this.id + ' .col-' + data.ci).addClass('hidden');
+				} else {
+					$('#' + this.id + ' .col-' + data.ci).removeClass('hidden');
+				}
+			}
 
-	        element.text(text);
-	    }
+			element.text(text);
+		}
 	};
 
 	this.pageClicked = function (e) {
@@ -70,7 +75,6 @@
 	};
 
 	this.coalesc = function () {
-	    debugger;
 	    for (var i = 0; i<arguments.length; i++) {
 	        if (arguments[i] != null) {
 	            return arguments[i];

@@ -313,4 +313,17 @@ namespace Trooper.Ui.Mvc.Rabbit
         Info
     }
 
+	public enum ScreenMode
+	{
+		ExtraSmall, 
+
+		Small, 
+
+		Medium, 
+
+		Large, 
+
+		Print
+	}
+
 }
