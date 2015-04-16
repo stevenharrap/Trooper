@@ -176,7 +176,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
 					var attrs = new Dictionary<string, string>
 					{
-						{"class", RabbitHelper.MakeClassAttribute(new[] {cell.Class, c.ToString()})}
+						{"class", RabbitHelper.MakeClassAttributeContent(new[] {cell.Class, string.Format("col-{0}", c)})}
 					};
 
 					if (cell.ColSpan > 0)

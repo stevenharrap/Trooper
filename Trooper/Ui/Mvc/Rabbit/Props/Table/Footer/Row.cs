@@ -4,11 +4,11 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.Ui.Mvc.Rabbit.TableClasses.Footer
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
-    /// <summary>
+namespace Trooper.Ui.Mvc.Rabbit.Props.Table.Footer
+{
+	/// <summary>
     /// The row contains cells. Each row appears in the footer of the table above any
     /// paging options.
     /// </summary>

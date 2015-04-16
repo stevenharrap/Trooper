@@ -4,7 +4,7 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.Ui.Mvc.Rabbit.TableClasses
+namespace Trooper.Ui.Mvc.Rabbit.Props.Table
 {
     /// <summary>
     /// The row highlighting.

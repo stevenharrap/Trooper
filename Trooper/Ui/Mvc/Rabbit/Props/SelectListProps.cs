@@ -4,13 +4,13 @@ using Trooper.Ui.Mvc.Rabbit.Controls.Options;
 
 namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-	public class SelectListProps<TOption> : SelectList<TOption, TOption>
+	public class SelectListProps<TOption> : SelectListProps<TOption, TOption>
 	{
 	}
 
-    public class SelectList<TOptionKey, TOptionValue> : InputProps
+    public class SelectListProps<TOptionKey, TOptionValue> : InputProps
     {
-	    public SelectList()
+		public SelectListProps()
 	    {
 			this.Options = new List<Option<TOptionKey, TOptionValue>>();
 	    }

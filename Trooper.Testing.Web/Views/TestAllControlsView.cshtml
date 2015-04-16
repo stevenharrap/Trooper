@@ -19,7 +19,7 @@
 
     @{
         var goRabbit = new GoRabbit<TestAllControlsModel>(Html);
-        var formProps = new FormControl
+        var formProps = new FormProps
         {
             Action = Url.Action("Submit", "TestAllControls"),
             ShowTitles = string.IsNullOrEmpty(Model.ShowTitles) ? (bool?)null : Model.ShowTitles == "Show",
@@ -40,15 +40,15 @@
     <div class="container">
         <h2>Test Area</h2>       
 
-        @goRabbit.Html.MessagesPanel(new MessagesPanel { Columns = 3, Title = "Test errors", Messages = formProps.Messages })
+        @goRabbit.Html.MessagesPanel(new MessagesPanelProps { Columns = 3, Title = "Test errors", Messages = formProps.Messages })
 
         <div class="row">
             <div class="col-xs-2">
-                @form.SelectListFor(m => m.ShowTitles, new SelectList<string, string> { Title = "Titles?", Options = Model.TitleOptions })
+                @form.SelectListFor(m => m.ShowTitles, new SelectListProps<string, string> { Title = "Titles?", Options = Model.TitleOptions })
             </div>
             <div class="col-xs-2">
                 @form.SelectListFor(m => m.MessageAlertLevel,
-                        new SelectList<Trooper.BusinessOperation2.MessageAlertLevel?, string>
+								 new SelectListProps<Trooper.BusinessOperation2.MessageAlertLevel?, string>
                             {
                                 Title = "Error?",
                                 Options = OptionListHelper.FromEnum<Trooper.BusinessOperation2.MessageAlertLevel>(new EnumParams { IncludeBlank = true })
@@ -59,56 +59,56 @@
 
         <div class="row">
             <div class="col-xs-4">
-                @form.IntegerBoxFor(m => m.TestNum01, new IntegerBox { Title = "Free integer" })
-                @form.IntegerBoxFor(m => m.TestNum02, new IntegerBox { Title = "Limited integer", Minimum = -5, Maximum = 5 })
-                @form.DecimalBoxFor(m => m.TestDec01, new DecimalBox { Title = "Free decimal" })
-                @form.DecimalBoxFor(m => m.TestDec02, new DecimalBox { Title = "Limited decimal (0.000)", Minimum = -5, Maximum = 5, DecimalDigits = 3 })
-                @form.PercentageBoxFor(m => m.TestDec03, new DecimalBox { Title = "Free percentage" })
-                @form.CurrencyBoxFor(m => m.TestDec04, new DecimalBox { Title = "Free currency" })
+                @form.IntegerBoxFor(m => m.TestNum01, new IntegerBoxProps { Title = "Free integer" })
+                @form.IntegerBoxFor(m => m.TestNum02, new IntegerBoxProps { Title = "Limited integer", Minimum = -5, Maximum = 5 })
+                @form.DecimalBoxFor(m => m.TestDec01, new DecimalBoxProps { Title = "Free decimal" })
+                @form.DecimalBoxFor(m => m.TestDec02, new DecimalBoxProps { Title = "Limited decimal (0.000)", Minimum = -5, Maximum = 5, DecimalDigits = 3 })
+                @form.PercentageBoxFor(m => m.TestDec03, new DecimalBoxProps { Title = "Free percentage" })
+                @form.CurrencyBoxFor(m => m.TestDec04, new DecimalBoxProps { Title = "Free currency" })
             </div>
             <div class="col-xs-4">
-                @form.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Free text" })
-                @form.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Limited text", MaxLength = 20 })
-                @form.TextareaBoxFor(m => m.TestTx03, new TextareaBox { Title = "Limited text area", MaxLength = 30 })
-                @form.CheckBoxFor(m => m.TestBl01, new CheckBox { Title = "Simple tick" })
-                @form.RadioListFor(m => m.TestSng02, new RadioList<string, string> { Title = "Radio select", Options = Model.Fruits, ScrollHeight = 150 })
+                @form.TextBoxFor(m => m.TestTx01, new TextBoxProps { Title = "Free text" })
+                @form.TextBoxFor(m => m.TestTx02, new TextBoxProps { Title = "Limited text", MaxLength = 20 })
+                @form.TextareaBoxFor(m => m.TestTx03, new TextareaBoxProps { Title = "Limited text area", MaxLength = 30 })
+                @form.CheckBoxFor(m => m.TestBl01, new CheckBoxProps { Title = "Simple tick" })
+                @form.RadioListFor(m => m.TestSng02, new RadioListProps<string, string> { Title = "Radio select", Options = Model.Fruits, ScrollHeight = 150 })
             </div>
             <div class="col-xs-4">
-                @form.MultiSelectListFor(m => m.TestMlt01, new SelectList<string, string> { Title = "Multi select", Options = Model.Fruits, AllowMultiple = true })
-                @form.CheckBoxListFor(m => m.TestMlt02, new CheckBoxList<string, string> { Title = "Check box select", Options = Model.Fruits })
-                @form.SelectListFor(m => m.TestSng01, new SelectList<string, string> { Title = "Single select", Options = Model.Fruits })
-				@form.SelectListFor(m => m.TestSng03, new SelectList<Vegetables> { Title = "Single select", Options = OptionListHelper.OptionsAsList<Vegetables>() })
+                @form.MultiSelectListFor(m => m.TestMlt01, new SelectListProps<string, string> { Title = "Multi select", Options = Model.Fruits, AllowMultiple = true })
+                @form.CheckBoxListFor(m => m.TestMlt02, new CheckBoxListProps<string, string> { Title = "Check box select", Options = Model.Fruits })
+                @form.SelectListFor(m => m.TestSng01, new SelectListProps<string, string> { Title = "Single select", Options = Model.Fruits })
+				@form.SelectListFor(m => m.TestSng03, new SelectListProps<Vegetables> { Title = "Single select", Options = OptionListHelper.OptionsAsList<Vegetables>() })
             </div>
         </div>
 
 	    <div class="row">
 		    <div class="col-xs-4">
-			    @form.Html.Popover(new Popover {ContentFunc = @<text>He's a hover popover</text>, Title = "It's popping", Selector = "#simple-popover-1"})
+			    @form.Html.Popover(new PopoverProps {ContentFunc = @<text>He's a hover popover</text>, Title = "It's popping", Selector = "#simple-popover-1"})
 			    <h4><span class="label label-default" id="simple-popover-1">I'm a hovering popover - hover me!</span></h4>
 
-			    @form.Html.Popover(new Popover {ContentFunc = @<text>He's an anywhere popover</text>, Title = "It's popping", Selector = "#simple-popover-2", Behaviour = PopoverBehaviour.ClickThenClickAnywhere})
+			    @form.Html.Popover(new PopoverProps {ContentFunc = @<text>He's an anywhere popover</text>, Title = "It's popping", Selector = "#simple-popover-2", Behaviour = PopoverBehaviour.ClickThenClickAnywhere})
 			    <h4><span class="label label-default" id="simple-popover-2">Click me then click anywhere again!</span></h4>
 
-				@form.Html.Popover(new Popover {ContentFunc = @<text>He's an outside popover</text>, Title = "It's popping", Selector = "#simple-popover-3", Behaviour = PopoverBehaviour.ClickThenClickOutside})
+				@form.Html.Popover(new PopoverProps {ContentFunc = @<text>He's an outside popover</text>, Title = "It's popping", Selector = "#simple-popover-3", Behaviour = PopoverBehaviour.ClickThenClickOutside})
 			    <h4><span class="label label-default" id="simple-popover-3">Click me then click outside the popover!</span></h4>
 
-			    @form.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date})
-			    @form.DateTimePickerFor(m => m.TestDt02, new DateTimePicker {Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime})
-			    @form.DateTimePickerFor(m => m.TestDt03, new DateTimePicker {Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds})
+			    @form.DateTimePickerFor(m => m.TestDt01, new DateTimePickerProps { Title = "Date time: Date", DateTimeFormat = DateTimeFormat.Date })
+			    @form.DateTimePickerFor(m => m.TestDt02, new DateTimePickerProps { Title = "Date time: Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime })
+			    @form.DateTimePickerFor(m => m.TestDt03, new DateTimePickerProps { Title = "Date time: Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds })
 		    </div>
             <div class="col-xs-4">
-                @form.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Date time: Time", DateTimeFormat = DateTimeFormat.Time })
-                @form.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Date time: Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
+                @form.DateTimePickerFor(m => m.TestDt04, new DateTimePickerProps { Title = "Date time: Time", DateTimeFormat = DateTimeFormat.Time })
+                @form.DateTimePickerFor(m => m.TestDt05, new DateTimePickerProps { Title = "Date time: Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
             </div>
             <div class="col-xs-4">
-                @form.UploadFor(m => m.TestFl01, new UploadBox { Title = "1st upload file" })
-                @form.UploadFor(m => m.TestFl02, new UploadBox { Title = "2nd upload file"})
+                @form.UploadFor(m => m.TestFl01, new UploadBoxProps { Title = "1st upload file" })
+                @form.UploadFor(m => m.TestFl02, new UploadBoxProps { Title = "2nd upload file" })
             </div>
         </div>
 
-        @form.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
-        @form.Button(new Button { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
-        @form.Button(new Button { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
+        @form.Button(new ButtonProps { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+        @form.Button(new ButtonProps { Title = "Add", Url = Url.Action("Add", "AllControls"), ButtonType = ButtonTypes.Primary, Submit = true })
+        @form.Button(new ButtonProps { Title = "Update", Url = Url.Action("Update", "AllControls"), ButtonType = ButtonTypes.Success, Submit = true })
     </div>
 
     @form.EndForm()

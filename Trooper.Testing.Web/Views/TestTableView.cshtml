@@ -4,11 +4,11 @@
 @using Trooper.Ui.Mvc.Rabbit.Controls.Options
 @using Trooper.Ui.Mvc.Cruncher
 @using Trooper.Ui.Interface.Mvc.Cruncher
-@using Trooper.Ui.Mvc.Rabbit.TableClasses
 @using Trooper.Utility
 @using System.Linq.Expressions;
 @using Trooper.Ui.Mvc.Rabbit.Props
-@using Trooper.Ui.Mvc.Rabbit.TableClasses.Footer;
+@using Trooper.Ui.Mvc.Rabbit.Props.Table
+@using Trooper.Ui.Mvc.Rabbit.Props.Table.Footer
 
 @model Trooper.Testing.Web.Models.TestTableModel
 
@@ -21,7 +21,7 @@
     <title>Testing table controls</title>
     @{
         var goRabbit = new GoRabbit<TestTableModel>(Html);
-        var form = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TestTable") });
+        var form = goRabbit.NewForm(new FormProps { Action = Url.Action("Submit", "TestTable") });
     }
 
     @goRabbit.Header()
@@ -36,18 +36,18 @@
 	    <hr/>
 
         @{
-            var tProps = new TableControl<BaseballMaster>
+            var tProps = new TableProps<BaseballMaster>
             {
                 Source = Model.BaseballMasters,
                 Caption = "Baseball masters",
                 HumanizeHeaders = true,
                 PageSize = 20,
                 Striped = true,
-                Hover = true,
-                FooterRows = new[] { new Row { Cells = new [] { new Cell { Content = "A year Sum!" } }  }  }
+                Hover = true
             };
-
-            tProps.AddKey(k => k.PlayerID);                       
+			
+            tProps.AddKey(k => k.PlayerID);
+	        tProps.AddFooterRow("hello", "how", "are", "you");
 
             tProps.AddColumn(new Column<BaseballMaster> { 
                 Value = c => c.PlayerID, 
@@ -74,9 +74,9 @@
             tProps.AddColumn(new Column<BaseballMaster> { Value = c => c.BirthCity, Format = "lives in {0}" });            
         }
 
-        @(form.TableFor<BaseballMaster>(m => m.TbMdl001, tProps))
+        @(form.TableFor(m => m.TbMdl001, tProps))
 
-        @form.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+        @form.Button(new ButtonProps { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
     </div>
 
     @form.EndForm()

@@ -229,7 +229,7 @@ namespace Trooper.Ui.Mvc.Utility
                 return string.Empty;
             }
 
-            return string.Join(" ", classes.Distinct());
+            return string.Join(" ", classes.Distinct().Where(c => !string.IsNullOrWhiteSpace(c)));
         }
 
         /// <summary>

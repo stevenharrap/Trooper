@@ -18,8 +18,8 @@
     <title>Testing Two Forms in one View</title>
     @{
         var goRabbit = new GoRabbit<TestTwoFormsModel>(Html);
-        var form1 = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TwoForms") });
-        var form2 = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TwoForms") });
+		var form1 = goRabbit.NewForm(new FormProps { Action = Url.Action("Submit", "TwoForms") });
+		var form2 = goRabbit.NewForm(new FormProps { Action = Url.Action("Submit", "TwoForms") });
     }
 
     @goRabbit.Header()
@@ -37,19 +37,19 @@
 		    <div class="col-xs-4">
                 <h3>Left Form</h3>
                 @form1.BeginForm()
-			    @form1.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Text box 1" })
-                @form1.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Text box 2" })
-                @form1.TextBoxFor(m => m.TestTx03, new TextBox { Title = "Text box 3" })
-                @form1.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+			    @form1.TextBoxFor(m => m.TestTx01, new TextBoxProps { Title = "Text box 1" })
+                @form1.TextBoxFor(m => m.TestTx02, new TextBoxProps { Title = "Text box 2" })
+                @form1.TextBoxFor(m => m.TestTx03, new TextBoxProps { Title = "Text box 3" })
+                @form1.Button(new ButtonProps { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
                 @form1.EndForm()
 		    </div>
             <div class="col-xs-4">
                 <h3>Right Form</h3>
                 @form2.BeginForm()
-                @form2.TextBoxFor(m => m.TestTx01, new TextBox { Title = "Text box 1" })
-                @form2.TextBoxFor(m => m.TestTx02, new TextBox { Title = "Text box 2" })
-                @form2.TextBoxFor(m => m.TestTx03, new TextBox { Title = "Text box 3" })
-                @form2.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+                @form2.TextBoxFor(m => m.TestTx01, new TextBoxProps { Title = "Text box 1" })
+                @form2.TextBoxFor(m => m.TestTx02, new TextBoxProps { Title = "Text box 2" })
+                @form2.TextBoxFor(m => m.TestTx03, new TextBoxProps { Title = "Text box 3" })
+                @form2.Button(new ButtonProps { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
                 @form2.EndForm()
             </div>
         </div>

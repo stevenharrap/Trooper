@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Web.WebPages;
 using Trooper.Ui.Interface.Mvc.Rabbit.Table;
 using Trooper.Ui.Mvc.Rabbit.Models;
-using Trooper.Ui.Mvc.Rabbit.TableClasses.Footer;
+using Trooper.Ui.Mvc.Rabbit.Props.Table.Footer;
 
 namespace Trooper.Ui.Mvc.Rabbit.Props
 {
@@ -51,6 +51,13 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
 			    Cells = cells.Select(c => new Cell {Content = c}).ToList()
 		    };
 
+		    if (this.FooterRows == null)
+		    {
+			    this.FooterRows = new List<Row>();
+		    }
+
+			this.FooterRows.Add(row);
+
 		    return row;
 	    }
 
@@ -60,6 +67,13 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
 			{
 				Cells = cells.Select(c => new Cell { Content = c == null ? null : c.Invoke(null).ToString() }).ToList()
 			};
+
+			if (this.FooterRows == null)
+			{
+				this.FooterRows = new List<Row>();
+			}
+
+			this.FooterRows.Add(row);
 
 			return row;
 		}

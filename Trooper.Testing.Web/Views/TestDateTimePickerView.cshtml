@@ -18,7 +18,7 @@
     <title>Testing Rabbit controls</title>
     @{
         var goRabbit = new GoRabbit<TestDateTimePickerModel>(Html);
-        var form = goRabbit.NewForm(new FormControl { Action = Url.Action("Submit", "TestDateTimePicker") });
+		var form = goRabbit.NewForm(new FormProps { Action = Url.Action("Submit", "TestDateTimePicker") });
     }
 
     @goRabbit.Header()
@@ -34,21 +34,21 @@
 
 	    <div class="row">
 		    <div class="col-xs-4">
-			    @form.DateTimePickerFor(m => m.TestDt01, new DateTimePicker {Title = "Date", DateTimeFormat = DateTimeFormat.Date})
-			    @form.DateTimePickerFor(m => m.TestDt02, new DateTimePicker {Title = "Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime})
-			    @form.DateTimePickerFor(m => m.TestDt03, new DateTimePicker {Title = "Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds})
+			    @form.DateTimePickerFor(m => m.TestDt01, new DateTimePickerProps { Title = "Date", DateTimeFormat = DateTimeFormat.Date })
+			    @form.DateTimePickerFor(m => m.TestDt02, new DateTimePickerProps { Title = "Date &amp time", DateTimeFormat = DateTimeFormat.DateAndTime })
+			    @form.DateTimePickerFor(m => m.TestDt03, new DateTimePickerProps { Title = "Date &amp time (ns)", DateTimeFormat = DateTimeFormat.DateTimeNoSeconds })
 		    </div>
             <div class="col-xs-4">
-                @form.DateTimePickerFor(m => m.TestDt04, new DateTimePicker { Title = "Time", DateTimeFormat = DateTimeFormat.Time })
-                @form.DateTimePickerFor(m => m.TestDt05, new DateTimePicker { Title = "Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
-                @form.DateTimePickerFor(m => m.TestDt06, new DateTimePicker { Title = "Preset date time", DateTimeFormat = DateTimeFormat.DateAndTime })
-                @form.DateTimePickerFor(m => m.TestDt07, new DateTimePicker { Title = "UTC +8:00  Date time", DateTimeFormat = DateTimeFormat.DateAndTime, UtcOffset = 8 * 60 })
+                @form.DateTimePickerFor(m => m.TestDt04, new DateTimePickerProps { Title = "Time", DateTimeFormat = DateTimeFormat.Time })
+                @form.DateTimePickerFor(m => m.TestDt05, new DateTimePickerProps { Title = "Time (ns)", DateTimeFormat = DateTimeFormat.TimeNoSeconds })
+                @form.DateTimePickerFor(m => m.TestDt06, new DateTimePickerProps { Title = "Preset date time", DateTimeFormat = DateTimeFormat.DateAndTime })
+                @form.DateTimePickerFor(m => m.TestDt07, new DateTimePickerProps { Title = "UTC +8:00  Date time", DateTimeFormat = DateTimeFormat.DateAndTime, UtcOffset = 8 * 60 })
             </div>
             <div class="col-xs-4">
                 <p><strong>These are not bound to the model.</strong></p>
 
                 @form.DateTimePicker(
-                new DateTimePicker 
+                new DateTimePickerProps 
                 { 
                     Title = "Between 2010-4-3 10:00 and 2010-4-13 14:00", 
                     DateTimeFormat = DateTimeFormat.DateAndTime,
@@ -58,7 +58,7 @@
                 })
 
                 @form.DateTimePicker(
-                new DateTimePicker
+                new DateTimePickerProps
                 {
                     Title = "After 2010-4-3 10:00",
                     DateTimeFormat = DateTimeFormat.DateAndTime,
@@ -67,7 +67,7 @@
                 })
 
                 @form.DateTimePicker(
-                new DateTimePicker
+                new DateTimePickerProps
                 {
                     Title = "Before 2010-4-13 14:00",
                     DateTimeFormat = DateTimeFormat.DateAndTime,
@@ -76,7 +76,7 @@
                 })
 
                 @form.DateTimePicker(
-                new DateTimePicker
+                new DateTimePickerProps
                 {
                     Title = "Default out of range",
                     DateTimeFormat = DateTimeFormat.DateAndTime,
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        @form.Button(new Button { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
+        @form.Button(new ButtonProps { Title = "Refresh", ButtonType = ButtonTypes.Inverse, Submit = true })
     </div>
 
     @form.EndForm()

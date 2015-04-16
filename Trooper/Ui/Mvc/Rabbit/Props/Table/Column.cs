@@ -5,13 +5,13 @@
 //--------------------------------------------------------------------------------------
 
 
-namespace Trooper.Ui.Mvc.Rabbit.TableClasses
-{
-    using System;
-	using System.Linq.Expressions;
-	using System.Collections.Generic;
-	using Interface.Mvc.Rabbit.Table;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Trooper.Ui.Interface.Mvc.Rabbit.Table;
 
+namespace Trooper.Ui.Mvc.Rabbit.Props.Table
+{
 	/// <summary>
     /// 
     /// </summary>

@@ -639,7 +639,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 	    }
 
         public IHtmlString SelectList<TOptionKey, TOptionValue>(
-            SelectList<TOptionKey, TOptionValue> sProps)
+            SelectListProps<TOptionKey, TOptionValue> sProps)
         {
             this.Html.RegisterControl(sProps);
 
@@ -702,7 +702,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString SelectListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, TOptionKey>> expression,
-            SelectList<TOptionKey, TOptionValue> sProps)
+            SelectListProps<TOptionKey, TOptionValue> sProps)
         {
             var value = RabbitHelper.GetExpressionValue<TModel, TOptionKey>(expression, this.goRabbit.HtmlHelper);
 
@@ -716,7 +716,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString MultiSelectListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, IList<TOptionKey>>> expression,
-            SelectList<TOptionKey, TOptionValue> sProps)
+            SelectListProps<TOptionKey, TOptionValue> sProps)
         {
             var value = RabbitHelper.GetExpressionValue<TModel, IList<TOptionKey>>(expression, this.goRabbit.HtmlHelper);
 

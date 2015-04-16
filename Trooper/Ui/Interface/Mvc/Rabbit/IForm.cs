@@ -44,7 +44,7 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit
 
         IHtmlString IntegerBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, IntegerBoxProps iProps);
 
-        IHtmlString MultiSelectListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, IList<TOptionKey>>> expression, SelectList<TOptionKey, TOptionValue> sProps);
+		IHtmlString MultiSelectListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, IList<TOptionKey>>> expression, SelectListProps<TOptionKey, TOptionValue> sProps);
 
         IHtmlString PercentageBox(DecimalBoxProps pProps);
 
@@ -60,11 +60,11 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit
 
         IHtmlString SelectList<TOption>(SelectListProps<TOption> sProps);
 
-        IHtmlString SelectList<TOptionKey, TOptionValue>(SelectList<TOptionKey, TOptionValue> sProps);
+		IHtmlString SelectList<TOptionKey, TOptionValue>(SelectListProps<TOptionKey, TOptionValue> sProps);
 
         IHtmlString SelectListFor<TOption>(Expression<Func<TModel, TOption>> expression, SelectListProps<TOption> sProps);
 
-        IHtmlString SelectListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, TOptionKey>> expression, SelectList<TOptionKey, TOptionValue> sProps);               
+		IHtmlString SelectListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, TOptionKey>> expression, SelectListProps<TOptionKey, TOptionValue> sProps);               
 
         IHtmlString Table<T>(TableProps<T> tProps) where T : class;
 

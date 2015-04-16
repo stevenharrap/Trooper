@@ -4,7 +4,7 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.Ui.Mvc.Rabbit.TableClasses.Footer
+namespace Trooper.Ui.Mvc.Rabbit.Props.Table.Footer
 {
     /// <summary>
     /// This is a cell within a footer row. It allows you to set specific class, colspan and content
