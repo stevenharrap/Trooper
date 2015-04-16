@@ -1,8 +1,11 @@
 ﻿trooper.ui.control.table = (function (params)
 {
     this.id = params.id;
+    this.formId = params.formId;
+    this.name = params.name;
     this.rowSelectionMode = params.rowSelectionMode;
-	this.columns = params.columns;
+    this.columns = params.columns;
+    this.postAction = params.postAction;
 
     this.rowSelected = new Array();
     this.rowDblclicked = new Array();
@@ -38,7 +41,7 @@
 	this.clearSelection = function () {
 
 	};
-	
+    	
 	this.screenModeChanged = function (screenMode) {
 		for (var c = 0; c < this.columns.length; c++) {
 			var data = this.columns[c];
@@ -71,7 +74,19 @@
 	};
 
 	this.pageClicked = function (e) {
+	    var data = this.persistedData();
+	    data.PageNumber = parseInt($(e.currentTarget).attr('data-value')); 
+	    this.persistedData(data);
 
+	    this.post();
+	};
+
+	this.persistedData = function (jsonData) {
+	    if (arguments.length == 1) {
+	        $('textarea[name="' + this.name + '"]').val(JSON.stringify(jsonData));
+	    } else {
+	        return JSON.parse($('textarea[name="' + this.name + '"]').val());
+	    }
 	};
 
 	this.coalesc = function () {
@@ -82,6 +97,11 @@
 	    }
 
 	    return null;
+	};
+
+	this.post = function () {
+	    debugger;
+	    trooper.ui.registry.getForm(this.formId).submit(this.url);
 	};
 
 	var publicResult = {

@@ -318,7 +318,6 @@
     <Content Include="Ui\Mvc\Rabbit\Content\moment\moment.js" />
     <Content Include="Ui\Mvc\Rabbit\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Rabbit\Content\scripts\table.js.txt" />
-    <Content Include="Ui\Mvc\Rabbit\Form.cs.txt" />
     <Compile Include="Ui\Mvc\Rabbit\GoRabbit.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Form.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Html.cs" />
@@ -329,7 +328,7 @@
     <Compile Include="Ui\Mvc\Rabbit\Models\TableModel.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Models\UploadModel.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Enumerations.cs" />
-    <Compile Include="Ui\Mvc\Rabbit\PanelGroupItem.cs" />
+    <Compile Include="Ui\Mvc\Rabbit\Props\PanelGroup\PanelGroupItem.cs" />
     <Content Include="Ui\Mvc\Rabbit\Table.cs.txt" />
     <Compile Include="Ui\Mvc\Rabbit\Table.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\Column.cs" />
@@ -338,7 +337,6 @@
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\Footer\Row.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\Page.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\RowFormat.cs" />
-    <Compile Include="Ui\Mvc\Rabbit\UploadHelper.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\IStoreItem.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherStore.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherController.cs" />

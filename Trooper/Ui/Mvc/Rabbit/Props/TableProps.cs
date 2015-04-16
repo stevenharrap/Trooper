@@ -90,7 +90,9 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
             this.Columns.Add(column);
 
             return column;
-        }               
+        }
+
+        public string PostAction { get; set; }
 
         public string FormId { get; set; }
 

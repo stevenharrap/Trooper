@@ -291,10 +291,14 @@ namespace Trooper.Ui.Mvc.Rabbit
 				        });
 
             var js = string.Format(
-                "new trooper.ui.control.table({{ id: '{0}', rowSelectionMode: '{1}', columns: {2} }});",
+                "new trooper.ui.control.table({{ id: '{0}', formId: '{1}', name: '{2}.PersistedData', rowSelectionMode: '{3}', columns: {4}, postAction: {5} }});",
                 this.tProps.Id,
+                this.tProps.FormId,
+                this.tProps.Name,
                 this.tProps.RowSelectionMode,
-				Json.Encode(columns));
+				Json.Encode(columns),
+                RabbitHelper.MakeJsStringParameter(this.tProps.PostAction));
+
 
             this.cruncher.AddJsInline(js, OrderOptions.Last);
         }

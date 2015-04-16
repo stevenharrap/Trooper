@@ -4,7 +4,7 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.Ui.Mvc.Rabbit
+namespace Trooper.Ui.Mvc.Rabbit.Props.PanelGroup
 {
     using System;
     using System.Web.WebPages;

@@ -16,8 +16,7 @@
 
     this.clicked = function () {
         if (this.submit && this.url != '') {
-            $('#' + this.formId).attr('action', this.url);
-            $('#' + this.formId).submit();
+            trooper.ui.registry.getForm(this.formId).submit(this.url);
             return;
         }
 

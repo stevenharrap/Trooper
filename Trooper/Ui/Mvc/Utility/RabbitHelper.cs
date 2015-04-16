@@ -17,6 +17,8 @@ namespace Trooper.Ui.Mvc.Utility
     using System.Linq.Expressions;
     using System;
     using Trooper.Utility;
+    using System.Web.Hosting;
+    using System.IO;
 
     /// <summary>
     /// General helper methods for working in MVC controllers. These may become obsolete over time
@@ -24,6 +26,12 @@ namespace Trooper.Ui.Mvc.Utility
     /// </summary>
     public class RabbitHelper
     {
+        /// <summary>
+        /// The folder location where uploaded documents are held while the form submits due to other
+        /// user requests.
+        /// </summary>
+        public const string PersistedDocFolder = "~/AppData/PersistedDocs";
+
         /// <summary>
         /// Adds the validation errors to the model state errors.
         /// </summary>
@@ -256,6 +264,11 @@ namespace Trooper.Ui.Mvc.Utility
             return Conversion.ConvertToBoolean(value, false).ToString().ToLower();
         }
 
+        public static string MakeJsStringParameter(string value)
+        {
+            return value == null ? "null" : string.Format("'{0}'", value.Replace(@"'", @"\'"));
+        }
+
         /// <summary>
         /// Makes an icon using the supplied icon image from the BootStrap library. 
         /// <see cref="http://getbootstrap.com/components/"/>
@@ -329,6 +342,22 @@ namespace Trooper.Ui.Mvc.Utility
         public static string PopoverPlacementToString(PopoverPlacements placement)
         {
             return placement.ToString().ToLower();
+        }               
+
+        /// <summary>
+        /// Clears out any existing uploads. Do this in App_Start method.
+        /// </summary>
+        public static void ClearUploads()
+        {
+            var path = HostingEnvironment.MapPath(PersistedDocFolder);
+
+            if (path != null && Directory.Exists(path))
+            {
+                foreach (var f in new DirectoryInfo(path).GetFiles())
+                {
+                    f.Delete();
+                }
+            }
         }
     }
 }

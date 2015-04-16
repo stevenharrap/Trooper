@@ -14,6 +14,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Controllers
     using Trooper.Properties;
     using Trooper.Ui.Mvc.Rabbit;
     using Trooper.Ui.Mvc.Rabbit.Models;
+    using Trooper.Ui.Mvc.Utility;
 
     /// <summary>
     /// When an upload control is created on the page it will write an IFrame and that URL
@@ -95,7 +96,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Controllers
                 return this.UploadIframe(m);
             }
 
-            var folder = HostingEnvironment.MapPath(UploadHelper.PersistedDocFolder);
+            var folder = HostingEnvironment.MapPath(RabbitHelper.PersistedDocFolder);
 
             if (folder == null)
             {

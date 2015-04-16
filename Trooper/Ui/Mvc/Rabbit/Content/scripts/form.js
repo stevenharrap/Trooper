@@ -54,25 +54,24 @@
         return $('#' + this.id).submit(func);
     };
 
+    this.submit = function (action) {
+        if (action != null) {
+            $('#' + this.id).attr('action', this.url);
+        }
+
+        $('#' + this.id).submit();
+    };
+
     var publicResult = {
         id: trooper.utility.control.makeIdAccessor(this),
         addVolatileField: $.proxy(this.addVolatileField, this),
         makeFormDirty: $.proxy(this.makeFormDirty, this),
         makeFormClean: $.proxy(this.makeFormClean, this),
         canLeave: $.proxy(this.canLeave, this),
-        onSubmit: $.proxy(this.onSubmit, this)
+        onSubmit: $.proxy(this.onSubmit, this),
+        submit: $.proxy(this.submit, this)
     };
 
     trooper.ui.registry.addControl(this.id, publicResult, 'form');
     $(document).ready($.proxy(this.init, this));
 });
-
-
-
-
-
-
-
-
-
-

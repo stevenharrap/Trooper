@@ -12,6 +12,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Models
     using System.Web.Helpers;
     using System.Web.Hosting;
     using Trooper.Ui.Mvc.Rabbit;
+    using Trooper.Ui.Mvc.Utility;
     using Trooper.Utility;
 
     /// <summary>
@@ -291,7 +292,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Models
         {
             get
             {
-                return HostingEnvironment.MapPath(string.Format(@"{0}\{1}", UploadHelper.PersistedDocFolder, this.PersistedId));
+                return HostingEnvironment.MapPath(string.Format(@"{0}\{1}", RabbitHelper.PersistedDocFolder, this.PersistedId));
             }
         }
 
