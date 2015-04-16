@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Trooper.Ui.Mvc.Rabbit.Controls;
 
-namespace Trooper.Ui.Mvc.Rabbit.Controls
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    public class DateTimePicker : FormControl
+    public class DateTimePickerProps : InputProps
     {
-        public DateTimePicker()
+        public DateTimePickerProps()
         {
             this.UtcOffset = 600;
 

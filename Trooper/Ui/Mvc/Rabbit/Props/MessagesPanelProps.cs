@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trooper.BusinessOperation2;
-using Trooper.BusinessOperation2.Interface.OperationResponse;
-using Trooper.BusinessOperation2.Utility;
+﻿using Trooper.BusinessOperation2.Interface.OperationResponse;
 
-namespace Trooper.Ui.Mvc.Rabbit.Controls
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    public class MessagesPanel : HtmlControl
+    public class MessagesPanelProps : ElementProps
     {
 	    private int columns = 1;
 

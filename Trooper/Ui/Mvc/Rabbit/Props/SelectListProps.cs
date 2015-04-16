@@ -1,17 +1,14 @@
-﻿using Trooper.Utility;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Trooper.Ui.Mvc.Rabbit.Controls.Options;
 
-namespace Trooper.Ui.Mvc.Rabbit.Controls
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Trooper.Ui.Mvc.Rabbit.Controls.Options;
-
-	public class SelectList<TOption> : SelectList<TOption, TOption>
+	public class SelectListProps<TOption> : SelectList<TOption, TOption>
 	{
 	}
 
-    public class SelectList<TOptionKey, TOptionValue> : FormControl
+    public class SelectList<TOptionKey, TOptionValue> : InputProps
     {
 	    public SelectList()
 	    {

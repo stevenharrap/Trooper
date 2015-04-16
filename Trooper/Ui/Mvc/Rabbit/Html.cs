@@ -4,32 +4,27 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using Trooper.BusinessOperation2;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
 using Trooper.BusinessOperation2.Utility;
+using Trooper.Properties;
+using Trooper.Ui.Interface.Mvc.Cruncher;
+using Trooper.Ui.Interface.Mvc.Rabbit;
+using Trooper.Ui.Interface.Mvc.Rabbit.Props;
+using Trooper.Ui.Mvc.Rabbit.Controllers;
+using Trooper.Ui.Mvc.Rabbit.Props;
+using Trooper.Ui.Mvc.Utility;
+using Trooper.Utility;
 
 namespace Trooper.Ui.Mvc.Rabbit
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
-    using System.Web.WebPages;
-    using Trooper.BusinessOperation2;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.Properties;
-    using Trooper.Ui.Interface.Mvc.Cruncher;
-    using Trooper.Ui.Mvc.Rabbit.Controllers;
-    using Trooper.Ui.Mvc.Rabbit.Controls;
-    using Trooper.Ui.Mvc.Cruncher;
-    using Trooper.Utility;
-    using Trooper.Ui.Interface.Mvc.Rabbit;
-    using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
-    using Trooper.Ui.Mvc.Utility;
-
-    /// <summary>
+	/// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides
     /// flexible device independent display. This class provides none-form related UI elements
     /// and will automatically inject the Jquery and Bootstrap client side requirements using 
@@ -72,18 +67,18 @@ namespace Trooper.Ui.Mvc.Rabbit
 
 		#region public properties
 
-        public Dictionary<string, IHtmlControl> ControlsRegister
+        public Dictionary<string, IElementProps> ControlsRegister
         {
             get
             {
                 if (HttpContext.Current.Items.Contains(registerName))
                 {
-                    return HttpContext.Current.Items[registerName] as Dictionary<string, IHtmlControl>;
+					return HttpContext.Current.Items[registerName] as Dictionary<string, IElementProps>;
                 }
 
-                HttpContext.Current.Items[registerName] = new Dictionary<string, IHtmlControl>();
+				HttpContext.Current.Items[registerName] = new Dictionary<string, IElementProps>();
 
-                return HttpContext.Current.Items[registerName] as Dictionary<string, IHtmlControl>;
+				return HttpContext.Current.Items[registerName] as Dictionary<string, IElementProps>;
             }
 
             private set
@@ -122,7 +117,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <returns>
         /// The <see cref="MvcHtmlString"/>.
         /// </returns>
-        public IHtmlString PannelGroup(PannelGroup pgProps)
+        public IHtmlString PannelGroup(PannelGroupProps pgProps)
         {
             this.RegisterControl(pgProps);
 
@@ -213,7 +208,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <returns>
         /// The <see cref="MvcHtmlString"/>.
         /// </returns>
-        public IHtmlString ButtonDropDown(ButtonDropDown bddProps)
+        public IHtmlString ButtonDropDown(ButtonDropDownProps bddProps)
         {
             this.RegisterControl(bddProps);
 
@@ -285,7 +280,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <returns>
         /// The <see cref="MvcHtmlString"/> html for the window.
         /// </returns>
-        public IHtmlString ModalWindow(ModalWindow mwProps)
+        public IHtmlString ModalWindow(ModalWindowProps mwProps)
         {
             this.RegisterControl(mwProps);
 
@@ -363,7 +358,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// <param name="frameHeight">
         /// The frame height of the frame.
         /// </param>
-        public void ModalVirtualWindow(ModalWindow mwProps)
+        public void ModalVirtualWindow(ModalWindowProps mwProps)
         {
             this.RegisterControl(mwProps);
 
@@ -391,7 +386,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             this.goRabbit.Cruncher.AddJsInline(js, OrderOptions.Last);
         }
 
-		public IHtmlString MessagesPanel(MessagesPanel mpProps)
+		public IHtmlString MessagesPanel(MessagesPanelProps mpProps)
 		{
 			mpProps.Messages = mpProps.Messages ?? this.Messages;
 
@@ -490,7 +485,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 			return new MvcHtmlString(html.ToString());
 		}
 
-		public IHtmlString Popover(Popover poProps)
+		public IHtmlString Popover(PopoverProps poProps)
 		{
 			this.RegisterControl(poProps);
 
@@ -518,14 +513,14 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         #region support
 
-        public void RegisterControl(IHtmlControl control)
+        public void RegisterControl(IElementProps props)
         {
             var idInc = 1;
-            var id = control.Id;
+            var id = props.Id;
 
             if (!string.IsNullOrWhiteSpace(id) && !this.ControlsRegister.ContainsKey(id))
             {
-                this.ControlsRegister.Add(id, control);
+                this.ControlsRegister.Add(id, props);
                 return;
             }
 
@@ -534,9 +529,9 @@ namespace Trooper.Ui.Mvc.Rabbit
                 idInc++;
             }
 
-            control.Id = string.Format("control_{0}", idInc);
+            props.Id = string.Format("control_{0}", idInc);
 
-            this.ControlsRegister.Add(control.Id, control);
+            this.ControlsRegister.Add(props.Id, props);
         }               
 
 	    public void IncludeJquery()

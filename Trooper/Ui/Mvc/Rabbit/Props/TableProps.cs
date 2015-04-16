@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web.WebPages;
 using Trooper.Ui.Interface.Mvc.Rabbit.Table;
 using Trooper.Ui.Mvc.Rabbit.Models;
-using Trooper.Ui.Mvc.Rabbit.TableClasses;
 using Trooper.Ui.Mvc.Rabbit.TableClasses.Footer;
 
-namespace Trooper.Ui.Mvc.Rabbit.Controls
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    public class TableControl<T> : FormControl
+    public class TableProps<T> : InputProps
         where T : class
     {
-        public TableControl()
+        public TableProps()
         {
             this.CanPage = true;
             this.PageSize = 50;
@@ -45,6 +43,26 @@ namespace Trooper.Ui.Mvc.Rabbit.Controls
 		/// provided to the table.
 		/// </summary>
 		public IList<Row> FooterRows { get; set; }
+
+	    public Row AddFooterRow(params string[] cells)
+	    {
+		    var row = new Row
+		    {
+			    Cells = cells.Select(c => new Cell {Content = c}).ToList()
+		    };
+
+		    return row;
+	    }
+
+		public Row AddFooterRow(params Func<object, HelperResult>[] cells)
+		{
+			var row = new Row
+			{
+				Cells = cells.Select(c => new Cell { Content = c == null ? null : c.Invoke(null).ToString() }).ToList()
+			};
+
+			return row;
+		}
 
         public TableModel TableModel { get; set; }
 

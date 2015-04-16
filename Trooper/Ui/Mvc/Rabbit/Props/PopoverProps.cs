@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
-namespace Trooper.Ui.Mvc.Rabbit.Controls
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-	public class Popover : HtmlControl
+	public class PopoverProps : ElementProps
 	{
-        public Popover()
+        public PopoverProps()
         {
             this.PlacementAutoAssist = true;
             this.Placement = PopoverPlacements.Bottom;

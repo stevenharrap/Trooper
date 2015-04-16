@@ -1,8 +1,6 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
+﻿namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    using System.Collections.Generic;
-
-    public class TextareaBox : FormControl
+	public class TextareaBoxProps : InputProps
     {
         public string Value { get; set; }        
 

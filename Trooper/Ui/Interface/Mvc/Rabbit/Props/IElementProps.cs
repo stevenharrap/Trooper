@@ -1,12 +1,10 @@
-﻿namespace Trooper.Ui.Interface.Mvc.Rabbit.Controls
+﻿using System.Collections.Generic;
+using Trooper.BusinessOperation2;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+
+namespace Trooper.Ui.Interface.Mvc.Rabbit.Props
 {
-    using System;
-    using System.Collections.Generic;
-    using Trooper.BusinessOperation2;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-
-
-    public interface IHtmlControl
+	public interface IElementProps
     {
         bool? Enabled { get; set; }
 

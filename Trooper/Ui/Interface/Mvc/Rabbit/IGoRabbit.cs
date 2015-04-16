@@ -1,4 +1,6 @@
-﻿namespace Trooper.Ui.Interface.Mvc.Rabbit
+﻿using Trooper.Ui.Mvc.Rabbit.Props;
+
+namespace Trooper.Ui.Interface.Mvc.Rabbit
 {
     using System;
 using System.Web;
@@ -14,7 +16,7 @@ using Trooper.Ui.Mvc.Rabbit.Controls;
 
         UrlHelper UrlHelper { get; set; }
 
-        IForm<TModel> NewForm(FormControl formProps);
+        IForm<TModel> NewForm(FormProps formProps);
 
         IHtmlString Header();
     }

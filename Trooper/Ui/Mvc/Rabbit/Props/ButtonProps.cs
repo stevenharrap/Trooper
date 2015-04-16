@@ -1,10 +1,11 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Trooper.Ui.Mvc.Rabbit.Controls;
 
-    public class Button : FormControl
+namespace Trooper.Ui.Mvc.Rabbit.Props
+{
+	public class ButtonProps : InputProps
     {
-        public Button()
+        public ButtonProps()
         {
             this.ButtonType = ButtonTypes.Default;
             this.LoadingScreenTitle = "Working...";

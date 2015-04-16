@@ -1,11 +1,12 @@
-﻿namespace Trooper.Ui.Interface.Mvc.Rabbit
+﻿using Trooper.Ui.Mvc.Rabbit.Props;
+
+namespace Trooper.Ui.Interface.Mvc.Rabbit
 {
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Web;
-    using Trooper.Ui.Mvc.Rabbit.Controls;
-    using Trooper.Ui.Mvc.Rabbit.Models;
+    using Ui.Mvc.Rabbit.Models;
 
     public interface IForm<TModel>
     {
@@ -13,72 +14,72 @@
 
         IHtmlString BeginForm();
 
-        IHtmlString Button(Button bProps);
+        IHtmlString Button(ButtonProps bProps);
 
-        IHtmlString ButtonFor<TValue>(Expression<Func<TModel, TValue>> expression, Button bProps);
+        IHtmlString ButtonFor<TValue>(Expression<Func<TModel, TValue>> expression, ButtonProps bProps);
 
-        IHtmlString CheckBox(CheckBox cbProps);
+        IHtmlString CheckBox(CheckBoxProps cbProps);
 
-        IHtmlString CheckBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, CheckBox cbProps);
+        IHtmlString CheckBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, CheckBoxProps cbProps);
 
-        IHtmlString CheckBoxList<TOptionKey, TOptionValue>(CheckBoxList<TOptionKey, TOptionValue> cblProps);
+        IHtmlString CheckBoxList<TOptionKey, TOptionValue>(CheckBoxListProps<TOptionKey, TOptionValue> cblProps);
 
-        IHtmlString CheckBoxListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, IList<TOptionKey>>> expression, CheckBoxList<TOptionKey, TOptionValue> cblProps);               
+        IHtmlString CheckBoxListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, IList<TOptionKey>>> expression, CheckBoxListProps<TOptionKey, TOptionValue> cblProps);               
 
-        IHtmlString CurrencyBox(DecimalBox cProps);
+        IHtmlString CurrencyBox(DecimalBoxProps cProps);
 
-        IHtmlString CurrencyBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, DecimalBox dProps);
+        IHtmlString CurrencyBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, DecimalBoxProps dProps);
 
-        IHtmlString DateTimePicker(DateTimePicker dtpProps);
+        IHtmlString DateTimePicker(DateTimePickerProps dtpProps);
 
-        IHtmlString DateTimePickerFor<TValue>(Expression<Func<TModel, TValue>> expression, DateTimePicker dtpProps);
+        IHtmlString DateTimePickerFor<TValue>(Expression<Func<TModel, TValue>> expression, DateTimePickerProps dtpProps);
 
-        IHtmlString DecimalBox(DecimalBox dProps);
+        IHtmlString DecimalBox(DecimalBoxProps dProps);
 
-        IHtmlString DecimalBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, DecimalBox dProps);
+        IHtmlString DecimalBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, DecimalBoxProps dProps);
 
         IHtmlString EndForm();
         
-        IHtmlString IntegerBox(IntegerBox iProps);
+        IHtmlString IntegerBox(IntegerBoxProps iProps);
 
-        IHtmlString IntegerBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, IntegerBox iProps);
+        IHtmlString IntegerBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, IntegerBoxProps iProps);
 
         IHtmlString MultiSelectListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, IList<TOptionKey>>> expression, SelectList<TOptionKey, TOptionValue> sProps);
 
-        IHtmlString PercentageBox(DecimalBox pProps);
+        IHtmlString PercentageBox(DecimalBoxProps pProps);
 
-        IHtmlString PercentageBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, DecimalBox dProps);
+        IHtmlString PercentageBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, DecimalBoxProps dProps);
 
-        IHtmlString RadioList<TOptionKey, TOptionValue>(RadioList<TOptionKey, TOptionValue> rlProps);
+        IHtmlString RadioList<TOptionKey, TOptionValue>(RadioListProps<TOptionKey, TOptionValue> rlProps);
 
-        IHtmlString RadioListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, TOptionKey>> expression, RadioList<TOptionKey, TOptionValue> rlProps);
+        IHtmlString RadioListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, TOptionKey>> expression, RadioListProps<TOptionKey, TOptionValue> rlProps);
 
-        IHtmlString SearchBox(SearchBox sbProps);
+        IHtmlString SearchBox(SearchBoxProps sbProps);
 
-        IHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBox sbProps);
+        IHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBoxProps sbProps);
 
-        IHtmlString SelectList<TOption>(SelectList<TOption> sProps);
+        IHtmlString SelectList<TOption>(SelectListProps<TOption> sProps);
 
         IHtmlString SelectList<TOptionKey, TOptionValue>(SelectList<TOptionKey, TOptionValue> sProps);
 
-        IHtmlString SelectListFor<TOption>(Expression<Func<TModel, TOption>> expression, SelectList<TOption> sProps);
+        IHtmlString SelectListFor<TOption>(Expression<Func<TModel, TOption>> expression, SelectListProps<TOption> sProps);
 
         IHtmlString SelectListFor<TOptionKey, TOptionValue>(Expression<Func<TModel, TOptionKey>> expression, SelectList<TOptionKey, TOptionValue> sProps);               
 
-        IHtmlString Table<T>(TableControl<T> tProps) where T : class;
+        IHtmlString Table<T>(TableProps<T> tProps) where T : class;
 
-        IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableControl<T> tProps) where T : class;
+        IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableProps<T> tProps) where T : class;
 
-        IHtmlString TextareaBox(TextareaBox tabProps);
+        IHtmlString TextareaBox(TextareaBoxProps tabProps);
 
-        IHtmlString TextareaBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, TextareaBox tabProp);
+        IHtmlString TextareaBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, TextareaBoxProps tabProp);
 
-        IHtmlString TextBox(TextBox tbProps);
+        IHtmlString TextBox(TextBoxProps tbProps);
 
-        IHtmlString TextBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, TextBox tbProps);
+        IHtmlString TextBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, TextBoxProps tbProps);
 
-        IHtmlString Upload(UploadBox ubProps);
+        IHtmlString Upload(UploadBoxProps ubProps);
 
-        IHtmlString UploadFor(Expression<Func<TModel, UploadModel>> expression, UploadBox ubProps);
+        IHtmlString UploadFor(Expression<Func<TModel, UploadModel>> expression, UploadBoxProps ubProps);
     }
 }

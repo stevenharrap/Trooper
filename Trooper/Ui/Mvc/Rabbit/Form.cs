@@ -4,6 +4,8 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using Trooper.Ui.Mvc.Rabbit.Props;
+
 namespace Trooper.Ui.Mvc.Rabbit
 {
 	using System;
@@ -43,7 +45,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         private IGoRabbit<TModel> goRabbit;
 
-        public FormControl FormProps { get; set; }
+        public FormProps FormProps { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Form{TModel}"/> class.
@@ -53,7 +55,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 		/// The html helper.
 		/// </param>
 		/// <param name="fhProps"></param>
-        public Form(FormControl fhProps, IGoRabbit<TModel> goRabbit, IHtml html)
+		public Form(FormProps fhProps, IGoRabbit<TModel> goRabbit, IHtml html)
         {
             this.goRabbit = goRabbit;
             this.FormProps = fhProps;
@@ -92,7 +94,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         #region controls
 
-        public IHtmlString TextBox(TextBox tbProps)
+        public IHtmlString TextBox(TextBoxProps tbProps)
         {
             this.Html.RegisterControl(tbProps);
 
@@ -105,7 +107,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString TextBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression, 
-            TextBox tbProps)
+            TextBoxProps tbProps)
         {
             var value = Conversion.ConvertToString(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -117,11 +119,11 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.TextBox(tbProps);
         }
 
-        public IHtmlString IntegerBox(IntegerBox iProps)
+        public IHtmlString IntegerBox(IntegerBoxProps iProps)
         {
             this.Html.RegisterControl(iProps);
 
-            var tbProps = iProps as TextBox;
+            var tbProps = iProps as TextBoxProps;
 
             tbProps.Value = iProps.Value == null ? string.Empty : iProps.Value.ToString();
 
@@ -145,7 +147,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString IntegerBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
-            IntegerBox iProps)
+            IntegerBoxProps iProps)
         {
             var value = Conversion.ConvertToInt(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -157,11 +159,11 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.IntegerBox(iProps);
         }
 
-        public IHtmlString DecimalBox(DecimalBox dProps)
+        public IHtmlString DecimalBox(DecimalBoxProps dProps)
         {
             this.Html.RegisterControl(dProps);
 
-            var tbProps = dProps as TextBox;
+            var tbProps = dProps as TextBoxProps;
 
             tbProps.Value = this.FormatDecimal(dProps.Value, dProps.DecimalDigits);
 
@@ -186,7 +188,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString DecimalBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
-            DecimalBox dProps)
+            DecimalBoxProps dProps)
         {
             var value = Conversion.ConvertToDecimal(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -198,7 +200,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.DecimalBox(dProps);
         }
 
-        public IHtmlString PercentageBox(DecimalBox pProps)
+        public IHtmlString PercentageBox(DecimalBoxProps pProps)
         {
             this.Html.RegisterControl(pProps);
             
@@ -207,7 +209,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 pProps.DecimalDigits = 2;
             }
             
-            var tbProps = pProps as TextBox;
+            var tbProps = pProps as TextBoxProps;
 
             tbProps.Value = this.FormatDecimal(pProps.Value, pProps.DecimalDigits);
 
@@ -234,7 +236,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString PercentageBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
-            DecimalBox dProps)
+            DecimalBoxProps dProps)
         {
             var value = Conversion.ConvertToDecimal(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -246,7 +248,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.PercentageBox(dProps);
         }
 
-        public IHtmlString CurrencyBox(DecimalBox cProps)
+        public IHtmlString CurrencyBox(DecimalBoxProps cProps)
         {
             this.Html.RegisterControl(cProps);
 
@@ -255,7 +257,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 cProps.DecimalDigits = 2;
             }
 
-            var tbProps = cProps as TextBox;
+            var tbProps = cProps as TextBoxProps;
 
             tbProps.Value = this.FormatDecimal(cProps.Value, cProps.DecimalDigits);
 
@@ -282,7 +284,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString CurrencyBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
-            DecimalBox dProps)
+            DecimalBoxProps dProps)
         {
             var value = Conversion.ConvertToDecimal(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -294,7 +296,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.CurrencyBox(dProps);
         }
 
-        public IHtmlString TextareaBox(TextareaBox tabProps)
+        public IHtmlString TextareaBox(TextareaBoxProps tabProps)
         {
             this.Html.RegisterControl(tabProps);
 
@@ -352,7 +354,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString TextareaBoxFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
-            TextareaBox tabProp)
+            TextareaBoxProps tabProp)
         {
             var value = Conversion.ConvertToString(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -364,7 +366,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.TextareaBox(tabProp);
         }
 
-        public IHtmlString Button(Button bProps)
+        public IHtmlString Button(ButtonProps bProps)
         {
             this.Html.RegisterControl(bProps);
 
@@ -420,7 +422,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return MvcHtmlString.Create(output);
         }
 
-        public IHtmlString ButtonFor<TValue>(Expression<Func<TModel, TValue>> expression, Button bProps)
+        public IHtmlString ButtonFor<TValue>(Expression<Func<TModel, TValue>> expression, ButtonProps bProps)
         {
             var value = Conversion.ConvertToString(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -432,7 +434,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.Button(bProps);
         }
 
-        public IHtmlString Upload(UploadBox ubProps)
+        public IHtmlString Upload(UploadBoxProps ubProps)
         {
             this.Html.RegisterControl(ubProps);
 
@@ -506,7 +508,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return MvcHtmlString.Create(output);
         }
 
-        public IHtmlString UploadFor(Expression<Func<TModel, UploadModel>> expression, UploadBox ubProps)
+        public IHtmlString UploadFor(Expression<Func<TModel, UploadModel>> expression, UploadBoxProps ubProps)
         {
             var value = RabbitHelper.GetExpressionValue<TModel, UploadModel>(expression, this.goRabbit.HtmlHelper);
 
@@ -518,7 +520,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.Upload(ubProps);
         }
 
-        public IHtmlString CheckBoxList<TOptionKey, TOptionValue>(CheckBoxList<TOptionKey, TOptionValue> cblProps)
+        public IHtmlString CheckBoxList<TOptionKey, TOptionValue>(CheckBoxListProps<TOptionKey, TOptionValue> cblProps)
         {
             this.Html.RegisterControl(cblProps);
 
@@ -573,7 +575,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString CheckBoxListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, IList<TOptionKey>>> expression,
-            CheckBoxList<TOptionKey, TOptionValue> cblProps)
+            CheckBoxListProps<TOptionKey, TOptionValue> cblProps)
         {
             var value = RabbitHelper.GetExpressionValue<TModel, IList<TOptionKey>>(expression, this.goRabbit.HtmlHelper);
 
@@ -585,7 +587,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.CheckBoxList(cblProps);
         }
 
-        public IHtmlString CheckBox(CheckBox cbProps)
+        public IHtmlString CheckBox(CheckBoxProps cbProps)
         {
             this.Html.RegisterControl(cbProps);
 
@@ -617,7 +619,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return MvcHtmlString.Create(output);
         }
 
-        public IHtmlString CheckBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, CheckBox cbProps)
+        public IHtmlString CheckBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, CheckBoxProps cbProps)
         {
             var value = Conversion.ConvertToBoolean(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -631,7 +633,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
 
         public IHtmlString SelectList<TOption>(
-			SelectList<TOption> sProps)
+			SelectListProps<TOption> sProps)
 	    {
 		    return this.SelectList<TOption, TOption>(sProps);
 	    }
@@ -693,7 +695,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString SelectListFor<TOption>(
 			Expression<Func<TModel, TOption>> expression,
-			SelectList<TOption> sProps)
+			SelectListProps<TOption> sProps)
 	    {
 		    return this.SelectListFor<TOption, TOption>(expression, sProps);
 	    }
@@ -726,7 +728,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.SelectList(sProps);
         }
 
-        public IHtmlString RadioList<TOptionKey, TOptionValue>(RadioList<TOptionKey, TOptionValue> rlProps)
+        public IHtmlString RadioList<TOptionKey, TOptionValue>(RadioListProps<TOptionKey, TOptionValue> rlProps)
         {
             this.Html.RegisterControl(rlProps);
 
@@ -781,7 +783,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString RadioListFor<TOptionKey, TOptionValue>(
             Expression<Func<TModel, TOptionKey>> expression,
-            RadioList<TOptionKey, TOptionValue> rlProps)
+            RadioListProps<TOptionKey, TOptionValue> rlProps)
         {
             var value = RabbitHelper.GetExpressionValue<TModel, TOptionKey>(expression, this.goRabbit.HtmlHelper);
 
@@ -793,7 +795,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.RadioList(rlProps);
         }
 
-        public IHtmlString DateTimePicker(DateTimePicker dtpProps)
+        public IHtmlString DateTimePicker(DateTimePickerProps dtpProps)
         {
             this.Html.RegisterControl(dtpProps);
 
@@ -842,7 +844,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             result = this.MakeFormGroup(result, dtpProps);
 
-            var poProps = new Popover
+            var poProps = new PopoverProps
 	        {
 		        Selector = string.Format("#{0} .date-select", dtpProps.Id),
 		        Behaviour = PopoverBehaviour.ClickThenClickOutside,
@@ -882,7 +884,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         public IHtmlString DateTimePickerFor<TValue>(
             Expression<Func<TModel, TValue>> expression,
-            DateTimePicker dtpProps)
+            DateTimePickerProps dtpProps)
         {
             var value = Conversion.ConvertToDateTime(RabbitHelper.GetExpressionValue<TModel, TValue>(expression, this.goRabbit.HtmlHelper));
 
@@ -894,7 +896,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.DateTimePicker(dtpProps);
         }
 
-        public IHtmlString Table<T>(TableControl<T> tProps)
+        public IHtmlString Table<T>(TableProps<T> tProps)
             where T : class
         {
             tProps.FormId = this.FormProps.Id;
@@ -902,7 +904,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return new Table<T>(tProps, this.Html, this.goRabbit.Cruncher).Render();
         }
 
-        public IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableControl<T> tProps)
+        public IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableProps<T> tProps)
             where T : class
         {
             var value = RabbitHelper.GetExpressionValue<TModel, TableModel>(expression, this.goRabbit.HtmlHelper);
@@ -915,7 +917,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return this.Table(tProps);
         }
 
-        public IHtmlString SearchBox(SearchBox sbProps)
+        public IHtmlString SearchBox(SearchBoxProps sbProps)
         {
             this.Html.RegisterControl(sbProps);
 
@@ -963,7 +965,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return MvcHtmlString.Create(result);
         }
 
-        public IHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBox sbProps)
+        public IHtmlString SearchBoxFor<TValue>(Expression<Func<TModel, TValue>> expression, SearchBoxProps sbProps)
         {
 			sbProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             sbProps.Id = this.GetIdFromName(sbProps);
@@ -998,7 +1000,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             }
         }
 
-        private string MakeFormGroup(string contents, FormControl cBase)
+        private string MakeFormGroup(string contents, InputProps cBase)
         {
             var classes = new List<string> { "form-group" };
 
@@ -1030,7 +1032,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return string.Format("<div class=\"input-group\">{0}</div>\n", contents);
         }
 
-        private string MakeTextBox(TextBox tbProps, bool incJs)
+        private string MakeTextBox(TextBoxProps tbProps, bool incJs)
         {
             //// first lets add our javascript core and control instance
             if (!this.goRabbit.Cruncher.HasJsItem("textBox_js"))
@@ -1168,7 +1170,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return true;
         }
         
-        private string GetIdFromName(FormControl control)
+        private string GetIdFromName(InputProps control)
         {
             return string.IsNullOrEmpty(control.Id) ? control.Name.Replace('.', '_') : control.Id;
         }
@@ -1206,7 +1208,7 @@ namespace Trooper.Ui.Mvc.Rabbit
             return messages.Where(v => v.Property == metaData.PropertyName).ToList();
         }
 
-        private MessageAlertLevel? GetControlAlertLevel(FormControl cBase)
+        private MessageAlertLevel? GetControlAlertLevel(InputProps cBase)
         {
             var worstControlLevel = cBase.WorstMessageLevel;
 

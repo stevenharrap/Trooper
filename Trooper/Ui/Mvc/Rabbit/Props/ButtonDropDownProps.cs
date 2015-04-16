@@ -1,11 +1,12 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
-{
-    using System.Collections.Generic;
-    using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Trooper.Ui.Mvc.Rabbit.Controls;
 
-    public class ButtonDropDown : HtmlControl
+namespace Trooper.Ui.Mvc.Rabbit.Props
+{
+	public class ButtonDropDownProps : ElementProps
     {
-        public ButtonDropDown()
+        public ButtonDropDownProps()
         {
             this.Direction = ButtonDropDirection.Down;
 

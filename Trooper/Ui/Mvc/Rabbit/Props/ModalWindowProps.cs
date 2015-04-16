@@ -1,13 +1,13 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using System.Web.WebPages;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Web.WebPages;
 
-    public class ModalWindow : HtmlControl
+namespace Trooper.Ui.Mvc.Rabbit.Props
+{
+	public class ModalWindowProps : ElementProps
     {
-        public ModalWindow()
+        public ModalWindowProps()
         {
             this.IncCloseButton = true;
 

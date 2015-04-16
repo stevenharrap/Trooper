@@ -1,23 +1,17 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
+﻿namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    using System.Collections.Generic;
-
-    public enum Method
+	public enum Method
     {
         Post,
         Get
     }
 
-    public class FormControl : HtmlControl
+    public class FormProps : ElementProps
     {
-        public FormControl()
+		public FormProps()
         {
-            this.Method = Controls.Method.Post;
+            this.Method = Method.Post;
         }
-
-        public string Name { get; set; }
-
-        public List<string> FormGroupClasses { get; set; }
 
         public string Action { get; set; }
 

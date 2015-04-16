@@ -1,15 +1,14 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using Trooper.BusinessOperation2;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.BusinessOperation2.Utility;
-    using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
+﻿using System.Collections.Generic;
+using Trooper.BusinessOperation2;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.BusinessOperation2.Utility;
+using Trooper.Ui.Interface.Mvc.Rabbit.Props;
 
-    public class HtmlControl : IHtmlControl
+namespace Trooper.Ui.Mvc.Rabbit.Props
+{
+	public class ElementProps : IElementProps
     {
-        public HtmlControl()
+        public ElementProps()
         {
             this.Visible = true;
         }

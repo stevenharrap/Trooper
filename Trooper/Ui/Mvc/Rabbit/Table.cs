@@ -1,23 +1,15 @@
-﻿using PagedList;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using Humanizer;
+using PagedList;
 using Trooper.Properties;
 using Trooper.Ui.Interface.Mvc.Cruncher;
-using Trooper.Ui.Mvc.Rabbit.Controls;
-using Trooper.Ui.Mvc.Rabbit.TableClasses;
-using Humanizer;
-using System.Web.Helpers;
-using AutoMapper;
 using Trooper.Ui.Interface.Mvc.Rabbit;
-using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
 using Trooper.Ui.Interface.Mvc.Rabbit.Table;
+using Trooper.Ui.Mvc.Rabbit.Props;
 using Trooper.Ui.Mvc.Utility;
 using Trooper.Utility;
 
@@ -26,13 +18,13 @@ namespace Trooper.Ui.Mvc.Rabbit
     public class Table<T>
         where T : class
     {
-        private TableControl<T> tProps;
+        private TableProps<T> tProps;
 
         private IHtml html;
 
         private ICruncher cruncher;
 
-        public Table(TableControl<T> tProps, IHtml html, ICruncher cruncher)
+        public Table(TableProps<T> tProps, IHtml html, ICruncher cruncher)
         {
             this.cruncher = cruncher;
             this.tProps = tProps;

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Trooper.Ui.Mvc.Rabbit.Controls
+﻿namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    public class SearchBox : FormControl
+    public class SearchBoxProps : InputProps
     {
-        public SearchBox()
+        public SearchBoxProps()
         {
             this.ScrollHeight = 150;
             this.PopoverPlacement = PopoverPlacements.Bottom;

@@ -1,4 +1,6 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit
+﻿using Trooper.Ui.Mvc.Rabbit.Props;
+
+namespace Trooper.Ui.Mvc.Rabbit
 {
     using System;
     using System.Collections.Generic;
@@ -37,7 +39,7 @@
             this.Html = html;
         }
 
-        public IForm<TModel> NewForm(FormControl formProps)
+        public IForm<TModel> NewForm(FormProps formProps)
         {
             return new Form<TModel>(formProps, this, this.Html);
         }

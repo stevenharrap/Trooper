@@ -1,20 +1,16 @@
-﻿namespace Trooper.Ui.Interface.Mvc.Rabbit
+﻿using System.Collections.Generic;
+using System.Web;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.Ui.Interface.Mvc.Rabbit.Props;
+using Trooper.Ui.Mvc.Rabbit.Props;
+
+namespace Trooper.Ui.Interface.Mvc.Rabbit
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web;
-    using System.Web.Mvc;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.Ui.Interface.Mvc.Cruncher;
-    using Trooper.Ui.Interface.Mvc.Rabbit.Controls;
-    using Trooper.Ui.Mvc.Rabbit;
-    using Trooper.Ui.Mvc.Rabbit.Controls;
-
-    public interface IHtml
+	public interface IHtml
     {
-        IHtmlString ButtonDropDown(ButtonDropDown bddProps);
+        IHtmlString ButtonDropDown(ButtonDropDownProps bddProps);
 
-        Dictionary<string, IHtmlControl> ControlsRegister { get; }
+		Dictionary<string, IElementProps> ControlsRegister { get; }
 
         void IncludeBootstrap();
 
@@ -28,16 +24,16 @@
 
         IList<IMessage> Messages { get; set; }
 
-        IHtmlString MessagesPanel(MessagesPanel mpProps);
+        IHtmlString MessagesPanel(MessagesPanelProps mpProps);
 
-        void ModalVirtualWindow(ModalWindow mwProps);
+        void ModalVirtualWindow(ModalWindowProps mwProps);
 
-        IHtmlString ModalWindow(ModalWindow mwProps);
+        IHtmlString ModalWindow(ModalWindowProps mwProps);
 
-        IHtmlString PannelGroup(PannelGroup pgProps);
+        IHtmlString PannelGroup(PannelGroupProps pgProps);
 
-        IHtmlString Popover(Popover poProps);
+        IHtmlString Popover(PopoverProps poProps);
 
-        void RegisterControl(IHtmlControl control);
+		void RegisterControl(IElementProps control);
     }
 }

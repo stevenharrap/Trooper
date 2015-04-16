@@ -1,10 +1,10 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
+﻿using System.Collections.Generic;
+using Trooper.Ui.Mvc.Rabbit.Controls;
+using Trooper.Ui.Mvc.Rabbit.Controls.Options;
+
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    using System.Collections.Generic;
-
-    using Trooper.Ui.Mvc.Rabbit.Controls.Options;
-
-    public class CheckBoxList<TOptionKey, TOptionValue> : FormControl
+	public class CheckBoxListProps<TOptionKey, TOptionValue> : InputProps
     {
 		public IList<Option<TOptionKey, TOptionValue>> Options { get; set; }
 

@@ -1,11 +1,9 @@
-﻿namespace Trooper.Ui.Mvc.Rabbit.Controls
+﻿using System.Collections.Generic;
+using Trooper.Ui.Mvc.Rabbit.Controls.Options;
+
+namespace Trooper.Ui.Mvc.Rabbit.Props
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Trooper.Ui.Mvc.Rabbit.Controls.Options;
-
-    public class RadioList<TOptionKey, TOptionValue> : FormControl
+	public class RadioListProps<TOptionKey, TOptionValue> : InputProps
     {
 		public List<Option<TOptionKey, TOptionValue>> Options { get; set; }
 
