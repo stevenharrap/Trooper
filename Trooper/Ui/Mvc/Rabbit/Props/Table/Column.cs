@@ -20,6 +20,10 @@ namespace Trooper.Ui.Mvc.Rabbit.Props.Table
         public Expression<Func<T, object>> SortIdentity { get; set; }
 
         public Expression<Func<T, object>> Value { get; set; }
+
+        public SortDirection? SortDirection { get; set; }
+
+        public int SortImportance { get; set; }
                 
         /// <summary>
         /// Gets or sets a value indicating whether content in the column is allowed to wrap.

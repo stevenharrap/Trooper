@@ -1,4 +1,17 @@
-﻿table.table.trooper {
+﻿textarea.trooper.table-persisted-data {
+    width: 100%;
+    height: 50px;
+}
+
+table.table.trooper {
+
+    thead tr th {
+        cursor: default;
+    }
+
+    thead tr th.is-sortable {
+        cursor: pointer;
+    }
 
     tbody tr td {
         cursor: pointer;
@@ -45,8 +58,8 @@
         white-space: nowrap;
     }
 
-    tbody tr.highlight,
-    tbody tr.highlight td {
+    tbody tr.selected,
+    tbody tr.selected td {
         background-color: #428bca;
         color: #fff;
     }
@@ -77,6 +90,11 @@
             .left {
                 float: left;
                 width: 70%;
+
+                .pagination li, 
+                .pagination li a {
+                    cursor: pointer;
+                }
             }
 
             .right {

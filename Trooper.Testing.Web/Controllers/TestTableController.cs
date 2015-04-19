@@ -19,6 +19,7 @@ namespace Trooper.Testing.Web.Controllers
     using System.IO;
     using CsvHelper;
     using CsvHelper.Configuration;
+    using Trooper.Ui.Mvc.Rabbit.Models.Table;
 
     /// <summary>
     /// Controller for BSF test page

@@ -326,4 +326,9 @@ namespace Trooper.Ui.Mvc.Rabbit
 		Print
 	}
 
+    public enum SortDirection
+    {
+        Ascending = 1,
+        Descending = 2
+    }
 }

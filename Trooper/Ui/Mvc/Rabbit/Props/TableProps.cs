@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Web.WebPages;
 using Trooper.Ui.Interface.Mvc.Rabbit.Table;
 using Trooper.Ui.Mvc.Rabbit.Models;
+using Trooper.Ui.Mvc.Rabbit.Models.Table;
+using Trooper.Ui.Mvc.Rabbit.Props.Table;
 using Trooper.Ui.Mvc.Rabbit.Props.Table.Footer;
 
 namespace Trooper.Ui.Mvc.Rabbit.Props
@@ -16,6 +18,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
         {
             this.CanPage = true;
             this.PageSize = 50;
+            this.PagesSize = 10;
         }
 
         public List<Expression<Func<T, object>>> Keys { get; set; }
@@ -29,6 +32,8 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
 
             this.Keys.Add(keyExpression);
         }
+
+        public Func<T, RowFormat> RowFormatter { get; set; }
 
         /// <summary>
         /// Gets or sets the data source.
@@ -87,6 +92,14 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
                 this.Columns = new List<IColumn<T>>();
             }
 
+            if (column.SortIdentity != null)
+            {
+                if (column.SortImportance < 0)
+                {
+                    column.SortImportance = this.Columns.Count + column.SortImportance;
+                }
+            }
+
             this.Columns.Add(column);
 
             return column;
@@ -117,6 +130,8 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
         /// Gets or sets the number of rows per page.
         /// </summary>
         public int PageSize { get; set; }
+
+        public int PagesSize { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the table should allow paging. True by default.

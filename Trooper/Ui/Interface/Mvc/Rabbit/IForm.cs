@@ -6,6 +6,7 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Web;
+    using Trooper.Ui.Mvc.Rabbit.Models.Table;
     using Ui.Mvc.Rabbit.Models;
 
     public interface IForm<TModel>

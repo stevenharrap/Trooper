@@ -7,13 +7,13 @@
     this.columns = params.columns;
     this.postAction = params.postAction;
 
-    this.rowSelected = new Array();
     this.rowDblclicked = new Array();
     this.rowUnselected = new Array();
     this._selectedRows = new Array();	
 	
     this.init = function () {       
 		
+        $('#' + this.id + ' thead th').click($.proxy(this.columnClick, this));
 		$('#' + this.id + ' tbody tr').click($.proxy(this.rowClick, this));
 		$('#' + this.id + ' tbody tr').dblclick($.proxy(this.rowDblclick, this));
 		$('#' + this.id + ' tfoot li').click($.proxy(this.pageClicked, this));
@@ -38,8 +38,71 @@
 		return this._selectedRows;
 	};
 
-	this.clearSelection = function () {
+	this.columnClick = function (e) {
+	    var th = $(e.currentTarget);
+	    var data = this.persistedData();
+	    var sortInfo = null;	    
 
+	    for (var i = 0; i < this.columns.length; i++) {
+	        var column = this.columns[i];
+	        if (th.hasClass('col-' + column.ci)) {
+	            if (column.si == null) {
+	                return;
+	            }
+
+	            sortInfo = data.Sorting[column.si];
+
+	            if (sortInfo.Direction == null) {
+	                sortInfo.Direction = 1;
+	            } else if (sortInfo.Direction == 1) {
+	                sortInfo.Direction = 2;
+	            } else {
+	                sortInfo.Direction = null;
+	                sortInfo.Importance = 0;
+	            }
+
+	            break;	            
+	        }
+	    }
+
+	    if (sortInfo.Direction != null) {
+	        var highestInfo = null;
+
+	        for (var i = 0; i < this.columns.length; i++) {
+	            var column = this.columns[i];
+
+	            if (highestInfo == null) {
+	                highestInfo = data.Sorting[column.si];
+	            } else if (column.si != null && data.Sorting[column.si].Importance > highestInfo.Importance) {
+	                highestInfo = data.Sorting[column.si];
+	            }
+	        }
+
+	        if (highestInfo != sortInfo) {
+	            sortInfo.Importance = highestInfo.Importance + 1;
+	        }
+	    }
+
+	    this.persistedData(data);
+	    this.post();
+	};
+
+	this.rowClick = function (e) {
+	    var data = this.persistedData();
+	    var tr = $(e.currentTarget).closest('tr');
+	    var keys = JSON.parse(tr.attr('data-value'));
+        
+	    if (data.Selected == null) {
+	        data.Selected = new Array();
+	    }
+
+	    data.Selected.push(keys);
+	    tr.addClass('selected');
+
+	    this.persistedData(data);
+	};
+
+	this.clearSelection = function () {	    
 	};
     	
 	this.screenModeChanged = function (screenMode) {
@@ -69,7 +132,7 @@
 				}
 			}
 
-			element.text(text);
+			element.find("span.title").text(text);
 		}
 	};
 
@@ -100,7 +163,6 @@
 	};
 
 	this.post = function () {
-	    debugger;
 	    trooper.ui.registry.getForm(this.formId).submit(this.url);
 	};
 
@@ -112,9 +174,7 @@
 	    addRowUnselectedEvent: $.proxy(this.addRowUnselectedEvent, this),
 	    selectedRows: $.proxy(this.selectedRows, this)
 	};
-
-
-
+    
 	trooper.ui.registry.addControl(this.id, publicResult, 'table');
     $(document).ready($.proxy(this.init, this));
 

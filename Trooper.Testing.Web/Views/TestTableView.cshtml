@@ -41,9 +41,34 @@
                 Source = Model.BaseballMasters,
                 Caption = "Baseball masters",
                 HumanizeHeaders = true,
-                PageSize = 20,
+                PageSize = 10,
                 Striped = true,
-                Hover = true
+                Hover = true,
+                RowFormatter = r => {
+                    var rf = new RowFormat();
+
+                    if (r.NameLast == "Norris")
+                    {
+                        rf.Highlighted = RowHighlight.Danger;
+                    }
+
+                    if (r.BirthYear == 1992)
+                    {
+                        rf.Highlighted = RowHighlight.Success;
+                    }
+
+                    if (r.BirthCity == "Upata")
+                    {
+                        rf.Bold = true;
+                    }
+
+                    if (r.NameLast == "Odor")
+                    {
+                        rf.RuleOverStyle = RuleStyle.Dashed;
+                    }
+
+                    return rf;                    
+                }
             };
 			
             tProps.AddKey(k => k.PlayerID);
@@ -67,6 +92,9 @@
             tProps.AddColumn(new Column<BaseballMaster> { 
                 Value = c => c.BirthYear, 
                 Humanize = false,
+                SortIdentity = c => c.BirthYear,
+                SortDirection = Trooper.Ui.Mvc.Rabbit.SortDirection.Descending,  
+                SortImportance = -1,              
                 HeaderExtraSmall = "Bth Y",
 				VisibleInModes = new []{ ScreenMode.Large }
             });

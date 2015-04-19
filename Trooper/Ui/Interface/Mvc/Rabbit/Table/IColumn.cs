@@ -12,6 +12,10 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit.Table
 
 		Expression<Func<T, object>> Value { get; set; }
 
+        SortDirection? SortDirection { get; set; }
+
+        int SortImportance { get; set; }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether content in the column is allowed to wrap.
 		/// By default header large is used.

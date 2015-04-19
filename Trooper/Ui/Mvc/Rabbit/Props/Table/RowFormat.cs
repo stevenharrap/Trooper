@@ -67,7 +67,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Props.Table
     /// The class for describing how a row should display
     /// </summary>
     /// <typeparam name="TKey">The data type on the key value for the row</typeparam>
-    public class RowFormat<TKey>
+    public class RowFormat
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RowFormat{TKey}"/> class.
@@ -79,11 +79,6 @@ namespace Trooper.Ui.Mvc.Rabbit.Props.Table
             this.RuleUnderStyle = RuleStyle.Default;
             this.RowTextHighlightStyle = RowTextHighlight.None;
         }
-
-        /// <summary>
-        /// Gets or sets The key for the row
-        /// </summary>
-        public TKey Key { get; set; }
 
         /// <summary>
         /// Gets or sets the highlighted.

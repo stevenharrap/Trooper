@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Text;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -12,6 +13,7 @@ using Trooper.Ui.Interface.Mvc.Rabbit.Table;
 using Trooper.Ui.Mvc.Rabbit.Props;
 using Trooper.Ui.Mvc.Utility;
 using Trooper.Utility;
+using Trooper.Ui.Mvc.Rabbit.Props.Table;
 
 namespace Trooper.Ui.Mvc.Rabbit
 {
@@ -36,7 +38,25 @@ namespace Trooper.Ui.Mvc.Rabbit
         public MvcHtmlString Render()
         {
             var result = new StringBuilder();
-            var pagedSource = new PagedList<T>(this.tProps.Source.ToList(), this.tProps.TableModel.PageNumber, this.tProps.PageSize);
+
+            var orderBy = from s in this.tProps.TableModel.GetPersistedModel(this.tProps).Sorting
+                          where s.Value.Direction != null
+                          orderby s.Value.Importance descending
+                          let direction = s.Value.Direction == SortDirection.Ascending
+                            ? "ASC"
+                            : s.Value.Direction == SortDirection.Descending
+                            ? "DESC"
+                            : string.Empty
+                          select string.Format("{0} {1}", s.Key, direction);
+
+            var ordered = orderBy.Any() 
+                ? this.tProps.Source.AsQueryable().OrderBy(string.Join(", ", orderBy)) 
+                : this.tProps.Source.AsQueryable();
+            
+            var pagedSource = new PagedList<T>(
+                ordered.ToList(), 
+                this.tProps.TableModel.GetPersistedModel(this.tProps).PageNumber, 
+                this.tProps.PageSize);
 
             var tableStyle = string.Format(
                 "trooper table {0} {1} {2} {3}",
@@ -45,16 +65,10 @@ namespace Trooper.Ui.Mvc.Rabbit
                 this.tProps.Hover ? "table-hover" : null,
                 this.tProps.Condensed ? "table-condensed" : null);
 
-            var persistData =
-                new
-                {
-                    this.tProps.TableModel.PageNumber,
-                };
-
             result.AppendFormat(
-                "<textarea style=\"display:none\" name=\"{0}.PersistedData\"/>{1}</textarea>\r\n",
+                "<textarea class=\"trooper table-persisted-data\" name=\"{0}.PersistedData\"/>{1}</textarea>\r\n",
                 this.tProps.Name,
-                Json.Encode(persistData));
+                Json.Encode(this.tProps.TableModel.GetPersistedModel(this.tProps)));
 
             result.AppendFormat("<table id=\"{0}\" class=\"{1}\">\r\n", this.tProps.Id, tableStyle);
 
@@ -85,8 +99,32 @@ namespace Trooper.Ui.Mvc.Rabbit
             {
 	            var col = this.tProps.Columns[c];
                 var header = this.GetColumnTitle(col);
+                var css = RabbitHelper.MakeClassAttribute(new string[] 
+                { 
+                    string.Format("col-{0}", c), 
+                    col.SortIdentity == null ? null : "is-sortable" 
+                });
 
-                result.AppendFormat("<th class=\"col-{0}\">{1}</th>\r\n", c, header);
+
+                result.AppendFormat("<th {0}>", css);
+                result.AppendFormat("<span class=\"title\">{0}</span>", header);
+
+                if (col.SortIdentity != null)
+                {
+                    var name = ReflectionHelper.GetNameFromExpression<T>(col.SortIdentity);
+                    var sortInfo = this.tProps.TableModel.GetSortInfoFormColumn(name, this.tProps);
+
+                    if (sortInfo != null && sortInfo.Direction == SortDirection.Ascending)
+                    {
+                        result.Append(" <span class=\"glyphicon glyphicon-triangle-top\"></span>");
+                    }
+                    else if (sortInfo != null && sortInfo.Direction == SortDirection.Descending)
+                    {
+                        result.Append(" <span class=\"glyphicon glyphicon-triangle-bottom\"></span>");
+                    }
+                }
+
+                result.Append("</th>\r\n");
             }
 
             result.Append("</tr>\r\n");
@@ -99,9 +137,19 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             foreach (var row in pagedSource)
             {
-                var keyResult = this.GetKeyAsJson(row);                
+                var keyResult = this.GetKeyAsJson(row);
+                var rowFormat = this.tProps.RowFormatter == null ? null : this.tProps.RowFormatter(row);
 
-                result.AppendFormat("<tr data-value=\"{0}\">\r\n", keyResult);
+                var css = rowFormat == null ? null : RabbitHelper.MakeClassAttribute(new string[] 
+                { 
+                    rowFormat.Highlighted != RowHighlight.None ? rowFormat.Highlighted.ToString().ToLower() : null,
+                    rowFormat.Bold ? "bold" : null,
+                    rowFormat.RowTextHighlightStyle != RowTextHighlight.None ? string.Format("text-{0}", rowFormat.RowTextHighlightStyle.ToString().ToLower()) : null,
+                    rowFormat.RuleUnderStyle != RuleStyle.Default ? string.Format("rule-under rule-under-{0}", rowFormat.RuleUnderStyle.ToString().ToLower()) : null,
+                    rowFormat.RuleOverStyle != RuleStyle.Default ? string.Format("rule-over rule-over-{0}", rowFormat.RuleOverStyle.ToString().ToLower()) : null
+                });
+
+                result.AppendFormat("<tr data-value=\"{0}\" {1}>\r\n", keyResult, css);
 
 				for (var c = 0; c < this.tProps.Columns.Count; c++)
 				{
@@ -200,6 +248,14 @@ namespace Trooper.Ui.Mvc.Rabbit
 				return;
 			}
 
+            var pn = pagedSource.PageNumber - 1;
+            var remainder = pn % this.tProps.PagesSize;
+            var lower = pn - remainder;
+            var higher = lower + this.tProps.PagesSize;
+            lower = lower <= 0 ? 1 : lower;
+            lower = lower >= this.tProps.PagesSize ? lower + 1 : lower;
+            higher = higher > pagedSource.PageCount ? pagedSource.PageCount : higher;
+
 			result.AppendFormat("<tr>\r\n");
 			result.AppendFormat("<td colspan=\"{0}\">", this.tProps.Columns.Count());
 
@@ -207,14 +263,14 @@ namespace Trooper.Ui.Mvc.Rabbit
 			result.Append("<div class=\"left\">\r\n");
 			result.Append("<ul class=\"pagination\">\r\n");
 
-			if (pagedSource.PageNumber > 10)
+            if (pagedSource.PageNumber > this.tProps.PagesSize)
 			{
 				result.AppendFormat(
 					"<li data-value=\"{0}\"><a><span class=\"glyphicon glyphicon-triangle-left\"></span></a></li>\r\n",
-					pagedSource.PageNumber - 10);
-			}
+					lower - 1);
+			}            
 
-			for (var p = pagedSource.PageNumber; p < pagedSource.PageCount && p < pagedSource.PageNumber + 10; p++)
+			for (var p = lower; p <= higher; p++)
 			{
 				if (p == pagedSource.PageNumber)
 				{
@@ -226,11 +282,11 @@ namespace Trooper.Ui.Mvc.Rabbit
 				}
 			}
 
-			if (pagedSource.PageNumber + 10 < pagedSource.PageCount)
+			if (higher < pagedSource.PageCount)
 			{
 				result.AppendFormat(
 					"<li data-value=\"{0}\"><a>{1} pages <span class=\"glyphicon glyphicon-triangle-right\"></span></a></li>",
-					pagedSource.PageNumber + 10,
+					higher + 1,
 					pagedSource.PageCount);
 			}
 
