@@ -10,6 +10,8 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit.Table
 	{
 		Expression<Func<T, object>> SortIdentity { get; set; }
 
+        string SortIdentityName { get; }
+
 		Expression<Func<T, object>> Value { get; set; }
 
         SortDirection? SortDirection { get; set; }

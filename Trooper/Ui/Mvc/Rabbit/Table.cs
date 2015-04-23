@@ -14,6 +14,8 @@ using Trooper.Ui.Mvc.Rabbit.Props;
 using Trooper.Ui.Mvc.Utility;
 using Trooper.Utility;
 using Trooper.Ui.Mvc.Rabbit.Props.Table;
+using Trooper.Ui.Mvc.Rabbit.Models.Table;
+using Trooper.Ui.Mvc.Rabbit.Props.Table.Body;
 
 namespace Trooper.Ui.Mvc.Rabbit
 {
@@ -22,6 +24,12 @@ namespace Trooper.Ui.Mvc.Rabbit
     {
         private TableProps<T> tProps;
 
+        private PagedList<T> pagedSource;
+
+        private Dictionary<string, T> jsonKeys;
+
+        private PersistedTableModel persistedModel;
+
         private IHtml html;
 
         private ICruncher cruncher;
@@ -29,34 +37,20 @@ namespace Trooper.Ui.Mvc.Rabbit
         public Table(TableProps<T> tProps, IHtml html, ICruncher cruncher)
         {
             this.cruncher = cruncher;
-            this.tProps = tProps;
             this.html = html;
-
+            this.tProps = tProps;
+            
             this.html.RegisterControl(tProps);
+
+            this.persistedModel = this.MakePersistedModel();
+            this.pagedSource = this.MakePagedSource();
+            this.jsonKeys = this.MakeJsonKeys();
+            this.Persist();
         }
 
         public MvcHtmlString Render()
         {
-            var result = new StringBuilder();
-
-            var orderBy = from s in this.tProps.TableModel.GetPersistedModel(this.tProps).Sorting
-                          where s.Value.Direction != null
-                          orderby s.Value.Importance descending
-                          let direction = s.Value.Direction == SortDirection.Ascending
-                            ? "ASC"
-                            : s.Value.Direction == SortDirection.Descending
-                            ? "DESC"
-                            : string.Empty
-                          select string.Format("{0} {1}", s.Key, direction);
-
-            var ordered = orderBy.Any() 
-                ? this.tProps.Source.AsQueryable().OrderBy(string.Join(", ", orderBy)) 
-                : this.tProps.Source.AsQueryable();
-            
-            var pagedSource = new PagedList<T>(
-                ordered.ToList(), 
-                this.tProps.TableModel.GetPersistedModel(this.tProps).PageNumber, 
-                this.tProps.PageSize);
+            var result = new StringBuilder();            
 
             var tableStyle = string.Format(
                 "trooper table {0} {1} {2} {3}",
@@ -65,10 +59,18 @@ namespace Trooper.Ui.Mvc.Rabbit
                 this.tProps.Hover ? "table-hover" : null,
                 this.tProps.Condensed ? "table-condensed" : null);
 
+            var persistedTable = new PersistedTableModel
+            {
+                Sorting = this.tProps.Columns
+                    .Where(c => c.SortIdentityName != null)
+                    .ToDictionary(k => k.SortIdentityName, v => new SortInfo { Direction = v.SortDirection, Importance = v.SortImportance }),
+                PageNumber = this.tProps.PageNumber,
+            };                    
+
             result.AppendFormat(
                 "<textarea class=\"trooper table-persisted-data\" name=\"{0}.PersistedData\"/>{1}</textarea>\r\n",
                 this.tProps.Name,
-                Json.Encode(this.tProps.TableModel.GetPersistedModel(this.tProps)));
+                Json.Encode(persistedTable));
 
             result.AppendFormat("<table id=\"{0}\" class=\"{1}\">\r\n", this.tProps.Id, tableStyle);
 
@@ -90,6 +92,77 @@ namespace Trooper.Ui.Mvc.Rabbit
             return new MvcHtmlString(result.ToString());
         }
 
+        private PagedList<T> MakePagedSource()
+        {
+            this.tProps.PageNumber = this.persistedModel.PageNumber;
+
+            if (this.tProps.PageNumber <= 0)
+            {
+                this.tProps.PageNumber = 1;
+            }
+
+            var orderBy = from c in this.tProps.Columns
+                          where c.SortDirection != null
+                          orderby c.SortImportance descending
+                          let direction = c.SortDirection == SortDirection.Ascending
+                            ? "ASC"
+                            : c.SortDirection == SortDirection.Descending
+                            ? "DESC"
+                            : string.Empty
+                          select string.Format("{0} {1}", c.SortIdentityName, direction);
+
+            var ordered = orderBy.Any()
+                ? this.tProps.Source.AsQueryable().OrderBy(string.Join(", ", orderBy))
+                : this.tProps.Source.AsQueryable();
+
+            var pagedSource = new PagedList<T>(
+                ordered.ToList(),
+                this.tProps.PageNumber,
+                this.tProps.PageSize);
+
+            return pagedSource;
+        }
+
+        private Dictionary<string, T> MakeJsonKeys()
+        {
+            return pagedSource.ToDictionary(k => this.GetKeyAsJson(k), v => v);
+        }
+
+        private PersistedTableModel MakePersistedModel()
+        {
+            var model = this.tProps.TableModel.PersistedData == null
+                ? new PersistedTableModel()
+                : Json.Decode<PersistedTableModel>(this.tProps.TableModel.PersistedData);
+
+            return model;
+        }
+
+        private void Persist()
+        {
+            this.tProps.Selected = new List<T>();
+
+            foreach (var jsonKey in this.persistedModel.Selected)
+            {
+                if (jsonKeys.ContainsKey(jsonKey))
+                {
+                    this.tProps.Selected.Add(jsonKeys[jsonKey]);
+                }
+            }                        
+
+            if (this.persistedModel.Sorting == null) {
+                return;
+            }
+            
+            foreach (var ps in this.persistedModel.Sorting.Where(s => s.Value != null)) {
+                var column = this.tProps.Columns.FirstOrDefault(c => ps.Key != null && c.SortIdentityName == ps.Key);
+                
+                if (column != null) {
+                    column.SortImportance = ps.Value.Importance;
+                    column.SortDirection = ps.Value.Direction;
+                }
+            }
+        }
+
         private void RenderHeader(StringBuilder result)
         {
             result.Append("<thead>\r\n");
@@ -105,20 +178,16 @@ namespace Trooper.Ui.Mvc.Rabbit
                     col.SortIdentity == null ? null : "is-sortable" 
                 });
 
-
                 result.AppendFormat("<th {0}>", css);
                 result.AppendFormat("<span class=\"title\">{0}</span>", header);
 
-                if (col.SortIdentity != null)
+                if (col.SortIdentityName != null)
                 {
-                    var name = ReflectionHelper.GetNameFromExpression<T>(col.SortIdentity);
-                    var sortInfo = this.tProps.TableModel.GetSortInfoFormColumn(name, this.tProps);
-
-                    if (sortInfo != null && sortInfo.Direction == SortDirection.Ascending)
+                    if (col.SortDirection == SortDirection.Ascending)
                     {
                         result.Append(" <span class=\"glyphicon glyphicon-triangle-top\"></span>");
                     }
-                    else if (sortInfo != null && sortInfo.Direction == SortDirection.Descending)
+                    else if (col.SortDirection == SortDirection.Descending)
                     {
                         result.Append(" <span class=\"glyphicon glyphicon-triangle-bottom\"></span>");
                     }

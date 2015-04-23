@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trooper.Ui.Mvc.Rabbit.Models.Table
+namespace Trooper.Ui.Mvc.Rabbit.Props.Table
 {
-    public class PersistedSortInfo
+    public class SortInfo
     {
         public SortDirection? Direction { get; set; }
 

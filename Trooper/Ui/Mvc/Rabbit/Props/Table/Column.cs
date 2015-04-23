@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Trooper.Ui.Interface.Mvc.Rabbit.Table;
+using Trooper.Utility;
 
 namespace Trooper.Ui.Mvc.Rabbit.Props.Table
 {
@@ -17,7 +18,29 @@ namespace Trooper.Ui.Mvc.Rabbit.Props.Table
     /// </summary>
     public class Column<T> : IColumn<T> where T : class 
     {
+        private string sortIdentityName = null;
+
         public Expression<Func<T, object>> SortIdentity { get; set; }
+
+        public string SortIdentityName
+        {
+            get
+            {
+                if (this.SortIdentity == null)
+                {
+                    return null;
+                }
+
+                if (this.sortIdentityName != null)
+                {
+                    return this.sortIdentityName;
+                }
+
+                this.sortIdentityName = ReflectionHelper.GetNameFromExpression(this.SortIdentity);
+
+                return this.sortIdentityName;
+            }
+        }
 
         public Expression<Func<T, object>> Value { get; set; }
 

@@ -5,23 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trooper.Ui.Mvc.Rabbit.Models.Table;
+using Trooper.Ui.Mvc.Rabbit.Props.Table;
 
 namespace Trooper.Ui.Mvc.Rabbit.Models.Table
 {
     public class PersistedTableModel
     {
-        public PersistedTableModel()
-        {
-            this.PageNumber = 1;            
-        }
+        public IList<string> Selected { get; set; }
 
-        [ReadOnly(true)]
-        public IList<IDictionary<string, object>> Selected { get; set; }
-
-        [ReadOnly(true)]
         public int PageNumber { get; set; }
 
-        [ReadOnly(true)]
-        public IDictionary<string, PersistedSortInfo> Sorting { get; set; }
+        public IDictionary<string, SortInfo> Sorting { get; set; }
     }    
 }

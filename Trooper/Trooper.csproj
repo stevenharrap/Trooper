@@ -271,7 +271,7 @@
     <Compile Include="Ui\Interface\Mvc\Rabbit\Table\IColumn.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controllers\RabbitController.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Controllers\RabbitUploadController.cs" />
-    <Compile Include="Ui\Mvc\Rabbit\Models\Table\PersistedSortInfo.cs" />
+    <Compile Include="Ui\Mvc\Rabbit\Props\Table\SortInfo.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Models\Table\PersistedTableModel.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\ButtonProps.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\ButtonDropDownProps.cs" />
@@ -343,7 +343,7 @@
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\Footer\Cell.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\Footer\Row.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\Table\Page.cs" />
-    <Compile Include="Ui\Mvc\Rabbit\Props\Table\RowFormat.cs" />
+    <Compile Include="Ui\Mvc\Rabbit\Props\Table\Body\RowFormat.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\IStoreItem.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherStore.cs" />
     <Compile Include="Ui\Interface\Mvc\Cruncher\ICruncherController.cs" />
