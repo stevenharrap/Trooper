@@ -15,30 +15,9 @@ namespace Trooper.NUnitTesting.TestShopApp
 
     [TestFixture]
     [Category("Facade")]
-    public class TestShopFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
+    public class TestShopBaseFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
     {
-		private const string ToBeImplemented = "Shop Facade Test to be implemented";
-
-	    public override void TestGetByKey()
-	    {
-			using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
-			{
-				var shop1 = new Shop {Name = "Kmart", Address = "Queensland"};
-				var shop2 = new Shop {Name = "Coles", Address = "NSW"};
-
-				bp.Facade.AddSome(new List<Shop> {shop1, shop2});
-				bp.Uow.Save();
-			}
-
-		    using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
-		    {
-				
-		    }
-
-
-
-
-	    }
+		private const string ToBeImplemented = "Ignored in base testing.";
 
 	    [TestFixtureSetUp]
         public void TestFixtureSetup()
@@ -57,6 +36,13 @@ namespace Trooper.NUnitTesting.TestShopApp
 		[Test]
 		[Ignore(ToBeImplemented)]
         public override void TestUpdate()
+        {
+            Assert.That(true);
+        }
+
+        [Test]
+        [Ignore(ToBeImplemented)]
+        public override void TestGetSome()
         {
             Assert.That(true);
         }

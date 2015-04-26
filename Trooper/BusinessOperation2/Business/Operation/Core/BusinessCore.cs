@@ -238,7 +238,9 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                     return response;
                 }
 
-                response.Items = bp.Facade.GetSome(search).ToList<Ti>();
+                var some = bp.Facade.GetSome(search);
+
+                response.Items = bp.Facade.Limit(some, search).ToList<Ti>();
 
                 return response;
             }

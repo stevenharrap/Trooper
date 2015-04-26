@@ -63,8 +63,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestShopAppDbContext.cs" />
-    <Compile Include="TestShopBusinsessOperation.cs" />
-    <Compile Include="TestShopFacade.cs" />
+    <Compile Include="TestShopBaseBusinsessOperation.cs" />
+    <Compile Include="TestShopOverrideBusinsessOperation.cs" />
+    <Compile Include="TestShopBaseFacade.cs" />
+    <Compile Include="TestShopOverrideFacade.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -160,38 +160,6 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         }
 
         /// <summary>
-        ///     Test <see cref="IFacade.GetSome(ISearch search)"/>
-        /// </summary>
-        [Test]
-        public virtual void TestGetSome()
-        {
-            using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
-            {
-                var item1 = ItemGenerator.NewItem(bp.Facade);
-                var item2 = ItemGenerator.NewItem(bp.Facade);
-                var item3 = ItemGenerator.NewItem(bp.Facade);
-                var item4 = ItemGenerator.NewItem(bp.Facade);
-                var item5 = ItemGenerator.NewItem(bp.Facade);
-                var item6 = ItemGenerator.NewItem(bp.Facade);
-                
-                bp.Facade.Add(item1);
-                bp.Facade.Add(item2);
-                bp.Facade.Add(item3);
-                bp.Facade.Add(item4);
-                bp.Facade.Add(item5);
-                bp.Facade.Add(item6);
-                bp.Uow.Save();
-
-                var some = bp.Facade.GetSome(new Search { SkipItems = 3, TakeItems = 2 });
-
-                Assert.IsNotNull(some);
-                Assert.That(some.Count(), Is.EqualTo(2));
-                Assert.IsTrue(bp.Facade.AreEqual(some.First(), item4));
-                Assert.IsTrue(bp.Facade.AreEqual(some.Last(), item5));
-            }
-        }
-
-        /// <summary>
         ///     Test <see cref="IFacade.Limit(IQueryable<T> items, ISearch search)"/>
         /// </summary>
         [Test]
@@ -366,6 +334,13 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
                 Assert.IsTrue(bp.Facade.Any());
             }
         }
+
+        /// <summary>
+        ///     Test <see cref="IFacade.GetSome(ISearch search)"/>
+        /// </summary>
+        [Test]
+        public abstract void TestGetSome();
+
 
         public abstract void TestUpdate();
 

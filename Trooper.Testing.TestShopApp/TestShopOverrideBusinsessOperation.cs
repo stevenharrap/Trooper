@@ -10,7 +10,7 @@
 
     [TestFixture]
     [Category("BusinessOperation")]
-    public class TestShopBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
+    public class TestShopOverrideBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
     {
 	    private const string ToBeImplemented = "Shop BO Test to be implemented";
 

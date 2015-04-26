@@ -99,7 +99,7 @@
 
         public virtual IEnumerable<Tc> GetSome(ISearch search)
         {            
-            return this.Limit(this.GetAll().AsEnumerable(), search);
+            return this.GetAll().AsEnumerable();
         }
 
         public IEnumerable<Tc> Limit(IEnumerable<Tc> items, ISearch search)
