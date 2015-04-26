@@ -11,10 +11,10 @@ namespace Trooper.Ui.Mvc.Rabbit.Models.Table
 {
     public class PersistedTableModel
     {
-        public IList<string> Selected { get; set; }
+        public Dictionary<string, object>[] Selected { get; set; }
 
         public int PageNumber { get; set; }
 
-        public IDictionary<string, SortInfo> Sorting { get; set; }
+        public Dictionary<string, SortInfo> Sorting { get; set; }
     }    
 }

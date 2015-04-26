@@ -37,11 +37,6 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
 
         public Func<T, Body.RowFormat> RowFormatter { get; set; }
 
-        /// <summary>
-        /// Gets or sets the data source.
-        /// </summary>
-        public IEnumerable<T> Source { get; set; }
-
         public IList<IColumn<T>> Columns { get; set;}
 
 		/// <summary>
@@ -85,7 +80,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
 			return row;
 		}
 
-        public TableModel TableModel { get; set; }
+        public TableModel<T> TableModel { get; set; }
 
         public IColumn<T> AddColumn(IColumn<T> column)
         {
@@ -159,9 +154,5 @@ namespace Trooper.Ui.Mvc.Rabbit.Props
         /// Gets or sets the caption for the table.
         /// </summary>
         public string Caption { get; set; }
-
-        public IList<T> Selected { get; set; }
-
-        public int PageNumber { get; set; }
     }
 }

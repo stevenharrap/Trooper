@@ -10,8 +10,6 @@ namespace Trooper.Testing.Web.Models
 {
     public class TestTableModel
     {
-        public IEnumerable<BaseballMaster> BaseballMasters { get; set; }
-
-        public TableModel TbMdl001 { get; set; }
+        public TableModel<BaseballMaster> TbMdl001 { get; set; }
     }
 }

@@ -39,11 +39,11 @@
         @{
             var tProps = new TableProps<BaseballMaster>
             {
-                Source = Model.BaseballMasters,
                 Caption = "Baseball masters",
                 HumanizeHeaders = true,
                 PageSize = 10,
-                Striped = true,
+                Striped = true, 
+                RowSelectionMode = TableRowSelectionModes.Multiple,                
                 Hover = true,
                 RowFormatter = r => {
                     var rf = new Body.RowFormat();

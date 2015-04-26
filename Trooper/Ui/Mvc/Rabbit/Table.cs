@@ -26,10 +26,6 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         private PagedList<T> pagedSource;
 
-        private Dictionary<string, T> jsonKeys;
-
-        private PersistedTableModel persistedModel;
-
         private IHtml html;
 
         private ICruncher cruncher;
@@ -41,11 +37,8 @@ namespace Trooper.Ui.Mvc.Rabbit
             this.tProps = tProps;
             
             this.html.RegisterControl(tProps);
-
-            this.persistedModel = this.MakePersistedModel();
+            this.tProps.TableModel.Sorting = tProps.Columns;
             this.pagedSource = this.MakePagedSource();
-            this.jsonKeys = this.MakeJsonKeys();
-            this.Persist();
         }
 
         public MvcHtmlString Render()
@@ -64,7 +57,8 @@ namespace Trooper.Ui.Mvc.Rabbit
                 Sorting = this.tProps.Columns
                     .Where(c => c.SortIdentityName != null)
                     .ToDictionary(k => k.SortIdentityName, v => new SortInfo { Direction = v.SortDirection, Importance = v.SortImportance }),
-                PageNumber = this.tProps.PageNumber,
+                PageNumber = this.tProps.TableModel.PageNumber,
+                Selected = this.tProps.TableModel.Selected.Select(s => this.GetKeyAsDictionary(s)).ToArray()
             };                    
 
             result.AppendFormat(
@@ -94,13 +88,6 @@ namespace Trooper.Ui.Mvc.Rabbit
 
         private PagedList<T> MakePagedSource()
         {
-            this.tProps.PageNumber = this.persistedModel.PageNumber;
-
-            if (this.tProps.PageNumber <= 0)
-            {
-                this.tProps.PageNumber = 1;
-            }
-
             var orderBy = from c in this.tProps.Columns
                           where c.SortDirection != null
                           orderby c.SortImportance descending
@@ -112,55 +99,15 @@ namespace Trooper.Ui.Mvc.Rabbit
                           select string.Format("{0} {1}", c.SortIdentityName, direction);
 
             var ordered = orderBy.Any()
-                ? this.tProps.Source.AsQueryable().OrderBy(string.Join(", ", orderBy))
-                : this.tProps.Source.AsQueryable();
+                ? this.tProps.TableModel.Source.AsQueryable().OrderBy(string.Join(", ", orderBy))
+                : this.tProps.TableModel.Source.AsQueryable();
 
             var pagedSource = new PagedList<T>(
                 ordered.ToList(),
-                this.tProps.PageNumber,
+                this.tProps.TableModel.PageNumber,
                 this.tProps.PageSize);
 
             return pagedSource;
-        }
-
-        private Dictionary<string, T> MakeJsonKeys()
-        {
-            return pagedSource.ToDictionary(k => this.GetKeyAsJson(k), v => v);
-        }
-
-        private PersistedTableModel MakePersistedModel()
-        {
-            var model = this.tProps.TableModel.PersistedData == null
-                ? new PersistedTableModel()
-                : Json.Decode<PersistedTableModel>(this.tProps.TableModel.PersistedData);
-
-            return model;
-        }
-
-        private void Persist()
-        {
-            this.tProps.Selected = new List<T>();
-
-            foreach (var jsonKey in this.persistedModel.Selected)
-            {
-                if (jsonKeys.ContainsKey(jsonKey))
-                {
-                    this.tProps.Selected.Add(jsonKeys[jsonKey]);
-                }
-            }                        
-
-            if (this.persistedModel.Sorting == null) {
-                return;
-            }
-            
-            foreach (var ps in this.persistedModel.Sorting.Where(s => s.Value != null)) {
-                var column = this.tProps.Columns.FirstOrDefault(c => ps.Key != null && c.SortIdentityName == ps.Key);
-                
-                if (column != null) {
-                    column.SortImportance = ps.Value.Importance;
-                    column.SortDirection = ps.Value.Direction;
-                }
-            }
         }
 
         private void RenderHeader(StringBuilder result)
@@ -206,7 +153,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 
             foreach (var row in pagedSource)
             {
-                var keyResult = this.GetKeyAsJson(row);
+                var keyResult = this.GetKeyAsJson(row, true);
                 var rowFormat = this.tProps.RowFormatter == null ? null : this.tProps.RowFormatter(row);
 
                 var css = rowFormat == null ? null : RabbitHelper.MakeClassAttribute(new string[] 
@@ -215,7 +162,9 @@ namespace Trooper.Ui.Mvc.Rabbit
                     rowFormat.Bold ? "bold" : null,
                     rowFormat.RowTextHighlightStyle != RowTextHighlight.None ? string.Format("text-{0}", rowFormat.RowTextHighlightStyle.ToString().ToLower()) : null,
                     rowFormat.RuleUnderStyle != RuleStyle.Default ? string.Format("rule-under rule-under-{0}", rowFormat.RuleUnderStyle.ToString().ToLower()) : null,
-                    rowFormat.RuleOverStyle != RuleStyle.Default ? string.Format("rule-over rule-over-{0}", rowFormat.RuleOverStyle.ToString().ToLower()) : null
+                    rowFormat.RuleOverStyle != RuleStyle.Default ? string.Format("rule-over rule-over-{0}", rowFormat.RuleOverStyle.ToString().ToLower()) : null,
+                    this.tProps.RowSelectionMode == TableRowSelectionModes.None ? null : "is-selectable",
+                    this.tProps.TableModel.Selected.Contains(row) ? "selected" : null
                 });
 
                 result.AppendFormat("<tr data-value=\"{0}\" {1}>\r\n", keyResult, css);
@@ -240,7 +189,19 @@ namespace Trooper.Ui.Mvc.Rabbit
             result.Append("</tbody>\r\n");
         }
 
-        private string GetKeyAsJson(T row)
+        private string GetKeyAsJson(T row, bool quote)
+        {
+            var result = this.GetKeyAsDictionary(row);
+
+            if (quote)
+            {
+                return Json.Encode(result).Replace("\"", "&quot;");
+            }
+
+            return Json.Encode(result);
+        }
+
+        private Dictionary<string, object> GetKeyAsDictionary(T row)
         {
             if (this.tProps.Keys == null || !this.tProps.Keys.Any())
             {
@@ -262,7 +223,7 @@ namespace Trooper.Ui.Mvc.Rabbit
                 keyResult.Add(name, compiledKey(row));
             }
 
-            return Json.Encode(keyResult).Replace("\"", "&quot;");
+            return keyResult;
         }
 
         private void RenderFooter(StringBuilder result, PagedList<T> pagedSource)

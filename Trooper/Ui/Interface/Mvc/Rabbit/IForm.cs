@@ -69,7 +69,7 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit
 
         IHtmlString Table<T>(TableProps<T> tProps) where T : class;
 
-        IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableProps<T> tProps) where T : class;
+        IHtmlString TableFor<T>(Expression<Func<TModel, TableModel<T>>> expression, TableProps<T> tProps) where T : class;
 
         IHtmlString TextareaBox(TextareaBoxProps tabProps);
 

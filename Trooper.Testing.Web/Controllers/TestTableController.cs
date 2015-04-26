@@ -16,6 +16,7 @@ namespace Trooper.Testing.Web.Controllers
     using Trooper.BusinessOperation2.Utility;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
     using System;
+    using System.Linq;
     using System.IO;
     using CsvHelper;
     using CsvHelper.Configuration;
@@ -42,7 +43,7 @@ namespace Trooper.Testing.Web.Controllers
         {
             var model = new TestTableModel();
 
-            model.TbMdl001 = new TableModel();
+            model.TbMdl001 = new TableModel<BaseballMaster>();
             
             Persist(model);
 
@@ -73,7 +74,7 @@ namespace Trooper.Testing.Web.Controllers
             var csv = new CsvReader(reader);
             csv.Configuration.IsHeaderCaseSensitive = false;
             csv.Configuration.RegisterClassMap<BaseballMasterMap>();
-            currentModel.BaseballMasters = csv.GetRecords<BaseballMaster>();
+            currentModel.TbMdl001.Source = csv.GetRecords<BaseballMaster>().ToList();
             //currentModel.BaseballMasters
 
         }

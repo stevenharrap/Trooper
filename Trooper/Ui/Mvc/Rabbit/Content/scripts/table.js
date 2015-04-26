@@ -88,16 +88,34 @@
 	};
 
 	this.rowClick = function (e) {
+	    if (this.rowSelectionMode == 'None') {
+	        return;
+	    }
+
 	    var data = this.persistedData();
 	    var tr = $(e.currentTarget).closest('tr');
-	    var keys = JSON.parse(tr.attr('data-value'));
-        
+	    var key = JSON.parse(tr.attr('data-value'));
+
 	    if (data.Selected == null) {
 	        data.Selected = new Array();
 	    }
+        
+	    debugger;
 
-	    data.Selected.push(keys);
-	    tr.addClass('selected');
+	    if (this.hasKey(data.Selected, key)) {
+	        data.Selected = this.removeKey(data.Selected, key);
+	        tr.removeClass('selected');
+	    }
+
+	    else if (this.rowSelectionMode == 'Single') {
+	        data.Selected = new Array(key);
+	        $('#' + this.id + ' tbody tr').removeClass('selected');
+	        tr.addClass('selected');
+	    }
+	    else if (this.rowSelectionMode == 'Multiple') {
+	        data.Selected.push(key);
+	        tr.addClass('selected');
+	    }
 
 	    this.persistedData(data);
 	};
@@ -160,6 +178,39 @@
 	    }
 
 	    return null;
+	};
+
+	this.hasKey = function(selected, key) {
+	    for (var i = 0; i < selected.length; i++) {
+	        if (this.areKeysEqual(selected[i], key)) {
+	            return true;
+	        }
+	    }
+
+	    return false;
+	};
+
+	this.removeKey = function (selected, key) {
+	    var result = new Array();
+
+	    for (var i = 0; i < selected.length; i++) {
+	        if (!this.areKeysEqual(selected[i], key)) {
+	            result.push(selected[i]);
+	        }
+	    }
+
+	    return result;
+	};
+
+	this.areKeysEqual = function (key1, key2) {
+	    if (key1 == null || key2 == null) {
+	        return false;
+	    }
+
+	    var json1 = JSON.stringify(key1);
+	    var json2 = JSON.stringify(key2);
+
+	    return json1 == json2;
 	};
 
 	this.post = function () {

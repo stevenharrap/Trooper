@@ -905,10 +905,10 @@ namespace Trooper.Ui.Mvc.Rabbit
             return new Table<T>(tProps, this.Html, this.goRabbit.Cruncher).Render();
         }
 
-        public IHtmlString TableFor<T>(Expression<Func<TModel, TableModel>> expression, TableProps<T> tProps)
+        public IHtmlString TableFor<T>(Expression<Func<TModel, TableModel<T>>> expression, TableProps<T> tProps)
             where T : class
         {
-            var value = RabbitHelper.GetExpressionValue<TModel, TableModel>(expression, this.goRabbit.HtmlHelper);
+            var value = RabbitHelper.GetExpressionValue<TModel, TableModel<T>>(expression, this.goRabbit.HtmlHelper);
 
             tProps.Name = this.goRabbit.HtmlHelper.NameFor(expression).ToString();
             tProps.Id = this.GetIdFromName(tProps);
