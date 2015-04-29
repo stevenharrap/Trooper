@@ -140,7 +140,7 @@
         
         public Tc GetByKey(object obj)
         {
-            var item = AutoMapper.Mapper.Map<Tc>(obj);
+            var item = AutoMapper.Mapper.DynamicMap<Tc>(obj);
 
             return this.GetByKey(item);
         }

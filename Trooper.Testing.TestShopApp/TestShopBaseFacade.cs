@@ -17,7 +17,7 @@ namespace Trooper.NUnitTesting.TestShopApp
     [Category("Facade")]
     public class TestShopBaseFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
     {
-		private const string ToBeImplemented = "Ignored in base testing.";
+		private const string IgnoreInBase = "Ignored in base testing.";
 
 	    [TestFixtureSetUp]
         public void TestFixtureSetup()
@@ -34,14 +34,14 @@ namespace Trooper.NUnitTesting.TestShopApp
         }
 
 		[Test]
-		[Ignore(ToBeImplemented)]
+		[Ignore(IgnoreInBase)]
         public override void TestUpdate()
         {
             Assert.That(true);
         }
 
         [Test]
-        [Ignore(ToBeImplemented)]
+        [Ignore(IgnoreInBase)]
         public override void TestGetSome()
         {
             Assert.That(true);
