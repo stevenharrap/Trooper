@@ -18,22 +18,18 @@ namespace Trooper.Testing.CoreShop.Facade
 			{
 				var sns = search as ShopNameSearch;
 
-				var data = from s in this.GetAll()
+				return from s in this.GetAll()
 					where s.Name == sns.Name
 					select s;
-
-				return this.Limit(data, sns);
 			}
 
 			if (search is ShopAddressSearch)
 			{
 				var sns = search as ShopAddressSearch;
 
-				var data = from s in this.GetAll()
+				return from s in this.GetAll()
 						   where s.Address == sns.Address
 						   select s;
-
-				return this.Limit(data, sns);
 			}
 
 			return base.GetSome(search);

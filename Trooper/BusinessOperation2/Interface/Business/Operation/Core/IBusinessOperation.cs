@@ -6,7 +6,7 @@
         where Tc : class, Ti, new()
         where Ti : class
     {
-        ICredential DefaultCredential { get; set; }
+        IIdentity DefaultIdentity { get; set; }
 
         IBusinessCore<Tc, Ti> BusinessCore { get; set; }
     }

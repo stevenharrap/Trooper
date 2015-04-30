@@ -152,7 +152,7 @@
 
         public bool Exists(object obj)
         {
-            var item = AutoMapper.Mapper.Map<Tc>(obj);
+            var item = AutoMapper.Mapper.DynamicMap<Tc>(obj);
 
             return this.Exists(item);
         }
@@ -197,7 +197,7 @@
 
         public bool AreEqual(object obj, Tc item2)
         {
-            var entity1 = AutoMapper.Mapper.Map<Tc>(obj);
+            var entity1 = AutoMapper.Mapper.DynamicMap<Tc>(obj);
 
             return this.AreEqual(entity1, item2);
         }

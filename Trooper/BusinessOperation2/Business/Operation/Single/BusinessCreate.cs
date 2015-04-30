@@ -18,28 +18,28 @@ namespace Trooper.BusinessOperation2.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public ICredential DefaultCredential { get; set; }
+        public IIdentity DefaultIdentity { get; set; }
 
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
 
-        public IAddResponse<Ti> Add(Ti item, ICredential credential = null)
+        public IAddResponse<Ti> Add(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.Add(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.Add(item, identity ?? this.DefaultIdentity);
         }
 
-        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, ICredential credential = null)
+        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity = null)
         {
-            return this.BusinessCore.AddSome(items, credential ?? this.DefaultCredential);
+            return this.BusinessCore.AddSome(items, identity ?? this.DefaultIdentity);
         }
 
-        public IResponse Validate(Ti item, ICredential credential = null)
+        public IResponse Validate(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.Validate(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.Validate(item, identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
-            return this.BusinessCore.IsAllowed(argument, credential ?? this.DefaultCredential);
+            return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);
         }
     }
 }

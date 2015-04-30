@@ -19,48 +19,48 @@ namespace Trooper.BusinessOperation2.Business.Operation.Composite
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public ICredential DefaultCredential { get; set; }
+        public IIdentity DefaultIdentity { get; set; }
 
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
-        
-        public IAddResponse<Ti> Add(Ti item, ICredential credential = null)
+
+        public IAddResponse<Ti> Add(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.Add(item, credential ?? this.DefaultCredential);
-        }
-        
-        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, ICredential credential = null)
-        {
-            return this.BusinessCore.AddSome(items, credential ?? this.DefaultCredential);
+            return this.BusinessCore.Add(item, identity ?? this.DefaultIdentity);
         }
 
-        public IResponse Validate(Ti item, ICredential credential = null)
+        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity = null)
         {
-            return this.BusinessCore.Validate(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.AddSome(items, identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential = null)
+        public IResponse Validate(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.IsAllowed(argument, credential ?? this.DefaultCredential);
+            return this.BusinessCore.Validate(item, identity ?? this.DefaultIdentity);
         }
 
-        public IManyResponse<Ti> GetAll(ICredential credential = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
-            return this.BusinessCore.GetAll(credential ?? this.DefaultCredential);
+            return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);
         }
 
-        public IManyResponse<Ti> GetSome(Interface.DataManager.ISearch search, ICredential credential = null)
+        public IManyResponse<Ti> GetAll(IIdentity identity = null)
         {
-            return this.BusinessCore.GetSome(search, credential ?? this.DefaultCredential);
+            return this.BusinessCore.GetAll(identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<Ti> GetByKey(Ti item, ICredential credential = null)
+        public IManyResponse<Ti> GetSome(Interface.DataManager.ISearch search, IIdentity identity = null)
         {
-            return this.BusinessCore.GetByKey(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.GetSome(search, identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<bool> ExistsByKey(Ti item, ICredential credential = null)
+        public ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.ExistsByKey(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.GetByKey(item, identity ?? this.DefaultIdentity);
+        }
+
+        public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity = null)
+        {
+            return this.BusinessCore.ExistsByKey(item, identity ?? this.DefaultIdentity);
         }
     }
 }

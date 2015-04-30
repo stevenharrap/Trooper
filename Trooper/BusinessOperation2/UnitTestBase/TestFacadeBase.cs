@@ -338,9 +338,7 @@ using Trooper.BusinessOperation2.Interface.UnitTestBase;
         /// <summary>
         ///     Test <see cref="IFacade.GetSome(ISearch search)"/>
         /// </summary>
-        [Test]
         public abstract void TestGetSome();
-
 
         public abstract void TestUpdate();
 

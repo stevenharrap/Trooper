@@ -17,18 +17,18 @@ namespace Trooper.BusinessOperation2.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public ICredential DefaultCredential { get; set; }
+        public IIdentity DefaultIdentity { get; set; }
 
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
 
-        public IResponse Validate(Ti item, ICredential credential = null)
+        public IResponse Validate(Ti item, IIdentity identity = null)
         {
-            return this.Validate(item, credential ?? this.DefaultCredential);
+            return this.Validate(item, identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
-            return this.IsAllowed(argument, credential ?? this.DefaultCredential);
+            return this.IsAllowed(argument, identity ?? this.DefaultIdentity);
         }
     }
 }

@@ -157,6 +157,7 @@
     <Compile Include="BusinessOperation2\Business\Security\AdCredential.cs" />
     <Compile Include="BusinessOperation2\Business\Security\Credential.cs" />
     <Compile Include="BusinessOperation2\Business\Security\Authorization.cs" />
+    <Compile Include="BusinessOperation2\Business\Security\Identity.cs" />
     <Compile Include="BusinessOperation2\Business\Security\RequestArg.cs" />
     <Compile Include="BusinessOperation2\Business\Security\UserRole.cs" />
     <Compile Include="BusinessOperation2\Business\Security\Action.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="BusinessOperation2\Interface\Business\Response\ISaveResponse.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Response\ISingleResponse.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\ICredential.cs" />
+    <Compile Include="BusinessOperation2\Interface\Business\Security\IIdentity.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\IUserRole.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\IAuthorization.cs" />
     <Compile Include="BusinessOperation2\Interface\Business\Security\IRequestArg.cs" />

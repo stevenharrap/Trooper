@@ -13,6 +13,11 @@
 
         public IList<IUserRole> Roles { get; set; }
 
+        public ICredential ResolveCredential(IIdentity identity)
+        {
+            return new Credential { Username = identity.Username };
+        }
+
         public virtual bool IsAddDataAction(string action)
         {
             return action == Action.AddAction || action == Action.AddSomeAction;

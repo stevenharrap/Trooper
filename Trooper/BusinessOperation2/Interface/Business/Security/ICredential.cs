@@ -2,10 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public interface ICredential
-    {
-        string Username { get; set; }               
-
+    public interface ICredential : IIdentity
+    {                    
         IEnumerable<string> Groups { get; set; }
     }
 }

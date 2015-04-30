@@ -11,6 +11,8 @@
 
         IList<IUserRole> Roles { get; set; }
 
+        ICredential ResolveCredential(IIdentity identity);
+
         bool IsAddDataAction(string action);
 
         bool IsUpdateDataAction(string action);

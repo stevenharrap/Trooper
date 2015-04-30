@@ -9,16 +9,6 @@
         where Tc : class, Ti, new()
         where Ti : class
     {
-        /// <summary>
-        /// Can the user perform the given action. The search and entities provide the context to what is being attempted. 
-        /// You will need to override this method if you have special access checking requirements.
-        /// </summary>
-        /// <param name="argument">
-        /// The argument.
-        /// </param>
-        /// <returns>
-        /// The <see cref="OperationResponse"/>.
-        /// </returns>
-        ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential = null);
+        ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null);
     }
 }

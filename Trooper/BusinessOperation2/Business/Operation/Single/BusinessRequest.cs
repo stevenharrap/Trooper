@@ -16,13 +16,13 @@ namespace Trooper.BusinessOperation2.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public ICredential DefaultCredential { get; set; }
+        public IIdentity DefaiultIdentity { get; set; }
 
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
-            return this.BusinessCore.IsAllowed(argument, credential ?? this.DefaultCredential);
+            return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaiultIdentity);
         }
     }
 }

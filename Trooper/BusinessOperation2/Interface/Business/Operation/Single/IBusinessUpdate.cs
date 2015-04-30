@@ -19,43 +19,10 @@ namespace Trooper.BusinessOperation2.Interface.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        /// <summary>
-        /// The add operation for adding an item to the system if the user can access the method. 
-        /// Result and key of the new entity is returned in the response.
-        /// </summary>
-        /// <param name="entity">
-        /// The entity to add
-        /// </param>
-        /// <returns>
-        /// The <see cref="OperationResponse"/>.
-        /// </returns>
-        IAddResponse<Tc> Add(Ti item, ICredential credential = null);
+        IAddResponse<Tc> Add(Ti item, IIdentity identity = null);
 
-        /// <summary>
-        /// The update operation for updating an item in the system if the user can access the method. 
-        /// The result is returned in the response.
-        /// </summary>
-        /// <param name="entity">
-        /// The entity to update.
-        /// </param>
-        /// <returns>
-        /// The <see cref="OperationResponse"/>.
-        /// </returns>
-        IResponse Update(Ti item, ICredential credential = null);
+        IResponse Update(Ti item, IIdentity identity = null);
 
-        /// <summary>
-        /// The save operation for adding an item to the system if it 
-        /// does not exist or update an existing item. 
-        /// Requires that user can access Add and update methods. 
-        /// Result and key of the new entity is returned in the response
-        /// if it is an add. 
-        /// </summary>
-        /// <param name="entity">
-        /// The entity to add or update.
-        /// </param>
-        /// <returns>
-        /// The <see cref="OperationResponse"/>.
-        /// </returns>
-        ISaveResponse<Tc> Save(Ti item, ICredential credential = null);
+        ISaveResponse<Tc> Save(Ti item, IIdentity identity = null);
     }
 }

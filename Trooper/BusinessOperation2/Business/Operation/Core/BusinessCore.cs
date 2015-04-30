@@ -32,19 +32,9 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         public IBusinessPack<Tc, Ti> GetBusinessPack()
         {
             return this.OnRequestBusinessPack();
-        }
-               
-        /// <summary>
-        /// The add operation for adding an item to the system if the user can access the method. 
-        /// Result and key of the new entity is returned in the response.
-        /// </summary>
-        /// <param name="entity">
-        /// The entity to add
-        /// </param>
-        /// <returns>
-        /// The <see cref="OperationResponse"/>.
-        /// </returns>
-        public virtual IAddResponse<Ti> Add(Ti item, ICredential credential)
+        }               
+        
+        public virtual IAddResponse<Ti> Add(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {                
@@ -70,7 +60,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = added };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -83,17 +73,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        /// <summary>
-        /// The add operation for adding items to the system. The user will need to have access to the method. 
-        /// Result and key of the new entity is returned in the response.
-        /// </summary>
-        /// <param name="entities">
-        /// The entities to add
-        /// </param>
-        /// <returns>
-        /// The <see cref="OperationResponse"/>.
-        /// </returns>
-        public virtual IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, ICredential credential)
+        public virtual IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -113,7 +93,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.AddSomeAction, Items = added };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -126,7 +106,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IResponse Validate(Ti item, ICredential credential)
+        public virtual IResponse Validate(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -136,7 +116,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.ValidateAction, Item = item as Tc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -147,7 +127,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential)
+        public virtual ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -155,7 +135,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.IsAllowedAction };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -164,7 +144,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IResponse DeleteByKey(Ti item, ICredential credential)
+        public virtual IResponse DeleteByKey(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -174,7 +154,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -187,7 +167,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, ICredential credential)
+        public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -195,7 +175,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                 var response = new Response();
                 var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -208,14 +188,14 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IManyResponse<Ti> GetAll(ICredential credential = null)
+        public virtual IManyResponse<Ti> GetAll(IIdentity identity = null)
         {
             using (var bp = this.GetBusinessPack())
             {
                 var response = new ManyResponse<Ti>();
                 var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -226,14 +206,14 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IManyResponse<Ti> GetSome(ISearch search, ICredential credential)
+        public virtual IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
                 var response = new ManyResponse<Ti>();
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -246,7 +226,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual ISingleResponse<Ti> GetByKey(Ti item, ICredential credential)
+        public virtual ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -254,7 +234,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
                 var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -273,14 +253,14 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual ISingleResponse<bool> ExistsByKey(Ti item, ICredential credential)
+        public virtual ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
                 var response = new SingleResponse<bool>();
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -292,7 +272,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IResponse Update(Ti item, ICredential credential)
+        public virtual IResponse Update(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -311,7 +291,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = updated };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -324,7 +304,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual ISaveResponse<Ti> Save(Ti item, ICredential credential)
+        public virtual ISaveResponse<Ti> Save(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -344,7 +324,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = exists ? Action.UpdateAction :  Action.AddAction, Item = saved };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, credential))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
                 {
                     return response;
                 }
@@ -358,7 +338,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, ICredential credential)
+        public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -385,7 +365,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
                     if (bp.Authorization != null)
                     {
-                        bp.Authorization.IsAllowed(arg, credential);
+                        bp.Authorization.IsAllowed(arg, identity);
                     }
                 }
 

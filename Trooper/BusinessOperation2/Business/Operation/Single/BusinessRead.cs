@@ -17,31 +17,31 @@ namespace Trooper.BusinessOperation2.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public ICredential DefaultCredential { get; set; }
+        public IIdentity DefaultIdentity { get; set; }
 
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
 
-        public IManyResponse<Ti> GetAll(ICredential credential = null)
+        public IManyResponse<Ti> GetAll(IIdentity identity = null)
         {
-            return this.BusinessCore.GetAll(credential ?? this.DefaultCredential);
+            return this.BusinessCore.GetAll(identity ?? this.DefaultIdentity);
         }
 
-        public IManyResponse<Ti> GetSome(ISearch search, ICredential credential = null)
+        public IManyResponse<Ti> GetSome(ISearch search, IIdentity identity = null)
         {
-            return this.BusinessCore.GetSome(search, credential ?? this.DefaultCredential);
+            return this.BusinessCore.GetSome(search, identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<Ti> GetByKey(Ti item, ICredential credential = null)
+        public ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.GetByKey(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.GetByKey(item, identity ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<bool> ExistsByKey(Ti item, ICredential credential = null)
+        public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.ExistsByKey(item, credential ?? this.DefaultCredential);
+            return this.BusinessCore.ExistsByKey(item, credential ?? this.DefaultIdentity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, ICredential credential = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
             return this.BusinessCore.IsAllowed(argument, credential ?? this.DefaultCredential);
         }
