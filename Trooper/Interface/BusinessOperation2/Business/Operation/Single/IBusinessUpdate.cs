@@ -4,14 +4,14 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.BusinessOperation2.Interface.Business.Operation.Single
-{
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Response;
+using Trooper.Interface.BusinessOperation2.Business.Security;
 
-    /// <summary>
+namespace Trooper.Interface.BusinessOperation2.Business.Operation.Single
+{
+	/// <summary>
     /// Provides the means to expose your Model and Facade, wrap it in Read and Write operations and control
     /// access to those operations.
     /// </summary>

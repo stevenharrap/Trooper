@@ -1,10 +1,11 @@
-﻿namespace Trooper.BusinessOperation2.Injection
+﻿using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Security;
+
+namespace Trooper.BusinessOperation2.Injection
 {
     using Autofac;
     using Trooper.BusinessOperation2.Business.Operation.Core;
     using Trooper.BusinessOperation2.Interface;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
     using Trooper.BusinessOperation2.Interface.DataManager;
 
     public class BusinessOperationInjection

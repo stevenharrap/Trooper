@@ -1,9 +1,10 @@
-﻿namespace Trooper.BusinessOperation2.Interface.Business.Response
-{
-    using System.Runtime.Serialization;
-    using System.ServiceModel;
+﻿using System.Runtime.Serialization;
+using System.ServiceModel;
+using Trooper.BusinessOperation2;
 
-    [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
+namespace Trooper.Interface.BusinessOperation2.Business.Response
+{
+	[ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public interface ISaveSomeItem<T>
     {
         /// <summary>

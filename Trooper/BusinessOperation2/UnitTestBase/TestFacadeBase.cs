@@ -1,4 +1,5 @@
 ﻿using Trooper.BusinessOperation2.Interface.DataManager;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
 
 namespace Trooper.BusinessOperation2.UnitTestBase
 {
@@ -9,8 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Trooper.BusinessOperation2.Business.Operation.Core;
-using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-using Trooper.BusinessOperation2.Interface.UnitTestBase;
+    using Trooper.BusinessOperation2.Interface.UnitTestBase;
 
     
     public abstract class TestFacadeBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>

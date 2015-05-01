@@ -4,15 +4,14 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using Trooper.Interface.BusinessOperation2.Business.Operation.Composite;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Response;
+using Trooper.Interface.BusinessOperation2.Business.Security;
+
 namespace Trooper.BusinessOperation2.Business.Operation.Composite
 {
     using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.Business.Operation;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Composite;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Single;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
 
     public class BusinessCr<Tc, Ti> : IBusinessCr<Tc, Ti>

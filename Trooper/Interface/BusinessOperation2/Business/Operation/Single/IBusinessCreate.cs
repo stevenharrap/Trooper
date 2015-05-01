@@ -4,15 +4,14 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.BusinessOperation2.Interface.Business.Operation.Single
-{
-    using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
+using System.Collections.Generic;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Response;
+using Trooper.Interface.BusinessOperation2.Business.Security;
 
-    
-    public interface IBusinessCreate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessValidate<Tc, Ti>, IBusinessOperation<Tc, Ti>
+namespace Trooper.Interface.BusinessOperation2.Business.Operation.Single
+{
+	public interface IBusinessCreate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessValidate<Tc, Ti>, IBusinessOperation<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {

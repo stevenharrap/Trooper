@@ -1,12 +1,13 @@
 ﻿
+using Trooper.Interface.BusinessOperation2.Business.Response;
+
 namespace Trooper.BusinessOperation2.Business.Response
 {
     using System;
     using System.Runtime.Serialization;
     using System.ServiceModel;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
 
-    [Serializable]
+	[Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SaveSomeItem<T> : ISaveSomeItem<T>

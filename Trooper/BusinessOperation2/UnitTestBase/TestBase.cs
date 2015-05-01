@@ -1,7 +1,8 @@
-﻿namespace Trooper.BusinessOperation2.UnitTestBase
+﻿using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+
+namespace Trooper.BusinessOperation2.UnitTestBase
 {
 	using Autofac;
-	using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
 	using Trooper.BusinessOperation2.Interface.UnitTestBase;
 
     public class TestBase<TiBusinessCore, Tc, Ti>

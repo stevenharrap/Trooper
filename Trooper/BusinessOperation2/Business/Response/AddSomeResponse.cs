@@ -4,15 +4,16 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using Trooper.Interface.BusinessOperation2.Business.Response;
+
 namespace Trooper.BusinessOperation2.Business.Response
 {
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.ServiceModel;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
 
-    /// <summary>
+	/// <summary>
     /// The many response is an implementation of the IOperationResponse interface
     /// for responding to requests for some entities of a particular type.
     /// </summary>

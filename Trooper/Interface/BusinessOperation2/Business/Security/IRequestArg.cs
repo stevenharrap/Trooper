@@ -4,12 +4,12 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.BusinessOperation2.Interface.Business.Security
-{
-    using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.DataManager;
+using System.Collections.Generic;
+using Trooper.BusinessOperation2.Interface.DataManager;
 
-    /// <summary>
+namespace Trooper.Interface.BusinessOperation2.Business.Security
+{
+	/// <summary>
     /// Instances deriving this interface are passed to the CanUser Method
     /// of Access.
     /// </summary>

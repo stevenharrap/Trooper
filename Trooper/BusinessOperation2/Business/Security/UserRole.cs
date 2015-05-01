@@ -1,9 +1,10 @@
-﻿namespace Trooper.BusinessOperation2.Business.Security
+﻿using Trooper.Interface.BusinessOperation2.Business.Security;
+
+namespace Trooper.BusinessOperation2.Business.Security
 {
     using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
 
-    public class UserRole : IUserRole
+	public class UserRole : IUserRole
     {
         public string Action { get; set; }
 

@@ -4,14 +4,14 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.BusinessOperation2.Interface.Business.Operation.Single
+using System.Collections.Generic;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Security;
+
+namespace Trooper.Interface.BusinessOperation2.Business.Operation.Single
 {
-    using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    
-    public interface IBusinessDelete<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
+	public interface IBusinessDelete<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {

@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Trooper.BusinessOperation2.Interface.Business.Security
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
-    /// <summary>
+namespace Trooper.Interface.BusinessOperation2.Business.Security
+{
+	/// <summary>
     /// This class provides the data for the Business classes to determine if the given user
     /// can perform the required action.
     /// </summary>

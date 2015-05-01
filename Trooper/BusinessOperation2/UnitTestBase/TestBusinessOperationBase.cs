@@ -1,13 +1,13 @@
 ﻿using Trooper.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Security;
 
 namespace Trooper.BusinessOperation2.UnitTestBase
 {
     using Autofac;
 using NUnit.Framework;
 using Trooper.BusinessOperation2.Business.Security;
-using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-using Trooper.BusinessOperation2.Interface.Business.Security;
-using Trooper.BusinessOperation2.Interface.UnitTestBase;
+    using Trooper.BusinessOperation2.Interface.UnitTestBase;
     using System.Linq;
     using System;
     using System.Collections.Generic;

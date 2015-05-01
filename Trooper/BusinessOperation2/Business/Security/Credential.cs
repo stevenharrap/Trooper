@@ -1,9 +1,10 @@
-﻿namespace Trooper.BusinessOperation2.Business.Security
+﻿using Trooper.Interface.BusinessOperation2.Business.Security;
+
+namespace Trooper.BusinessOperation2.Business.Security
 {
     using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
 
-    public class Credential : ICredential
+	public class Credential : ICredential
     {
         public string Username { get; set; }
                 

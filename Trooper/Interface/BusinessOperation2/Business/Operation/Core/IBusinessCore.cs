@@ -4,14 +4,14 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.BusinessOperation2.Interface.Business.Operation.Core
-{
-	using System.Collections.Generic;
-	using Response;
-	using Security;
-	using DataManager;
-	using OperationResponse;
+using System.Collections.Generic;
+using Trooper.BusinessOperation2.Interface.DataManager;
+using Trooper.BusinessOperation2.Interface.OperationResponse;
+using Trooper.Interface.BusinessOperation2.Business.Response;
+using Trooper.Interface.BusinessOperation2.Business.Security;
 
+namespace Trooper.Interface.BusinessOperation2.Business.Operation.Core
+{
 	public delegate IBusinessPack<Tc, Ti> BusinessPackHandler<Tc, Ti>()        
         where Tc : class, Ti, new()
         where Ti : class;

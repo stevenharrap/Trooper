@@ -4,15 +4,16 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Interface.BusinessOperation2.Business.Response;
+using Trooper.Interface.BusinessOperation2.Business.Security;
+
 namespace Trooper.BusinessOperation2.Business.Operation.Core
 {
 	using System.Collections.Generic;
 	using System.Linq;
 	using Response;
 	using Security;
-	using Interface.Business.Operation.Core;
-	using Interface.Business.Response;
-	using Interface.Business.Security;
 	using Interface.DataManager;
 	using Interface.OperationResponse;
 	using Utility;

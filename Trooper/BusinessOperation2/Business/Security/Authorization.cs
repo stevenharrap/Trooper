@@ -1,8 +1,9 @@
-﻿namespace Trooper.BusinessOperation2.Business.Security
+﻿using Trooper.Interface.BusinessOperation2.Business.Security;
+
+namespace Trooper.BusinessOperation2.Business.Security
 {
 	using System.Collections.Generic;
 	using System.Linq;
-	using Trooper.BusinessOperation2.Interface.Business.Security;
 	using Trooper.BusinessOperation2.Interface.DataManager;
 	using Trooper.BusinessOperation2.Interface.OperationResponse;
 	using Trooper.BusinessOperation2.Utility;
