@@ -6,20 +6,18 @@
 
 namespace Trooper.BusinessOperation2.Business.Operation.Core
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Trooper.BusinessOperation2.Business.Response;
-    using Trooper.BusinessOperation2.Business.Security;
-    using Trooper.BusinessOperation2.Interface.Business.Operation;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
-    using Trooper.BusinessOperation2.Interface.DataManager;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.BusinessOperation2.Utility;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Response;
+	using Security;
+	using Interface.Business.Operation.Core;
+	using Interface.Business.Response;
+	using Interface.Business.Security;
+	using Interface.DataManager;
+	using Interface.OperationResponse;
+	using Utility;
 
-
-    /// <summary>
+	/// <summary>
     /// Provides the means to expose your Model, wrap it in Read and Add operations and control
     /// access to those operations.
     /// </summary>

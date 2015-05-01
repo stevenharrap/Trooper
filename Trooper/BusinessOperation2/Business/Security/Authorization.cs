@@ -1,10 +1,11 @@
 ﻿namespace Trooper.BusinessOperation2.Business.Security
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
-    using Trooper.BusinessOperation2.Interface.DataManager;
-    using Trooper.BusinessOperation2.Utility;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Trooper.BusinessOperation2.Interface.Business.Security;
+	using Trooper.BusinessOperation2.Interface.DataManager;
+	using Trooper.BusinessOperation2.Interface.OperationResponse;
+	using Trooper.BusinessOperation2.Utility;
 
     public class Authorization<Tc> : IAuthorization<Tc> 
         where Tc : class,  new()
@@ -13,7 +14,7 @@
 
         public IList<IUserRole> Roles { get; set; }
 
-        public ICredential ResolveCredential(IIdentity identity)
+        public virtual ICredential ResolveCredential(IIdentity identity)
         {
             return new Credential { Username = identity.Username };
         }
@@ -49,6 +50,11 @@
                 || action == Action.ExistsByKeyAction;
         }
 
+	    public bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity)
+	    {
+		    return this.IsAllowed(arg, this.ResolveCredential(identity));
+	    }
+
         public bool IsAllowed(IRequestArg<Tc> arg, ICredential credential)
         {
             var response = new Response.Response();
@@ -56,7 +62,12 @@
             return this.IsAllowed(arg, credential, response);
         }
 
-        public virtual bool IsAllowed(IRequestArg<Tc> arg, ICredential credential, Interface.OperationResponse.IResponse response)
+	    public bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity, IResponse response)
+	    {
+		    return this.IsAllowed(arg, this.ResolveCredential(identity), response);
+	    }
+
+        public virtual bool IsAllowed(IRequestArg<Tc> arg, ICredential credential, IResponse response)
         {
             if (this.Roles == null)
             {

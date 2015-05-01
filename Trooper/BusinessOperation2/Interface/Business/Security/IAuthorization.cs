@@ -1,8 +1,8 @@
 ﻿namespace Trooper.BusinessOperation2.Interface.Business.Security
 {
     using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Interface.DataManager;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
+    using DataManager;
+    using OperationResponse;
 
     public interface IAuthorization<Tc> 
         where Tc : class, new()
@@ -23,7 +23,11 @@
 
         bool IsReadAction(string action);
 
+		bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity);
+
         bool IsAllowed(IRequestArg<Tc> arg, ICredential credential);
+
+		bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity, IResponse response);
 
         bool IsAllowed(IRequestArg<Tc> arg, ICredential credential, IResponse response);
     }

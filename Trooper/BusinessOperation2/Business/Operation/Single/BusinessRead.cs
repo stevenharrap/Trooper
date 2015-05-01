@@ -6,12 +6,11 @@
 
 namespace Trooper.BusinessOperation2.Business.Operation.Single
 {
-    using Trooper.BusinessOperation2.Interface.Business.Operation;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Core;
-    using Trooper.BusinessOperation2.Interface.Business.Operation.Single;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
-    using Trooper.BusinessOperation2.Interface.DataManager;
+    using Interface.Business.Operation.Core;
+    using Interface.Business.Operation.Single;
+    using Interface.Business.Response;
+    using Interface.Business.Security;
+    using Interface.DataManager;
 
     public class BusinessRead<Tc, Ti> : IBusinessRead<Tc, Ti> 
         where Tc : class, Ti, new()
@@ -38,12 +37,12 @@ namespace Trooper.BusinessOperation2.Business.Operation.Single
 
         public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity = null)
         {
-            return this.BusinessCore.ExistsByKey(item, credential ?? this.DefaultIdentity);
+			return this.BusinessCore.ExistsByKey(item, identity ?? this.DefaultIdentity);
         }
 
         public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
-            return this.BusinessCore.IsAllowed(argument, credential ?? this.DefaultCredential);
+			return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);
         }
     }
 }

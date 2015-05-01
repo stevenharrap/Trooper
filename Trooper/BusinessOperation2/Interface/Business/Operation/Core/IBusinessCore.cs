@@ -6,35 +6,16 @@
 
 namespace Trooper.BusinessOperation2.Interface.Business.Operation.Core
 {
-    using Autofac;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using Trooper.BusinessOperation2.Interface.Business.Response;
-    using Trooper.BusinessOperation2.Interface.Business.Security;
-    using Trooper.BusinessOperation2.Interface.DataManager;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
+	using System.Collections.Generic;
+	using Response;
+	using Security;
+	using DataManager;
+	using OperationResponse;
 
-    public delegate IBusinessPack<Tc, Ti> BusinessPackHandler<Tc, Ti>()        
+	public delegate IBusinessPack<Tc, Ti> BusinessPackHandler<Tc, Ti>()        
         where Tc : class, Ti, new()
         where Ti : class;
 
-    /// <summary>
-    /// Provides the means to expose your Model and Facade, wrap it in Read and Add operations and control
-    /// access to those operations.
-    /// </summary>
-    /// <typeparam name="TSearch">
-    /// The search class to provide parameters to the GetSome method
-    /// </typeparam>
-    /// <typeparam name="TEntity">
-    /// The class that contains the entity whole entity (but not navigation properties)
-    /// </typeparam>
-    /// <typeparam name="TEntityPrp">
-    /// The class that contains the entity properties (that are not primary or foreign key properties)
-    /// </typeparam>
-    /// <typeparam name="TEntityKey">
-    /// The key of the entity
-    /// </typeparam>
     public interface IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
