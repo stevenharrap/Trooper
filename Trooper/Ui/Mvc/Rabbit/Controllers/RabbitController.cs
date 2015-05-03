@@ -14,6 +14,7 @@ using System.IO;
 using System.Resources;
 using System.Web.Mvc;
 using Trooper.Properties;
+    using WebResources = Trooper.WebResources.Properties;
 
     /// <summary>
     /// The bootstrap controller. Currently supplied the icons for the bootstrap CSS library.
@@ -22,31 +23,31 @@ using Trooper.Properties;
     {
         private static Dictionary<string, Func<FileResult>> BinaryResources = new Dictionary<string, Func<FileResult>> 
         {
-            { "GlyphiconsHalflingsRegularEot", () => new FileContentResult(Resources.GlyphiconsHalflingsRegularEot, "application/vnd.ms-fontobject")},
-            { "GlyphiconsHalflingsRegularTtf", () => new FileContentResult(Resources.GlyphiconsHalflingsRegularTtf, "application/x-font-ttf")},
-            { "GlyphiconsHalflingsRegularWoff", () => new FileContentResult(Resources.GlyphiconsHalflingsRegularWoff, "application/font-woff")},
-            { "GlyphiconsHalflingsRegularWoff2", () => new FileContentResult(Resources.GlyphiconsHalflingsRegularWoff2, "application/font-woff")},
+            { "GlyphiconsHalflingsRegularEot", () => new FileContentResult(WebResources.Resources.GlyphiconsHalflingsRegularEot, "application/vnd.ms-fontobject")},
+            { "GlyphiconsHalflingsRegularTtf", () => new FileContentResult(WebResources.Resources.GlyphiconsHalflingsRegularTtf, "application/x-font-ttf")},
+            { "GlyphiconsHalflingsRegularWoff", () => new FileContentResult(WebResources.Resources.GlyphiconsHalflingsRegularWoff, "application/font-woff")},
+            { "GlyphiconsHalflingsRegularWoff2", () => new FileContentResult(WebResources.Resources.GlyphiconsHalflingsRegularWoff2, "application/font-woff")},
 
-            { "ui-bg_flat_0_aaaaaa_40x100_png", () => PngBitmapToByteStream(Resources.ui_bg_flat_0_aaaaaa_40x100_png)},
-            { "ui-bg_glass_55_fbf9ee_1x400_png", () => PngBitmapToByteStream(Resources.ui_bg_glass_55_fbf9ee_1x400_png)},
-            { "ui-bg_glass_65_ffffff_1x400_png", () => PngBitmapToByteStream(Resources.ui_bg_glass_65_ffffff_1x400_png)},
-            { "ui-bg_glass_75_dadada_1x400_png", () => PngBitmapToByteStream(Resources.ui_bg_glass_75_dadada_1x400_png)},
-            { "ui-bg_glass_75_e6e6e6_1x400_png", () => PngBitmapToByteStream(Resources.ui_bg_glass_75_e6e6e6_1x400_png)},
-            { "ui-bg_glass_75_ffffff_1x400_png", () => PngBitmapToByteStream(Resources.ui_bg_glass_75_ffffff_1x400_png)},
-            { "ui-bg_highlight_soft_75_cccccc_1x100_png", () => PngBitmapToByteStream(Resources.ui_bg_highlight_soft_75_cccccc_1x100_png)},
-            { "ui-bg_inset_soft_95_fef1ec_1x100_png", () => PngBitmapToByteStream(Resources.ui_bg_inset_soft_95_fef1ec_1x100_png)},
-            { "ui-icons_222222_256x240_png", () => PngBitmapToByteStream(Resources.ui_icons_222222_256x240_png)},
-            { "ui-icons_2e83ff_256x240_png", () => PngBitmapToByteStream(Resources.ui_icons_2e83ff_256x240_png)},
-            { "ui-icons_454545_256x240_png", () => PngBitmapToByteStream(Resources.ui_icons_454545_256x240_png)},
-            { "ui-icons_888888_256x240_png", () => PngBitmapToByteStream(Resources.ui_icons_888888_256x240_png)},
-            { "ui-icons_cd0a0a_256x240_png", () => PngBitmapToByteStream(Resources.ui_icons_cd0a0a_256x240_png)},
-            { "ui-icons_f6cf3b_256x240_png", () => PngBitmapToByteStream(Resources.ui_icons_f6cf3b_256x240_png)},
+            { "ui-bg_flat_0_aaaaaa_40x100_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_flat_0_aaaaaa_40x100_png)},
+            { "ui-bg_glass_55_fbf9ee_1x400_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_glass_55_fbf9ee_1x400_png)},
+            { "ui-bg_glass_65_ffffff_1x400_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_glass_65_ffffff_1x400_png)},
+            { "ui-bg_glass_75_dadada_1x400_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_glass_75_dadada_1x400_png)},
+            { "ui-bg_glass_75_e6e6e6_1x400_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_glass_75_e6e6e6_1x400_png)},
+            { "ui-bg_glass_75_ffffff_1x400_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_glass_75_ffffff_1x400_png)},
+            { "ui-bg_highlight_soft_75_cccccc_1x100_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_highlight_soft_75_cccccc_1x100_png)},
+            { "ui-bg_inset_soft_95_fef1ec_1x100_png", () => PngBitmapToByteStream(WebResources.Resources.ui_bg_inset_soft_95_fef1ec_1x100_png)},
+            { "ui-icons_222222_256x240_png", () => PngBitmapToByteStream(WebResources.Resources.ui_icons_222222_256x240_png)},
+            { "ui-icons_2e83ff_256x240_png", () => PngBitmapToByteStream(WebResources.Resources.ui_icons_2e83ff_256x240_png)},
+            { "ui-icons_454545_256x240_png", () => PngBitmapToByteStream(WebResources.Resources.ui_icons_454545_256x240_png)},
+            { "ui-icons_888888_256x240_png", () => PngBitmapToByteStream(WebResources.Resources.ui_icons_888888_256x240_png)},
+            { "ui-icons_cd0a0a_256x240_png", () => PngBitmapToByteStream(WebResources.Resources.ui_icons_cd0a0a_256x240_png)},
+            { "ui-icons_f6cf3b_256x240_png", () => PngBitmapToByteStream(WebResources.Resources.ui_icons_f6cf3b_256x240_png)},
         };
 
         private static readonly Dictionary<string, Func<ContentResult>> StringResources = new Dictionary<string, Func<ContentResult>> 
         {
-            { "GlyphiconsHalflingsReguarSvg", () => new ContentResult { Content = Resources.GlyphiconsHalflingsReguarSvg, ContentType = "image/svg+xml" }},
-            { "bootstrap_css_map", () => new ContentResult { Content = Resources.bootstrap_css_map, ContentType = "application/text" }},
+            { "GlyphiconsHalflingsReguarSvg", () => new ContentResult { Content = WebResources.Resources.GlyphiconsHalflingsReguarSvg, ContentType = "image/svg+xml" }},
+            { "bootstrap_css_map", () => new ContentResult { Content = WebResources.Resources.bootstrap_css_map, ContentType = "application/text" }},
         };
 
 

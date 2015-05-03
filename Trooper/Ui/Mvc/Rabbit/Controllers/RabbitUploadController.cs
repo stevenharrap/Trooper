@@ -15,6 +15,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Controllers
     using Trooper.Ui.Mvc.Rabbit;
     using Trooper.Ui.Mvc.Rabbit.Models;
     using Trooper.Ui.Mvc.Utility;
+    using WebResources = Trooper.WebResources.Properties;
 
     /// <summary>
     /// When an upload control is created on the page it will write an IFrame and that URL
@@ -59,7 +60,7 @@ namespace Trooper.Ui.Mvc.Rabbit.Controllers
             return new ContentResult
                 {
                     Content =
-                        "<html>\n<head>\n<script type=\"text/javascript\">\n" + Resources.jquery_min_js + "\n</script>\n"
+                        "<html>\n<head>\n<script type=\"text/javascript\">\n" + WebResources.Resources.jquery_min_js + "\n</script>\n"
                         + "<script type=\"text/javascript\">\n"
                         + "$(document).ready(function(){$('#UploadedFile').change(function(){$('form').submit();});});\n"
                         + "$(document).ready(function(){parent.window.trooper.ui.registry.getUpload('" + m.Id + "').iFrameLoad();});\n"

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper", "Trooper\Trooper.csproj", "{27F46F59-C7C9-4E02-93B9-91F7041A7980}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{73A4D8
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.WebResources", "Trooper.WebResources\Trooper.WebResources.csproj", "{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,24 @@ Global
 		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Staging|Any CPU.ActiveCfg = Release|Any CPU
 		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Staging|Any CPU.Build.0 = Release|Any CPU
 		{1F67547F-6E3B-462D-9E89-8F40412EFDE7}.Staging|x86.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Release|x86.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{837E10F9-68DD-4BF4-A4AD-BFD11EB2B852}.Staging|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

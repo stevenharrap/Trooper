@@ -84,6 +84,10 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -324,32 +328,11 @@
     <Compile Include="Ui\Mvc\Rabbit\Props\DecimalBoxProps.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\IntegerBoxProps.cs" />
     <Compile Include="Ui\Mvc\Rabbit\Props\TextBoxProps.cs" />
-    <None Include="Ui\Mvc\Rabbit\Content\Bootstrap\css\bootstrap.css.map" />
-    <None Include="Ui\Mvc\Rabbit\Content\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="Ui\Mvc\Rabbit\Content\jquery-inputmask\RobinHerbots-jquery.inputmask-3.1.62-1-gbbbae31.zip" />
+    <None Include="app.config" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\messagesPanel.js" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\numericBox.js" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\textareaBox.js" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\button.js" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-inputmask\jquery.inputmask.js" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_glass_75_ffffff_1x400.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-bg_inset-soft_95_fef1ec_1x100.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-icons_222222_256x240.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-icons_454545_256x240.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-icons_888888_256x240.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\images\ui-icons_f6cf3b_256x240.png" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui-bootstrap-theme\jquery-ui-1.10.0.custom.css" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui\jquery-ui.min.css" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery-ui\jquery-ui.min.js" />
-    <Content Include="Ui\Mvc\Rabbit\Content\moment\moment.js" />
     <Content Include="Ui\Mvc\Rabbit\Content\scripts\popover.js" />
     <Content Include="Ui\Mvc\Rabbit\Content\scripts\table.js.txt" />
     <Compile Include="Ui\Mvc\Rabbit\GoRabbit.cs" />
@@ -386,7 +369,10 @@
     <Compile Include="Utility\ReflectionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ui\Mvc\Rabbit\Content\Bootstrap\Controllers\" />
+    <ProjectReference Include="..\Trooper.WebResources\Trooper.WebResources.csproj">
+      <Project>{837e10f9-68dd-4bf4-a4ad-bfd11eb2b852}</Project>
+      <Name>Trooper.WebResources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -399,10 +385,6 @@
     <Content Include="Docs\StdDocument-HowTo\StdDocument-HowTo.txt" />
     <Content Include="Docs\StdDocument-HowTo\StdDocument-Schema.txt" />
     <Content Include="Docs\StdDocument-HowTo\Usage\YourAppWeb\ManageRecordView.cshtml.txt" />
-    <Content Include="Ui\Mvc\Rabbit\Content\Bootstrap\css\bootstrap.css" />
-    <Content Include="Ui\Mvc\Rabbit\Content\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Ui\Mvc\Rabbit\Content\Bootstrap\js\bootstrap.min.js" />
-    <Content Include="Ui\Mvc\Rabbit\Content\jquery\jquery.min.js" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\dateTimePicker.js" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\form.js" />
     <None Include="Ui\Mvc\Rabbit\Content\scripts\trooper.js" />
@@ -420,9 +402,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
-    <None Include="Ui\Mvc\Rabbit\Content\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Ui\Mvc\Rabbit\Content\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="Ui\Mvc\Rabbit\Content\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Ui\Mvc\Rabbit\Content\styles\dateTimePicker.less" />
     <None Include="Ui\Mvc\Rabbit\Content\styles\trooper.less" />
     <None Include="Ui\Mvc\Rabbit\Content\styles\searchBox.less" />

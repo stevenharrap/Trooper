@@ -22,8 +22,11 @@ using Trooper.Ui.Mvc.Rabbit.Props;
 using Trooper.Ui.Mvc.Utility;
 using Trooper.Utility;
 
+
 namespace Trooper.Ui.Mvc.Rabbit
 {
+    using WebResources = Trooper.WebResources.Properties;
+
 	/// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides
     /// flexible device independent display. This class provides none-form related UI elements
@@ -538,14 +541,14 @@ namespace Trooper.Ui.Mvc.Rabbit
 	    {
 			if (!this.goRabbit.Cruncher.HasJsItem("jquery"))
 			{
-				this.goRabbit.Cruncher.AddJsInline(Resources.jquery_min_js, "jquery", OrderOptions.First);
+                this.goRabbit.Cruncher.AddJsInline(WebResources.Resources.jquery_min_js, "jquery", OrderOptions.First);
 			}
 	    }
 
         public void IncludeJqueryInputMask() {
             if (!this.goRabbit.Cruncher.HasJsItem("jquery.inputmask.js"))
             {
-                this.goRabbit.Cruncher.AddJsInline(Resources.jquery_inputmask_js, "jquery.inputmask.js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(WebResources.Resources.jquery_inputmask_js, "jquery.inputmask.js", OrderOptions.Middle);
             }
         }
 
@@ -555,7 +558,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 			{
 				var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-				this.goRabbit.Cruncher.AddJsInline(Resources.bootstrap_min_js, "bootstrap", OrderOptions.First);
+                this.goRabbit.Cruncher.AddJsInline(WebResources.Resources.bootstrap_min_js, "bootstrap", OrderOptions.First);
 
 				var ghre = RabbitController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularEot");
 				var ghrs = RabbitController.MakeAction(urlHelper, "GlyphiconsHalflingsReguarSvg");
@@ -564,7 +567,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 				var ghrw2 = RabbitController.MakeAction(urlHelper, "GlyphiconsHalflingsRegularWoff2");
 				var getBootstrapCssMap = RabbitController.MakeAction(urlHelper, "bootstrap_css_map");
 
-				var css = Resources.bootstrap_css;
+                var css = WebResources.Resources.bootstrap_css;
 
 				css = css.Replace("../fonts/glyphicons-halflings-regular.eot", ghre);
 				css = css.Replace("../fonts/glyphicons-halflings-regular.woff", ghrw);
@@ -581,10 +584,10 @@ namespace Trooper.Ui.Mvc.Rabbit
 	    {
 			if (!this.goRabbit.Cruncher.HasJsItem("jquery-ui"))
 			{
-				this.goRabbit.Cruncher.AddJsInline(Resources.jquery_ui_min_js, "jquery-ui", OrderOptions.Middle);
-				this.goRabbit.Cruncher.AddCssInline(Resources.jquery_ui_min_css, "jquery-ui-css", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(WebResources.Resources.jquery_ui_min_js, "jquery-ui", OrderOptions.Middle);
+                //this.goRabbit.Cruncher.AddCssInline(WebResources.Resources.jquery_ui_min_css, "jquery-ui-css", OrderOptions.Middle);
 
-                var jqueryTheme = Resources.jquery_ui_1_10_0_custom_css;
+                var jqueryTheme = WebResources.Resources.jquery_ui_bootstrap_theme_css;
                                 
                 jqueryTheme = jqueryTheme.Replace("images/ui-bg_flat_0_aaaaaa_40x100.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_flat_0_aaaaaa_40x100_png"));
                 jqueryTheme = jqueryTheme.Replace("images/ui-bg_glass_55_fbf9ee_1x400.png", RabbitController.MakeAction(this.goRabbit.UrlHelper, "ui_bg_glass_55_fbf9ee_1x400_png"));
@@ -609,7 +612,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 	    {
 		    if (!this.goRabbit.Cruncher.HasJsItem("moment.js"))
 		    {
-				this.goRabbit.Cruncher.AddJsInline(Resources.moment_js, "moment.js", OrderOptions.Middle);
+                this.goRabbit.Cruncher.AddJsInline(WebResources.Resources.moment_js, "moment.js", OrderOptions.Middle);
 		    }
 	    }
 
