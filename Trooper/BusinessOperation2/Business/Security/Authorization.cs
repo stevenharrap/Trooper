@@ -13,7 +13,7 @@ namespace Trooper.BusinessOperation2.Business.Security
     {
         public IUnitOfWork Uow { get; set; }
 
-        public IList<IUserRole> Roles { get; set; }
+        public virtual IList<IUserRole> Roles { get; set; }
 
         public virtual ICredential ResolveCredential(IIdentity identity)
         {

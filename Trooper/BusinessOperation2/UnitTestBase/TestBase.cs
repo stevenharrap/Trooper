@@ -5,7 +5,7 @@ namespace Trooper.BusinessOperation2.UnitTestBase
 	using Autofac;
 	using Trooper.BusinessOperation2.Interface.UnitTestBase;
 
-    public class TestBase<TiBusinessCore, Tc, Ti>
+    public class TestBase<TiBusinessCore, Tc, Ti> : TestBase
         where TiBusinessCore : IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
@@ -31,5 +31,12 @@ namespace Trooper.BusinessOperation2.UnitTestBase
         {
             return this.Container.Resolve<TiBusinessCore>();
         }        
+    }
+
+    public class TestBase
+    {
+        public const string ValidUsername = "ValidTestUser";
+
+        public const string InvalidUsername = "InvalidTestUser";
     }
 }

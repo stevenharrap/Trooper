@@ -1,4 +1,4 @@
-namespace Trooper.Testing.CoreShop.Interface.Model
+namespace Trooper.Testing.ShopModel.Interface
 {
     public interface IShop
     {

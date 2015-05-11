@@ -1,4 +1,4 @@
-﻿namespace Trooper.Testing.CoreShop.Model
+﻿namespace Trooper.Testing.ShopModel
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;

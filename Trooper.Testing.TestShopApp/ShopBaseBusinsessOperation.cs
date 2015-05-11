@@ -1,12 +1,12 @@
-﻿namespace Trooper.NUnitTesting.TestShopApp.Base
+﻿namespace Trooper.Testing.DefaultShopApp
 {
     using NUnit.Framework;
     using Trooper.BusinessOperation2.Injection;
     using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.Testing.CoreShop;
-    using Trooper.Testing.CoreShop.Interface.Business.Support;
-    using Trooper.Testing.CoreShop.Interface.Model;
-    using Trooper.Testing.CoreShop.Model;
+    using Trooper.Testing.DefaultShopApi;
+    using Trooper.Testing.DefaultShopApi.Interface.Business.Support;
+    using Trooper.Testing.ShopModel;
+    using Trooper.Testing.ShopModel.Interface;
 
     [TestFixture]
     [Category("BusinessOperation")]
@@ -30,39 +30,39 @@
             base.SetUp();
         }
 
-        [Test]
-        [Ignore(ToBeImplemented)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestIsAllowed()
         {
-            Assert.That(true);
         }
 
-        [Test]
-        [Ignore(ToBeImplemented)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestUpdate()
         {
-            Assert.That(true);
         }
 
-        [Test]
-        [Ignore(ToBeImplemented)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestSave()
         {
-            Assert.That(true);
         }
 
-        [Test]
-        [Ignore(ToBeImplemented)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestSaveSome()
         {
-            Assert.That(true);
         }
 
-        [Test]
-        [Ignore(ToBeImplemented)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestValidate()
         {
-            Assert.That(true);
         }
 
         #endregion

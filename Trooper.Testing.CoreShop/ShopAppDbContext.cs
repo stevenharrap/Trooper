@@ -1,24 +1,23 @@
-﻿namespace Trooper.Testing.CoreShop
+﻿namespace Trooper.Testing.CustomShopApi
 {
     using System.Data.Entity;
     using Trooper.BusinessOperation2.Interface.DataManager;
-    using Trooper.Testing.CoreShop.Model;
-
+    using Trooper.Testing.ShopModel;
+    
     public class ShopAppDbContext : DbContext, IDbContext
     {
         public ShopAppDbContext()
-            : this("TrooperUnitTestingDbContext")
         {
-			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopAppDbContext>());
-			
         }
         
         public ShopAppDbContext(string context)
             : base(context)
         {
+            
+
 			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopAppDbContext>());
            // Database.Delete();
-            //Database.Create();
+           //Database.Create();
         }
 
 

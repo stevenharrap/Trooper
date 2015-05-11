@@ -1,13 +1,13 @@
-﻿namespace Trooper.Testing.CoreShop.Business.Support
+﻿namespace Trooper.Testing.CustomShopApi.Business.Support
 {
     using Autofac;
     using Trooper.BusinessOperation2.Injection;
-    using Trooper.Testing.CoreShop.Business.Operation;
-    using Trooper.Testing.CoreShop.Facade;
-    using Trooper.Testing.CoreShop.Interface.Business.Operation;
-    using Trooper.Testing.CoreShop.Interface.Business.Support;
-    using Trooper.Testing.CoreShop.Interface.Model;
-    using Trooper.Testing.CoreShop.Model;
+    using Trooper.Testing.CustomShopApi.Business.Operation;
+    using Trooper.Testing.CustomShopApi.Facade;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
+    using Trooper.Testing.ShopModel;
+    using Trooper.Testing.ShopModel.Interface;
 
     public class ShopInjection
     {

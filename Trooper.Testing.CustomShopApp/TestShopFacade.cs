@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Trooper.NUnitTesting.TestShopApp.Actual
+namespace Trooper.Testing.CustomShopApp
 {
     using System.Linq;
     using Autofac;
@@ -8,17 +8,16 @@ namespace Trooper.NUnitTesting.TestShopApp.Actual
     using Trooper.BusinessOperation2.Injection;
     using Trooper.BusinessOperation2.Interface;
     using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.Testing.CoreShop;
-    using Trooper.Testing.CoreShop.Facade;
-    using Trooper.Testing.CoreShop.Interface.Business.Support;
-    using Trooper.Testing.CoreShop.Interface.Model;
-    using Trooper.Testing.CoreShop.Model;
-    using Trooper.Testing.CoreShop.Business.Support;
     using Trooper.BusinessOperation2.Business.Operation.Core;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
+    using Trooper.Testing.ShopModel;
+    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.CustomShopApi.Business.Support;
+    using Trooper.Testing.CustomShopApi;
 
     [TestFixture]
     [Category("Facade")]
-    public class TestShopActualFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
+    public class TestShopFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
     {
 		private const string ToBeImplemented = "Shop Facade Test to be implemented";
 

@@ -1,6 +1,6 @@
 ﻿using Trooper.BusinessOperation2.Business.Operation.Core;
 
-namespace Trooper.Testing.CoreShop.Business.Support
+namespace Trooper.Testing.CustomShopApi.Business.Support
 {
 	public class ShopAddressSearch : Search
 	{

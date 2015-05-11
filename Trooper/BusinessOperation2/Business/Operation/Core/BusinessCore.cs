@@ -35,9 +35,23 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         
         public virtual IAddResponse<Ti> Add(Ti item, IIdentity identity)
         {
+            var response = new AddResponse<Ti>();
+
+            if (item == null)
+            {
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
             using (var bp = this.GetBusinessPack())
             {                
-                var response = new AddResponse<Ti>();
+                
                 var itemAsTc = bp.Facade.Map(item);
                 var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
 
@@ -74,9 +88,22 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new AddSomeResponse<Ti>();
+
+            if (items == null)
             {
-                var response = new AddSomeResponse<Ti>();
+                MessageUtility.Errors.Add("The items have not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var itemsTc = bp.Facade.Map(items);
                 var added = bp.Facade.AddSome(itemsTc);
 
@@ -105,12 +132,24 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
             }
         }
 
-        public virtual IResponse Validate(Ti item, IIdentity identity)
+        public virtual ISingleResponse<bool> Validate(Ti item, IIdentity identity)
         {
+            var response = new SingleResponse<bool>();
+
+            if (item == null)
+            {
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
             using (var bp = this.GetBusinessPack())
             {
-                var response = new Response();
-
                 var added = bp.Facade.Add(item as Tc);
 
                 var arg = new RequestArg<Tc> { Action = Action.ValidateAction, Item = item as Tc };
@@ -120,7 +159,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                     return response;
                 }
 
-                bp.Validation.Validate(added, response);
+                response.Item = bp.Validation.IsValid(added, response);
 
                 return response;
             }
@@ -128,15 +167,27 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
         {
+            var response = new SingleResponse<bool> { Item = true };
+
+            if (argument == null)
+            {
+                MessageUtility.Errors.Add("The argument has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
             using (var bp = this.GetBusinessPack())
             {
-                var response = new SingleResponse<bool>();
-
                 var arg = new RequestArg<Tc> { Action = Action.IsAllowedAction };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null)
                 {
-                    return response;
+                    response.Item = bp.Authorization.IsAllowed(arg, identity, response);
                 }
 
                 return response;
@@ -145,9 +196,22 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IResponse DeleteByKey(Ti item, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new Response();
+
+            if (item == null)
             {
-                var response = new Response();
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var itemAsTc = bp.Facade.Map(item);
                 var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
 
@@ -168,10 +232,24 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
         {
+            var response = new Response();
+
+            if (items == null)
+            {
+                MessageUtility.Errors.Add("The items have not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
             using (var bp = this.GetBusinessPack())
             {
                 var itemsAsListTc = bp.Facade.Map(items);
-                var response = new Response();
+                
                 var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
@@ -189,9 +267,17 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IManyResponse<Ti> GetAll(IIdentity identity = null)
         {
+            var response = new ManyResponse<Ti>();
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
             using (var bp = this.GetBusinessPack())
             {
-                var response = new ManyResponse<Ti>();
+                
                 var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
@@ -207,9 +293,22 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new ManyResponse<Ti>();
+
+            if (search == null)
             {
-                var response = new ManyResponse<Ti>();
+                MessageUtility.Errors.Add("The search has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
@@ -227,9 +326,23 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
         {
+            var response = new SingleResponse<Ti>();
+
+            if (item == null)
+            {
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
             using (var bp = this.GetBusinessPack())
             {
-                var response = new SingleResponse<Ti>();
+               
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
                 var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
 
@@ -254,9 +367,22 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new SingleResponse<bool>();
+
+            if (item == null)
             {
-                var response = new SingleResponse<bool>();
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
 
                 if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
@@ -273,9 +399,22 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual IResponse Update(Ti item, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new AddResponse<Ti>();
+
+            if (item == null)
             {
-                var response = new AddResponse<Ti>();
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var itemAsTc = bp.Facade.Map(item);
                 var errorMessage = string.Format("The ({0}) could not be updated.", typeof(Tc));
                 var updated = bp.Facade.Exists(itemAsTc) ? bp.Facade.Update(itemAsTc) : null;
@@ -305,9 +444,22 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual ISaveResponse<Ti> Save(Ti item, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new SaveResponse<Ti> { Change = SaveChangeType.None };
+
+            if (item == null)
             {
-                var response = new SaveResponse<Ti> { Change = SaveChangeType.None };
+                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var itemAsTc = bp.Facade.Map(item);
                 var errorMessage = string.Format("The ({0}) could not be saved.", typeof(Tc));
                 var exists = bp.Facade.Exists(itemAsTc);
@@ -339,14 +491,27 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
 
         public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
+            var response = new SaveSomeResponse<Ti>();
+
+            if (items == null)
             {
-                var response = new SaveSomeResponse<Ti>();
+                MessageUtility.Errors.Add("The items have not been supplied.", response);
+                return response;
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {                
                 var itemsTc = bp.Facade.Map(items);
-                var saved = from i in itemsTc
+                var saved = (from i in itemsTc
                             let exists = bp.Facade.Exists(i)
                             let item = exists ? bp.Facade.Update(i) : bp.Facade.Add(i)
-                            select new { Item = item, Exists = exists };
+                            select new { Item = item, Exists = exists }).ToList();
 
                 foreach (var i in saved)
                 {

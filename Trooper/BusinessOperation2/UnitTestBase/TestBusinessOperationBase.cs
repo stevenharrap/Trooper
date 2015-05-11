@@ -17,6 +17,8 @@ using Trooper.BusinessOperation2.Business.Security;
         where Tc : class, Ti, new()
         where Ti : class
     {
+        #region Setup
+
         public override void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
         {
             base.TestFixtureSetup(container, itemGenerator); 
@@ -34,17 +36,24 @@ using Trooper.BusinessOperation2.Business.Security;
             this.TestDeleteAll();
         }
 
-        public virtual ICredential GetValidCredential()
+        #endregion
+
+        #region Tests        
+
+        public virtual IIdentity GetValidIdentity()
         {
-            return new Credential
+            return new Identity
             {
-                Username = "ValidTestUser"
+                Username = ValidUsername
             };
         }
 
-        public virtual ICredential GetInvalidCredential()
+        public virtual IIdentity GetInvalididentity()
         {
-            throw new NotImplementedException();
+            return new Identity
+            {
+                Username = InvalidUsername
+            };
         }
 
         [Test]
@@ -67,18 +76,18 @@ using Trooper.BusinessOperation2.Business.Security;
         public virtual void TestDeleteAll() 
         {
             var bc = this.NewBusinessCoreInstance();
-            var credential = this.GetValidCredential();
-            var all = bc.GetAll(credential);
+            var identity = this.GetValidIdentity();
+            var all = bc.GetAll(identity);
 
             Assert.IsNotNull(all);
             Assert.IsTrue(all.Ok);
 
-            var delete = bc.DeleteSomeByKey(all.Items, credential);
+            var delete = bc.DeleteSomeByKey(all.Items, identity);
 
             Assert.IsNotNull(delete);
             Assert.IsTrue(delete.Ok);
 
-            all = bc.GetAll(credential);
+            all = bc.GetAll(identity);
 
             Assert.IsNotNull(all);
             Assert.IsFalse(all.Items.Any());
@@ -90,18 +99,22 @@ using Trooper.BusinessOperation2.Business.Security;
             var bc = this.NewBusinessCoreInstance();
             var bp = bc.GetBusinessPack();
             var item = this.ItemGenerator.NewItem(bp.Facade);
-            var credential = this.GetValidCredential();
+            var identity = this.GetValidIdentity();
 
-            var add = bc.Add(item, credential);
+            var add = bc.Add(item, identity);
 
             Assert.IsNotNull(add);
             Assert.IsTrue(add.Ok);
 
-            var all = bc.GetAll(credential);
+            var all = bc.GetAll(identity);
 
             Assert.IsNotNull(all);
             Assert.IsTrue(all.Ok);
             Assert.That(all.Items.Count, Is.EqualTo(1));
+
+            Assert.IsFalse(bc.Add(null, null).Ok);
+            Assert.IsFalse(bc.Add(item, null).Ok);
+            Assert.IsFalse(bc.Add(null, identity).Ok);
         }
 
 	    private IEnumerable<Ti> TestAddSome(ICollection<Ti> expected)
@@ -110,9 +123,9 @@ using Trooper.BusinessOperation2.Business.Security;
 
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
-		    var addSome = bc.AddSome(expected, credential);
+		    var addSome = bc.AddSome(expected, identity);
 			Assert.IsNotNull(addSome);
 			Assert.IsTrue(addSome.Ok);
 			Assert.IsNotNull(addSome.Items);
@@ -141,19 +154,23 @@ using Trooper.BusinessOperation2.Business.Security;
 			var item1 = this.ItemGenerator.NewItem(bp.Facade);
 			var item2 = this.ItemGenerator.NewItem(bp.Facade);
 			var item3 = this.ItemGenerator.NewItem(bp.Facade);
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
 			var addSome = this.TestAddSome(new List<Ti> { item1, item2 }).ToList();
 
-			var deleteByKey = bc.DeleteByKey(addSome[1], credential);
+			var deleteByKey = bc.DeleteByKey(addSome[1], identity);
 			Assert.IsNotNull(deleteByKey);
 			Assert.IsTrue(deleteByKey.Ok);
 
 			this.TestGetAll(new List<Ti> { addSome[0] });
 
-			deleteByKey = bc.DeleteByKey(item3, credential);
+			deleteByKey = bc.DeleteByKey(item3, identity);
 			Assert.IsNotNull(deleteByKey);
 			Assert.IsTrue(deleteByKey.Ok);
+
+            Assert.IsFalse(bc.AddSome(null, null).Ok);
+            Assert.IsFalse(bc.AddSome(new[] { item1 }, null).Ok);
+            Assert.IsFalse(bc.AddSome(null, identity).Ok);
         }
 
         [Test]
@@ -165,15 +182,19 @@ using Trooper.BusinessOperation2.Business.Security;
 			var item2 = ItemGenerator.NewItem(bp.Facade);
 			var item3 = ItemGenerator.NewItem(bp.Facade);
 			var item4 = ItemGenerator.NewItem(bp.Facade);
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
 			var addSome = this.TestAddSome(new List<Ti> { item1, item2, item3, item4 }).ToList();
 
-			var deleteSomeByKey = bc.DeleteSomeByKey(new List<Ti> { addSome[1], addSome[2] }, credential);
+			var deleteSomeByKey = bc.DeleteSomeByKey(new List<Ti> { addSome[1], addSome[2] }, identity);
 			Assert.NotNull(deleteSomeByKey);
 			Assert.IsTrue(deleteSomeByKey.Ok);
 
 			this.TestGetAll(new List<Ti> { addSome[0], addSome[3] });
+
+            Assert.IsFalse(bc.DeleteSomeByKey(null, null).Ok);
+            Assert.IsFalse(bc.DeleteSomeByKey(new[] { item1 }, null).Ok);
+            Assert.IsFalse(bc.DeleteSomeByKey(null, identity).Ok);
         }
 
         [Test]
@@ -193,17 +214,19 @@ using Trooper.BusinessOperation2.Business.Security;
 		{
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
 			Assert.IsNotNull(bc);
-			Assert.IsNotNull(credential);
+			Assert.IsNotNull(identity);
 			
-			var getAll = bc.GetAll(credential);
+			var getAll = bc.GetAll(identity);
 
 			Assert.IsNotNull(getAll);
 			Assert.IsNotNull(getAll.Items);
 			Assert.IsNotNull(getAll.Ok);
 			Assert.That(getAll.Items.Count(), Is.EqualTo(expected));
+
+            Assert.IsFalse(bc.GetAll(null).Ok);
 
 			return getAll.Items;
 		}
@@ -234,7 +257,7 @@ using Trooper.BusinessOperation2.Business.Security;
         {
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
 			var item1 = ItemGenerator.NewItem(bp.Facade);
 			var item2 = ItemGenerator.NewItem(bp.Facade);
@@ -244,7 +267,7 @@ using Trooper.BusinessOperation2.Business.Security;
 			var item6 = ItemGenerator.NewItem(bp.Facade);
 
 			var addSome = this.TestAddSome(new List<Ti>{item1, item2, item3, item4, item5, item6}).ToList();
-	        var getSome = bc.GetSome(new Search {SkipItems = 3, TakeItems = 2}, credential);
+	        var getSome = bc.GetSome(new Search {SkipItems = 3, TakeItems = 2}, identity);
 
 			Assert.IsNotNull(getSome);
 			Assert.IsTrue(getSome.Ok);
@@ -252,6 +275,10 @@ using Trooper.BusinessOperation2.Business.Security;
 			Assert.That(getSome.Items.Count(), Is.EqualTo(2));
 			Assert.IsTrue(bp.Facade.AreEqual(getSome.Items.First(), bp.Facade.Map(addSome[3])));
 			Assert.IsTrue(bp.Facade.AreEqual(getSome.Items.Last(), bp.Facade.Map(addSome[4])));
+
+            Assert.IsFalse(bc.GetSome(null, null).Ok);
+            Assert.IsFalse(bc.GetSome(new Search(), null).Ok);
+            Assert.IsFalse(bc.GetSome(null, identity).Ok);
         }
 
         [Test]
@@ -259,7 +286,7 @@ using Trooper.BusinessOperation2.Business.Security;
         {
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
 			var item1 = ItemGenerator.NewItem(bp.Facade);
 			var item2 = ItemGenerator.NewItem(bp.Facade);
@@ -270,15 +297,19 @@ using Trooper.BusinessOperation2.Business.Security;
 			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
 			var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));
 
-	        bc.DeleteByKey(second, credential);
+	        bc.DeleteByKey(second, identity);
 
 	        this.TestGetAll(1);
 
-	        var getByKey = bc.GetByKey(first, credential);
+	        var getByKey = bc.GetByKey(first, identity);
 			Assert.IsNotNull(getByKey);
 			Assert.IsTrue(getByKey.Ok);
 			Assert.IsNotNull(getByKey.Item);
 			Assert.IsTrue(bp.Facade.AreEqual(getByKey.Item, first));
+
+            Assert.IsFalse(bc.GetByKey(null, null).Ok);
+            Assert.IsFalse(bc.GetByKey(item1, null).Ok);
+            Assert.IsFalse(bc.GetByKey(null, identity).Ok);
         }
 
         [Test]
@@ -286,7 +317,7 @@ using Trooper.BusinessOperation2.Business.Security;
         {
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var credential = this.GetValidCredential();
+			var identity = this.GetValidIdentity();
 
 			var item1 = ItemGenerator.NewItem(bp.Facade);
 			var item2 = ItemGenerator.NewItem(bp.Facade);
@@ -297,19 +328,23 @@ using Trooper.BusinessOperation2.Business.Security;
 			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
 			var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));
 
-			bc.DeleteByKey(second, credential);
+			bc.DeleteByKey(second, identity);
 
 			this.TestGetAll(1);
 
-			var existsByKey = bc.ExistsByKey(first, credential);
+			var existsByKey = bc.ExistsByKey(first, identity);
 			Assert.IsNotNull(existsByKey);
 			Assert.IsTrue(existsByKey.Ok);
 			Assert.IsTrue(existsByKey.Item);
 
-			existsByKey = bc.ExistsByKey(second, credential);
+			existsByKey = bc.ExistsByKey(second, identity);
 			Assert.IsNotNull(existsByKey);
 			Assert.IsTrue(existsByKey.Ok);
 			Assert.IsFalse(existsByKey.Item);
+
+            Assert.IsFalse(bc.ExistsByKey(null, null).Ok);
+            Assert.IsFalse(bc.ExistsByKey(item1, null).Ok);
+            Assert.IsFalse(bc.ExistsByKey(null, identity).Ok);
         }
 
 	    public abstract void TestIsAllowed();
@@ -321,5 +356,7 @@ using Trooper.BusinessOperation2.Business.Security;
 	    public abstract void TestSaveSome();
 
 	    public abstract void TestValidate();
+
+        #endregion
     }
 }

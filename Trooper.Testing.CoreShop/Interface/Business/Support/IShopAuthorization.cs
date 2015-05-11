@@ -1,9 +1,8 @@
 ﻿using Trooper.Interface.BusinessOperation2.Business.Security;
+using Trooper.Testing.ShopModel;
 
-namespace Trooper.Testing.CoreShop.Interface.Business.Support
+namespace Trooper.Testing.CustomShopApi.Interface.Business.Support
 {
-	using Trooper.Testing.CoreShop.Model;
-
     public interface IShopAuthorization : IAuthorization<Shop>
     {
     }

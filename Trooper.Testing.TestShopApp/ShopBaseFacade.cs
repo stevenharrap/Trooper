@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace Trooper.NUnitTesting.TestShopApp.Base
+namespace Trooper.Testing.DefaultShopApp
 {
     using Autofac;
     using NUnit.Framework;
     using Trooper.BusinessOperation2.Injection;
     using Trooper.BusinessOperation2.Interface;
     using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.Testing.CoreShop;
-    using Trooper.Testing.CoreShop.Facade;
-    using Trooper.Testing.CoreShop.Interface.Business.Support;
-    using Trooper.Testing.CoreShop.Interface.Model;
-    using Trooper.Testing.CoreShop.Model;
+    using Trooper.Testing.DefaultShopApi;
+    using Trooper.Testing.DefaultShopApi.Interface.Business.Support;
+    using Trooper.Testing.ShopModel;
+    using Trooper.Testing.ShopModel.Interface;
 
     [TestFixture]
     [Category("Facade")]
@@ -33,18 +32,18 @@ namespace Trooper.NUnitTesting.TestShopApp.Base
             base.SetUp();
         }
 
-		[Test]
-		[Ignore(IgnoreInBase)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestUpdate()
         {
-            Assert.That(true);
         }
 
-        [Test]
-        [Ignore(IgnoreInBase)]
+        /// <summary>
+        /// untestable here
+        /// </summary>
         public override void TestGetSome()
         {
-            Assert.That(true);
         }
     }
 }

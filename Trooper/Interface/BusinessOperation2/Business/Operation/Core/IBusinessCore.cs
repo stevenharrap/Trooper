@@ -48,6 +48,6 @@ namespace Trooper.Interface.BusinessOperation2.Business.Operation.Core
 
         ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity);
 
-        IResponse Validate(Ti item, IIdentity identity);       
+        ISingleResponse<bool> Validate(Ti item, IIdentity identity);       
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+using Trooper.Testing.ShopModel;
+using Trooper.Testing.ShopModel.Interface;
 
-namespace Trooper.Testing.CoreShop.Interface.Business.Support
+namespace Trooper.Testing.CustomShopApi.Interface.Business.Support
 {
-	using Trooper.Testing.CoreShop.Interface.Model;
-    using Trooper.Testing.CoreShop.Model;
-
     public interface IShopBusinessCore : IBusinessCore<Shop, IShop>
     {
     }

@@ -222,7 +222,7 @@
 		        return;
 	        }
 
-            var local = this.Repository.DbContext.Set<Tc>().Local.FirstOrDefault(i => this.AreEqual(i, item));
+            var local = this.FindLocal(item);
 
             var entry = this.Repository.DbContext.Entry(local ?? item);
 
@@ -239,11 +239,22 @@
 
         public virtual Tc Update(Tc item)
         {
-            var entry = this.Repository.DbContext.Entry(item);
-            var attached = this.Repository.DbSet.Attach(item);
-            entry.State = EntityState.Modified;
+            var local = this.FindLocal(item);
 
-            return attached;
+            if (local == null)
+            {
+                var entry = this.Repository.DbContext.Entry(item);
+                var attached = this.Repository.DbSet.Attach(item);
+                entry.State = EntityState.Modified;
+                return attached;
+            }
+            else
+            {
+                var entry = this.Repository.DbContext.Entry(local);
+                entry.State = EntityState.Modified;
+                AutoMapper.Mapper.Map(item, local);
+                return local;
+            }                        
         }
 
         public bool Any()
@@ -264,6 +275,11 @@
         #endregion
 
         #region private methods
+
+        private Tc FindLocal(Tc item)
+        {
+            return this.Repository.DbContext.Set<Tc>().Local.FirstOrDefault(i => this.AreEqual(i, item));
+        }
 
         #endregion        
     }

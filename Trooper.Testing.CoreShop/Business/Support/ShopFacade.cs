@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using Trooper.Testing.CoreShop.Business.Support;
+using Trooper.Testing.CustomShopApi.Business.Support;
 
-namespace Trooper.Testing.CoreShop.Facade
+namespace Trooper.Testing.CustomShopApi.Facade
 {
     using Trooper.BusinessOperation2.Interface;
     using Trooper.BusinessOperation2.Interface.DataManager;
-    using Trooper.Testing.CoreShop.Interface.Business.Support;
-    using Trooper.Testing.CoreShop.Interface.Model;
-    using Trooper.Testing.CoreShop.Model;
-
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
+    using Trooper.Testing.ShopModel;
+    using Trooper.Testing.ShopModel.Interface;
 
     public class ShopFacade : Facade<Shop, IShop>, IShopFacade
     {
