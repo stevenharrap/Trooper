@@ -50,9 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\IInventory.cs" />
     <Compile Include="Interface\IShop.cs" />
     <Compile Include="Interface\IProduct.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="InventoryMap.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

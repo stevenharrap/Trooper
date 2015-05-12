@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trooper.Testing.ShopModel.Interface;
 
 namespace Trooper.Testing.ShopModel
 {
-    public class Inventory
+    public class Inventory : IInventory
     {
         public int ShopId { get; set; }
 
@@ -16,8 +17,8 @@ namespace Trooper.Testing.ShopModel
 
         public string Bin { get; set; }
 
-        public virtual Product ProductNav { get; set; }
+        public virtual Product Product { get; set; }
 
-        public virtual Shop ShopNav { get; set; }
+        public virtual Shop Shop { get; set; }
     }
 }

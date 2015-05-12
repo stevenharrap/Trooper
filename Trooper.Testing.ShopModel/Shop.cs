@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Trooper.Testing.ShopModel.Interface;
 
 namespace Trooper.Testing.ShopModel
@@ -8,6 +9,8 @@ namespace Trooper.Testing.ShopModel
 
         public string Name { get; set; }
 
-        public string Address { get; set; }      
+        public string Address { get; set; }
+
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

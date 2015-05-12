@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using Trooper.Testing.ShopModel.Interface;
 
 namespace Trooper.Testing.ShopModel
 {
-    public class Product //: IProduct
+    public class Product : IProduct
     {
         //public int? SpecDocId { get; set; }
+        
+        public int ProductId { get; set; }
 
         public string Name { get; set; }
 
@@ -12,6 +15,6 @@ namespace Trooper.Testing.ShopModel
 
         //public virtual DocNav SpecDocNav { get; set; }
 
-        //public virtual ICollection<InventoryNav> InventoryNavs { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }
