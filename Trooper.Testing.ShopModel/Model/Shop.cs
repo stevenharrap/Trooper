@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Trooper.Testing.ShopModel.Interface;
 
-namespace Trooper.Testing.ShopModel
+namespace Trooper.Testing.ShopModel.Model
 {
     public class Shop : IShop
     {

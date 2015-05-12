@@ -12,6 +12,7 @@
     using Trooper.Testing.CustomShopApi.Business.Support;
     using Trooper.BusinessOperation2.Business.Security;
     using Trooper.BusinessOperation2;
+    using Trooper.Testing.ShopModel.Model;
 
     [TestFixture]
     [Category("BusinessOperation")]

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trooper.Testing.ShopModel.Interface;
 
-namespace Trooper.Testing.ShopModel
+namespace Trooper.Testing.ShopModel.Model
 {
     public class Inventory : IInventory
     {

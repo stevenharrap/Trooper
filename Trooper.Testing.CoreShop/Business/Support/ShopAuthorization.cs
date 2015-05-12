@@ -9,6 +9,7 @@
     using Trooper.Interface.BusinessOperation2.Business.Security;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
+    using Trooper.Testing.ShopModel.Model;
 
     public class ShopAuthorization : Authorization<Shop>, IShopAuthorization
     {

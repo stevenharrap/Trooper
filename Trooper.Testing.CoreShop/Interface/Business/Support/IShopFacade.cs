@@ -4,6 +4,7 @@
     using Trooper.BusinessOperation2.Interface.DataManager;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Model;
 
     public interface IShopFacade : IFacade<Shop, IShop>
     {        

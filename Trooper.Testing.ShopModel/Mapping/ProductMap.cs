@@ -1,6 +1,7 @@
-namespace Trooper.Testing.ShopModel
+namespace Trooper.Testing.ShopModel.Mapping
 {
     using System.Data.Entity.ModelConfiguration;
+    using Trooper.Testing.ShopModel.Model;
 
     public class ProductMap : EntityTypeConfiguration<Product>
     {

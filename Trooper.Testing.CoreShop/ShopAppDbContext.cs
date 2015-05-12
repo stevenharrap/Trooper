@@ -3,29 +3,17 @@
     using System.Data.Entity;
     using Trooper.BusinessOperation2.Interface.DataManager;
     using Trooper.Testing.ShopModel;
-    
-    public class ShopAppDbContext : DbContext, IDbContext
+    using Trooper.Testing.ShopModel.Config;
+
+    public class ShopAppDbContext : ShopModelDbContext
     {
         public ShopAppDbContext()
         {
         }
-        
+
         public ShopAppDbContext(string context)
             : base(context)
         {
-            
-
-			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopAppDbContext>());
-           // Database.Delete();
-           //Database.Create();
-        }
-
-
-        public DbSet<Shop> Shops { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Configurations.Add(new ShopMap());
         }
     }
 }

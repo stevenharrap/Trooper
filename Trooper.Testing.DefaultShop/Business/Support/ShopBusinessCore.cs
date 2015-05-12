@@ -9,6 +9,7 @@ using Trooper.Testing.DefaultShopApi.Facade;
 using Trooper.Testing.DefaultShopApi.Interface.Business.Support;
 using Trooper.Testing.ShopModel;
 using Trooper.Testing.ShopModel.Interface;
+using Trooper.Testing.ShopModel.Model;
 
 namespace Trooper.Testing.DefaultShopApi.Business.Support
 {

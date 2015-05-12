@@ -8,6 +8,7 @@ namespace Trooper.Testing.CustomShopApi.Facade
     using Trooper.Testing.CustomShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Model;
 
     public class ShopFacade : Facade<Shop, IShop>, IShopFacade
     {

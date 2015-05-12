@@ -6,6 +6,7 @@ namespace Trooper.Testing.CustomShopApp
     {
         public ShopAppDbContext() : base("TrooperCustomShopTesting")
         {
+            
         }
 
     }

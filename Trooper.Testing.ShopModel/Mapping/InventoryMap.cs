@@ -5,14 +5,15 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trooper.Testing.ShopModel.Model;
 
-namespace Trooper.Testing.ShopModel
+namespace Trooper.Testing.ShopModel.Mapping
 {
     public class InventoryMap : EntityTypeConfiguration<Inventory>
     {
         public InventoryMap()
         {
-            // Primary Key
+            // Primary Key          
             this.HasKey(t => new { t.ShopId, t.ProductId });
 
             // Properties
