@@ -69,7 +69,6 @@
     <Compile Include="TestShopBusinsessOperation.cs" />
     <Compile Include="TestShopFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShopAppDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

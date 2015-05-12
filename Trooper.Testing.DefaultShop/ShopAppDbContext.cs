@@ -8,12 +8,9 @@
     public class ShopAppDbContext : ShopModelDbContext
     {
         public ShopAppDbContext()
+            : base("TrooperUnitTestingDbContext")
         {
-        }
 
-        public ShopAppDbContext(string context)
-            : base(context)
-        {           
         }
     }
 }

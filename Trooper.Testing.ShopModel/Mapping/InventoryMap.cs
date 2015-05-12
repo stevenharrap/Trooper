@@ -31,12 +31,12 @@ namespace Trooper.Testing.ShopModel.Mapping
             this.ToTable("Inventory");
 
             // Relationships
-            this.HasRequired(t => t.Product)
-                .WithMany(t => t.Inventories)
-                .HasForeignKey(d => d.ProductId);
-            this.HasRequired(t => t.Shop)
-                .WithMany(t => t.Inventories)
-                .HasForeignKey(d => d.ShopId);
+            //this.HasRequired(t => t.Product)
+            //    .WithMany(t => t.Inventories)
+            //    .HasForeignKey(d => d.ProductId);
+            //this.HasRequired(t => t.Shop)
+            //    .WithMany(t => t.Inventories)
+            //    .HasForeignKey(d => d.ShopId);
         }
     }
 }

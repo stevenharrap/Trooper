@@ -269,7 +269,12 @@
 
         public IEnumerable<Tc> Map(IEnumerable<Ti> items)
         {
-            return AutoMapper.Mapper.Map<IEnumerable<Tc>>(items);
+            //return AutoMapper.Mapper.Map<IEnumerable<Tc>>(items);
+
+            foreach (var i in items)
+            {
+                yield return this.Map(i);
+            }
         }
 
         #endregion
