@@ -14,6 +14,7 @@ namespace Trooper.BusinessOperation2.Injection
 
     public class BusinessOperationInjection
     {
+        #region public
         public static IContainer BuildBusinessApp<TAppModule>()
             where TAppModule : Module, new()
         {
@@ -77,6 +78,25 @@ namespace Trooper.BusinessOperation2.Injection
                 Tc, Ti>(builder);
         }
 
+        public static void AddBusinessCore<Tc, Ti>(ContainerBuilder builder)
+            where Tc : class, Ti, new()
+            where Ti : class
+        {
+            AddBusinessCore<
+                Facade<Tc, Ti>, IFacade<Tc, Ti>,
+                Authorization<Tc>, IAuthorization<Tc>,
+                Validation<Tc>, IValidation<Tc>,
+                BusinessCore<Tc, Ti>, IBusinessCore<Tc, Ti>,
+                BusinessAll<Tc, Ti>, IBusinessAll<Tc, Ti>,
+                Tc, Ti>(builder);
+        }
+
+
+
+        #endregion
+
+        #region private
+
         private static IBusinessPack<Tc, Ti> NewBusinessPack<
             TiFacade,
             TiAuthorization,
@@ -121,5 +141,7 @@ namespace Trooper.BusinessOperation2.Injection
         {
             return container.Resolve<TiBusinessCore>();
         }
+
+        #endregion
     }
 }

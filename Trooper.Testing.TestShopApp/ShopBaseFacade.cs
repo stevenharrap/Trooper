@@ -7,15 +7,15 @@ namespace Trooper.Testing.DefaultShopApp
     using Trooper.BusinessOperation2.Injection;
     using Trooper.BusinessOperation2.Interface;
     using Trooper.BusinessOperation2.UnitTestBase;
+    using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
     using Trooper.Testing.DefaultShopApi;
-    using Trooper.Testing.DefaultShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
     using Trooper.Testing.ShopModel.Model;
 
     [TestFixture]
     [Category("Facade")]
-    public class TestShopBaseFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
+    public class TestShopBaseFacade : TestFacadeBase<IBusinessCore<Shop, IShop>, Shop, IShop>
     {
 		private const string IgnoreInBase = "Ignored in base testing. Tested in specific facade.";
 

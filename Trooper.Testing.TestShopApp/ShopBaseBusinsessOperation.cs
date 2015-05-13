@@ -3,15 +3,15 @@
     using NUnit.Framework;
     using Trooper.BusinessOperation2.Injection;
     using Trooper.BusinessOperation2.UnitTestBase;
+    using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
     using Trooper.Testing.DefaultShopApi;
-    using Trooper.Testing.DefaultShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
     using Trooper.Testing.ShopModel.Model;
 
     [TestFixture]
     [Category("BusinessOperation")]
-    public class TestShopBaseBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
+    public class TestShopBaseBusinsessOperation : TestBusinessOperationBase<IBusinessCore<Shop, IShop>, Shop, IShop>
     {
         private const string ToBeImplemented = "Ignored in base testing.";
 

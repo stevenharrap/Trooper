@@ -62,17 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\Operation\ShopBo.cs" />
-    <Compile Include="Business\Support\ShopAuthorization.cs" />
-    <Compile Include="Business\Support\ShopBusinessCore.cs" />
-    <Compile Include="Business\Support\ShopFacade.cs" />
     <Compile Include="Business\Support\ShopInjection.cs" />
-    <Compile Include="Business\Support\ShopValidation.cs" />
-    <Compile Include="Interface\Business\Operation\IShopBo.cs" />
-    <Compile Include="Interface\Business\Support\IShopAuthorization.cs" />
-    <Compile Include="Interface\Business\Support\IShopBusinessCore.cs" />
-    <Compile Include="Interface\Business\Support\IShopFacade.cs" />
-    <Compile Include="Interface\Business\Support\IShopValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopAppDbContext.cs" />
     <Compile Include="ShopAppModule.cs" />
