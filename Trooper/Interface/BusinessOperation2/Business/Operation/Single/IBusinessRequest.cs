@@ -1,4 +1,5 @@
-﻿using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+﻿using System;
+using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
 using Trooper.Interface.BusinessOperation2.Business.Response;
 using Trooper.Interface.BusinessOperation2.Business.Security;
 
@@ -9,5 +10,7 @@ namespace Trooper.Interface.BusinessOperation2.Business.Operation.Single
         where Ti : class
     {
         ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null);
+
+        ISingleResponse<Guid> GetSession(IIdentity identity);
     }
 }

@@ -17,7 +17,11 @@ namespace Trooper.BusinessOperation2.Business.Security
 
         public virtual ICredential ResolveCredential(IIdentity identity)
         {
-            return new Credential { Username = identity.Username };
+            return new Credential 
+            { 
+                Username = identity.Username,
+                Session = identity.Session
+            };
         }
 
         public virtual bool IsAddDataAction(string action)

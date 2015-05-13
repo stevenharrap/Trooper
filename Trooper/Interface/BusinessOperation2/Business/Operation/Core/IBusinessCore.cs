@@ -4,6 +4,7 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using Trooper.BusinessOperation2.Interface.DataManager;
 using Trooper.BusinessOperation2.Interface.OperationResponse;
@@ -41,6 +42,8 @@ namespace Trooper.Interface.BusinessOperation2.Business.Operation.Core
         ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity);
 
         ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity);
+
+        ISingleResponse<Guid> GetSession(IIdentity identity);
 
         IResponse Update(Ti item, IIdentity identity);
 

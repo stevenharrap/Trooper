@@ -9,10 +9,10 @@ namespace Trooper.BusinessOperation2.Business.Security
 {
     public class Identity : IIdentity
     {
-        public string Username
-        {
-            get;
-            set;
-        }
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
+        public Guid Session { get; set; }
     }
 }
