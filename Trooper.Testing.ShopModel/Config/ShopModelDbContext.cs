@@ -15,12 +15,14 @@
         public ShopModelDbContext(string context)
             : base(context)
         {
-           // Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopModelDbContext>());
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ShopModelDbContext, RecreateDbConfiguration>(context));
-           // Database.Delete();
-           //Database.Create();
-        }
+            if (!Database.CompatibleWithModel(false))
+            {
+                Database.Delete();
+                Database.Create();
+            }
 
+            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopModelDbContext>());
+        }
 
         public DbSet<Shop> Shops { get; set; }
         

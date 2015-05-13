@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveDirectory\ActiveDirectoryUser.cs" />
+    <Compile Include="BusinessOperation2\Business\Operation\Composite\BusinessAll.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Core\BusinessCore.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Composite\BusinessCr.cs" />
     <Compile Include="BusinessOperation2\Business\Operation\Core\BusinessPack.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Core\IBusinessCore.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Core\IBusinessPack.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Core\IBusinessPackEventArgs.cs" />
+    <Compile Include="Interface\BusinessOperation2\Business\Operation\Composite\IBusinessAll.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessCreate.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Core\IBusinessOperation.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessValidate.cs" />
@@ -366,6 +368,7 @@
     <Compile Include="Ui\Mvc\Utility\RabbitHelper.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\Logging.cs" />
+    <Compile Include="Utility\MappingExpressionExtensions.cs" />
     <Compile Include="Utility\ReflectionHelper.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,10 +19,10 @@ namespace Trooper.Interface.BusinessOperation2.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        IAddResponse<Tc> Add(Ti item, IIdentity identity = null);
+        IAddResponse<Ti> Add(Ti item, IIdentity identity = null);
 
         IResponse Update(Ti item, IIdentity identity = null);
 
-        ISaveResponse<Tc> Save(Ti item, IIdentity identity = null);
+        ISaveResponse<Ti> Save(Ti item, IIdentity identity = null);
     }
 }

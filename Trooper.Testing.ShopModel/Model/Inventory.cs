@@ -17,8 +17,8 @@ namespace Trooper.Testing.ShopModel.Model
 
         public string Bin { get; set; }
 
-        //public virtual Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
-        //public virtual Shop Shop { get; set; }
+        public virtual Shop Shop { get; set; }
     }
 }

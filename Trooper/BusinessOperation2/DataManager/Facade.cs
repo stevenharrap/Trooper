@@ -1,6 +1,8 @@
 ﻿namespace Trooper.BusinessOperation2.Interface
 {
+    using AutoMapper;
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Core;
@@ -8,15 +10,21 @@
     using System.Linq;
     using System.Reflection;
     using Trooper.BusinessOperation2.Interface.DataManager;
+    using Trooper.Utility;    
 
-    public abstract class Facade<Tc, Ti> : IFacade<Tc, Ti> 
+    public class Facade<Tc, Ti> : IFacade<Tc, Ti> 
         where Tc : class, Ti, new()
         where Ti : class
     {
+        static Facade()
+        {
+            AutoMapper.Mapper.CreateMap<Ti, Tc>().IgnorePropertiesOfType(typeof(ICollection));
+        }
+
         #region fields
 
         #region public
-
+        
         private IObjectContextAdapter ObjectContextAdapter
         {
             get

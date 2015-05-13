@@ -15,6 +15,6 @@ namespace Trooper.Testing.ShopModel.Model
 
         //public virtual DocNav SpecDocNav { get; set; }
 
-        //public virtual ICollection<Inventory> Inventories { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

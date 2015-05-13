@@ -4,9 +4,13 @@ using Trooper.Interface.BusinessOperation2.Business.Security;
 namespace Trooper.BusinessOperation2.Injection
 {
     using Autofac;
+    using Trooper.BusinessOperation2.Business.Operation.Composite;
     using Trooper.BusinessOperation2.Business.Operation.Core;
+    using Trooper.BusinessOperation2.Business.Security;
+    using Trooper.BusinessOperation2.DataManager;
     using Trooper.BusinessOperation2.Interface;
     using Trooper.BusinessOperation2.Interface.DataManager;
+    using Trooper.Interface.BusinessOperation2.Business.Operation.Composite;
 
     public class BusinessOperationInjection
     {
@@ -58,7 +62,20 @@ namespace Trooper.BusinessOperation2.Injection
             {
                 BusinessCore = c.Resolve<TiBusinessCore>()
             }).As<TiBusinessOperation>();
-        }        
+        }
+
+        public static void AddBusinessCore<Tc, Ti>(ContainerBuilder builder)
+            where Tc : class, Ti, new()
+            where Ti : class
+        {
+            AddBusinessCore<
+                Facade<Tc, Ti>, IFacade<Tc, Ti>,
+                Authorization<Tc>, IAuthorization<Tc>,
+                Validation<Tc>, IValidation<Tc>,
+                BusinessCore<Tc, Ti>, IBusinessCore<Tc, Ti>,
+                BusinessAll<Tc, Ti>, IBusinessAll<Tc, Ti>,
+                Tc, Ti>(builder);
+        }
 
         private static IBusinessPack<Tc, Ti> NewBusinessPack<
             TiFacade,
@@ -88,20 +105,7 @@ namespace Trooper.BusinessOperation2.Injection
                 Validation = validation
             };
         }
-
-        /*public static void AddBusinessOperation<TiBusinessCore, TcBusinessOperation, TiBusinessOperation, Tc, Ti>(ContainerBuilder builder)
-            where TiBusinessCore : IBusinessCore<Tc, Ti>
-            where TcBusinessOperation : TiBusinessOperation, IBusinessOperation<Tc, Ti>, new()
-            where TiBusinessOperation : IBusinessOperation<Tc, Ti>
-            where Tc : class, Ti, new()
-            where Ti : class
-        {
-            builder.Register(c => new TcBusinessOperation
-            {
-                BusinessCore = c.Resolve<TiBusinessCore>()
-            }).As<TiBusinessOperation>();
-        }*/
-
+        
         public static TiBusinessOperation ResoveBusinessOperation<TiBusinessOperation, Tc, Ti>(IContainer container)
             where TiBusinessOperation : IBusinessOperation<Tc, Ti>
             where Tc : class, Ti, new()

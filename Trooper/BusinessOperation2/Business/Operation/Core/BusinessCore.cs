@@ -22,7 +22,7 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
     /// Provides the means to expose your Model, wrap it in Read and Add operations and control
     /// access to those operations.
     /// </summary>
-    public abstract class BusinessCore<Tc, Ti> : IBusinessCore<Tc, Ti> 
+    public class BusinessCore<Tc, Ti> : IBusinessCore<Tc, Ti> 
         where Tc : class, Ti, new()
         where Ti : class
     {
