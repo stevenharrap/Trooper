@@ -11,6 +11,7 @@ using Trooper.Interface.BusinessOperation2.Business.Security;
 
 namespace Trooper.BusinessOperation2.Business.Operation.Composite
 {
+    using System;
     using System.Collections.Generic;
     using Trooper.BusinessOperation2.Interface.OperationResponse;
     using Trooper.Interface.BusinessOperation2.Business.Operation.Single;
@@ -41,6 +42,11 @@ namespace Trooper.BusinessOperation2.Business.Operation.Composite
         public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
             return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);
+        }
+
+        public ISingleResponse<Guid> GetSession(IIdentity identity = null)
+        {
+            return this.BusinessCore.GetSession(identity ?? this.DefaultIdentity);
         }
 
         public IManyResponse<Ti> GetAll(IIdentity identity = null)

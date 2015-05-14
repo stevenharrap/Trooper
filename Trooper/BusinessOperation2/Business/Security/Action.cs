@@ -90,5 +90,7 @@ namespace Trooper.BusinessOperation2.Business.Security
         public const string ValidateAction = "Validate";
 
         public const string IsAllowedAction = "IsAllowed";
+
+        public const string GetSession = "GetSession";
     }
 }

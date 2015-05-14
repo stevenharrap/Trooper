@@ -26,6 +26,8 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
         where Tc : class, Ti, new()
         where Ti : class
     {
+        private static List<System.Guid> sessions = new List<System.Guid>();
+
         public event BusinessPackHandler<Tc, Ti> OnRequestBusinessPack;
 
         public IBusinessPack<Tc, Ti> GetBusinessPack()
@@ -189,6 +191,34 @@ namespace Trooper.BusinessOperation2.Business.Operation.Core
                 {
                     response.Item = bp.Authorization.IsAllowed(arg, identity, response);
                 }
+
+                return response;
+            }
+        }
+
+        public virtual ISingleResponse<System.Guid> GetSession(IIdentity identity)
+        {
+            var response = new SingleResponse<System.Guid>();
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                return response;
+            }
+
+            using (var bp = this.GetBusinessPack())
+            {
+                var arg = new RequestArg<Tc> { Action = Security.Action.GetSession };
+
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                {
+                    return response;
+                }
+
+                var session = System.Guid.NewGuid();
+
+                sessions.Add(session);
+                response.Item = session;
 
                 return response;
             }

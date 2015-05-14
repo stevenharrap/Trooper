@@ -5,10 +5,8 @@ using Trooper.Interface.BusinessOperation2.Business.Security;
 
 namespace Trooper.Interface.BusinessOperation2.Business.Operation.Single
 {
-	public interface IBusinessRequest<Tc, Ti> : IBusinessOperation<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+	public interface IBusinessSession
     {
-        ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null);
+        ISingleResponse<Guid> GetSession(IIdentity identity);
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Composite\IBusinessAll.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessCreate.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Core\IBusinessOperation.cs" />
+    <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessSession.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessValidate.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessRequest.cs" />
     <Compile Include="Interface\BusinessOperation2\Business\Operation\Single\IBusinessUpdate.cs" />

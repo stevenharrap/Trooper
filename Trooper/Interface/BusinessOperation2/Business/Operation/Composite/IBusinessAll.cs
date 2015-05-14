@@ -16,7 +16,8 @@ namespace Trooper.Interface.BusinessOperation2.Business.Operation.Composite
         IBusinessCreate<Tc, Ti>, 
         IBusinessDelete<Tc, Ti>, 
         IBusinessRead<Tc, Ti>, 
-        IBusinessRequest<Tc, Ti>, 
+        IBusinessRequest<Tc, Ti>,
+        IBusinessSession,
         IBusinessUpdate<Tc, Ti>,
         IBusinessValidate<Tc, Ti>, 
         IBusinessOperation<Tc, Ti>
