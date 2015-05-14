@@ -13,6 +13,7 @@
     using Trooper.Thorny.Business.Security;
     using Trooper.Thorny;
     using Trooper.Testing.ShopModel.Model;
+    using Trooper.Interface.Thorny.Business.Security;
 
     [TestFixture]
     [Category("BusinessOperation")]
@@ -40,6 +41,8 @@
 
         #region Tests
 
+        #region Add
+
         [Test]
         public override void Test_Base_Add()
         {
@@ -62,6 +65,20 @@
             Assert.IsFalse(bc.Add(shop1, null).Ok);
             Assert.IsFalse(bc.Add(null, identity).Ok);
         }
+
+        public override void Test_Access_Add()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_Add()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region AddSome
 
         [Test]
         public override void Test_Base_AddSome()
@@ -87,6 +104,20 @@
             Assert.IsFalse(bc.AddSome(null, identity).Ok);
         }
 
+        public override void Test_Access_AddSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_AddSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region DeleteAll
+
         [Test]
         public override void Test_Base_DeleteAll()
         {
@@ -103,6 +134,20 @@
             Assert.That(allResult.Ok);
             Assert.IsFalse(allResult.Items.Any());
         }
+
+        public override void Test_Access_DeleteAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_DeleteAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region DeleteByKey
 
         [Test]
         public override void Test_Base_DeleteByKey()
@@ -137,6 +182,20 @@
             Assert.IsFalse(bc.DeleteByKey(null, identity).Ok);
         }
 
+        public override void Test_Access_DeleteByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_DeleteByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region DeleteSomeByKey
+
         [Test]
         public override void Test_Base_DeleteSomeByKey()
         {
@@ -169,6 +228,20 @@
             Assert.IsFalse(bc.DeleteSomeByKey(null, identity).Ok);
         }
 
+        public override void Test_Access_DeleteSomeByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_DeleteSomeByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region ExistsByKey
+
         [Test]
         public override void Test_Base_ExistsByKey()
         {
@@ -197,6 +270,20 @@
             Assert.IsFalse(bc.ExistsByKey(null, identity).Ok);
         }
 
+        public override void Test_Access_ExistsByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_ExistsByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetAll
+
         [Test]
         public override void Test_Base_GetAll()
         {
@@ -218,6 +305,20 @@
 
             Assert.IsFalse(bc.GetAll(null).Ok);
         }
+
+        public override void Test_Access_GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetByKey
 
         [Test]
         public override void Test_Base_GetByKey()
@@ -246,6 +347,20 @@
             Assert.IsFalse(bc.GetByKey(shop1, null).Ok);
             Assert.IsFalse(bc.GetByKey(null, identity).Ok);
         }
+
+        public override void Test_Access_GetByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_GetByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetSome
 
         [Test]
         public override void Test_Base_GetSome()
@@ -278,9 +393,23 @@
             Assert.IsFalse(bc.GetSome(null, identity).Ok);
         }
 
-		[Test]
-	    public override void TestIsAllowed()
-	    {
+        public override void Test_Access_GetSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_GetSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region IsAllowed
+
+        [Test]
+        public override void Test_Base_IsAllowed()
+        {
             var bc = this.NewBusinessCoreInstance();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
@@ -296,10 +425,14 @@
             Assert.IsFalse(bc.IsAllowed(null, null).Ok);
             Assert.IsFalse(bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, null).Ok);
             Assert.IsFalse(bc.IsAllowed(null, validIdentity).Ok);
-	    }
+        }
 
-		[Test]
-	    public override void TestUpdate()
+        #endregion
+
+        #region Update
+
+        [Test]
+	    public override void Test_Base_Update()
 	    {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -322,8 +455,17 @@
             Assert.IsFalse(update.Ok);
 	    }
 
-		[Test]
-	    public override void TestSave()
+        public override void Test_Access_Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region Save
+
+        [Test]
+	    public override void Test_Base_Save()
 	    {
 			var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -360,9 +502,13 @@
             Assert.IsFalse(bc.Save(null, identity).Ok);
 	    }
 
-		[Test]
-	    public override void TestSaveSome()
-	    {
+        #endregion
+
+        #region SaveSome
+
+        [Test]
+        public override void Test_Base_SaveSome()
+        {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
             var shop2 = new Shop { Name = "Coles", Address = "NSW" };
@@ -418,12 +564,16 @@
             Assert.IsTrue(saveSome.Items.Any(i => i.Item.ShopId == getShop4.Item.ShopId));
 
             Assert.IsFalse(bc.SaveSome(null, null).Ok);
-            Assert.IsFalse(bc.SaveSome(new [] { shop1 }, null).Ok);
+            Assert.IsFalse(bc.SaveSome(new[] { shop1 }, null).Ok);
             Assert.IsFalse(bc.SaveSome(null, identity).Ok);
-	    }
+        }
 
-		[Test]
-	    public override void TestValidate()
+        #endregion
+
+        #region Validate
+
+        [Test]
+	    public override void Test_Base_Validate()
 	    {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -443,6 +593,61 @@
             Assert.IsFalse(bc.Validate(null, identity).Ok);
         }
 
+        public override void Test_Validate_Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion
+
+        #endregion
+
+        #region Support
+
+        public override IIdentity GetInvalidIdentity()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override Shop GetInvalidItem()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion  
+
+ 
+        
+
+        
+
+        
+
+        
+
+        public override void Test_Access_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+                
+        public override void Test_Access_Validate()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

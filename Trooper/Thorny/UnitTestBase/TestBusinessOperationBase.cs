@@ -11,6 +11,7 @@ using Trooper.Thorny.Business.Security;
     using System.Linq;
     using System;
     using System.Collections.Generic;
+    using Trooper.Thorny.Interface.DataManager;
         
     public abstract class TestBusinessOperationBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
         where TiBusinessCore : IBusinessCore<Tc, Ti>
@@ -48,13 +49,14 @@ using Trooper.Thorny.Business.Security;
             };
         }
 
-        public virtual IIdentity GetInvalidIdentity()
+        public abstract IIdentity GetInvalidIdentity();
+
+        public virtual Tc GetValidItem(IFacade<Tc, Ti> facade)
         {
-            return new Identity
-            {
-                Username = InvalidUsername
-            };
+            return this.GetValidItem(facade);
         }
+
+        public abstract Tc GetInvalidItem();
 
         [Test]
         public virtual void TestGetBusinessPack() 
@@ -108,7 +110,7 @@ using Trooper.Thorny.Business.Security;
         {
             var bc = this.NewBusinessCoreInstance();
             var bp = bc.GetBusinessPack();
-            var item = this.ItemGenerator.NewItem(bp.Facade);
+            var item = this.GetValidItem(bp.Facade);
             var identity = this.GetValidIdentity();
 
             var add = bc.Add(item, identity);
@@ -140,9 +142,9 @@ using Trooper.Thorny.Business.Security;
         {
             var bc = this.NewBusinessCoreInstance();
             var bp = bc.GetBusinessPack();
-            var item1 = this.ItemGenerator.NewItem(bp.Facade);
-            var item2 = this.ItemGenerator.NewItem(bp.Facade);
-            var item3 = this.ItemGenerator.NewItem(bp.Facade);
+            var item1 = this.GetValidItem(bp.Facade);
+            var item2 = this.GetValidItem(bp.Facade);
+            var item3 = this.GetValidItem(bp.Facade);
 
 			this.TestAddSome(new List<Ti> { item1, item2, item3 });
         }
@@ -160,9 +162,9 @@ using Trooper.Thorny.Business.Security;
         {
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var item1 = this.ItemGenerator.NewItem(bp.Facade);
-			var item2 = this.ItemGenerator.NewItem(bp.Facade);
-			var item3 = this.ItemGenerator.NewItem(bp.Facade);
+			var item1 = this.GetValidItem(bp.Facade);
+			var item2 = this.GetValidItem(bp.Facade);
+			var item3 = this.GetValidItem(bp.Facade);
 			var identity = this.GetValidIdentity();
 
 			var addSome = this.TestAddSome(new List<Ti> { item1, item2 }).ToList();
@@ -195,10 +197,10 @@ using Trooper.Thorny.Business.Security;
         {
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var item1 = ItemGenerator.NewItem(bp.Facade);
-			var item2 = ItemGenerator.NewItem(bp.Facade);
-			var item3 = ItemGenerator.NewItem(bp.Facade);
-			var item4 = ItemGenerator.NewItem(bp.Facade);
+			var item1 = this.GetValidItem(bp.Facade);
+			var item2 = this.GetValidItem(bp.Facade);
+			var item3 = this.GetValidItem(bp.Facade);
+			var item4 = this.GetValidItem(bp.Facade);
 			var identity = this.GetValidIdentity();
 
 			var addSome = this.TestAddSome(new List<Ti> { item1, item2, item3, item4 }).ToList();
@@ -227,8 +229,8 @@ using Trooper.Thorny.Business.Security;
         {
 			var bc = this.NewBusinessCoreInstance();
 			var bp = bc.GetBusinessPack();
-			var item1 = ItemGenerator.NewItem(bp.Facade);
-			var item2 = ItemGenerator.NewItem(bp.Facade);
+			var item1 = this.GetValidItem(bp.Facade);
+			var item2 = this.GetValidItem(bp.Facade);
 
 	        var addSome = this.TestAddSome(new List<Ti> {item1, item2});
 
@@ -250,12 +252,12 @@ using Trooper.Thorny.Business.Security;
 			var bp = bc.GetBusinessPack();
 			var identity = this.GetValidIdentity();
 
-			var item1 = ItemGenerator.NewItem(bp.Facade);
-			var item2 = ItemGenerator.NewItem(bp.Facade);
-			var item3 = ItemGenerator.NewItem(bp.Facade);
-			var item4 = ItemGenerator.NewItem(bp.Facade);
-			var item5 = ItemGenerator.NewItem(bp.Facade);
-			var item6 = ItemGenerator.NewItem(bp.Facade);
+			var item1 = this.GetValidItem(bp.Facade);
+			var item2 = this.GetValidItem(bp.Facade);
+			var item3 = this.GetValidItem(bp.Facade);
+			var item4 = this.GetValidItem(bp.Facade);
+			var item5 = this.GetValidItem(bp.Facade);
+			var item6 = this.GetValidItem(bp.Facade);
 
 			var addSome = this.TestAddSome(new List<Ti>{item1, item2, item3, item4, item5, item6}).ToList();
 	        var getSome = bc.GetSome(new Search {SkipItems = 3, TakeItems = 2}, identity);
@@ -287,8 +289,8 @@ using Trooper.Thorny.Business.Security;
 			var bp = bc.GetBusinessPack();
 			var identity = this.GetValidIdentity();
 
-			var item1 = ItemGenerator.NewItem(bp.Facade);
-			var item2 = ItemGenerator.NewItem(bp.Facade);
+			var item1 = this.GetValidItem(bp.Facade);
+			var item2 = this.GetValidItem(bp.Facade);
 
 			this.TestAddSome(new List<Ti> { item1, item2 });
 	        var all = this.TestGetAll(2);
@@ -326,8 +328,8 @@ using Trooper.Thorny.Business.Security;
 			var bp = bc.GetBusinessPack();
 			var identity = this.GetValidIdentity();
 
-			var item1 = ItemGenerator.NewItem(bp.Facade);
-			var item2 = ItemGenerator.NewItem(bp.Facade);
+			var item1 = this.GetValidItem(bp.Facade);
+			var item2 = this.GetValidItem(bp.Facade);
 
 			this.TestAddSome(new List<Ti> { item1, item2 });
 			var all = this.TestGetAll(2);
@@ -465,6 +467,8 @@ using Trooper.Thorny.Business.Security;
                     }));
             }
         }
+
+        #endregion
 
         #endregion
     }
