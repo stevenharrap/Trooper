@@ -4,10 +4,10 @@ namespace Trooper.Testing.DefaultShopApp
 {
     using Autofac;
     using NUnit.Framework;
-    using Trooper.BusinessOperation2.Injection;
-    using Trooper.BusinessOperation2.Interface;
-    using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.Interface;
+    using Trooper.Thorny.UnitTestBase;
+    using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Testing.DefaultShopApi;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;

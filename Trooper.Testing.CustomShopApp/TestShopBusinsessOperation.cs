@@ -2,16 +2,16 @@
 {
     using NUnit.Framework;
     using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Injection;
-    using Trooper.BusinessOperation2.UnitTestBase;
+    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.UnitTestBase;
     using Trooper.Testing.CustomShopApi;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
     using System.Linq;
     using Trooper.Testing.CustomShopApi.Business.Support;
-    using Trooper.BusinessOperation2.Business.Security;
-    using Trooper.BusinessOperation2;
+    using Trooper.Thorny.Business.Security;
+    using Trooper.Thorny;
     using Trooper.Testing.ShopModel.Model;
 
     [TestFixture]
@@ -41,7 +41,7 @@
         #region Tests
 
         [Test]
-        public override void TestAdd()
+        public override void Test_Base_Add()
         {
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
             var identity = this.GetValidIdentity();
@@ -64,7 +64,7 @@
         }
 
         [Test]
-        public override void TestAddSome()
+        public override void Test_Base_AddSome()
         {
             var bc = this.NewBusinessCoreInstance();
 
@@ -88,7 +88,7 @@
         }
 
         [Test]
-        public override void TestDeleteAll()
+        public override void Test_Base_DeleteAll()
         {
             var bc = this.NewBusinessCoreInstance();
             var identity = this.GetValidIdentity();
@@ -105,7 +105,7 @@
         }
 
         [Test]
-        public override void TestDeleteByKey()
+        public override void Test_Base_DeleteByKey()
         {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -138,7 +138,7 @@
         }
 
         [Test]
-        public override void TestDeleteSomeByKey()
+        public override void Test_Base_DeleteSomeByKey()
         {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -170,7 +170,7 @@
         }
 
         [Test]
-        public override void TestExistsByKey()
+        public override void Test_Base_ExistsByKey()
         {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -198,7 +198,7 @@
         }
 
         [Test]
-        public override void TestGetAll()
+        public override void Test_Base_GetAll()
         {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -220,7 +220,7 @@
         }
 
         [Test]
-        public override void TestGetByKey()
+        public override void Test_Base_GetByKey()
         {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -248,7 +248,7 @@
         }
 
         [Test]
-        public override void TestGetSome()
+        public override void Test_Base_GetSome()
         {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
@@ -283,7 +283,7 @@
 	    {
             var bc = this.NewBusinessCoreInstance();
             var validIdentity = this.GetValidIdentity();
-            var invalidIdentity = this.GetInvalididentity();
+            var invalidIdentity = this.GetInvalidIdentity();
 
             var allowedResult = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, validIdentity);
             Assert.IsTrue(allowedResult.Ok);

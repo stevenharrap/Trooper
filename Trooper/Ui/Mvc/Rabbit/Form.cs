@@ -17,9 +17,9 @@ namespace Trooper.Ui.Mvc.Rabbit
 	using System.Web.Helpers;
 	using System.Web.Mvc;
 	using System.Web.Mvc.Html;
-	using BusinessOperation2;
-	using BusinessOperation2.Interface.OperationResponse;
-	using BusinessOperation2.Utility;
+	using Thorny;
+	using Thorny.Interface.OperationResponse;
+	using Thorny.Utility;
 	using Properties;
 	using Interface.Mvc.Cruncher;
 	using Controls;

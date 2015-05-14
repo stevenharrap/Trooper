@@ -1,4 +1,4 @@
-﻿using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+﻿using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Testing.ShopModel;
 using Trooper.Testing.ShopModel.Interface;
 using Trooper.Testing.ShopModel.Model;

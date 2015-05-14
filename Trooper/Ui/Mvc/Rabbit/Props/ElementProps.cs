@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Trooper.BusinessOperation2;
-using Trooper.BusinessOperation2.Interface.OperationResponse;
-using Trooper.BusinessOperation2.Utility;
+using Trooper.Thorny;
+using Trooper.Thorny.Interface.OperationResponse;
+using Trooper.Thorny.Utility;
 using Trooper.Ui.Interface.Mvc.Rabbit.Props;
 
 namespace Trooper.Ui.Mvc.Rabbit.Props

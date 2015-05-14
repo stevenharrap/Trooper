@@ -1,9 +1,9 @@
 ﻿namespace Trooper.Testing.DefaultShopApp
 {
     using NUnit.Framework;
-    using Trooper.BusinessOperation2.Injection;
-    using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.Interface.BusinessOperation2.Business.Operation.Core;
+    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.UnitTestBase;
+    using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Testing.DefaultShopApi;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
@@ -67,5 +67,155 @@
         }
 
         #endregion
+
+        public override void Test_Access_DeleteAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_DeleteAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_Add()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_Add()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_AddSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_AddSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_DeleteByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_DeleteByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_DeleteSomeByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_DeleteSomeByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_GetSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_GetSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_GetByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_GetByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_ExistsByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_ExistsByKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Base_IsAllowed()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Base_Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Base_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Base_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Validate_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Base_Validate()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Test_Access_Validate()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

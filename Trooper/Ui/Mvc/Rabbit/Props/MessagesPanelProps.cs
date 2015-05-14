@@ -1,4 +1,4 @@
-﻿using Trooper.BusinessOperation2.Interface.OperationResponse;
+﻿using Trooper.Thorny.Interface.OperationResponse;
 
 namespace Trooper.Ui.Mvc.Rabbit.Props
 {

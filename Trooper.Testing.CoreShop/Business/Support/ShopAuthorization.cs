@@ -1,12 +1,12 @@
 ﻿namespace Trooper.Testing.CustomShopApi.Business.Support
 {
     using System.Collections.Generic;
-    using Trooper.BusinessOperation2.Business.Security;
-    using Trooper.BusinessOperation2.Interface.OperationResponse;
-    using Trooper.BusinessOperation2.OperationResponse;
-    using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.BusinessOperation2.Utility;
-    using Trooper.Interface.BusinessOperation2.Business.Security;
+    using Trooper.Thorny.Business.Security;
+    using Trooper.Thorny.Interface.OperationResponse;
+    using Trooper.Thorny.OperationResponse;
+    using Trooper.Thorny.UnitTestBase;
+    using Trooper.Thorny.Utility;
+    using Trooper.Interface.Thorny.Business.Security;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Model;

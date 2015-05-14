@@ -5,10 +5,10 @@ namespace Trooper.Testing.CustomShopApp
     using System.Linq;
     using Autofac;
     using NUnit.Framework;
-    using Trooper.BusinessOperation2.Injection;
-    using Trooper.BusinessOperation2.Interface;
-    using Trooper.BusinessOperation2.UnitTestBase;
-    using Trooper.BusinessOperation2.Business.Operation.Core;
+    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.Interface;
+    using Trooper.Thorny.UnitTestBase;
+    using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;

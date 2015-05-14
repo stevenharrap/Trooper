@@ -1,4 +1,4 @@
-﻿using Trooper.BusinessOperation2.Business.Operation.Core;
+﻿using Trooper.Thorny.Business.Operation.Core;
 
 namespace Trooper.Testing.CustomShopApi.Business.Support
 {

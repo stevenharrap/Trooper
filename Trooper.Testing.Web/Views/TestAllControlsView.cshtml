@@ -48,10 +48,10 @@
             </div>
             <div class="col-xs-2">
                 @form.SelectListFor(m => m.MessageAlertLevel,
-								 new SelectListProps<Trooper.BusinessOperation2.MessageAlertLevel?, string>
+								 new SelectListProps<Trooper.Thorny.MessageAlertLevel?, string>
                             {
                                 Title = "Error?",
-                                Options = OptionListHelper.FromEnum<Trooper.BusinessOperation2.MessageAlertLevel>(new EnumParams { IncludeBlank = true })
+                                Options = OptionListHelper.FromEnum<Trooper.Thorny.MessageAlertLevel>(new EnumParams { IncludeBlank = true })
                             })
             </div>
         </div>

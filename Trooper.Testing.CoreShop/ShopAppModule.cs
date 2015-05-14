@@ -1,7 +1,7 @@
 ﻿namespace Trooper.Testing.CustomShopApi
 {
     using Autofac;
-    using Trooper.BusinessOperation2.Injection;
+    using Trooper.Thorny.Injection;
     using Trooper.Testing.CustomShopApi.Business.Support;
 
     public class ShopAppModule : Module
