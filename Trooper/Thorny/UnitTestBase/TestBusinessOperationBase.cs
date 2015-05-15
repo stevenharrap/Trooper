@@ -12,7 +12,7 @@ using Trooper.Thorny.Business.Security;
     using System;
     using System.Collections.Generic;
     using Trooper.Thorny.Interface.DataManager;
-        
+
     public abstract class TestBusinessOperationBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
         where TiBusinessCore : IBusinessCore<Tc, Ti>
         where Tc : class, Ti, new()
@@ -39,7 +39,7 @@ using Trooper.Thorny.Business.Security;
 
         #endregion
 
-        #region Tests
+        #region Support
 
         public virtual IIdentity GetValidIdentity()
         {
@@ -53,10 +53,14 @@ using Trooper.Thorny.Business.Security;
 
         public virtual Tc GetValidItem(IFacade<Tc, Ti> facade)
         {
-            return this.GetValidItem(facade);
+            return this.ItemGenerator.NewItem(facade);
         }
 
         public abstract Tc GetInvalidItem();
+
+        #endregion
+
+        #region Tests
 
         [Test]
         public virtual void TestGetBusinessPack() 

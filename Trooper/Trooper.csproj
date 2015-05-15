@@ -210,6 +210,7 @@
     <Compile Include="Thorny\OperationResponse\Message.cs" />
     <Compile Include="Thorny\OperationResponse\Response.cs" />
     <Compile Include="Thorny\UnitTestBase\ItemGenerator.cs" />
+    <Compile Include="Thorny\UnitTestBase\TestDefaultBusinsessOperation.cs" />
     <Compile Include="Thorny\UnitTestBase\TestBase.cs" />
     <Compile Include="Thorny\UnitTestBase\TestBusinessOperationBase.cs" />
     <Compile Include="Thorny\UnitTestBase\TestFacadeBase.cs" />

@@ -19,7 +19,7 @@
     [Category("BusinessOperation")]
     public class TestShopBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
     {
-	    private const string ToBeImplemented = "Shop BO Test to be implemented";
+        private const string ToBeImplemented = "Shop BO Test to be implemented";
 
         #region Setup
 
@@ -66,11 +66,13 @@
             Assert.IsFalse(bc.Add(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_Add()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_Add()
         {
             throw new System.NotImplementedException();
@@ -100,15 +102,17 @@
             Assert.That(result.Items.Any(s => s.Name == "BigW" && s.Address == "Vic"));
 
             Assert.IsFalse(bc.AddSome(null, null).Ok);
-            Assert.IsFalse(bc.AddSome(new [] {shop1}, null).Ok);
+            Assert.IsFalse(bc.AddSome(new[] { shop1 }, null).Ok);
             Assert.IsFalse(bc.AddSome(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_AddSome()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_AddSome()
         {
             throw new System.NotImplementedException();
@@ -123,7 +127,7 @@
         {
             var bc = this.NewBusinessCoreInstance();
             var identity = this.GetValidIdentity();
-            
+
             var allResult = bc.GetAll(identity);
             Assert.That(allResult.Ok);
 
@@ -135,11 +139,13 @@
             Assert.IsFalse(allResult.Items.Any());
         }
 
+        [Test]
         public override void Test_Access_DeleteAll()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_DeleteAll()
         {
             throw new System.NotImplementedException();
@@ -182,11 +188,13 @@
             Assert.IsFalse(bc.DeleteByKey(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_DeleteByKey()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_DeleteByKey()
         {
             throw new System.NotImplementedException();
@@ -212,7 +220,7 @@
             Assert.That(getAllResult.Ok);
             Assert.AreEqual(getAllResult.Items.Count, 3);
             var shops = getAllResult.Items.Where(i => i.Name == "Kmart" || i.Name == "BigW");
-            Assert.IsNotNull(shop2);            
+            Assert.IsNotNull(shop2);
 
             var deleteSomeByKey = bc.DeleteSomeByKey(shops, identity);
             Assert.IsNotNull(deleteSomeByKey);
@@ -224,15 +232,17 @@
             Assert.IsTrue(getAllResult.Items.Any(i => i.Name == "Coles"));
 
             Assert.IsFalse(bc.DeleteSomeByKey(null, null).Ok);
-            Assert.IsFalse(bc.DeleteSomeByKey(new [] {shop1}, null).Ok);
+            Assert.IsFalse(bc.DeleteSomeByKey(new[] { shop1 }, null).Ok);
             Assert.IsFalse(bc.DeleteSomeByKey(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_DeleteSomeByKey()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_DeleteSomeByKey()
         {
             throw new System.NotImplementedException();
@@ -270,11 +280,13 @@
             Assert.IsFalse(bc.ExistsByKey(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_ExistsByKey()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_ExistsByKey()
         {
             throw new System.NotImplementedException();
@@ -306,11 +318,13 @@
             Assert.IsFalse(bc.GetAll(null).Ok);
         }
 
+        [Test]
         public override void Test_Access_GetAll()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_GetAll()
         {
             throw new System.NotImplementedException();
@@ -348,11 +362,13 @@
             Assert.IsFalse(bc.GetByKey(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_GetByKey()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_GetByKey()
         {
             throw new System.NotImplementedException();
@@ -377,7 +393,7 @@
 
             var names = bc.GetSome(new ShopNameSearch { Name = "Kmart" }, identity);
             var addresses = bc.GetSome(new ShopAddressSearch { Address = "NSW" }, identity);
-            
+
             Assert.IsTrue(names.Ok);
             Assert.AreEqual(names.Items.Count(), 2);
             Assert.IsTrue(names.Items.Any(s => s.Name == "Kmart" && s.Address == "Queensland"));
@@ -393,11 +409,13 @@
             Assert.IsFalse(bc.GetSome(null, identity).Ok);
         }
 
+        [Test]
         public override void Test_Access_GetSome()
         {
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void Test_Validate_GetSome()
         {
             throw new System.NotImplementedException();
@@ -432,8 +450,8 @@
         #region Update
 
         [Test]
-	    public override void Test_Base_Update()
-	    {
+        public override void Test_Base_Update()
+        {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
             var shop2 = new Shop { Name = "Kmart", Address = "NSW" };
@@ -445,7 +463,7 @@
 
             add.Item.Address = "NT";
             var update = bc.Update(add.Item, identity);
-            Assert.IsTrue(update.Ok);            
+            Assert.IsTrue(update.Ok);
 
             var getByKey = bc.GetByKey(add.Item, identity);
             Assert.IsTrue(getByKey.Ok);
@@ -453,9 +471,16 @@
 
             update = bc.Update(shop2, identity);
             Assert.IsFalse(update.Ok);
-	    }
+        }
 
+        [Test]
         public override void Test_Access_Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        [Test]
+        public override void Test_Validate_Update()
         {
             throw new System.NotImplementedException();
         }
@@ -465,9 +490,9 @@
         #region Save
 
         [Test]
-	    public override void Test_Base_Save()
-	    {
-			var bc = this.NewBusinessCoreInstance();
+        public override void Test_Base_Save()
+        {
+            var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
             var shop2 = new Shop { Name = "Kmart", Address = "NSW" };
             var identity = this.GetValidIdentity();
@@ -500,7 +525,20 @@
             Assert.IsFalse(bc.Save(null, null).Ok);
             Assert.IsFalse(bc.Save(shop1, null).Ok);
             Assert.IsFalse(bc.Save(null, identity).Ok);
-	    }
+        }
+
+        [Test]
+        public override void Test_Access_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        [Test]
+        public override void Test_Validate_Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
 
         #endregion
 
@@ -568,13 +606,25 @@
             Assert.IsFalse(bc.SaveSome(null, identity).Ok);
         }
 
+        [Test]
+        public override void Test_Access_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        [Test]
+        public override void Test_Validate_SaveSome()
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion
 
         #region Validate
 
         [Test]
-	    public override void Test_Base_Validate()
-	    {
+        public override void Test_Base_Validate()
+        {
             var bc = this.NewBusinessCoreInstance();
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
             var shop2 = new Shop { Name = "KmartKmartKmartKmartKmartKmartKmartKmartKmartKmartKmartKmart", Address = "NSW" };
@@ -593,7 +643,8 @@
             Assert.IsFalse(bc.Validate(null, identity).Ok);
         }
 
-        public override void Test_Validate_Update()
+        [Test]
+        public override void Test_Access_Validate()
         {
             throw new System.NotImplementedException();
         }
@@ -606,48 +657,21 @@
 
         public override IIdentity GetInvalidIdentity()
         {
-            throw new System.NotImplementedException();
+            return new Identity
+            {
+                Username = InvalidUsername
+            };
         }
 
         public override Shop GetInvalidItem()
         {
-            throw new System.NotImplementedException();
+            return new Shop 
+            {
+                Address = "To long street To long street To long street To long street To long street To long street To long street To long street To long street To long street To long street",
+                Name = "To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name"
+            };
         }
 
         #endregion  
-
- 
-        
-
-        
-
-        
-
-        
-
-        public override void Test_Access_Save()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Test_Validate_Save()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Test_Access_SaveSome()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Test_Validate_SaveSome()
-        {
-            throw new System.NotImplementedException();
-        }
-                
-        public override void Test_Access_Validate()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
