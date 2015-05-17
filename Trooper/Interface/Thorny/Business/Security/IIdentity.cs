@@ -9,5 +9,7 @@ namespace Trooper.Interface.Thorny.Business.Security
         string Password { get; set; }
 
         Guid Session { get; set; }
+
+        string Culture { get; set; }
     }
 }

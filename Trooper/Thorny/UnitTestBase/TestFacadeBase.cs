@@ -45,7 +45,7 @@ using Trooper.Thorny.Business.Operation.Core;
             {
                 bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
                 bp.Facade.Add(this.ItemGenerator.NewItem(bp.Facade));
-                bp.Uow.Save();            
+                bp.Uow.Save(); 
 
                 var all = bp.Facade.GetAll().ToList();
                 Assert.NotNull(all);

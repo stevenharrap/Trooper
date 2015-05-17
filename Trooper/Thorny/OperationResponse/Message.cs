@@ -26,6 +26,11 @@ namespace Trooper.Thorny.OperationResponse
         public string Content { get; set; }
 
         /// <summary>
+        /// An alphanumeric code that can uniquely identify the message regardless of culture
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
         /// Gets or sets the entity (if any) that the error is related to.
         /// </summary>
         [DataMember]

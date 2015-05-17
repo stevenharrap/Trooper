@@ -60,7 +60,7 @@ namespace Trooper.Thorny.Utility
             this.level = level;
         }
 
-        public IMessage Make<TEntity>(string message, Expression<Func<TEntity>> expression)
+        public IMessage Make<TEntity>(string message, string code, Expression<Func<TEntity>> expression)
         {
             var memberExpression = expression.Body as MemberExpression;
 
@@ -69,6 +69,7 @@ namespace Trooper.Thorny.Utility
             return new Message
             {
                 Content = message,
+                Code = code,
                 Entity = memberExpression.Expression.GetType().FullName,
                 Property = propertyInfo.Name,
                 Level = this.level
@@ -93,12 +94,13 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// The <see cref="Message"/>.
         /// </returns>
-        public IMessage Make<TEntity>(string message, TEntity entity, string property)
+        public IMessage Make<TEntity>(string message, string code, TEntity entity, string property)
             where TEntity : class
         {
             return new Message
                        {
                            Content = message,
+                           Code = code,
                            Entity = entity == null ? string.Empty : entity.GetType().FullName,
                            Property = property,
                            Level = this.level
@@ -117,11 +119,12 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// The <see cref="Message"/>.
         /// </returns>
-        public IMessage Make(string message, string property)
+        public IMessage Make(string message, string code, string property)
         {
             return new Message
             {
                 Content = message,
+                Code = code,
                 Entity = null,
                 Property = property,
                 Level = this.level
@@ -137,11 +140,12 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// The <see cref="Message"/>.
         /// </returns>
-        public IMessage Make(string message)
+        public IMessage Make(string message, string code)
         {
             return new Message
             {
                 Content = message,
+                Code = code,
                 Entity = null,
                 Property = null,
                 Level = this.level
@@ -169,10 +173,10 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// Returns the operation response.
         /// </returns>
-        public IResponse Add<TEntity>(string message, TEntity entity, string property, IResponse response)
+        public IResponse Add<TEntity>(string message, string code, TEntity entity, string property, IResponse response)
             where TEntity : class
         {
-            var e = Make(message, entity, property);
+            var e = Make(message, code, entity, property);
 
             if (response.Messages == null)
             {
@@ -199,9 +203,9 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// Returns the operation response.
         /// </returns>
-        public IResponse Add(string message, string property, IResponse response)
+        public IResponse Add(string message, string code, string property, IResponse response)
         {
-            var e = Make(message, property);
+            var e = Make(message, code, property);
 
             if (response.Messages == null)
             {
@@ -225,14 +229,14 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// Returns the operation response.
         /// </returns>
-        public IResponse Add(string message, IResponse response)
+        public IResponse Add(string message, string code, IResponse response)
         {
             if (response == null)
             {
                 response = new Response();
             }
 
-            var e = Make(message);
+            var e = Make(message, code);
 
             if (response.Messages == null)
             {

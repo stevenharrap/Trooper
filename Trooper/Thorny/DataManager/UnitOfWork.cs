@@ -2,8 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity.Validation;
     using System.Linq;
+    using Trooper.Thorny.DataManager;
     using Trooper.Thorny.Interface.DataManager;
+    using Trooper.Thorny.Interface.OperationResponse;
+    using Trooper.Thorny.Utility;
 
     public class UnitOfWork<TContext> : IUnitOfWork 
         where TContext : IDbContext, new()
@@ -36,6 +40,24 @@
             _repositories.Add(typeof(T), repository);
 
             return repository;
+        }
+
+        public void Save(IResponse response)
+        {
+            try
+            {
+                _ctx.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var vr in eve.ValidationErrors)
+                    {                        
+                        MessageUtility.Errors.Add(vr.ErrorMessage, Validation.InvalidPropertyCode, eve.Entry.Entity, vr.PropertyName, response);
+                    }                    
+                }
+            }
         }
 
         public void Save()

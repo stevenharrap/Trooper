@@ -148,7 +148,6 @@
     <Compile Include="Thorny\Business\Operation\Core\BusinessPackEventArgs.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Search.cs" />
     <Compile Include="Thorny\Business\Operation\Single\BusinessCreate.cs" />
-    <Compile Include="Thorny\Business\Operation\Single\BusinessValidate.cs" />
     <Compile Include="Thorny\Business\Operation\Single\BusinessRequest.cs" />
     <Compile Include="Thorny\Business\Operation\Single\BusinessRead.cs" />
     <Compile Include="Thorny\Business\Response\AddResponse.cs" />
@@ -179,7 +178,6 @@
     <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessCreate.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Core\IBusinessOperation.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessSession.cs" />
-    <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessValidate.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessRequest.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessUpdate.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessDelete.cs" />

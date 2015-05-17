@@ -11,7 +11,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
-	public interface IBusinessCreate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessValidate<Tc, Ti>, IBusinessOperation<Tc, Ti>
+	public interface IBusinessCreate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {

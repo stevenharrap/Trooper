@@ -15,7 +15,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     /// Provides the means to expose your Model and Facade, wrap it in Read and Write operations and control
     /// access to those operations.
     /// </summary>
-    public interface IBusinessUpdate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessValidate<Tc, Ti>, IBusinessOperation<Tc, Ti>
+    public interface IBusinessUpdate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {

@@ -5,7 +5,7 @@
     using Trooper.Thorny.Interface.OperationResponse;
     using Trooper.Thorny.Utility;
 
-    public class Validation<Tc> : IValidation<Tc> 
+    public class Validation<Tc> : Validation, IValidation<Tc> 
         where Tc : class, new()
     {
         public IUnitOfWork Uow { get; set; }
@@ -34,14 +34,19 @@
 
         public virtual IResponse Validate(Tc item, IResponse response)
         {
-            var vr = Validation.Validate(item);
+            //var vr = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(item);
 
-            foreach (var v in vr)
-            {
-                MessageUtility.Errors.Add(v.Message, v.Target, v.Key, response);
-            }
+            //foreach (var v in vr)
+            //{
+            //    MessageUtility.Errors.Add(v.Message, InvalidPropertyCode, v.Target, v.Key, response);
+            //}
 
             return response;
         }
+    }
+
+    public class Validation
+    {
+        public const string InvalidPropertyCode = Constants.ValidationErrorCodeRoot + ".InvalidProperty";
     }
 }

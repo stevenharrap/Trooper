@@ -22,7 +22,7 @@ namespace Trooper.Thorny.Business.Operation.Core
     /// Provides the means to expose your Model, wrap it in Read and Add operations and control
     /// access to those operations.
     /// </summary>
-    public class BusinessCore<Tc, Ti> : IBusinessCore<Tc, Ti> 
+    public class BusinessCore<Tc, Ti> : BusinessCore, IBusinessCore<Tc, Ti> 
         where Tc : class, Ti, new()
         where Ti : class
     {
@@ -41,13 +41,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode ,response);
                 return response;
             }
 
@@ -59,7 +59,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 if (bp.Facade.Exists(item))
                 {
-                    MessageUtility.Errors.Add(errorMessage, response);
+                    MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
                     return response;
                 }
 
@@ -67,7 +67,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 if (added == null)
                 {
-                    MessageUtility.Errors.Add(errorMessage, response);
+                    MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
                     return response;
                 }
 
@@ -75,12 +75,12 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = added };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 response.Item = added;
 
@@ -94,13 +94,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (items == null)
             {
-                MessageUtility.Errors.Add("The items have not been supplied.", response);
+                MessageUtility.Errors.Add("The items have not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -121,47 +121,14 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.AddSomeAction, Items = added };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 response.Items = added;
-
-                return response;
-            }
-        }
-
-        public virtual ISingleResponse<bool> Validate(Ti item, IIdentity identity)
-        {
-            var response = new SingleResponse<bool>();
-
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
-                return response;
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
-                return response;
-            }
-
-            using (var bp = this.GetBusinessPack())
-            {
-                var added = bp.Facade.Add(item as Tc);
-
-                var arg = new RequestArg<Tc> { Action = Action.ValidateAction, Item = item as Tc };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
-                {
-                    return response;
-                }
-
-                response.Item = bp.Validation.IsValid(added, response);
 
                 return response;
             }
@@ -173,13 +140,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (argument == null)
             {
-                MessageUtility.Errors.Add("The argument has not been supplied.", response);
+                MessageUtility.Errors.Add("The argument has not been supplied.", NullArgumentCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -202,7 +169,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -210,7 +177,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             {
                 var arg = new RequestArg<Tc> { Action = Security.Action.GetSession };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
@@ -230,13 +197,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -247,14 +214,14 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
 
                 bp.Facade.Delete(itemAsTc);
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 return response;
             }
@@ -266,13 +233,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (items == null)
             {
-                MessageUtility.Errors.Add("The items have not been supplied.", response);
+                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -282,14 +249,14 @@ namespace Trooper.Thorny.Business.Operation.Core
                 
                 var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
 
                 bp.Facade.DeleteSome(itemsAsListTc);
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 return response;
             }
@@ -301,7 +268,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -310,7 +277,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 
                 var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
@@ -327,13 +294,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (search == null)
             {
-                MessageUtility.Errors.Add("The search has not been supplied.", response);
+                MessageUtility.Errors.Add("The search has not been supplied.", NullSearchCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -341,7 +308,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             {                
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
@@ -360,13 +327,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -376,7 +343,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
                 var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
@@ -385,7 +352,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 if (result == null)
                 {
-                    MessageUtility.Errors.Add(errorMessage, item, null, response);
+                    MessageUtility.Errors.Add(errorMessage, NoRecordCode, item, null, response);
                     return response;
                 }
 
@@ -401,13 +368,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -415,7 +382,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             {                
                 var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
@@ -433,13 +400,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -451,7 +418,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 if (updated == null)
                 {
-                    MessageUtility.Errors.Add(errorMessage, response);
+                    MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
                     return response;
                 }
 
@@ -459,12 +426,12 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = updated };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 response.Item = updated;
 
@@ -478,13 +445,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", response);
+                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -497,7 +464,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 if (saved == null)
                 {
-                    MessageUtility.Errors.Add(errorMessage, response);
+                    MessageUtility.Errors.Add(errorMessage, SaveFailedcCode, response);
                     return response;
                 }
 
@@ -505,12 +472,12 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var arg = new RequestArg<Tc> { Action = exists ? Action.UpdateAction :  Action.AddAction, Item = saved };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity))
+                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
                 {
                     return response;
                 }
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 response.Item = saved;
                 response.Change = exists ? SaveChangeType.Update : SaveChangeType.Add;
@@ -525,13 +492,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (items == null)
             {
-                MessageUtility.Errors.Add("The items have not been supplied.", response);
+                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
                 return response;
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
@@ -559,7 +526,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                     if (bp.Authorization != null)
                     {
-                        bp.Authorization.IsAllowed(arg, identity);
+                        bp.Authorization.IsAllowed(arg, identity, response);
                     }
                 }
 
@@ -568,7 +535,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                     return response;
                 }                
 
-                bp.Uow.Save();
+                bp.Uow.Save(response);
 
                 response.Items = saved.Select(i => new SaveSomeItem<Ti>
                 {
@@ -579,5 +546,24 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
         }        
+    }
+
+    public class BusinessCore
+    {
+        public const string NullItemCode = Constants.BusinessCoreErrorCodeRoot + ".NullItem";
+
+        public const string NullItemsCode = Constants.BusinessCoreErrorCodeRoot + ".NullItems";
+
+        public const string NullIdentityCode = Constants.BusinessCoreErrorCodeRoot + ".NullIdentity";
+
+        public const string NullArgumentCode = Constants.BusinessCoreErrorCodeRoot + ".:NullArgument";
+
+        public const string AddFailedCode = Constants.BusinessCoreErrorCodeRoot + ".AddFailed";
+
+        public const string NullSearchCode = Constants.BusinessCoreErrorCodeRoot + ".NullSearch";
+
+        public const string NoRecordCode = Constants.BusinessCoreErrorCodeRoot + ".NoReocrd";
+
+        public const string SaveFailedcCode = Constants.BusinessCoreErrorCodeRoot + ".SaveFailed";
     }
 }

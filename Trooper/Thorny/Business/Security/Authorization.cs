@@ -8,7 +8,7 @@ namespace Trooper.Thorny.Business.Security
 	using Trooper.Thorny.Interface.OperationResponse;
 	using Trooper.Thorny.Utility;
 
-    public class Authorization<Tc> : IAuthorization<Tc> 
+    public class Authorization<Tc> : Authorization, IAuthorization<Tc> 
         where Tc : class,  new()
     {
         public IUnitOfWork Uow { get; set; }
@@ -20,7 +20,8 @@ namespace Trooper.Thorny.Business.Security
             return new Credential 
             { 
                 Username = identity.Username,
-                Session = identity.Session
+                Session = identity.Session,
+                Culture = identity.Culture
             };
         }
 
@@ -120,6 +121,7 @@ namespace Trooper.Thorny.Business.Security
                 MessageUtility.Errors.Add(
                 string.Format(
                     "The user {0} is not allowed to perform action {1}.",
+                    UserDeniedCode,
                     credential.Username,
                     arg.Action),
                 null,
@@ -128,5 +130,10 @@ namespace Trooper.Thorny.Business.Security
 
             return false;
         }
+    }
+
+    public class Authorization
+    {
+        public const string UserDeniedCode = Constants.AuthorizationErrorCodeRoot + ".UserDenied";
     }
 }

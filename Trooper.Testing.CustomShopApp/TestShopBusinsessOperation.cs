@@ -14,6 +14,8 @@
     using Trooper.Thorny;
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Interface.Thorny.Business.Security;
+    using Trooper.Thorny.Business.Operation.Core;
+    using Trooper.Thorny.DataManager;
 
     [TestFixture]
     [Category("BusinessOperation")]
@@ -47,6 +49,7 @@
         public override void Test_Base_Add()
         {
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
+            var shop2 = this.GetInvalidItem();
             var identity = this.GetValidIdentity();
             var bc = this.NewBusinessCoreInstance();
 
@@ -57,8 +60,14 @@
 
             var all = bc.GetAll(identity);
 
-            Assert.IsNotNull(all);
-            Assert.IsTrue(all.Ok);
+            Assert.That(all.Items.Count, Is.EqualTo(1));
+
+            add = bc.Add(shop2, identity);
+
+            Assert.IsNotNull(add);
+            Assert.IsFalse(add.Ok);
+
+            all = bc.GetAll(identity);
             Assert.That(all.Items.Count, Is.EqualTo(1));
 
             Assert.IsFalse(bc.Add(null, null).Ok);
@@ -69,13 +78,32 @@
         [Test]
         public override void Test_Access_Add()
         {
-            throw new System.NotImplementedException();
-        }
+            var validShop = this.GetValidItem();
+            var invalidShop = this.GetInvalidItem();
+            var validIdentity = this.GetValidIdentity();
+            var invalidIdentity = this.GetInvalidIdentity();
+            var bc = this.NewBusinessCoreInstance();
 
-        [Test]
-        public override void Test_Validate_Add()
-        {
-            throw new System.NotImplementedException();
+            var allowed = bc.Add(validShop, validIdentity);
+            Assert.IsTrue(allowed.Ok);
+
+            allowed = bc.Add(invalidShop, validIdentity);
+            Assert.IsFalse(allowed.Ok);
+            Assert.IsNotNull(allowed.Messages);
+            Assert.IsTrue(allowed.Messages.Any());
+            Assert.That(allowed.Messages.First().Code == Validation.InvalidPropertyCode);
+
+            var denied = bc.Add(validShop, invalidIdentity);
+            Assert.IsFalse(denied.Ok);
+            Assert.IsNotNull(denied.Messages);
+            Assert.IsTrue(denied.Messages.Any());
+            Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+            denied = bc.Add(invalidShop, invalidIdentity);
+            Assert.IsFalse(denied.Ok);
+            Assert.IsNotNull(denied.Messages);
+            Assert.IsTrue(denied.Messages.Any());
+            Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
         }
 
         #endregion
@@ -90,16 +118,32 @@
             var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
             var shop2 = new Shop { Name = "Coles", Address = "NSW" };
             var shop3 = new Shop { Name = "BigW", Address = "Vic" };
+            var shop4 = this.GetInvalidItem();
             var identity = this.GetValidIdentity();
 
-            var result = bc.AddSome(new List<IShop> { shop1, shop2, shop3 }, identity);
+            var addSome = bc.AddSome(new List<IShop> { shop1, shop2, shop3 }, identity);
 
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Ok);
-            Assert.That(result.Items.Count(), Is.EqualTo(3));
-            Assert.That(result.Items.Any(s => s.Name == "Kmart" && s.Address == "Queensland"));
-            Assert.That(result.Items.Any(s => s.Name == "Coles" && s.Address == "NSW"));
-            Assert.That(result.Items.Any(s => s.Name == "BigW" && s.Address == "Vic"));
+            Assert.IsNotNull(addSome);
+            Assert.IsTrue(addSome.Ok);
+            Assert.That(addSome.Items.Count(), Is.EqualTo(3));
+            Assert.That(addSome.Items.Any(s => s.Name == "Kmart" && s.Address == "Queensland"));
+            Assert.That(addSome.Items.Any(s => s.Name == "Coles" && s.Address == "NSW"));
+            Assert.That(addSome.Items.Any(s => s.Name == "BigW" && s.Address == "Vic"));
+
+            var all = bc.GetAll(identity);
+            Assert.That(all.Items.Count, Is.EqualTo(3));
+
+            addSome = bc.AddSome(new List<IShop> { shop4 }, identity);
+            Assert.IsFalse(addSome.Ok);
+
+            all = bc.GetAll(identity);
+            Assert.That(all.Items.Count, Is.EqualTo(3));
+
+            addSome = bc.AddSome(new List<IShop> { shop1, shop4 }, identity);
+            Assert.IsFalse(addSome.Ok);
+
+            all = bc.GetAll(identity);
+            Assert.That(all.Items.Count, Is.EqualTo(3));
 
             Assert.IsFalse(bc.AddSome(null, null).Ok);
             Assert.IsFalse(bc.AddSome(new[] { shop1 }, null).Ok);
@@ -109,13 +153,44 @@
         [Test]
         public override void Test_Access_AddSome()
         {
-            throw new System.NotImplementedException();
-        }
+            var validShop = this.GetValidItem();
+            var invalidShop = this.GetInvalidItem();
+            var validIdentity = this.GetValidIdentity();
+            var invalidIdentity = this.GetInvalidIdentity();
+            var bc = this.NewBusinessCoreInstance();
 
-        [Test]
-        public override void Test_Validate_AddSome()
-        {
-            throw new System.NotImplementedException();
+            var allowed = bc.AddSome(new[] { validShop }, validIdentity);
+            Assert.IsTrue(allowed.Ok);
+
+            allowed = bc.AddSome(new[] { invalidShop }, validIdentity);
+            Assert.IsFalse(allowed.Ok);
+            Assert.IsNotNull(allowed.Messages);
+            Assert.IsTrue(allowed.Messages.Any());
+            Assert.That(allowed.Messages.First().Code == Validation.InvalidPropertyCode);
+
+            allowed = bc.AddSome(new[] { validShop, invalidShop }, validIdentity);
+            Assert.IsFalse(allowed.Ok);
+            Assert.IsNotNull(allowed.Messages);
+            Assert.IsTrue(allowed.Messages.Any());
+            Assert.That(allowed.Messages.First().Code == Validation.InvalidPropertyCode);
+
+            var denied = bc.AddSome(new[] { validShop }, invalidIdentity);
+            Assert.IsFalse(denied.Ok);
+            Assert.IsNotNull(denied.Messages);
+            Assert.IsTrue(denied.Messages.Any());
+            Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+            denied = bc.AddSome(new[] { invalidShop }, invalidIdentity);
+            Assert.IsFalse(denied.Ok);
+            Assert.IsNotNull(denied.Messages);
+            Assert.IsTrue(denied.Messages.Any());
+            Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+            denied = bc.AddSome(new[] { validShop, invalidShop }, invalidIdentity);
+            Assert.IsFalse(denied.Ok);
+            Assert.IsNotNull(denied.Messages);
+            Assert.IsTrue(denied.Messages.Any());
+            Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
         }
 
         #endregion
@@ -141,12 +216,6 @@
 
         [Test]
         public override void Test_Access_DeleteAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        [Test]
-        public override void Test_Validate_DeleteAll()
         {
             throw new System.NotImplementedException();
         }
@@ -194,12 +263,6 @@
             throw new System.NotImplementedException();
         }
 
-        [Test]
-        public override void Test_Validate_DeleteByKey()
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         #region DeleteSomeByKey
@@ -242,12 +305,6 @@
             throw new System.NotImplementedException();
         }
 
-        [Test]
-        public override void Test_Validate_DeleteSomeByKey()
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         #region ExistsByKey
@@ -286,12 +343,6 @@
             throw new System.NotImplementedException();
         }
 
-        [Test]
-        public override void Test_Validate_ExistsByKey()
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         #region GetAll
@@ -320,12 +371,6 @@
 
         [Test]
         public override void Test_Access_GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        [Test]
-        public override void Test_Validate_GetAll()
         {
             throw new System.NotImplementedException();
         }
@@ -368,12 +413,6 @@
             throw new System.NotImplementedException();
         }
 
-        [Test]
-        public override void Test_Validate_GetByKey()
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         #region GetSome
@@ -411,12 +450,6 @@
 
         [Test]
         public override void Test_Access_GetSome()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        [Test]
-        public override void Test_Validate_GetSome()
         {
             throw new System.NotImplementedException();
         }
@@ -479,12 +512,6 @@
             throw new System.NotImplementedException();
         }
 
-        [Test]
-        public override void Test_Validate_Update()
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         #region Save
@@ -532,13 +559,6 @@
         {
             throw new System.NotImplementedException();
         }
-
-        [Test]
-        public override void Test_Validate_Save()
-        {
-            throw new System.NotImplementedException();
-        }
-
 
         #endregion
 
@@ -612,43 +632,6 @@
             throw new System.NotImplementedException();
         }
 
-        [Test]
-        public override void Test_Validate_SaveSome()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
-        #region Validate
-
-        [Test]
-        public override void Test_Base_Validate()
-        {
-            var bc = this.NewBusinessCoreInstance();
-            var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new Shop { Name = "KmartKmartKmartKmartKmartKmartKmartKmartKmartKmartKmartKmart", Address = "NSW" };
-            var identity = this.GetValidIdentity();
-
-            var validate = bc.Validate(shop1, identity);
-            Assert.IsTrue(validate.Ok);
-            Assert.IsTrue(validate.Item);
-
-            validate = bc.Validate(shop2, identity);
-            Assert.IsTrue(validate.Ok);
-            Assert.IsTrue(validate.Item);
-
-            Assert.IsFalse(bc.Validate(null, null).Ok);
-            Assert.IsFalse(bc.Validate(shop1, null).Ok);
-            Assert.IsFalse(bc.Validate(null, identity).Ok);
-        }
-
-        [Test]
-        public override void Test_Access_Validate()
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         #endregion
@@ -661,6 +644,11 @@
             {
                 Username = InvalidUsername
             };
+        }
+
+        public Shop GetValidItem()
+        {
+            return new Shop { Name = "Kmart", Address = "Queensland" };
         }
 
         public override Shop GetInvalidItem()

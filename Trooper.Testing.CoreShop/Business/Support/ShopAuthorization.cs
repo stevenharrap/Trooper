@@ -17,7 +17,7 @@
         {
             if (credential.Username == TestBase.InvalidUsername)
             {
-                MessageUtility.Notes.Add(string.Format("'{0}' is not allowed", TestBase.InvalidUsername), response);
+                MessageUtility.Errors.Add(string.Format("'{0}' is not allowed", TestBase.InvalidUsername), UserDeniedCode, response);
 
                 return false;
             }

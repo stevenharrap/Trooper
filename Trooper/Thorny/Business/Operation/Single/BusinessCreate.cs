@@ -32,11 +32,6 @@ namespace Trooper.Thorny.Business.Operation.Single
             return this.BusinessCore.AddSome(items, identity ?? this.DefaultIdentity);
         }
 
-        public IResponse Validate(Ti item, IIdentity identity = null)
-        {
-            return this.BusinessCore.Validate(item, identity ?? this.DefaultIdentity);
-        }
-
         public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
         {
             return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);

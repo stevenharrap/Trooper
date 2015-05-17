@@ -50,7 +50,5 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         ISaveResponse<Ti> Save(Ti item, IIdentity identity);
 
         ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity);
-
-        ISingleResponse<bool> Validate(Ti item, IIdentity identity);       
     }
 }

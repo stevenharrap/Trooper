@@ -103,8 +103,6 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_DeleteAll();
 
-        public abstract void Test_Validate_DeleteAll();
-
         #endregion
 
         #region Add
@@ -135,8 +133,6 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_Add();
 
-        public abstract void Test_Validate_Add();
-
         #endregion
 
         #region AddSome
@@ -154,8 +150,6 @@ using Trooper.Thorny.Business.Security;
         }
 
         public abstract void Test_Access_AddSome();
-
-        public abstract void Test_Validate_AddSome();
 
         #endregion
 
@@ -190,8 +184,6 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_DeleteByKey();
 
-        public abstract void Test_Validate_DeleteByKey();
-
         #endregion
 
         #region DeleteSomeByKey
@@ -222,8 +214,6 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_DeleteSomeByKey();
 
-        public abstract void Test_Validate_DeleteSomeByKey();
-
         #endregion
 
         #region GetAll
@@ -242,8 +232,6 @@ using Trooper.Thorny.Business.Security;
         }
 
         public abstract void Test_Access_GetAll();
-
-        public abstract void Test_Validate_GetAll();
 
         #endregion
 
@@ -279,8 +267,6 @@ using Trooper.Thorny.Business.Security;
         }
 
         public abstract void Test_Access_GetSome();
-
-        public abstract void Test_Validate_GetSome();
 
         #endregion
 
@@ -318,8 +304,6 @@ using Trooper.Thorny.Business.Security;
         }
 
         public abstract void Test_Access_GetByKey();
-
-        public abstract void Test_Validate_GetByKey();
 
         #endregion
 
@@ -362,7 +346,7 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_ExistsByKey();
 
-        public abstract void Test_Validate_ExistsByKey();
+        #endregion
 
         #region IsAllowed
 
@@ -376,8 +360,6 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_Update();
 
-        public abstract void Test_Validate_Update();
-
         #endregion
 
         #region Save
@@ -386,8 +368,6 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Access_Save();
 
-        public abstract void Test_Validate_Save();
-
         #endregion
 
         #region SaveSome
@@ -395,16 +375,6 @@ using Trooper.Thorny.Business.Security;
         public abstract void Test_Base_SaveSome();
 
         public abstract void Test_Access_SaveSome();
-
-        public abstract void Test_Validate_SaveSome();
-
-        #endregion
-
-        #region Validate
-
-        public abstract void Test_Base_Validate();
-
-        public abstract void Test_Access_Validate();
 
         #endregion
 
@@ -471,8 +441,6 @@ using Trooper.Thorny.Business.Security;
                     }));
             }
         }
-
-        #endregion
 
         #endregion
     }

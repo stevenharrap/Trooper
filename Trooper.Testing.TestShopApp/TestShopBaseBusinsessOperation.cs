@@ -10,10 +10,9 @@
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Interface.Thorny.Business.Security;
 
-    //[TestFixture]
-    //[Category("BusinessOperation")]
-    //[Ignore("Jumping default for the moment")]
-    //public class TestShopBaseBusinsessOperation : TestDefaultBaseBusinsessOperation<Shop, IShop, ShopAppModule>
-    //{
-    //}
+    [TestFixture]
+    [Category("BusinessOperation")]
+    public class TestShopBaseBusinsessOperation : TestDefaultBaseBusinsessOperation<Shop, IShop, ShopAppModule>
+    {
+    }
 }

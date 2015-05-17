@@ -14,5 +14,7 @@ namespace Trooper.Thorny.Business.Security
         public Guid Session { get; set; }
                 
         public IEnumerable<string> Groups { get; set; }
+
+        public string Culture { get; set; }
     }
 }

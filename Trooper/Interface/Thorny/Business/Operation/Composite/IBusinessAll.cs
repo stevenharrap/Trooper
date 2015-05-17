@@ -19,7 +19,6 @@ namespace Trooper.Interface.Thorny.Business.Operation.Composite
         IBusinessRequest<Tc, Ti>,
         IBusinessSession,
         IBusinessUpdate<Tc, Ti>,
-        IBusinessValidate<Tc, Ti>, 
         IBusinessOperation<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
