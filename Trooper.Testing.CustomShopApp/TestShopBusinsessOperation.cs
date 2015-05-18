@@ -2,20 +2,19 @@
 {
     using NUnit.Framework;
     using System.Collections.Generic;
-    using Trooper.Thorny.Injection;
-    using Trooper.Thorny.UnitTestBase;
-    using Trooper.Testing.CustomShopApi;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Interface;
+    using Thorny.Injection;
+    using Thorny.UnitTestBase;
+    using CustomShopApi;
+    using CustomShopApi.Interface.Business.Support;
+    using ShopModel.Interface;
     using System.Linq;
-    using Trooper.Testing.CustomShopApi.Business.Support;
-    using Trooper.Thorny.Business.Security;
-    using Trooper.Thorny;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Interface.Thorny.Business.Security;
-    using Trooper.Thorny.Business.Operation.Core;
-    using Trooper.Thorny.DataManager;
+    using CustomShopApi.Business.Support;
+    using Thorny.Business.Security;
+    using Thorny;
+    using ShopModel.Model;
+    using Interface.Thorny.Business.Security;
+    using Thorny.Business.Operation.Core;
+    using Thorny.DataManager;
 
     [TestFixture]
     [Category("BusinessOperation")]
@@ -87,11 +86,19 @@
             var allowed = bc.Add(validShop, validIdentity);
             Assert.IsTrue(allowed.Ok);
 
+			var all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
+
+			this.DeleteAll();
+
             allowed = bc.Add(invalidShop, validIdentity);
             Assert.IsFalse(allowed.Ok);
             Assert.IsNotNull(allowed.Messages);
             Assert.IsTrue(allowed.Messages.Any());
             Assert.That(allowed.Messages.First().Code == Validation.InvalidPropertyCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
 
             var denied = bc.Add(validShop, invalidIdentity);
             Assert.IsFalse(denied.Ok);
@@ -99,11 +106,17 @@
             Assert.IsTrue(denied.Messages.Any());
             Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
 
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
+
             denied = bc.Add(invalidShop, invalidIdentity);
             Assert.IsFalse(denied.Ok);
             Assert.IsNotNull(denied.Messages);
             Assert.IsTrue(denied.Messages.Any());
             Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
         }
 
         #endregion
@@ -162,11 +175,19 @@
             var allowed = bc.AddSome(new[] { validShop }, validIdentity);
             Assert.IsTrue(allowed.Ok);
 
+			var all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
+
+			this.DeleteAll();
+			
             allowed = bc.AddSome(new[] { invalidShop }, validIdentity);
             Assert.IsFalse(allowed.Ok);
             Assert.IsNotNull(allowed.Messages);
             Assert.IsTrue(allowed.Messages.Any());
             Assert.That(allowed.Messages.First().Code == Validation.InvalidPropertyCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
 
             allowed = bc.AddSome(new[] { validShop, invalidShop }, validIdentity);
             Assert.IsFalse(allowed.Ok);
@@ -174,11 +195,17 @@
             Assert.IsTrue(allowed.Messages.Any());
             Assert.That(allowed.Messages.First().Code == Validation.InvalidPropertyCode);
 
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
+
             var denied = bc.AddSome(new[] { validShop }, invalidIdentity);
             Assert.IsFalse(denied.Ok);
             Assert.IsNotNull(denied.Messages);
             Assert.IsTrue(denied.Messages.Any());
             Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
 
             denied = bc.AddSome(new[] { invalidShop }, invalidIdentity);
             Assert.IsFalse(denied.Ok);
@@ -186,38 +213,17 @@
             Assert.IsTrue(denied.Messages.Any());
             Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
 
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
+
             denied = bc.AddSome(new[] { validShop, invalidShop }, invalidIdentity);
             Assert.IsFalse(denied.Ok);
             Assert.IsNotNull(denied.Messages);
             Assert.IsTrue(denied.Messages.Any());
             Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
-        }
 
-        #endregion
-
-        #region DeleteAll
-
-        [Test]
-        public override void Test_Base_DeleteAll()
-        {
-            var bc = this.NewBusinessCoreInstance();
-            var identity = this.GetValidIdentity();
-
-            var allResult = bc.GetAll(identity);
-            Assert.That(allResult.Ok);
-
-            var deleteResult = bc.DeleteSomeByKey(allResult.Items, identity);
-            Assert.That(deleteResult.Ok);
-
-            allResult = bc.GetAll(identity);
-            Assert.That(allResult.Ok);
-            Assert.IsFalse(allResult.Items.Any());
-        }
-
-        [Test]
-        public override void Test_Access_DeleteAll()
-        {
-            throw new System.NotImplementedException();
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
         }
 
         #endregion
@@ -260,7 +266,53 @@
         [Test]
         public override void Test_Access_DeleteByKey()
         {
-            throw new System.NotImplementedException();
+			var validShop = this.GetValidItem();
+			var invalidShop = this.GetInvalidItem();
+			var validIdentity = this.GetValidIdentity();
+			var invalidIdentity = this.GetInvalidIdentity();
+			var bc = this.NewBusinessCoreInstance();
+
+			var added = bc.Add(validShop, validIdentity);
+			Assert.IsTrue(added.Ok);
+
+			var all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
+
+			var allowed = bc.DeleteByKey(invalidShop, validIdentity);
+			Assert.IsFalse(allowed.Ok);
+			Assert.IsNotNull(allowed.Messages);
+			Assert.IsTrue(allowed.Messages.Any());
+			Assert.That(allowed.Messages.First().Code == BusinessCore.NoRecordCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
+
+			allowed = bc.DeleteByKey(all.Items.First(), validIdentity);
+			Assert.IsTrue(allowed.Ok);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 0);
+
+			added = bc.Add(validShop, validIdentity);
+			Assert.IsTrue(added.Ok);
+
+			var denied = bc.DeleteByKey(validShop, invalidIdentity);
+			Assert.IsFalse(denied.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
+
+			denied = bc.DeleteByKey(invalidShop, invalidIdentity);
+			Assert.IsFalse(denied.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
         }
 
         #endregion
@@ -302,7 +354,62 @@
         [Test]
         public override void Test_Access_DeleteSomeByKey()
         {
-            throw new System.NotImplementedException();
+			var validShop1 = this.GetValidItem();
+			var validShop2 = this.GetValidItem();
+			var invalidShop = this.GetInvalidItem();
+			var validIdentity = this.GetValidIdentity();
+			var invalidIdentity = this.GetInvalidIdentity();
+			var bc = this.NewBusinessCoreInstance();
+
+			var added = bc.AddSome(new[] { validShop1, validShop2 }, validIdentity);
+			Assert.IsTrue(added.Ok);
+
+			var all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 2);
+
+			var allowed = bc.DeleteSomeByKey(new[] { all.Items.First() }, validIdentity);
+			Assert.IsTrue(allowed.Ok);
+
+			this.DeleteAll();
+
+			added = bc.AddSome(new[] { validShop1, validShop2 }, validIdentity);
+			Assert.IsTrue(added.Ok);
+
+			allowed = bc.DeleteSomeByKey(new[] { invalidShop }, validIdentity);
+			Assert.IsFalse(allowed.Ok);
+			Assert.IsNotNull(allowed.Messages);
+			Assert.IsTrue(allowed.Messages.Any());
+			Assert.That(allowed.Messages.First().Code == BusinessCore.NoRecordCode );
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 2);
+
+			allowed = bc.DeleteSomeByKey(new[] { added.Items.First(), invalidShop }, validIdentity);
+			Assert.IsFalse(allowed.Ok);
+			Assert.IsNotNull(allowed.Messages);
+			Assert.IsTrue(allowed.Messages.Any());
+			Assert.That(allowed.Messages.First().Code == BusinessCore.NoRecordCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 2);
+
+			var denied = bc.DeleteSomeByKey(new[] { added.Items.First() }, invalidIdentity);
+			Assert.IsFalse(denied.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 2);
+
+			denied = bc.DeleteSomeByKey(new[] { added.Items.First(), invalidShop }, invalidIdentity);
+			Assert.IsFalse(denied.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 2);
         }
 
         #endregion
@@ -340,7 +447,35 @@
         [Test]
         public override void Test_Access_ExistsByKey()
         {
-            throw new System.NotImplementedException();
+			var validShop = this.GetValidItem();
+			var invalidShop = this.GetInvalidItem();
+			var validIdentity = this.GetValidIdentity();
+			var invalidIdentity = this.GetInvalidIdentity();
+			var bc = this.NewBusinessCoreInstance();
+
+			var added = bc.Add(validShop, validIdentity);
+			Assert.IsTrue(added.Ok);
+
+			var all = bc.GetAll(validIdentity);
+			Assert.AreEqual(all.Items.Count, 1);
+
+			var allowed = bc.ExistsByKey(invalidShop, validIdentity);
+			Assert.IsTrue(allowed.Ok);
+
+			allowed = bc.ExistsByKey(added.Item, validIdentity);
+			Assert.IsTrue(allowed.Ok);
+
+			var denied = bc.ExistsByKey(invalidShop, invalidIdentity);
+			Assert.IsFalse(denied.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
+
+			denied = bc.ExistsByKey(added.Item, invalidIdentity);
+			Assert.IsFalse(denied.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
         }
 
         #endregion

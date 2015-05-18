@@ -464,7 +464,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 if (saved == null)
                 {
-                    MessageUtility.Errors.Add(errorMessage, SaveFailedcCode, response);
+                    MessageUtility.Errors.Add(errorMessage, SaveFailedCode, response);
                     return response;
                 }
 
@@ -564,6 +564,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public const string NoRecordCode = Constants.BusinessCoreErrorCodeRoot + ".NoReocrd";
 
-        public const string SaveFailedcCode = Constants.BusinessCoreErrorCodeRoot + ".SaveFailed";
+        public const string SaveFailedCode = Constants.BusinessCoreErrorCodeRoot + ".SaveFailed";
     }
 }

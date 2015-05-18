@@ -43,19 +43,6 @@
 
         #region Tests
 
-        #region DeleteAll
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_DeleteAll()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
-        #endregion
-
         #region Add
 
         /// <summary>

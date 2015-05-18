@@ -34,7 +34,7 @@ using Trooper.Thorny.Business.Security;
         {
             base.SetUp();
 
-            this.Test_Base_DeleteAll();
+            this.DeleteAll();
         }
 
         #endregion
@@ -58,6 +58,26 @@ using Trooper.Thorny.Business.Security;
 
         public abstract Tc GetInvalidItem();
 
+		public virtual void DeleteAll()
+		{
+			var bc = this.NewBusinessCoreInstance();
+			var identity = this.GetValidIdentity();
+			var all = bc.GetAll(identity);
+
+			Assert.IsNotNull(all);
+			Assert.IsTrue(all.Ok);
+
+			var delete = bc.DeleteSomeByKey(all.Items, identity);
+
+			Assert.IsNotNull(delete);
+			Assert.IsTrue(delete.Ok);
+
+			all = bc.GetAll(identity);
+
+			Assert.IsNotNull(all);
+			Assert.IsFalse(all.Items.Any());
+		}
+
         #endregion
 
         #region Tests
@@ -77,33 +97,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsNotNull(bp.Validation);
             Assert.IsNotNull(bp.Validation.Uow);
         }
-         
-        #region DeleteAll
-
-        [Test]
-        public virtual void Test_Base_DeleteAll() 
-        {
-            var bc = this.NewBusinessCoreInstance();
-            var identity = this.GetValidIdentity();
-            var all = bc.GetAll(identity);
-
-            Assert.IsNotNull(all);
-            Assert.IsTrue(all.Ok);
-
-            var delete = bc.DeleteSomeByKey(all.Items, identity);
-
-            Assert.IsNotNull(delete);
-            Assert.IsTrue(delete.Ok);
-
-            all = bc.GetAll(identity);
-
-            Assert.IsNotNull(all);
-            Assert.IsFalse(all.Items.Any());
-        }
-
-        public abstract void Test_Access_DeleteAll();
-
-        #endregion
 
         #region Add
 
