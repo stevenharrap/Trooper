@@ -507,7 +507,18 @@
         [Test]
         public override void Test_Access_GetAll()
         {
-            throw new System.NotImplementedException();
+			var validIdentity = this.GetValidIdentity();
+			var invalidIdentity = this.GetInvalidIdentity();
+			var bc = this.NewBusinessCoreInstance();
+
+	        var allowed = bc.GetAll(validIdentity);
+			Assert.IsTrue(allowed.Ok);
+
+			var denied = bc.GetAll(invalidIdentity);
+			Assert.IsFalse(allowed.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
         }
 
         #endregion
@@ -545,7 +556,29 @@
         [Test]
         public override void Test_Access_GetByKey()
         {
-            throw new System.NotImplementedException();
+			var validShop = this.GetValidItem();
+			var invalidShop = this.GetInvalidItem();
+			var validIdentity = this.GetValidIdentity();
+			var invalidIdentity = this.GetInvalidIdentity();
+			var bc = this.NewBusinessCoreInstance();
+
+			var added = bc.Add(validShop, validIdentity);
+			Assert.IsTrue(added.Ok);
+
+			var allowed = bc.GetByKey(added.Item, validIdentity);
+			Assert.IsTrue(allowed.Ok);
+
+			var denied = bc.GetByKey(invalidShop, validIdentity);
+			Assert.IsFalse(allowed.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == BusinessCore.NoRecordCode);
+
+			denied = bc.GetByKey(added.Item, invalidIdentity);
+			Assert.IsFalse(allowed.Ok);
+			Assert.IsNotNull(denied.Messages);
+			Assert.IsTrue(denied.Messages.Any());
+			Assert.That(denied.Messages.First().Code == Authorization.UserDeniedCode);
         }
 
         #endregion
