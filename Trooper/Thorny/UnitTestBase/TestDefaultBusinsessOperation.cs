@@ -45,105 +45,33 @@
 
         #region Add
 
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_Add()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
         #endregion
 
         #region AddSome
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_AddSome()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
 
         #endregion
 
         #region DeleteByKey
 
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_DeleteByKey()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
         #endregion
 
         #region DeleteSomeByKey
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_DeleteSomeByKey()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
+        
         #endregion
 
         #region GetAll
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_GetAll()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
+        
         #endregion
 
         #region GetSome
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_GetSome()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
+    
         #endregion
 
         #region GetByKey
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_GetByKey()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
+    
         #endregion
 
         #region ExistsByKey
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_ExistsByKey()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
 
         #endregion
 
@@ -170,16 +98,7 @@
         {
             Assert.Inconclusive(baseInconclusive);
         }
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_Update()
-        {
-            Assert.Inconclusive(accesInconclusive);            
-        }
-
+        
         #endregion
 
         #region Save
@@ -192,16 +111,7 @@
         {
             Assert.Inconclusive(baseInconclusive);
         }
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_Save()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
+        
         #endregion
 
         #region SaveSome
@@ -214,16 +124,7 @@
         {
             Assert.Inconclusive(baseInconclusive);
         }
-
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Access_SaveSome()
-        {
-            Assert.Inconclusive(accesInconclusive);
-        }
-
+    
         #endregion
 
         #endregion

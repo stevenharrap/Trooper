@@ -124,8 +124,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.Add(null, identity).Ok);
         }
 
-        public abstract void Test_Access_Add();
-
         #endregion
 
         #region AddSome
@@ -141,8 +139,6 @@ using Trooper.Thorny.Business.Security;
 
 			this.TestAddSome(new List<Ti> { item1, item2, item3 });
         }
-
-        public abstract void Test_Access_AddSome();
 
         #endregion
 
@@ -175,8 +171,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.AddSome(null, identity).Ok);
         }
 
-        public abstract void Test_Access_DeleteByKey();
-
         #endregion
 
         #region DeleteSomeByKey
@@ -205,8 +199,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.DeleteSomeByKey(null, identity).Ok);
         }
 
-        public abstract void Test_Access_DeleteSomeByKey();
-
         #endregion
 
         #region GetAll
@@ -223,8 +215,6 @@ using Trooper.Thorny.Business.Security;
 
 			this.TestGetAll(addSome.ToList());
         }
-
-        public abstract void Test_Access_GetAll();
 
         #endregion
 
@@ -258,8 +248,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.GetSome(new Search(), null).Ok);
             Assert.IsFalse(bc.GetSome(null, identity).Ok);
         }
-
-        public abstract void Test_Access_GetSome();
 
         #endregion
 
@@ -295,8 +283,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.GetByKey(item1, null).Ok);
             Assert.IsFalse(bc.GetByKey(null, identity).Ok);
         }
-
-        public abstract void Test_Access_GetByKey();
 
         #endregion
 
@@ -337,8 +323,6 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.ExistsByKey(null, identity).Ok);
         }
 
-        public abstract void Test_Access_ExistsByKey();
-
         #endregion
 
         #region IsAllowed
@@ -351,23 +335,17 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Base_Update();
 
-        public abstract void Test_Access_Update();
-
         #endregion
 
         #region Save
 
         public abstract void Test_Base_Save();
 
-        public abstract void Test_Access_Save();
-
         #endregion
 
         #region SaveSome
 
         public abstract void Test_Base_SaveSome();
-
-        public abstract void Test_Access_SaveSome();
 
         #endregion
 
