@@ -21,7 +21,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     {
         IAddResponse<Ti> Add(Ti item, IIdentity identity = null);
 
-        IResponse Update(Ti item, IIdentity identity = null);
+        ISingleResponse<Ti> Update(Ti item, IIdentity identity = null);
 
         ISaveResponse<Ti> Save(Ti item, IIdentity identity = null);
     }

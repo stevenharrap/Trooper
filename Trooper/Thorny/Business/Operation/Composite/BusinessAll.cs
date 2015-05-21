@@ -74,7 +74,7 @@ namespace Trooper.Thorny.Business.Operation.Composite
             return this.BusinessCore.DeleteSomeByKey(items, identity ?? this.DefaultIdentity);
         }
 
-        public IResponse Update(Ti item, IIdentity identity = null)
+        public ISingleResponse<Ti> Update(Ti item, IIdentity identity = null)
         {
             return this.BusinessCore.Update(item, identity ?? this.DefaultIdentity);
         }

@@ -30,14 +30,175 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public event BusinessPackHandler<Tc, Ti> OnRequestBusinessPack;
 
+        #region Methods
+
+        #region public
+
         public IBusinessPack<Tc, Ti> GetBusinessPack()
         {
             return this.OnRequestBusinessPack();
-        }               
-        
+        }
+
         public virtual IAddResponse<Ti> Add(Ti item, IIdentity identity)
         {
-            var response = new AddResponse<Ti>();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.Add(bp, item, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Item = null;
+                }
+
+                return response;
+            }
+        }
+
+        public virtual IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.AddSome(bp, items, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Items = null;
+                }
+
+                return response;
+            }
+        }
+
+        public virtual ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.IsAllowed(bp, argument, identity);
+            }
+        }
+
+        public virtual ISingleResponse<System.Guid> GetSession(IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetSession(bp, identity);
+            }
+        }
+
+        public virtual IResponse DeleteByKey(Ti item, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.DeleteByKey(bp, item, identity);
+
+                if (response.Ok)
+                {
+                    bp.Uow.Save(response);
+                }
+
+                return response;
+            }
+        }
+
+        public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.DeleteSomeByKey(bp, items, identity);
+
+                if (response.Ok)
+                {
+                    bp.Uow.Save(response);
+                }
+                return response;
+            }
+        }
+
+        public virtual IManyResponse<Ti> GetAll(IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetAll(bp, identity);
+            }
+        }
+
+        public virtual IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetSome(bp, search, identity, true);
+            }
+        }
+
+        public virtual ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetByKey(bp, item, identity);
+            }
+        }
+
+        public virtual ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.ExistsByKey(bp, item, identity);
+            }
+        }
+        
+        public virtual ISingleResponse<Ti> Update(Ti item, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.Update(bp, item, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Item = null;
+                }
+
+                return response;
+            }
+        }
+
+        public virtual ISaveResponse<Ti> Save(Ti item, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.Save(bp, item, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Item = null;
+                    response.Change = SaveChangeType.None;
+                }
+
+                return response;
+            }
+        }
+
+        public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.SaveSome(bp, items, identity);
+
+                if (!response.Ok || bp.Uow.Save(response))
+                {
+                    response.Items = null;
+                }
+
+                return response;
+            }
+        }
+
+        #endregion
+
+        #region protected
+
+        protected virtual IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IAddResponse<Ti> response = null)
+        {
+            response = response ?? new AddResponse<Ti>();
 
             if (item == null)
             {
@@ -47,50 +208,44 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode ,response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                
-                var itemAsTc = bp.Facade.Map(item);
-                var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
+            var itemAsTc = businessPack.Facade.Map(item);
+            var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
 
-                if (bp.Facade.Exists(item))
-                {
-                    MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
-                    return response;
-                }
-
-                var added = bp.Facade.Add(itemAsTc);
-
-                if (added == null)
-                {
-                    MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
-                    return response;
-                }
-
-                bp.Validation.Validate(added, response);
-
-                var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = added };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                bp.Uow.Save(response);
-
-                response.Item = added;
-
+            if (businessPack.Facade.Exists(item))
+            {
+                MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
                 return response;
             }
+
+            var added = businessPack.Facade.Add(itemAsTc);
+
+            if (added == null)
+            {
+                MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
+                return response;
+            }
+
+            businessPack.Validation.Validate(added, response);
+
+            var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = added };
+
+            if (businessPack.Authorization != null)
+            {
+                businessPack.Authorization.IsAllowed(arg, identity, response);
+            }
+
+            response.Item = added;
+
+            return response;
         }
 
-        public virtual IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
+        protected virtual IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IAddSomeResponse<Ti> response = null)
         {
-            var response = new AddSomeResponse<Ti>();
+            response = response ?? new AddSomeResponse<Ti>();
 
             if (items == null)
             {
@@ -104,39 +259,34 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var itemsTc = bp.Facade.Map(items);
-                var added = bp.Facade.AddSome(itemsTc);
+            var itemsTc = businessPack.Facade.Map(items);
+            var added = businessPack.Facade.AddSome(itemsTc);
 
-                foreach (var item in added)
-                {
-                    bp.Validation.Validate(item, response);
-                }
+            foreach (var item in added)
+            {
+                businessPack.Validation.Validate(item, response);
+            }
 
-                if (!response.Ok)
-                {
-                    return response;
-                }
-
-                var arg = new RequestArg<Tc> { Action = Action.AddSomeAction, Items = added };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                bp.Uow.Save(response);
-
-                response.Items = added;
-
+            if (!response.Ok)
+            {
                 return response;
             }
+
+            var arg = new RequestArg<Tc> { Action = Action.AddSomeAction, Items = added };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }
+
+            response.Items = added;
+
+            return response;
         }
 
-        public virtual ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
+        protected virtual ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity, ISingleResponse<bool> response = null)
         {
-            var response = new SingleResponse<bool> { Item = true };
+            response = response ?? new SingleResponse<bool> { Item = false };
 
             if (argument == null)
             {
@@ -150,22 +300,25 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
+            var arg = new RequestArg<Tc> { Action = Action.IsAllowedAction };
+
+            if (businessPack.Authorization != null && businessPack.Authorization.IsAllowed(arg, identity, response))
             {
-                var arg = new RequestArg<Tc> { Action = Action.IsAllowedAction };
-
-                if (bp.Authorization != null)
-                {
-                    response.Item = bp.Authorization.IsAllowed(arg, identity, response);
-                }
-
                 return response;
             }
+
+            var testArg = new RequestArg<Tc> { Action = argument.Action };
+
+            var testOutcome = businessPack.Authorization.IsAllowed(testArg, identity);
+
+            response.Item = testOutcome;
+
+            return response;
         }
 
-        public virtual ISingleResponse<System.Guid> GetSession(IIdentity identity)
+        protected virtual ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, ISingleResponse<System.Guid> response = null)
         {
-            var response = new SingleResponse<System.Guid>();
+            response = response ?? new SingleResponse<System.Guid>();
 
             if (identity == null)
             {
@@ -173,27 +326,24 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
+            var arg = new RequestArg<Tc> { Action = Security.Action.GetSession };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
-                var arg = new RequestArg<Tc> { Action = Security.Action.GetSession };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                var session = System.Guid.NewGuid();
-
-                sessions.Add(session);
-                response.Item = session;
-
                 return response;
             }
+
+            var session = System.Guid.NewGuid();
+
+            sessions.Add(session);
+            response.Item = session;
+
+            return response;
         }
 
-        public virtual IResponse DeleteByKey(Ti item, IIdentity identity)
+        protected virtual IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse response = null)
         {
-            var response = new Response();
+            response = response ?? new Response();
 
             if (item == null)
             {
@@ -207,29 +357,24 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var itemAsTc = bp.Facade.Map(item);
-                var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
+            var itemAsTc = businessPack.Facade.Map(item);
+            var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
 
-                var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
+            var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                bp.Facade.Delete(itemAsTc);
-
-                bp.Uow.Save(response);
-
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
                 return response;
             }
+
+            businessPack.Facade.Delete(itemAsTc);
+
+            return response;
         }
 
-        public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
+        protected virtual IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse response = null)
         {
-            var response = new Response();
+            response = response ?? new Response();
 
             if (items == null)
             {
@@ -243,28 +388,23 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
+            var itemsAsListTc = businessPack.Facade.Map(items);
+
+            var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
-                var itemsAsListTc = bp.Facade.Map(items);
-                
-                var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                bp.Facade.DeleteSome(itemsAsListTc);
-
-                bp.Uow.Save(response);
-
                 return response;
             }
+
+            businessPack.Facade.DeleteSome(itemsAsListTc);
+
+            return response;
         }
 
-        public virtual IManyResponse<Ti> GetAll(IIdentity identity = null)
+        protected virtual IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IManyResponse<Ti> response = null)
         {
-            var response = new ManyResponse<Ti>();
+            response = response ?? new ManyResponse<Ti>();
 
             if (identity == null)
             {
@@ -272,25 +412,21 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
+            var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
-                
-                var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                response.Items = bp.Facade.GetAll().ToList<Ti>();
-
                 return response;
             }
+
+            response.Items = businessPack.Facade.GetAll().ToList<Ti>();
+
+            return response;
         }
 
-        public virtual IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
+        protected virtual IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, bool limit, IManyResponse<Ti> response = null)
         {
-            var response = new ManyResponse<Ti>();
+            response = response ?? new ManyResponse<Ti>();
 
             if (search == null)
             {
@@ -304,26 +440,30 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
+            var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                var some = bp.Facade.GetSome(search);
-
-                response.Items = bp.Facade.Limit(some, search).ToList<Ti>();
-
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
                 return response;
             }
+
+            var some = businessPack.Facade.GetSome(search);
+
+            if (limit)
+            {
+                response.Items = businessPack.Facade.Limit(some, search).ToList<Ti>();
+            }
+            else
+            {
+                response.Items = some.ToList<Ti>();
+            }
+
+            return response;
         }
 
-        public virtual ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
+        protected virtual ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<Ti> response = null)
         {
-            var response = new SingleResponse<Ti>();
+            response = response ?? new SingleResponse<Ti>();
 
             if (item == null)
             {
@@ -337,34 +477,30 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
+            var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
+            var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
-               
-                var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
-                var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                var result = bp.Facade.GetByKey(item);
-
-                if (result == null)
-                {
-                    MessageUtility.Errors.Add(errorMessage, NoRecordCode, item, null, response);
-                    return response;
-                }
-
-                response.Item = result;
-
                 return response;
             }
+
+            var result = businessPack.Facade.GetByKey(item);
+
+            if (result == null)
+            {
+                MessageUtility.Errors.Add(errorMessage, NoRecordCode, item, null, response);
+                return response;
+            }
+
+            response.Item = result;
+
+            return response;
         }
 
-        public virtual ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
+        protected virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<bool> response = null)
         {
-            var response = new SingleResponse<bool>();
+            response = response ?? new SingleResponse<bool>();
 
             if (item == null)
             {
@@ -378,25 +514,22 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
+            var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
 
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                var result = bp.Facade.GetByKey(item);
-                response.Item = result != null;
-
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
                 return response;
             }
+
+            var result = businessPack.Facade.GetByKey(item);
+            response.Item = result != null;
+
+            return response;
         }
 
-        public virtual IResponse Update(Ti item, IIdentity identity)
+        protected virtual ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<Ti> response = null)
         {
-            var response = new AddResponse<Ti>();
+            response = response ?? new SingleResponse<Ti>();
 
             if (item == null)
             {
@@ -410,38 +543,33 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var itemAsTc = bp.Facade.Map(item);
-                var errorMessage = string.Format("The ({0}) could not be updated.", typeof(Tc));
-                var updated = bp.Facade.Exists(itemAsTc) ? bp.Facade.Update(itemAsTc) : null;
+            var itemAsTc = businessPack.Facade.Map(item);
+            var errorMessage = string.Format("The ({0}) could not be updated.", typeof(Tc));
+            var updated = businessPack.Facade.Exists(itemAsTc) ? businessPack.Facade.Update(itemAsTc) : null;
 
-                if (updated == null)
-                {
-                    MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
-                    return response;
-                }
-
-                bp.Validation.Validate(updated, response);
-
-                var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = updated };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                bp.Uow.Save(response);
-
-                response.Item = updated;
-
+            if (updated == null)
+            {
+                MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
                 return response;
             }
+
+            businessPack.Validation.Validate(updated, response);
+
+            var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = updated };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }
+
+            response.Item = updated;
+
+            return response;
         }
 
-        public virtual ISaveResponse<Ti> Save(Ti item, IIdentity identity)
+        protected virtual ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISaveResponse<Ti> response = null)
         {
-            var response = new SaveResponse<Ti> { Change = SaveChangeType.None };
+            response = response ?? new SaveResponse<Ti> { Change = SaveChangeType.None };
 
             if (item == null)
             {
@@ -455,40 +583,35 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var itemAsTc = bp.Facade.Map(item);
-                var errorMessage = string.Format("The ({0}) could not be saved.", typeof(Tc));
-                var exists = bp.Facade.Exists(itemAsTc);
-                var saved = exists ? bp.Facade.Update(itemAsTc) : bp.Facade.Add(itemAsTc);
+            var itemAsTc = businessPack.Facade.Map(item);
+            var errorMessage = string.Format("The ({0}) could not be saved.", typeof(Tc));
+            var exists = businessPack.Facade.Exists(itemAsTc);
+            var saved = exists ? businessPack.Facade.Update(itemAsTc) : businessPack.Facade.Add(itemAsTc);
 
-                if (saved == null)
-                {
-                    MessageUtility.Errors.Add(errorMessage, SaveFailedCode, response);
-                    return response;
-                }
-
-                bp.Validation.Validate(saved, response);
-
-                var arg = new RequestArg<Tc> { Action = exists ? Action.UpdateAction :  Action.AddAction, Item = saved };
-
-                if (bp.Authorization != null && !bp.Authorization.IsAllowed(arg, identity, response))
-                {
-                    return response;
-                }
-
-                bp.Uow.Save(response);
-
-                response.Item = saved;
-                response.Change = exists ? SaveChangeType.Update : SaveChangeType.Add;
-
+            if (saved == null)
+            {
+                MessageUtility.Errors.Add(errorMessage, SaveFailedCode, response);
                 return response;
             }
+
+            businessPack.Validation.Validate(saved, response);
+
+            var arg = new RequestArg<Tc> { Action = exists ? Action.UpdateAction : Action.AddAction, Item = saved };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }
+
+            response.Item = saved;
+            response.Change = exists ? SaveChangeType.Update : SaveChangeType.Add;
+
+            return response;
         }
 
-        public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
+        protected virtual ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, ISaveSomeResponse<Ti> response = null)
         {
-            var response = new SaveSomeResponse<Ti>();
+            response = response ?? new SaveSomeResponse<Ti>();
 
             if (items == null)
             {
@@ -502,50 +625,49 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            using (var bp = this.GetBusinessPack())
-            {                
-                var itemsTc = bp.Facade.Map(items);
-                var saved = (from i in itemsTc
-                            let exists = bp.Facade.Exists(i)
-                            let item = exists ? bp.Facade.Update(i) : bp.Facade.Add(i)
-                            select new { Item = item, Exists = exists }).ToList();
+            var itemsTc = businessPack.Facade.Map(items);
+            var saved = (from i in itemsTc
+                         let exists = businessPack.Facade.Exists(i)
+                         let item = exists ? businessPack.Facade.Update(i) : businessPack.Facade.Add(i)
+                         select new { Item = item, Exists = exists }).ToList();
 
-                foreach (var i in saved)
-                {
-                    bp.Validation.Validate(i.Item, response);
-                }
+            foreach (var i in saved)
+            {
+                businessPack.Validation.Validate(i.Item, response);
+            }
 
-                if (!response.Ok)
-                {
-                    return response;
-                }
-
-                foreach (var i in saved)
-                {
-                    var arg = new RequestArg<Tc> { Action = i.Exists ? Action.UpdateAction : Action.AddAction, Item = i.Item };
-
-                    if (bp.Authorization != null)
-                    {
-                        bp.Authorization.IsAllowed(arg, identity, response);
-                    }
-                }
-
-                if (!response.Ok)
-                {
-                    return response;
-                }                
-
-                bp.Uow.Save(response);
-
-                response.Items = saved.Select(i => new SaveSomeItem<Ti>
-                {
-                    Change = i.Exists ? SaveChangeType.Update : SaveChangeType.Add,
-                    Item = i.Item
-                });
-
+            if (!response.Ok)
+            {
                 return response;
             }
-        }        
+
+            foreach (var i in saved)
+            {
+                var arg = new RequestArg<Tc> { Action = i.Exists ? Action.UpdateAction : Action.AddAction, Item = i.Item };
+
+                if (businessPack.Authorization != null)
+                {
+                    businessPack.Authorization.IsAllowed(arg, identity, response);
+                }
+            }
+
+            if (!response.Ok)
+            {
+                return response;
+            }
+
+            response.Items = saved.Select(i => new SaveSomeItem<Ti>
+            {
+                Change = i.Exists ? SaveChangeType.Update : SaveChangeType.Add,
+                Item = i.Item
+            });
+
+            return response;
+        }
+
+        #endregion
+
+        #endregion
     }
 
     public class BusinessCore

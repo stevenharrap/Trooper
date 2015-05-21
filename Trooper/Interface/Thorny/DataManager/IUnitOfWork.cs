@@ -8,7 +8,7 @@
         IRepository<T> GetRepository<T>() 
             where T : class;
 
-        void Save(IResponse response);
+        bool Save(IResponse response);
 
         void Save();
     }

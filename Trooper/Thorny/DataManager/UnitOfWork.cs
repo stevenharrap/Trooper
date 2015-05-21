@@ -42,7 +42,7 @@
             return repository;
         }
 
-        public void Save(IResponse response)
+        public bool Save(IResponse response)
         {
             try
             {
@@ -50,14 +50,32 @@
             }
             catch (DbEntityValidationException ex)
             {
+                var atLeastOne = false;
+                
                 foreach (var eve in ex.EntityValidationErrors)
                 {
                     foreach (var vr in eve.ValidationErrors)
-                    {                        
+                    {
+                        atLeastOne = true;
                         MessageUtility.Errors.Add(vr.ErrorMessage, Validation.InvalidPropertyCode, eve.Entry.Entity, vr.PropertyName, response);
                     }                    
                 }
+
+                if (!atLeastOne)
+                {
+                    MessageUtility.Errors.Add("Unknown save error", null, response);
+                }
+
+                return false;
             }
+            catch (Exception ex)
+            {
+                MessageUtility.Errors.Add(ex.Message, null, response);
+
+                return false;
+            }
+
+            return true;
         }
 
         public void Save()

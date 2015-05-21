@@ -45,7 +45,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<Guid> GetSession(IIdentity identity);
 
-        IResponse Update(Ti item, IIdentity identity);
+        ISingleResponse<Ti> Update(Ti item, IIdentity identity);
 
         ISaveResponse<Ti> Save(Ti item, IIdentity identity);
 
