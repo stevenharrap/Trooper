@@ -15,6 +15,8 @@
         public ShopModelDbContext(string context)
             : base(context)
         {
+            Database.CreateIfNotExists();
+
             if (!Database.CompatibleWithModel(false))
             {
                 Database.Delete();

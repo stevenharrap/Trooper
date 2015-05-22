@@ -203,12 +203,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -250,12 +253,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (items == null)
             {
                 MessageUtility.Errors.Add("The items have not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -291,12 +297,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (argument == null)
             {
                 MessageUtility.Errors.Add("The argument has not been supplied.", NullArgumentCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -348,12 +357,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -379,12 +391,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (items == null)
             {
                 MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -431,12 +446,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (search == null)
             {
                 MessageUtility.Errors.Add("The search has not been supplied.", NullSearchCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -468,12 +486,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -505,12 +526,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -534,12 +558,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -574,12 +601,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 
@@ -616,12 +646,15 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (items == null)
             {
                 MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
-                return response;
             }
 
             if (identity == null)
             {
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
                 return response;
             }
 

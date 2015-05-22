@@ -118,6 +118,8 @@ namespace Trooper.Thorny.Business.Security
 
             if (response != null)
             {
+                response.Messages = new List<IMessage>();
+
                 MessageUtility.Errors.Add(
                 string.Format(
                     "The user {0} is not allowed to perform action {1}.",

@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity.Core;
+    using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Validation;
     using System.Linq;
+    using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Thorny.DataManager;
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Thorny.Interface.OperationResponse;
@@ -65,6 +68,12 @@
                 {
                     MessageUtility.Errors.Add("Unknown save error", null, response);
                 }
+
+                return false;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                MessageUtility.Errors.Add(ex.Message, BusinessCore.NoRecordCode, response);
 
                 return false;
             }

@@ -232,7 +232,12 @@
 
             var local = this.FindLocal(item);
 
-            var entry = this.Repository.DbContext.Entry(local ?? item);
+            if (local == null)
+            {
+                local = this.Repository.DbSet.Attach(item);
+            }
+
+            var entry = this.Repository.DbContext.Entry(local);
 
             entry.State = EntityState.Deleted;
         }
@@ -272,7 +277,11 @@
 
         public Tc Map(Ti item)
         {
-            return AutoMapper.Mapper.Map<Tc>(item);
+            var result = new Tc();
+
+            AutoMapper.Mapper.Map(item, result);
+
+            return result;
         }
 
         public IEnumerable<Tc> Map(IEnumerable<Ti> items)
