@@ -159,10 +159,12 @@
     <Compile Include="Thorny\Business\Response\SaveResponse.cs" />
     <Compile Include="Thorny\Business\Response\SingleResponse.cs" />
     <Compile Include="Thorny\Business\Security\AdCredential.cs" />
+    <Compile Include="Thorny\Business\Security\Behaviour.cs" />
     <Compile Include="Thorny\Business\Security\Credential.cs" />
     <Compile Include="Thorny\Business\Security\Authorization.cs" />
     <Compile Include="Thorny\Business\Security\Identity.cs" />
     <Compile Include="Thorny\Business\Security\RequestArg.cs" />
+    <Compile Include="Thorny\Business\Security\Role.cs" />
     <Compile Include="Thorny\Business\Security\UserRole.cs" />
     <Compile Include="Thorny\Business\Security\Action.cs" />
     <Compile Include="Thorny\Constants.cs" />
