@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Thorny.Business.Security
 {
-	public class Role
+    public class Role : IRole
 	{
-		public List<Behaviour> Behaviours { get; set; }
+		public IList<IBehaviour> Behaviours { get; set; }
 	}
 }

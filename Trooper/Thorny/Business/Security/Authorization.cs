@@ -13,7 +13,7 @@ namespace Trooper.Thorny.Business.Security
     {
         public IUnitOfWork Uow { get; set; }
 
-        public virtual IList<IUserRole> Roles { get; set; }
+        public virtual IList<IAssignment> Assignments { get; set; }
 
         public virtual ICredential ResolveCredential(IIdentity identity)
         {

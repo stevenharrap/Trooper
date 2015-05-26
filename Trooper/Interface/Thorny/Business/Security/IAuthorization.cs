@@ -9,7 +9,7 @@ namespace Trooper.Interface.Thorny.Business.Security
     {
         IUnitOfWork Uow { get; set; }
 
-        IList<IUserRole> Roles { get; set; }
+        IList<IAssignment> Assignments { get; set; }
 
         ICredential ResolveCredential(IIdentity identity);
 

@@ -4,14 +4,12 @@ namespace Trooper.Thorny.Business.Security
 {
     using System.Collections.Generic;
 
-	public class UserRole : IUserRole
+	public class Assignment : IAssignment
     {
-        public string Action { get; set; }
+        public IRole Role { get; set; }
 
         public IList<string> UserGroups { get; set; }
 
         public IList<string> Users { get; set; }
-
-        public bool Allow { get; set; }
     }
 }

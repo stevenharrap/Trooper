@@ -15,15 +15,15 @@ namespace Trooper.Testing.CustomShopApi.Business.Support
 
     public class ShopAuthorization : Authorization<Shop>, IShopAuthorization
     {
-		private readonly IList<IUserRole> roles = new IUserRole[]
+		private readonly IList<IAssignment> roles = new IAssignment[]
 		{
-			new UserRole {Action = Action.AllActions, Allow = true, Users = new[] {TestBase.ValidUsername}},
-			new UserRole {Action = Action.AllActions, Allow = false, Users = new[] {TestBase.InvalidUsername}},
-			new UserRole {Action = Action.GetByKeyAction, Allow = true, Users = new[] {"ReaderUser"}}
+			new Assignment {Action = Action.AllActions, Allow = true, Users = new[] {TestBase.ValidUsername}},
+			new Assignment {Action = Action.AllActions, Allow = false, Users = new[] {TestBase.InvalidUsername}},
+			new Assignment {Action = Action.GetByKeyAction, Allow = true, Users = new[] {"ReaderUser"}}
 		};
 
 
-		public override IList<IUserRole> Roles
+		public override IList<IAssignment> Roles
 		{
 			get { return roles; }
 			set { throw new NotImplementedException(); }

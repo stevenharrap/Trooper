@@ -141,6 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveDirectory\ActiveDirectoryUser.cs" />
+    <Compile Include="Interface\Thorny\Business\Security\IBehaviour.cs" />
+    <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessAll.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessCore.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
@@ -165,7 +167,7 @@
     <Compile Include="Thorny\Business\Security\Identity.cs" />
     <Compile Include="Thorny\Business\Security\RequestArg.cs" />
     <Compile Include="Thorny\Business\Security\Role.cs" />
-    <Compile Include="Thorny\Business\Security\UserRole.cs" />
+    <Compile Include="Thorny\Business\Security\Assignment.cs" />
     <Compile Include="Thorny\Business\Security\Action.cs" />
     <Compile Include="Thorny\Constants.cs" />
     <Compile Include="Thorny\DataManager\Facade.cs" />
@@ -193,7 +195,7 @@
     <Compile Include="Interface\Thorny\Business\Response\ISingleResponse.cs" />
     <Compile Include="Interface\Thorny\Business\Security\ICredential.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IIdentity.cs" />
-    <Compile Include="Interface\Thorny\Business\Security\IUserRole.cs" />
+    <Compile Include="Interface\Thorny\Business\Security\IAssignment.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IAuthorization.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IRequestArg.cs" />
     <Compile Include="Interface\Thorny\DataManager\IFacade.cs" />
