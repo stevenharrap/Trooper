@@ -16,6 +16,9 @@
     using Thorny.Business.Operation.Core;
     using Thorny.DataManager;
 
+	/// <summary>
+	/// Shop Testing. Tests need to be broken into specific components rather than giant catch-alls.
+	/// </summary>
     [TestFixture]
     [Category("BusinessOperation")]
     public class TestShopBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, Shop, IShop>
@@ -372,7 +375,6 @@
             var all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
             var shops = all.Items.Where(i => i.Name == "Kmart" || i.Name == "BigW");
-            Assert.IsNotNull(shop2);
 
             var deleteSomeByKey = bc.DeleteSomeByKey(shops, validIdentity);
             Assert.IsNotNull(deleteSomeByKey);
@@ -394,7 +396,6 @@
             Assert.IsFalse(deleteSomeByKey.Ok);
             Assert.IsNotNull(deleteSomeByKey.Messages);
             Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NoRecordCode));
-
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);
 
@@ -403,25 +404,16 @@
             Assert.IsNotNull(deleteSomeByKey.Messages);
             Assert.AreEqual(deleteSomeByKey.Messages.Count(), 1);
             Assert.That(deleteSomeByKey.Messages.First().Code == Authorization.UserDeniedCode);
-
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(new[] { added.Items.First(), invalidShop }, invalidIdentity);
             Assert.IsFalse(deleteSomeByKey.Ok);
             Assert.IsNotNull(deleteSomeByKey.Messages);
             Assert.AreEqual(deleteSomeByKey.Messages.Count(), 1);
             Assert.That(deleteSomeByKey.Messages.First().Code == Authorization.UserDeniedCode);
-
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
-
-            deleteSomeByKey = bc.DeleteSomeByKey(new[] { shop1, invalidShop }, validIdentity);
-            Assert.IsFalse(deleteSomeByKey.Ok);
-            Assert.IsNotNull(deleteSomeByKey.Messages);
-            Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
-            all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(new[] { shop1 }, invalidIdentity);
             Assert.IsFalse(deleteSomeByKey.Ok);
@@ -429,7 +421,7 @@
             Assert.AreEqual(deleteSomeByKey.Messages.Count(), 1);
             Assert.That(deleteSomeByKey.Messages.First().Code == Authorization.UserDeniedCode);
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(new[] { invalidShop }, invalidIdentity);
             Assert.IsFalse(deleteSomeByKey.Ok);
@@ -437,7 +429,7 @@
             Assert.AreEqual(deleteSomeByKey.Messages.Count(), 1);
             Assert.That(deleteSomeByKey.Messages.First().Code == Authorization.UserDeniedCode);
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(new[] { shop1, invalidShop }, invalidIdentity);
             Assert.IsFalse(deleteSomeByKey.Ok);
@@ -445,7 +437,7 @@
             Assert.AreEqual(deleteSomeByKey.Messages.Count(), 1);
             Assert.That(deleteSomeByKey.Messages.First().Code == Authorization.UserDeniedCode);
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(null, null);
             Assert.IsFalse(deleteSomeByKey.Ok);
@@ -453,35 +445,35 @@
             Assert.IsTrue(deleteSomeByKey.Messages.Any());
             Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode)); 
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(new[] { shop1 }, null);
             Assert.IsFalse(deleteSomeByKey.Ok);
             Assert.IsNotNull(deleteSomeByKey.Messages);
             Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(new[] { invalidShop }, null);
             Assert.IsFalse(deleteSomeByKey.Ok);
             Assert.IsNotNull(deleteSomeByKey.Messages);
             Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(null, validIdentity);
             Assert.IsFalse(deleteSomeByKey.Ok);
             Assert.IsNotNull(deleteSomeByKey.Messages);
-            Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
 
             deleteSomeByKey = bc.DeleteSomeByKey(null, invalidIdentity);
             Assert.IsFalse(deleteSomeByKey.Ok);
             Assert.IsNotNull(deleteSomeByKey.Messages);
-            Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            Assert.That(deleteSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 2);
+            Assert.AreEqual(all.Items.Count, 1);
         }
 
         #endregion
@@ -531,46 +523,41 @@
 
             existsByKey = bc.ExistsByKey(null, null);
             Assert.IsFalse(existsByKey.Ok);
-            Assert.IsNull(existsByKey.Item);
+            Assert.IsFalse(existsByKey.Item);
             Assert.IsNotNull(existsByKey.Messages);
-            Assert.IsTrue(existsByKey.Messages.Any());
-            Assert.That(existsByKey.Messages.First().Code == BusinessCore.NullIdentityCode);
+            Assert.That(existsByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
             existsByKey = bc.ExistsByKey(shop2, null);
             Assert.IsFalse(existsByKey.Ok);
-            Assert.IsNull(existsByKey.Item);
+            Assert.IsFalse(existsByKey.Item);
             Assert.IsNotNull(existsByKey.Messages);
-            Assert.IsTrue(existsByKey.Messages.Any());
-            Assert.That(existsByKey.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(existsByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
             existsByKey = bc.ExistsByKey(invalidShop, null);
             Assert.IsFalse(existsByKey.Ok);
-            Assert.IsNull(existsByKey.Item);
+            Assert.IsFalse(existsByKey.Item);
             Assert.IsNotNull(existsByKey.Messages);
-            Assert.IsTrue(existsByKey.Messages.Any());
-            Assert.That(existsByKey.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(existsByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
             existsByKey = bc.ExistsByKey(null, validIdentity);
             Assert.IsFalse(existsByKey.Ok);
-            Assert.IsNull(existsByKey.Item);
+            Assert.IsFalse(existsByKey.Item);
             Assert.IsNotNull(existsByKey.Messages);
-            Assert.IsTrue(existsByKey.Messages.Any());
-            Assert.That(existsByKey.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(existsByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
             existsByKey = bc.ExistsByKey(null, invalidIdentity);
             Assert.IsFalse(existsByKey.Ok);
-            Assert.IsNull(existsByKey.Item);
+            Assert.IsFalse(existsByKey.Item);
             Assert.IsNotNull(existsByKey.Messages);
-            Assert.IsTrue(existsByKey.Messages.Any());
-            Assert.That(existsByKey.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(existsByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
         }
@@ -603,18 +590,16 @@
             Assert.IsFalse(getAll.Ok);
             Assert.IsNull(getAll.Items);
             Assert.IsNotNull(getAll.Messages);
-            Assert.IsTrue(getAll.Messages.Any());
-            Assert.That(getAll.Messages.First().Code == Authorization.UserDeniedCode);
+            Assert.That(getAll.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
 
             getAll = bc.GetAll(null);
             Assert.IsFalse(getAll.Ok);
             Assert.IsNull(getAll.Items);
             Assert.IsNotNull(getAll.Messages);
-            Assert.IsTrue(getAll.Messages.Any());
-            Assert.That(getAll.Messages.First().Code == BusinessCore.NullIdentityCode);
+            Assert.That(getAll.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             
             var all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 3);
         }
 
         #endregion
@@ -656,15 +641,13 @@
             Assert.IsFalse(getByKey.Ok);
             Assert.IsNull(getByKey.Item);
             Assert.IsNotNull(getByKey.Messages);
-            Assert.IsTrue(getByKey.Messages.Any());
-            Assert.That(getByKey.Messages.First().Code == Authorization.UserDeniedCode);
+            Assert.That(getByKey.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
 
             getByKey = bc.GetByKey(null, null);
             Assert.IsFalse(getByKey.Ok);
             Assert.IsNull(getByKey.Item);
             Assert.IsNotNull(getByKey.Messages);
-            Assert.IsTrue(getByKey.Messages.Any());
-            Assert.That(getByKey.Messages.First().Code == BusinessCore.NullIdentityCode);
+            Assert.That(getByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
@@ -672,8 +655,7 @@
             Assert.IsFalse(getByKey.Ok);
             Assert.IsNull(getByKey.Item);
             Assert.IsNotNull(getByKey.Messages);
-            Assert.IsTrue(getByKey.Messages.Any());
-            Assert.That(getByKey.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(getByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
@@ -681,8 +663,7 @@
             Assert.IsFalse(getByKey.Ok);
             Assert.IsNull(getByKey.Item);
             Assert.IsNotNull(getByKey.Messages);
-            Assert.IsTrue(getByKey.Messages.Any());
-            Assert.That(getByKey.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(getByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
@@ -690,8 +671,7 @@
             Assert.IsFalse(getByKey.Ok);
             Assert.IsNull(getByKey.Item);
             Assert.IsNotNull(getByKey.Messages);
-            Assert.IsTrue(getByKey.Messages.Any());
-            Assert.That(getByKey.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(getByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
@@ -699,8 +679,7 @@
             Assert.IsFalse(getByKey.Ok);
             Assert.IsNull(getByKey.Item);
             Assert.IsNotNull(getByKey.Messages);
-            Assert.IsTrue(getByKey.Messages.Any());
-            Assert.That(getByKey.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(getByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
         }
@@ -740,36 +719,31 @@
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
-            Assert.IsTrue(getSome.Messages.Any());
-            Assert.That(getSome.Messages.First().Code == Authorization.UserDeniedCode);
+            Assert.That(getSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
 
             getSome = bc.GetSome(null, null);
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
-            Assert.IsTrue(getSome.Messages.Any());
-            Assert.That(getSome.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(getSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
 
             getSome = bc.GetSome(new ShopNameSearch(), null);
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
-            Assert.IsTrue(getSome.Messages.Any());
-            Assert.That(getSome.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(getSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
 
             getSome = bc.GetSome(null, validIdentity);
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
-            Assert.IsTrue(getSome.Messages.Any());
-            Assert.That(getSome.Messages.First().Code == BusinessCore.NullSearchCode);
+			Assert.That(getSome.Messages.Any(m => m.Code == BusinessCore.NullSearchCode));
 
             getSome = bc.GetSome(null, invalidIdentity);
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
-            Assert.IsTrue(getSome.Messages.Any());
-            Assert.That(getSome.Messages.First().Code == BusinessCore.NullSearchCode);
+			Assert.That(getSome.Messages.Any(m => m.Code == BusinessCore.NullSearchCode));
         }
 
         #endregion
@@ -783,17 +757,35 @@
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var allowedResult = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, validIdentity);
-            Assert.IsTrue(allowedResult.Ok);
-            Assert.IsTrue(allowedResult.Item);
+            var isAllowed = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, validIdentity);
+            Assert.IsTrue(isAllowed.Ok);
+            Assert.IsTrue(isAllowed.Item);
 
-            var deniedResult = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, invalidIdentity);
-            Assert.IsTrue(deniedResult.Ok);
-            Assert.IsFalse(deniedResult.Item);
+			isAllowed = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, invalidIdentity);
+			Assert.IsFalse(isAllowed.Ok);
+			Assert.IsFalse(isAllowed.Item);
+			Assert.IsNotNull(isAllowed.Messages);
+			Assert.AreEqual(isAllowed.Messages.Count(), 1);
+			Assert.IsTrue(isAllowed.Messages.First().Code == Authorization.UserDeniedCode);
 
-            Assert.IsFalse(bc.IsAllowed(null, null).Ok);
-            Assert.IsFalse(bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, null).Ok);
-            Assert.IsFalse(bc.IsAllowed(null, validIdentity).Ok);
+			isAllowed = bc.IsAllowed(null, null);
+			Assert.IsFalse(isAllowed.Ok);
+			Assert.IsFalse(isAllowed.Item);
+			Assert.IsNotNull(isAllowed.Messages);
+			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullArgumentCode));
+
+			isAllowed = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, null);
+			Assert.IsFalse(isAllowed.Ok);
+			Assert.IsFalse(isAllowed.Item);
+			Assert.IsNotNull(isAllowed.Messages);
+			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+
+			isAllowed = bc.IsAllowed(null, validIdentity);
+			Assert.IsFalse(isAllowed.Ok);
+			Assert.IsFalse(isAllowed.Item);
+			Assert.IsNotNull(isAllowed.Messages);
+			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullArgumentCode));
         }
 
         #endregion
@@ -824,66 +816,57 @@
             update = bc.Update(shop2, validIdentity);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == BusinessCore.NoRecordCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NoRecordCode));
 
             update = bc.Update(shop2, invalidIdentity);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == Authorization.UserDeniedCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NoRecordCode));
 
             update = bc.Update(add.Item, invalidIdentity);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == Authorization.UserDeniedCode);      
+			Assert.That(update.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
       
             add.Item.Name = invalidShop.Name;
             add.Item.Address = invalidShop.Address;
             update = bc.Update(add.Item, validIdentity);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == Validation.InvalidPropertyCode);
+			Assert.That(update.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
 
             update = bc.Update(null, null);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             var all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);
 
             update = bc.Update(shop2, null);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);
 
             update = bc.Update(add.Item, null);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);
 
             update = bc.Update(null, validIdentity);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);
 
             update = bc.Update(null, invalidIdentity);
             Assert.IsFalse(update.Ok);
             Assert.IsNotNull(update.Messages);
-            Assert.IsTrue(update.Messages.Any());
-            Assert.That(update.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(update.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);            
         }
@@ -937,29 +920,26 @@
 
             shop2.Name = invalidShop.Name;
             shop2.Address = invalidShop.Address;
-            save = bc.Save(save.Item, validIdentity);
+            save = bc.Save(shop2, validIdentity);
             Assert.IsFalse(save.Ok);
             Assert.IsNotNull(save.Messages);
-            Assert.IsTrue(save.Messages.Any());
-            Assert.That(save.Messages.First().Code == Validation.InvalidPropertyCode);
+            Assert.That(save.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
 
             save = bc.Save(null, null);
             Assert.IsFalse(save.Ok);
             Assert.IsNull(save.Item);
             Assert.IsNotNull(save.Messages);
-            Assert.IsTrue(save.Messages.Any());
-            Assert.That(save.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(save.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             var all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 2);
 
             save = bc.Save(shop2, null);
             Assert.IsFalse(save.Ok);
             Assert.IsNull(save.Item);
             Assert.IsNotNull(save.Messages);
-            Assert.IsTrue(save.Messages.Any());
-            Assert.That(save.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(save.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 2);
 
             save = bc.Save(shop1, null);
             Assert.IsFalse(save.Ok);
@@ -968,25 +948,23 @@
             Assert.IsTrue(save.Messages.Any());
             Assert.That(save.Messages.First().Code == BusinessCore.NullIdentityCode);
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 2);
 
             save = bc.Save(null, validIdentity);
             Assert.IsFalse(save.Ok);
             Assert.IsNull(save.Item);
             Assert.IsNotNull(save.Messages);
-            Assert.IsTrue(save.Messages.Any());
-            Assert.That(save.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(save.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 2);
 
             save = bc.Save(null, invalidIdentity);
             Assert.IsFalse(save.Ok);
             Assert.IsNull(save.Item);
             Assert.IsNotNull(save.Messages);
-            Assert.IsTrue(save.Messages.Any());
-            Assert.That(save.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(save.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 2);
         }
 
         #endregion
@@ -1018,6 +996,7 @@
 
             var saveSome = bc.SaveSome(new[] { first, second, shop3, shop4 }, validIdentity);
             Assert.IsTrue(saveSome.Ok);
+			Assert.IsNotNull(saveSome.Items);
             Assert.AreEqual(saveSome.Items.Count(), 4);
 
             var s1 = saveSome.Items.FirstOrDefault(i => i.Item.Name == "Kmart");
@@ -1056,36 +1035,31 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Authorization.UserDeniedCode);
+            Assert.That(saveSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
 
             saveSome = bc.SaveSome(new[] { shop4, invalidShop }, invalidIdentity);
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Authorization.UserDeniedCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
 
             saveSome = bc.SaveSome(new[] { invalidShop }, validIdentity);
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Validation.InvalidPropertyCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
 
             saveSome = bc.SaveSome(new[] { shop4, invalidShop }, validIdentity);
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Validation.InvalidPropertyCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
 
             saveSome = bc.SaveSome(new[] { invalidShop }, validIdentity);
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Validation.InvalidPropertyCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
             var all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1102,8 +1076,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Authorization.UserDeniedCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1111,8 +1084,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Authorization.UserDeniedCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1120,8 +1092,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == Authorization.UserDeniedCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1129,8 +1100,8 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+			Assert.That(saveSome.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1138,8 +1109,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1147,8 +1117,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == BusinessCore.NullIdentityCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1156,8 +1125,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
 
@@ -1165,8 +1133,7 @@
             Assert.IsFalse(saveSome.Ok);
             Assert.IsNull(saveSome.Items);
             Assert.IsNotNull(saveSome.Messages);
-            Assert.IsTrue(saveSome.Messages.Any());
-            Assert.That(saveSome.Messages.First().Code == BusinessCore.NullItemCode);
+			Assert.That(saveSome.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 4);
         }

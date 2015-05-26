@@ -223,11 +223,11 @@
             return result.ToList();
         }
 
-        public virtual void Delete(Tc item)
+        public virtual bool Delete(Tc item)
         {
 	        if (this.IsDefault(item))
 	        {
-		        return;
+		        return false;
 	        }
 
             var local = this.FindLocal(item);
@@ -240,14 +240,23 @@
             var entry = this.Repository.DbContext.Entry(local);
 
             entry.State = EntityState.Deleted;
+
+	        return true;
         }
 
-        public void DeleteSome(IEnumerable<Tc> items)
+        public bool DeleteSome(IEnumerable<Tc> items)
         {
+	        var result = true;
+
             foreach (var item in items)
             {
-                this.Delete(item);
+	            if (!this.Delete(item))
+	            {
+		            result = false;
+	            }
             }
+
+	        return result;
         }
 
         public virtual Tc Update(Tc item)

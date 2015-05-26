@@ -38,9 +38,9 @@
 
         IList<Tc> AddSome(IEnumerable<Tc> items);
 
-        void Delete(Tc item);
+        bool Delete(Tc item);
 
-        void DeleteSome(IEnumerable<Tc> item);
+        bool DeleteSome(IEnumerable<Tc> item);
 
         Tc Update(Tc item);
 

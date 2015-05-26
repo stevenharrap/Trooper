@@ -183,7 +183,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             {
                 var response = this.SaveSome(bp, items, identity);
 
-                if (!response.Ok || bp.Uow.Save(response))
+                if (!response.Ok || !bp.Uow.Save(response))
                 {
                     response.Items = null;
                 }
@@ -311,7 +311,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             var arg = new RequestArg<Tc> { Action = Action.IsAllowedAction };
 
-            if (businessPack.Authorization != null && businessPack.Authorization.IsAllowed(arg, identity, response))
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
@@ -370,7 +370,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
+            var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(Tc));
 
             var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
 
@@ -379,7 +379,10 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            businessPack.Facade.Delete(itemAsTc);
+	        if (!businessPack.Facade.Delete(itemAsTc))
+	        {
+		        MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+	        }
 
             return response;
         }
@@ -404,6 +407,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemsAsListTc = businessPack.Facade.Map(items);
+			var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(Tc));
 
             var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
@@ -412,7 +416,10 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            businessPack.Facade.DeleteSome(itemsAsListTc);
+			if (!businessPack.Facade.DeleteSome(itemsAsListTc))
+			{
+				MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+			}
 
             return response;
         }
