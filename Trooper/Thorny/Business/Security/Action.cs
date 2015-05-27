@@ -18,6 +18,8 @@ namespace Trooper.Thorny.Business.Security
         /// </summary>
         public const string AllActions = "*";
 
+	    public const string AllAddActions = "*Add";
+
         /// <summary>
         /// Represents all actions that result in removal of records. Testing against this action implies that
         /// you want to know if the user can access any action that results in deletion. The supplied method
@@ -83,11 +85,6 @@ namespace Trooper.Thorny.Business.Security
         /// The get all action.
         /// </summary>
         public const string GetAllAction = "GetAll";
-
-        /// <summary>
-        /// The validate action.
-        /// </summary>
-        public const string ValidateAction = "Validate";
 
         public const string IsAllowedAction = "IsAllowed";
 

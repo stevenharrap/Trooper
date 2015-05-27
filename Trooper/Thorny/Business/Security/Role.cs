@@ -7,8 +7,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Thorny.Business.Security
 {
-    public class Role : IRole
+    public class Role : List<IBehaviour>, IRole
 	{
-		public IList<IBehaviour> Behaviours { get; set; }
 	}
 }

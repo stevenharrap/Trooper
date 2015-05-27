@@ -757,7 +757,11 @@
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var isAllowed = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, validIdentity);
+			var isAllowed = bc.IsAllowed(new RequestArg<IShop> { Action = Action.AddAction }, new Identity { Username = "NoAdderUser" });
+			Assert.IsTrue(isAllowed.Ok);
+			Assert.IsFalse(isAllowed.Item);
+
+            isAllowed = bc.IsAllowed(new RequestArg<IShop> { Action = Action.GetAllAction }, validIdentity);
             Assert.IsTrue(isAllowed.Ok);
             Assert.IsTrue(isAllowed.Item);
 

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.Business.Security
 {
-    public interface IRole
+    public interface IRole : IList<IBehaviour>
     {
-        IList<IBehaviour> Behaviours { get; set; }
     }
 }

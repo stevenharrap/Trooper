@@ -1,44 +1,41 @@
-﻿using System;
-
-namespace Trooper.Testing.CustomShopApi.Business.Support
+﻿namespace Trooper.Testing.CustomShopApi.Business.Support
 {
     using System.Collections.Generic;
-    using Trooper.Thorny.Business.Security;
-    using Trooper.Thorny.Interface.OperationResponse;
-    using Trooper.Thorny.OperationResponse;
-    using Trooper.Thorny.UnitTestBase;
-    using Trooper.Thorny.Utility;
+    using Thorny.Business.Security;
+    using Thorny.UnitTestBase;
     using Trooper.Interface.Thorny.Business.Security;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Model;
+    using Interface.Business.Support;
+    using ShopModel.Model;
 
     public class ShopAuthorization : Authorization<Shop>, IShopAuthorization
     {
-		private readonly IList<IAssignment> roles = new IAssignment[]
-		{
-			new Assignment {Action = Action.AllActions, Allow = true, Users = new[] {TestBase.ValidUsername}},
-			new Assignment {Action = Action.AllActions, Allow = false, Users = new[] {TestBase.InvalidUsername}},
-			new Assignment {Action = Action.GetByKeyAction, Allow = true, Users = new[] {"ReaderUser"}}
-		};
+	    public override IList<IAssignment> Assignments
+	    {
+			get
+			{
+				var adminGroup = new List<string> { TestBase.ValidUsername, string.Format("{0}_1", TestBase.ValidUsername) };
 
+				var adminRole = new Role { new Behaviour { Action = Action.AllActions, Allow = true } };
+				var deniedRole = new Role { new Behaviour { Action = Action.AllActions, Allow = false } };
+				var readerRole = new Role
+				{
+					new Behaviour {Action = Action.AllActions, Allow = false},
+					new Behaviour {Action = Action.GetByKeyAction, Allow = true},
+					new Behaviour {Action = Action.GetAllAction, Allow = true}
+				};
+				var noAddingRole = new Role
+				{
+					new Behaviour {Action = Action.AllActions, Allow = true},
+					new Behaviour {Action = Action.AllAddActions, Allow = false}
+				};
 
-		public override IList<IAssignment> Roles
-		{
-			get { return roles; }
-			set { throw new NotImplementedException(); }
-		}
+				var adminAssignment = new Assignment {Role = adminRole, UserGroups = adminGroup};
+				var deniedAssignment = new Assignment {Role = deniedRole, Users = new[] {TestBase.InvalidUsername}};
+				var noAdderAssignment = new Assignment {Role = noAddingRole, Users = new[] {"NoAdderUser"}};
+				var readerAssignment = new Assignment {Role = readerRole, Users = new[] {"ReaderUser"}};
 
-		//public override bool IsAllowed(IRequestArg<Shop> arg, ICredential credential, IResponse response)
-		//{
-		//	if (credential.Username == TestBase.InvalidUsername)
-		//	{
-		//		MessageUtility.Errors.Add(string.Format("'{0}' is not allowed", TestBase.InvalidUsername), UserDeniedCode, response);
-
-		//		return false;
-		//	}
-
-		//	return base.IsAllowed(arg, credential, response);
-		//}
+				return new List<IAssignment> { adminAssignment, noAdderAssignment, deniedAssignment, readerAssignment };
+			}
+	    }
     }
 }

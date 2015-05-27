@@ -9,13 +9,13 @@ namespace Trooper.Interface.Thorny.Business.Security
     {
         IUnitOfWork Uow { get; set; }
 
-        IList<IAssignment> Assignments { get; set; }
+        IList<IAssignment> Assignments { get; }
+
+		IList<string> AllActions { get; }
 
         ICredential ResolveCredential(IIdentity identity);
 
         bool IsAddDataAction(string action);
-
-        bool IsUpdateDataAction(string action);
 
         bool IsRemoveDataAction(string action);
 

@@ -28,5 +28,7 @@ namespace Trooper.Interface.Thorny.Business.Security
         /// Gets or sets the users who can perform this action.
         /// </summary>
         IList<string> Users { get; set; }
+
+		int Precedence { get; set; }
     }
 }

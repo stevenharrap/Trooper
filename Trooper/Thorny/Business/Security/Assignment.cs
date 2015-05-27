@@ -11,5 +11,7 @@ namespace Trooper.Thorny.Business.Security
         public IList<string> UserGroups { get; set; }
 
         public IList<string> Users { get; set; }
+
+		public int Precedence { get; set; }
     }
 }

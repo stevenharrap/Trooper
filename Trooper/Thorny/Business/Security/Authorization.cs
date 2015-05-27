@@ -1,4 +1,6 @@
-﻿using Trooper.Interface.Thorny.Business.Security;
+﻿using System.Web.WebPages;
+using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
+using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Thorny.Business.Security
 {
@@ -13,7 +15,31 @@ namespace Trooper.Thorny.Business.Security
     {
         public IUnitOfWork Uow { get; set; }
 
-        public virtual IList<IAssignment> Assignments { get; set; }
+	    public virtual IList<IAssignment> Assignments
+	    {
+		    get { return null; }
+	    }
+
+		public virtual IList<string> AllActions
+		{
+			get
+			{
+				return new[]
+				{
+					Action.AddAction, 
+					Action.AddSomeAction, 
+					Action.DeleteByKeyAction, 
+					Action.DeleteSomeByKeyAction,
+					Action.ExistsByKeyAction, 
+					Action.GetAllAction, 
+					Action.GetByKeyAction, 
+					Action.GetSession, 
+					Action.GetSomeAction,
+					Action.IsAllowedAction, 
+					Action.UpdateAction
+				};
+			}
+		}
 
         public virtual ICredential ResolveCredential(IIdentity identity)
         {
@@ -27,14 +53,10 @@ namespace Trooper.Thorny.Business.Security
 
         public virtual bool IsAddDataAction(string action)
         {
-            return action == Action.AddAction || action == Action.AddSomeAction;
+            return action == Action.AddAction 
+				|| action == Action.AddSomeAction;
         }
-
-        public virtual bool IsUpdateDataAction(string action)
-        {
-            return action == Action.UpdateAction;
-        }
-
+		
         public virtual bool IsRemoveDataAction(string action)
         {
             return action == Action.DeleteByKeyAction
@@ -44,7 +66,7 @@ namespace Trooper.Thorny.Business.Security
         public virtual bool IsChangeAction(string action)
         {
             return this.IsAddDataAction(action)
-                || this.IsUpdateDataAction(action)
+				|| action == Action.UpdateAction
                 || this.IsRemoveDataAction(action);
         }
 
@@ -75,62 +97,65 @@ namespace Trooper.Thorny.Business.Security
 
         public virtual bool IsAllowed(IRequestArg<Tc> arg, ICredential credential, IResponse response)
         {
-            if (this.Roles == null)
+            if (this.Assignments == null)
             {
                 return true;
             }
 
-            var role = this.Roles.FirstOrDefault(ag => ag.Action == arg.Action);
+	        var behaviours = this.AllActions.Select(a => new Behaviour {Action = a, Allow = false}).ToList();
+	        var userAssignments = from a in this.Assignments
+		        where (a.UserGroups != null && a.UserGroups.Any(ug => ug == credential.Username)) ||
+		              (a.Users != null && a.Users.Any(u => u == credential.Username))
+		        orderby a.Precedence ascending
+		        select a;
 
-            if (role == null && this.IsRemoveDataAction(arg.Action))
-            {
-                role = this.Roles.FirstOrDefault(ag => ag.Action == Action.AllRemoveActions);
-            }
+	        foreach (var behaviour in userAssignments.SelectMany(assignment => assignment.Role))
+	        {
+		        switch (behaviour.Action)
+		        {
+			        case Action.AllActions:
+				        behaviours.ForEach(action => action.Allow = behaviour.Allow);
+				        break;
+			        case Action.AllAddActions:
+				        behaviours.Where(action => this.IsAddDataAction(action.Action)).ToList()
+					        .ForEach(action => action.Allow = behaviour.Allow);
+				        break;
+			        case Action.AllChangeActions:
+				        behaviours.Where(action => this.IsChangeAction(action.Action)).ToList()
+					        .ForEach(action => action.Allow = behaviour.Allow);
+				        break;
+			        case Action.AllReadActions:
+				        behaviours.Where(action => this.IsReadAction(action.Action)).ToList()
+					        .ForEach(action => action.Allow = behaviour.Allow);
+				        break;
+			        case Action.AllRemoveActions:
+				        behaviours.Where(action => this.IsRemoveDataAction(action.Action)).ToList()
+					        .ForEach(action => action.Allow = behaviour.Allow);
+				        break;
+			        default:
+				        behaviours.Where(action => action.Action == behaviour.Action).ToList()
+					        .ForEach(action => action.Allow = behaviour.Allow);
+				        break;
+		        }
+	        }
 
-            if (role == null && this.IsChangeAction(arg.Action))
-            {
-                role = this.Roles.FirstOrDefault(ag => ag.Action == Action.AllChangeActions);
-            }
+	        var allowed = behaviours.Any(behaviour => behaviour.Action == arg.Action && behaviour.Allow);
 
-            if (role == null && this.IsReadAction(arg.Action))
-            {
-                role = this.Roles.FirstOrDefault(ag => ag.Action == Action.AllReadActions);
-            }
-
-            if (role == null)
-            {
-                role = this.Roles.FirstOrDefault(ag => ag.Action == Action.AllActions);
-            }
-
-            //// No action found to check against so it's ok.
-            if (role == null)
-            {
-                return true;
-            }
-
-            var hasUser = (role.Users != null && role.Users.Contains(credential.Username))
-                          || (role.UserGroups != null && credential.Groups != null && role.UserGroups.Any(ug => credential.Groups.Contains(ug)));
-
-            if (hasUser && role.Allow)
-            {
-                return true;
-            }
-
-            if (response != null)
+			if (!allowed && response != null)
             {
                 response.Messages = new List<IMessage>();
 
                 MessageUtility.Errors.Add(
                 string.Format(
                     "The user {0} is not allowed to perform action {1}.",
-                    UserDeniedCode,
                     credential.Username,
                     arg.Action),
+				UserDeniedCode,
                 null,
                 response);
             }
 
-            return false;
+            return allowed;
         }
     }
 
