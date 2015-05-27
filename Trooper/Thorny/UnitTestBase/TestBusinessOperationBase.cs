@@ -284,6 +284,12 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.GetByKey(null, identity).Ok);
         }
 
+		[Test]
+	    public virtual void Test_Base_GetSomeByKey()
+	    {
+		    Assert.Fail();
+	    }
+
         #endregion
 
         #region ExistsByKey
@@ -334,6 +340,8 @@ using Trooper.Thorny.Business.Security;
         #region Update
 
         public abstract void Test_Base_Update();
+
+		public abstract void Test_Base_UpdateSome();
 
         #endregion
 

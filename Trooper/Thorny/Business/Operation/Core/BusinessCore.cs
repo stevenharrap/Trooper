@@ -138,6 +138,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
+		public virtual IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity)
+		{
+			using (var bp = this.GetBusinessPack())
+			{
+				return this.GetSomeByKey(bp, items, identity);
+			}
+		}
+
         public virtual ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
@@ -160,6 +168,14 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
         }
+
+		public virtual IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity)
+		{
+			using (var bp = this.GetBusinessPack())
+			{
+				return this.UpdateSome(bp, items, identity);
+			}
+		}
 
         public virtual ISaveResponse<Ti> Save(Ti item, IIdentity identity)
         {
@@ -526,6 +542,13 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
+		protected virtual IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IManyResponse<Ti> response = null)
+		{
+			response = response ?? new ManyResponse<Ti>();
+
+			return response;
+		}
+
         protected virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<bool> response = null)
         {
             response = response ?? new SingleResponse<bool>();
@@ -600,6 +623,13 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return response;
         }
+
+		protected virtual IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IManyResponse<Ti> response = null)
+		{
+			response = response ?? new ManyResponse<Ti>();
+
+			return response;
+		}
 
         protected virtual ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISaveResponse<Ti> response = null)
         {

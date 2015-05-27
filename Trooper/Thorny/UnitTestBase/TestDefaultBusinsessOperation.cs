@@ -98,6 +98,15 @@
         {
             Assert.Inconclusive(baseInconclusive);
         }
+
+		/// <summary>
+		/// untestable here
+		/// </summary>
+		[Test]
+		public override void Test_Base_UpdateSome()
+		{
+			Assert.Inconclusive(baseInconclusive);
+		}
         
         #endregion
 

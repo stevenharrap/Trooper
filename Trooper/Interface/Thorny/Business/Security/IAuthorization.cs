@@ -21,6 +21,8 @@ namespace Trooper.Interface.Thorny.Business.Security
 
         bool IsChangeAction(string action);
 
+		bool IsUpdateAction(string action);
+
         bool IsReadAction(string action);
 
 		bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity);

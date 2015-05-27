@@ -59,6 +59,11 @@ namespace Trooper.Thorny.Business.Operation.Composite
             return this.BusinessCore.GetByKey(item, identity ?? this.DefaultIdentity);
         }
 
+		public IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity = null)
+		{
+			return this.BusinessCore.GetSomeByKey(items, identity ?? this.DefaultIdentity);
+		}
+
         public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity = null)
         {
             return this.BusinessCore.ExistsByKey(item, identity ?? this.DefaultIdentity);
@@ -79,9 +84,19 @@ namespace Trooper.Thorny.Business.Operation.Composite
             return this.BusinessCore.Update(item, identity ?? this.DefaultIdentity);
         }
 
+		public IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity = null)
+		{
+			return this.BusinessCore.UpdateSome(items, identity ?? this.DefaultIdentity);
+		}
+
         public ISaveResponse<Ti> Save(Ti item, IIdentity identity = null)
         {
             return this.BusinessCore.Save(item, identity ?? this.DefaultIdentity);
         }
+
+		public IManyResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity = null)
+		{
+			return this.BusinessCore.UpdateSome(items, identity ?? this.DefaultIdentity);
+		}
     }
 }

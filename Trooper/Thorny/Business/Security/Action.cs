@@ -34,6 +34,8 @@ namespace Trooper.Thorny.Business.Security
         /// </summary>
         public const string AllChangeActions = "*Change";
 
+		public const string AllUpdateActions = "*Update";
+
         /// <summary>
         /// Represents all actions that result in reads. Testing against this action implies that
         /// you want to know if the user can access any action that only results in a read. The supplied method
@@ -56,6 +58,8 @@ namespace Trooper.Thorny.Business.Security
         /// </summary>
         public const string UpdateAction = "Update";
 
+		public const string UpdateSomeAction = "UpdateSome";
+
         /// <summary>
         /// The delete by key action.
         /// </summary>
@@ -70,6 +74,8 @@ namespace Trooper.Thorny.Business.Security
         /// The get by key action.
         /// </summary>
         public const string GetByKeyAction = "GetByKey";
+
+		public const string GetSomeByKeyAction = "GetByKey";
 
         /// <summary>
         /// The exists action

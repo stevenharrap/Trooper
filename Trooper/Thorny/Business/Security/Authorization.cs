@@ -33,10 +33,12 @@ namespace Trooper.Thorny.Business.Security
 					Action.ExistsByKeyAction, 
 					Action.GetAllAction, 
 					Action.GetByKeyAction, 
+					Action.GetSomeByKeyAction, 
 					Action.GetSession, 
 					Action.GetSomeAction,
 					Action.IsAllowedAction, 
-					Action.UpdateAction
+					Action.UpdateAction,
+					Action.UpdateSomeAction
 				};
 			}
 		}
@@ -63,10 +65,16 @@ namespace Trooper.Thorny.Business.Security
                 || action == Action.DeleteSomeByKeyAction;
         }
 
+		public virtual bool IsUpdateAction(string action)
+		{
+			return action == Action.UpdateAction
+				|| action == Action.UpdateSomeAction;
+		}
+
         public virtual bool IsChangeAction(string action)
         {
             return this.IsAddDataAction(action)
-				|| action == Action.UpdateAction
+				|| this.IsUpdateAction(action)
                 || this.IsRemoveDataAction(action);
         }
 
@@ -124,6 +132,10 @@ namespace Trooper.Thorny.Business.Security
 				        behaviours.Where(action => this.IsChangeAction(action.Action)).ToList()
 					        .ForEach(action => action.Allow = behaviour.Allow);
 				        break;
+					case Action.AllUpdateActions:
+						behaviours.Where(action => this.IsUpdateAction(action.Action)).ToList()
+							.ForEach(action => action.Allow = behaviour.Allow);
+						break;
 			        case Action.AllReadActions:
 				        behaviours.Where(action => this.IsReadAction(action.Action)).ToList()
 					        .ForEach(action => action.Allow = behaviour.Allow);

@@ -39,6 +39,8 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity);
 
+		IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity);
+
         ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity);
 
         ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity);
@@ -46,6 +48,8 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         ISingleResponse<Guid> GetSession(IIdentity identity);
 
         ISingleResponse<Ti> Update(Ti item, IIdentity identity);
+
+		IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity);
 
         ISaveResponse<Ti> Save(Ti item, IIdentity identity);
 

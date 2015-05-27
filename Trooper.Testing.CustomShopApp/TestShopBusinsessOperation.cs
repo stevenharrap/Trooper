@@ -684,6 +684,11 @@
             Assert.AreEqual(all.Items.Count, 3);
         }
 
+		public override void Test_Base_GetSomeByKey()
+		{
+			Assert.Fail();
+		}
+
         #endregion
 
         #region GetSome
@@ -874,6 +879,12 @@
             all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 1);            
         }
+
+		[Test]
+		public override void Test_Base_UpdateSome()
+		{
+			Assert.Fail();
+		}
 
         #endregion
 
