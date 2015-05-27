@@ -153,6 +153,14 @@
             return this.GetByKey(item);
         }
 
+        public virtual IEnumerable<Tc> GetSomeByKey(IEnumerable<Tc> items)
+        {
+            foreach (var item in items)
+            {
+                yield return this.GetByKey(item);
+            }
+        }
+
         public bool Exists(Tc item)
         {
             return this.GetByKey(item) != null;

@@ -544,9 +544,34 @@ namespace Trooper.Thorny.Business.Operation.Core
 
 		protected virtual IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IManyResponse<Ti> response = null)
 		{
-			response = response ?? new ManyResponse<Ti>();
+            response = response ?? new ManyResponse<Ti>();
 
-			return response;
+            if (items == null)
+            {
+                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
+                return response;
+            }
+
+            var itemsTc = businessPack.Facade.Map(items).ToList();
+            var arg = new RequestArg<Tc> { Action = Action.GetSomeByKeyAction, Items = itemsTc };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }
+
+            response.Items = businessPack.Facade.GetSomeByKey(itemsTc).ToList<Ti>();            
+
+            return response;
 		}
 
         protected virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<bool> response = null)
@@ -626,9 +651,54 @@ namespace Trooper.Thorny.Business.Operation.Core
 
 		protected virtual IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IManyResponse<Ti> response = null)
 		{
-			response = response ?? new ManyResponse<Ti>();
+            response = response ?? new ManyResponse<Ti>();
 
-			return response;
+            if (items == null)
+            {
+                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            if (!response.Ok)
+            {
+                return response;
+            }
+
+            var itemsTc = businessPack.Facade.Map(items);
+            var updated = itemsTc.Select(i => businessPack.Facade.Update(i)).ToList();
+
+            foreach (var i in updated)
+            {
+                businessPack.Validation.Validate(i, response);
+            }
+
+            if (!response.Ok)
+            {
+                return response;
+            }
+
+            foreach (var i in updated)
+            {
+                var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = i };
+
+                if (businessPack.Authorization != null)
+                {
+                    businessPack.Authorization.IsAllowed(arg, identity, response);
+                }
+            }
+
+            if (!response.Ok)
+            {
+                return response;
+            }
+
+            response.Items = updated.ToList<Ti>();
+
+            return response;
 		}
 
         protected virtual ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISaveResponse<Ti> response = null)

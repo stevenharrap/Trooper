@@ -142,7 +142,7 @@ using Trooper.Thorny.Business.Security;
 
         #endregion
 
-        #region AddSome
+        #region DeleteByKey
 
         [Test]
         public virtual void Test_Base_DeleteByKey() 
@@ -164,7 +164,9 @@ using Trooper.Thorny.Business.Security;
 
 			deleteByKey = bc.DeleteByKey(item3, identity);
 			Assert.IsNotNull(deleteByKey);
-			Assert.IsTrue(deleteByKey.Ok);
+			Assert.IsFalse(deleteByKey.Ok);
+            Assert.IsNotNull(deleteByKey.Messages);
+            Assert.That(deleteByKey.Messages.Any(m => m.Code == BusinessCore.NoRecordCode));
 
             Assert.IsFalse(bc.AddSome(null, null).Ok);
             Assert.IsFalse(bc.AddSome(new[] { item1 }, null).Ok);
@@ -267,11 +269,7 @@ using Trooper.Thorny.Business.Security;
 	        var all = this.TestGetAll(2);
 
 			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
-			var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));
-
-	        bc.DeleteByKey(second, identity);
-
-	        this.TestGetAll(1);
+			var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));	     
 
 	        var getByKey = bc.GetByKey(first, identity);
 			Assert.IsNotNull(getByKey);
@@ -284,10 +282,39 @@ using Trooper.Thorny.Business.Security;
             Assert.IsFalse(bc.GetByKey(null, identity).Ok);
         }
 
-		[Test]
+        #endregion
+
+        #region GetSomeByKey
+
+        [Test]
 	    public virtual void Test_Base_GetSomeByKey()
 	    {
-		    Assert.Fail();
+            var bc = this.NewBusinessCoreInstance();
+            var bp = bc.GetBusinessPack();
+            var identity = this.GetValidIdentity();
+
+            var item1 = this.GetValidItem(bp.Facade);
+            var item2 = this.GetValidItem(bp.Facade);
+            var item3 = this.GetValidItem(bp.Facade);
+
+            this.TestAddSome(new List<Ti> { item1, item2, item3 });
+            var all = this.TestGetAll(3);
+
+            var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
+            var second = this.ItemGenerator.CopyItem(bp.Facade.Map(all[1]));
+            var third = this.ItemGenerator.CopyItem(bp.Facade.Map(all[2]));            
+
+            var getSomeByKey = bc.GetSomeByKey(new [] { first, second }, identity);
+            Assert.IsNotNull(getSomeByKey);
+            Assert.IsTrue(getSomeByKey.Ok);
+            Assert.IsNotNull(getSomeByKey.Items);
+            Assert.AreEqual(getSomeByKey.Items.Count(), 2);
+            Assert.That(getSomeByKey.Items.Any(i => bp.Facade.AreEqual(i, first)));
+            Assert.That(getSomeByKey.Items.Any(i => bp.Facade.AreEqual(i, second)));
+
+            Assert.IsFalse(bc.GetSomeByKey(null, null).Ok);
+            Assert.IsFalse(bc.GetSomeByKey(new [] { first }, null).Ok);
+            Assert.IsFalse(bc.GetSomeByKey(null, identity).Ok);
 	    }
 
         #endregion
@@ -341,7 +368,11 @@ using Trooper.Thorny.Business.Security;
 
         public abstract void Test_Base_Update();
 
-		public abstract void Test_Base_UpdateSome();
+        #endregion
+
+        #region UpdateSome
+
+        public abstract void Test_Base_UpdateSome();
 
         #endregion
 

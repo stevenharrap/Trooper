@@ -71,6 +71,10 @@
     
         #endregion
 
+        #region GetSomeByKey
+
+        #endregion
+
         #region ExistsByKey
 
         #endregion
@@ -99,7 +103,11 @@
             Assert.Inconclusive(baseInconclusive);
         }
 
-		/// <summary>
+        #endregion
+
+        #region UpdateSome
+
+        /// <summary>
 		/// untestable here
 		/// </summary>
 		[Test]

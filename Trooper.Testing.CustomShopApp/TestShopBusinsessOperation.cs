@@ -628,7 +628,8 @@
             var getByKey = bc.GetByKey(shop2, validIdentity);
             Assert.IsNotNull(getByKey);
             Assert.IsTrue(getByKey.Ok);
-            Assert.AreEqual(shop2.Name, "Coles");
+            Assert.IsNotNull(getByKey.Item);
+            Assert.AreEqual(getByKey.Item.Name, "Coles");
 
             getByKey = bc.GetByKey(invalidShop, validIdentity);
             Assert.IsFalse(getByKey.Ok);
@@ -684,9 +685,91 @@
             Assert.AreEqual(all.Items.Count, 3);
         }
 
-		public override void Test_Base_GetSomeByKey()
+        #endregion
+
+        #region GetSomeByKey
+
+        public override void Test_Base_GetSomeByKey()
 		{
-			Assert.Fail();
+            var bc = this.NewBusinessCoreInstance();
+            var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new Shop { Name = "Coles", Address = "NSW" };
+            var shop3 = new Shop { Name = "BigW", Address = "Vic" };
+            var invalidShop = this.GetInvalidItem();
+            var validIdentity = this.GetValidIdentity();
+            var invalidIdentity = this.GetInvalidIdentity();
+
+            var added = bc.AddSome(new List<IShop> { shop1, shop2, shop3 }, validIdentity);
+            Assert.IsTrue(added.Ok);
+
+            var all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 3);
+
+            shop1 = all.Items.FirstOrDefault(i => i.Name == "Kmart") as Shop;
+            Assert.IsNotNull(shop1);
+            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as Shop;
+            Assert.IsNotNull(shop2);
+
+            var getSomeByKey = bc.GetSomeByKey(new [] { shop1, shop2 }, validIdentity);
+            Assert.IsNotNull(getSomeByKey);
+            Assert.IsTrue(getSomeByKey.Ok);
+            Assert.IsNotNull(getSomeByKey.Items);
+            Assert.AreEqual(getSomeByKey.Items.Count(), 2);
+            Assert.That(getSomeByKey.Items.Any(i => i.Name == "Kmart"));
+            Assert.That(getSomeByKey.Items.Any(i => i.Name == "Coles"));
+
+            getSomeByKey = bc.GetSomeByKey(new[] { invalidShop }, validIdentity);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.IsTrue(getSomeByKey.Messages.Any());
+            Assert.That(getSomeByKey.Messages.First().Code == BusinessCore.NoRecordCode);
+
+            getSomeByKey = bc.GetSomeByKey(new [] {added.Items.First()}, invalidIdentity);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.That(getSomeByKey.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
+
+            getSomeByKey = bc.GetSomeByKey(null, null);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.That(getSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 3);
+
+            getSomeByKey = bc.GetSomeByKey(new [] {shop2}, null);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.That(getSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 3);
+
+            getSomeByKey = bc.GetSomeByKey(new[] { invalidShop }, null);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.That(getSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 3);
+
+            getSomeByKey = bc.GetSomeByKey(null, validIdentity);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.That(getSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 3);
+
+            getSomeByKey = bc.GetSomeByKey(null, invalidIdentity);
+            Assert.IsFalse(getSomeByKey.Ok);
+            Assert.IsNull(getSomeByKey.Items);
+            Assert.IsNotNull(getSomeByKey.Messages);
+            Assert.That(getSomeByKey.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 3);
 		}
 
         #endregion
@@ -880,10 +963,109 @@
             Assert.AreEqual(all.Items.Count, 1);            
         }
 
-		[Test]
+        #endregion
+
+        #region UpdateSome
+
+        [Test]
 		public override void Test_Base_UpdateSome()
 		{
-			Assert.Fail();
+            var bc = this.NewBusinessCoreInstance();
+            var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new Shop { Name = "Coles", Address = "NSW" };
+            var shop3 = new Shop { Name = "Aldi", Address = "Queensland" };
+            var shop4 = new Shop { Name = "IGA", Address = "NSW" };
+
+            var invalidShop = this.GetInvalidItem();
+            var validIdentity = this.GetValidIdentity();
+            var invalidIdentity = this.GetInvalidIdentity();
+
+            var add = bc.AddSome(new [] {shop1, shop2, shop3, shop4}, validIdentity);
+            Assert.IsTrue(add.Ok);
+
+            shop1 = add.Items.FirstOrDefault(i => i.Name == "Kmart") as Shop;
+            Assert.IsNotNull(shop1);
+            shop3 = add.Items.FirstOrDefault(i => i.Name == "Aldi") as Shop;
+            Assert.IsNotNull(shop3);
+
+            shop1.Address = "NT";
+            shop3.Address = "ACT";
+            var updateSome = bc.UpdateSome(new [] {shop1, shop3}, validIdentity);
+            Assert.IsTrue(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Items);
+            Assert.AreEqual(updateSome.Items.Count, 2);
+            Assert.That(updateSome.Items.Any(i => i.Name == "Kmart" && i.Address == "NT"));
+            Assert.That(updateSome.Items.Any(i => i.Name == "Aldi" && i.Address == "ACT"));
+            
+            var all = bc.GetAll(validIdentity);
+            Assert.IsTrue(all.Ok);
+            Assert.IsNotNull(all.Items);
+            Assert.That(all.Items.Any(i => i.Name == "Kmart" && i.Address == "NT"));
+            Assert.That(all.Items.Any(i => i.Name == "Coles" && i.Address == "NSW"));
+            Assert.That(all.Items.Any(i => i.Name == "Aldi" && i.Address == "ACT"));
+            Assert.That(all.Items.Any(i => i.Name == "IGA" && i.Address == "NSW"));
+            
+            updateSome = bc.UpdateSome(new [] {shop2}, validIdentity);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNull(updateSome.Items);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NoRecordCode));
+
+            updateSome = bc.UpdateSome(new[] { shop2 }, invalidIdentity);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNull(updateSome.Items);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.AreEqual(updateSome.Items.Count, 1);
+            Assert.That(updateSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
+
+            shop1.Name = invalidShop.Name;
+            shop1.Address = invalidShop.Address;
+            updateSome = bc.UpdateSome(new [] {shop2}, validIdentity);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
+
+            shop1.Name = invalidShop.Name;
+            shop1.Address = invalidShop.Address;
+            updateSome = bc.UpdateSome(new[] { shop1, shop3 }, validIdentity);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
+
+            updateSome = bc.UpdateSome(null, null);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 4);
+
+            updateSome = bc.UpdateSome(new []  {shop2}, null);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 4);
+
+            updateSome = bc.UpdateSome(new[] { shop3 }, null);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 1);
+
+            updateSome = bc.UpdateSome(null, validIdentity);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 1);
+
+            updateSome = bc.UpdateSome(null, invalidIdentity);
+            Assert.IsFalse(updateSome.Ok);
+            Assert.IsNotNull(updateSome.Messages);
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            all = bc.GetAll(validIdentity);
+            Assert.AreEqual(all.Items.Count, 1);
 		}
 
         #endregion

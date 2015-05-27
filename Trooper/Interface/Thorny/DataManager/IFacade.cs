@@ -16,6 +16,8 @@
 
         Tc GetByKey(Tc item);
 
+        IEnumerable<Tc> GetSomeByKey(IEnumerable<Tc> items);
+
         Tc GetByKey(object obj);
 
         bool Exists(Tc item);
