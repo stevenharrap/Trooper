@@ -1015,12 +1015,12 @@
             Assert.IsFalse(updateSome.Ok);
             Assert.IsNull(updateSome.Items);
             Assert.IsNotNull(updateSome.Messages);
-            Assert.AreEqual(updateSome.Items.Count, 1);
+            Assert.AreEqual(updateSome.Messages.Count, 1);
             Assert.That(updateSome.Messages.Any(m => m.Code == Authorization.UserDeniedCode));
 
             shop1.Name = invalidShop.Name;
             shop1.Address = invalidShop.Address;
-            updateSome = bc.UpdateSome(new [] {shop2}, validIdentity);
+            updateSome = bc.UpdateSome(new [] {shop1}, validIdentity);
             Assert.IsFalse(updateSome.Ok);
             Assert.IsNotNull(updateSome.Messages);
             Assert.That(updateSome.Messages.Any(m => m.Code == Validation.InvalidPropertyCode));
@@ -1051,21 +1051,21 @@
             Assert.IsNotNull(updateSome.Messages);
             Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 4);
 
             updateSome = bc.UpdateSome(null, validIdentity);
             Assert.IsFalse(updateSome.Ok);
             Assert.IsNotNull(updateSome.Messages);
-            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 4);
 
             updateSome = bc.UpdateSome(null, invalidIdentity);
             Assert.IsFalse(updateSome.Ok);
             Assert.IsNotNull(updateSome.Messages);
-            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullItemCode));
+            Assert.That(updateSome.Messages.Any(m => m.Code == BusinessCore.NullItemsCode));
             all = bc.GetAll(validIdentity);
-            Assert.AreEqual(all.Items.Count, 1);
+            Assert.AreEqual(all.Items.Count, 4);
 		}
 
         #endregion

@@ -173,7 +173,14 @@ namespace Trooper.Thorny.Business.Operation.Core
 		{
 			using (var bp = this.GetBusinessPack())
 			{
-				return this.UpdateSome(bp, items, identity);
+				var response = this.UpdateSome(bp, items, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Items = null;
+                }
+
+                return response;
 			}
 		}
 
