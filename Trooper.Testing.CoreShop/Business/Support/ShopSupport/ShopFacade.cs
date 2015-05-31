@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Trooper.Testing.CustomShopApi.Business.Support;
 
-namespace Trooper.Testing.CustomShopApi.Facade
+namespace Trooper.Testing.CustomShopApi.Facade.ShopSupport
 {
     using Trooper.Thorny.Interface;
     using Trooper.Thorny.Interface.DataManager;
@@ -9,6 +9,8 @@ namespace Trooper.Testing.CustomShopApi.Facade
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
     using Trooper.Testing.ShopModel.Model;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
 
     public class ShopFacade : Facade<Shop, IShop>, IShopFacade
     {

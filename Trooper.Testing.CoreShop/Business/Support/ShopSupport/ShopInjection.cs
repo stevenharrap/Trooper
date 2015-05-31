@@ -1,4 +1,4 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support
+﻿namespace Trooper.Testing.CustomShopApi.Business.Support.ShopSupport
 {
     using Autofac;
     using Trooper.Thorny.Injection;
@@ -9,6 +9,8 @@
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Interface;
     using Trooper.Testing.ShopModel.Model;
+    using Trooper.Testing.CustomShopApi.Facade.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
 
     public class ShopInjection
     {

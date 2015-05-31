@@ -2,7 +2,7 @@
 
 namespace Trooper.Testing.ShopModel.Interface
 {
-    interface IProduct
+    public interface IProduct
     {
         int ProductId { get; set; }
 

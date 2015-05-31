@@ -15,6 +15,10 @@
     using Interface.Thorny.Business.Security;
     using Thorny.Business.Operation.Core;
     using Thorny.DataManager;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Autofac;
+    using Trooper.Testing.CustomShopApi.Business.Model;
 
 	/// <summary>
 	/// Shop Testing. Tests need to be broken into specific components rather than giant catch-alls.
@@ -43,7 +47,7 @@
 
         #endregion
 
-        #region Tests
+        #region Standard Tests
 
         #region Add
 
@@ -1336,6 +1340,27 @@
         }
 
         #endregion
+
+        #endregion
+
+        #region Shop Specific Tests 
+
+        [Test]
+        public void Test_SaveProduct()
+        {
+            var shop = new Shop { Name = "BigW", Address = "Vic" };            
+            var validIdentity = this.GetValidIdentity();
+            var invalidIdentity = this.GetInvalidIdentity();
+            var bc = this.NewBusinessCoreInstance();
+            
+            var addShop = bc.Add(shop, validIdentity);
+            Assert.IsTrue(addShop.Ok);
+
+            var productInShop = new ProductInShop { ShopId = addShop.Item.ShopId, Quantity = 100, Colour = "Red", Name = "Vegemite" };
+
+            var addProduct = bc.SaveProduct(productInShop, validIdentity);
+            Assert.IsTrue(addProduct.Ok);
+        }
 
         #endregion
 

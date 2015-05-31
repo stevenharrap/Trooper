@@ -39,6 +39,11 @@ namespace Trooper.Thorny.Business.Operation.Core
             return this.OnRequestBusinessPack();
         }
 
+        public IBusinessPack<Tc, Ti> GetBusinessPack(IUnitOfWork uow)
+        {
+            return this.OnRequestBusinessPack(uow);
+        }
+
         public virtual IAddResponse<Ti> Add(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())

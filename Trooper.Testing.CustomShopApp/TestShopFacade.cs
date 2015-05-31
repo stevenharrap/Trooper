@@ -15,6 +15,8 @@ namespace Trooper.Testing.CustomShopApp
     using Trooper.Testing.CustomShopApi.Business.Support;
     using Trooper.Testing.CustomShopApi;
     using Trooper.Testing.ShopModel.Model;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
 
     [TestFixture]
     [Category("Facade")]

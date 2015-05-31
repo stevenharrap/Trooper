@@ -13,7 +13,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Core
 {
-	public delegate IBusinessPack<Tc, Ti> BusinessPackHandler<Tc, Ti>()        
+    public delegate IBusinessPack<Tc, Ti> BusinessPackHandler<Tc, Ti>(IUnitOfWork uow = null)        
         where Tc : class, Ti, new()
         where Ti : class;
 
@@ -24,6 +24,8 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         event BusinessPackHandler<Tc, Ti> OnRequestBusinessPack;
 
         IBusinessPack<Tc, Ti> GetBusinessPack();
+
+        IBusinessPack<Tc, Ti> GetBusinessPack(IUnitOfWork uow);
 
         IAddResponse<Ti> Add(Ti item, IIdentity identity);
 

@@ -13,6 +13,7 @@
             BusinessOperationInjection.AddUnitOfWork<ShopAppDbContext>(builder);
 
             ShopInjection.AddShop(builder);
+            ProductInjection.AddProduct(builder);
         }
     }
 }

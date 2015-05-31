@@ -57,7 +57,7 @@ namespace Trooper.Thorny.Injection
             builder.Register(c => { 
                 var core = new TcBusinessCore();
                 var ctx = c.Resolve<IComponentContext>();
-                core.OnRequestBusinessPack += new BusinessPackHandler<Tc, Ti>(() => 
+                core.OnRequestBusinessPack += new BusinessPackHandler<Tc, Ti>((uow) => 
                     NewBusinessPack<TiFacade, TiAuthorization, TiValidation, Tc, Ti>(ctx));
                 return core; }).As<TiBusinessCore>();
 
@@ -80,58 +80,58 @@ namespace Trooper.Thorny.Injection
                 Tc, Ti>(builder);
         }
 
-        public static void AddBusinessCoreComponent1<TcFacade, TiFacade, Tc, Ti>(ContainerBuilder builder)
-            where TcFacade : TiFacade, IFacade<Tc, Ti>, new()
-            where TiFacade : IFacade<Tc, Ti>            
-            where Tc : class, Ti, new()
-            where Ti : class
-        {
-            builder.Register(c => new TcFacade()).As<TiFacade>();            
-        }
+        //public static void AddBusinessCoreComponent1<TcFacade, TiFacade, Tc, Ti>(ContainerBuilder builder)
+        //    where TcFacade : TiFacade, IFacade<Tc, Ti>, new()
+        //    where TiFacade : IFacade<Tc, Ti>            
+        //    where Tc : class, Ti, new()
+        //    where Ti : class
+        //{
+        //    builder.Register(c => new TcFacade()).As<TiFacade>();            
+        //}
 
-        public static void AddBusinessCoreComponent2<TcAuthorization, TiAuthorization, Tc, Ti>(ContainerBuilder builder)            
-            where TcAuthorization : TiAuthorization, IAuthorization<Tc>, new()
-            where TiAuthorization : IAuthorization<Tc>            
-            where Tc : class, Ti, new()
-            where Ti : class
-        {            
-            builder.Register(c => new TcAuthorization()).As<TiAuthorization>();            
-        }
+        //public static void AddBusinessCoreComponent2<TcAuthorization, TiAuthorization, Tc, Ti>(ContainerBuilder builder)            
+        //    where TcAuthorization : TiAuthorization, IAuthorization<Tc>, new()
+        //    where TiAuthorization : IAuthorization<Tc>            
+        //    where Tc : class, Ti, new()
+        //    where Ti : class
+        //{            
+        //    builder.Register(c => new TcAuthorization()).As<TiAuthorization>();            
+        //}
 
-        public static void AddBusinessCoreComponent3<TcValidation, TiValidation, Tc, Ti>(ContainerBuilder builder)           
-            where TcValidation : TiValidation, IValidation<Tc>, new()
-            where TiValidation : IValidation<Tc>            
-            where Tc : class, Ti, new()
-            where Ti : class
-        {            
-            builder.Register(c => new TcValidation()).As<TiValidation>();
-        }
+        //public static void AddBusinessCoreComponent3<TcValidation, TiValidation, Tc, Ti>(ContainerBuilder builder)           
+        //    where TcValidation : TiValidation, IValidation<Tc>, new()
+        //    where TiValidation : IValidation<Tc>            
+        //    where Tc : class, Ti, new()
+        //    where Ti : class
+        //{            
+        //    builder.Register(c => new TcValidation()).As<TiValidation>();
+        //}
 
-        public static void AddBusinessCoreComponent4<          
-            TcBusinessCore, TiBusinessCore,
-            TcBusinessOperation, TiBusinessOperation,
-            Tc, Ti>(ContainerBuilder builder)           
-            where TcBusinessCore : TiBusinessCore, IBusinessCore<Tc, Ti>, new()
-            where TiBusinessCore : IBusinessCore<Tc, Ti>
-            where TcBusinessOperation : TiBusinessOperation, IBusinessOperation<Tc, Ti>, new()
-            where TiBusinessOperation : IBusinessOperation<Tc, Ti>
-            where Tc : class, Ti, new()
-            where Ti : class
-        {
-            builder.Register(c =>
-            {
-                var core = new TcBusinessCore();
-                var ctx = c.Resolve<IComponentContext>();
-                core.OnRequestBusinessPack += new BusinessPackHandler<Tc, Ti>(() =>
-                    NewBusinessPack<TiFacade, TiAuthorization, TiValidation, Tc, Ti>(ctx));
-                return core;
-            }).As<TiBusinessCore>();
+        //public static void AddBusinessCoreComponent4<          
+        //    TcBusinessCore, TiBusinessCore,
+        //    TcBusinessOperation, TiBusinessOperation,
+        //    Tc, Ti>(ContainerBuilder builder)           
+        //    where TcBusinessCore : TiBusinessCore, IBusinessCore<Tc, Ti>, new()
+        //    where TiBusinessCore : IBusinessCore<Tc, Ti>
+        //    where TcBusinessOperation : TiBusinessOperation, IBusinessOperation<Tc, Ti>, new()
+        //    where TiBusinessOperation : IBusinessOperation<Tc, Ti>
+        //    where Tc : class, Ti, new()
+        //    where Ti : class
+        //{
+        //    builder.Register(c =>
+        //    {
+        //        var core = new TcBusinessCore();
+        //        var ctx = c.Resolve<IComponentContext>();
+        //        core.OnRequestBusinessPack += new BusinessPackHandler<Tc, Ti>(() =>
+        //            NewBusinessPack<TiFacade, TiAuthorization, TiValidation, Tc, Ti>(ctx));
+        //        return core;
+        //    }).As<TiBusinessCore>();
 
-            builder.Register(c => new TcBusinessOperation
-            {
-                BusinessCore = c.Resolve<TiBusinessCore>()
-            }).As<TiBusinessOperation>();
-        }
+        //    builder.Register(c => new TcBusinessOperation
+        //    {
+        //        BusinessCore = c.Resolve<TiBusinessCore>()
+        //    }).As<TiBusinessOperation>();
+        //}
 
         #endregion
 

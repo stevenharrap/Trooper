@@ -3,6 +3,7 @@
     using Autofac;
     using Trooper.Thorny.Injection;
     using Trooper.Testing.CustomShopApi.Business.Support;
+    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
 
     public class ShopAppModule : Module
     {
@@ -13,6 +14,7 @@
             BusinessOperationInjection.AddUnitOfWork<ShopAppDbContext>(builder);
 
             ShopInjection.AddShop(builder);
+            ProductInjection.AddProduct(builder);
         }
     }
 }

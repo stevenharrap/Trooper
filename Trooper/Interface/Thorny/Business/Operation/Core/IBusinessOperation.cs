@@ -6,8 +6,6 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         where Tc : class, Ti, new()
         where Ti : class
     {
-        IIdentity DefaultIdentity { get; set; }
-
         IBusinessCore<Tc, Ti> BusinessCore { get; set; }
     }
 }
