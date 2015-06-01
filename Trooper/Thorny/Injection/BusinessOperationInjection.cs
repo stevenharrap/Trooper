@@ -58,7 +58,7 @@ namespace Trooper.Thorny.Injection
                 var core = new TcBusinessCore();
                 var ctx = c.Resolve<IComponentContext>();
                 core.OnRequestBusinessPack += new BusinessPackHandler<Tc, Ti>((uow) => 
-                    NewBusinessPack<TiFacade, TiAuthorization, TiValidation, Tc, Ti>(ctx));
+                    NewBusinessPack<TiBusinessCore, TiFacade, TiAuthorization, TiValidation, Tc, Ti>(ctx, core, uow));
                 return core; }).As<TiBusinessCore>();
 
             builder.Register(c => new TcBusinessOperation
@@ -138,17 +138,19 @@ namespace Trooper.Thorny.Injection
         #region private
 
         private static IBusinessPack<Tc, Ti> NewBusinessPack<
+            TiBusinessCore,
             TiFacade,
             TiAuthorization,
             TiValidation,
-            Tc, Ti>(IComponentContext container)
+            Tc, Ti>(IComponentContext container, TiBusinessCore businessCore, IUnitOfWork uow = null)
+            where TiBusinessCore : IBusinessCore<Tc, Ti>
             where TiFacade : IFacade<Tc, Ti>
             where TiAuthorization : IAuthorization<Tc>
             where TiValidation : IValidation<Tc>
             where Tc : class, Ti, new()
             where Ti : class
         {
-            var uow = container.Resolve<IUnitOfWork>();
+            uow = uow ?? container.Resolve<IUnitOfWork>();            
             var facade = container.Resolve<TiFacade>();
             var authorization = container.Resolve<TiAuthorization>();
             var validation = container.Resolve<TiValidation>();
@@ -159,10 +161,12 @@ namespace Trooper.Thorny.Injection
 
             return new BusinessPack<Tc, Ti>
             {
+                BusinessCore = businessCore,
                 Authorization = authorization,
                 Facade = facade,
                 Uow = uow,
-                Validation = validation
+                Validation = validation,
+                Container = container
             };
         }
         
