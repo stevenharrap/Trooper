@@ -354,11 +354,11 @@ namespace Trooper.Thorny.Utility
 		}
 
         /// <summary>
-        /// The add the errors to the response and set Ok to false if there where actually
-        /// anything in the errors parameter.
+        /// The add the messages to the response and set Ok to false if there where actually
+        /// anything in the errors parameter. Then returns response.
         /// </summary>
         /// <param name="messages">
-        /// The errors.
+        /// The messages.
         /// </param>
         /// <param name="response">
         /// The response.
@@ -384,7 +384,7 @@ namespace Trooper.Thorny.Utility
         }
 
         /// <summary>
-        /// Copy the errors from response1 into response2
+        /// Copy the messages from response1 into response2 and returns response2
         /// </summary>
         /// <param name="response1">
         /// The response 1.
@@ -403,6 +403,19 @@ namespace Trooper.Thorny.Utility
             }
 
             return Add(response1.Messages, response2);
+        }
+
+        public static TiResponse Add<TiResponse>(IResponse response1, TiResponse response2)
+            where TiResponse : IResponse
+        {
+            if (response1 == null || response2 == null)
+            {
+                return response2;
+            }
+
+            Add(response1.Messages, response2);
+
+            return response2;
         }
     }
 }

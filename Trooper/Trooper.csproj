@@ -143,6 +143,7 @@
     <Compile Include="ActiveDirectory\ActiveDirectoryUser.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IBehaviour.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessAll.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessCore.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
@@ -169,11 +170,12 @@
     <Compile Include="Thorny\Business\Security\Role.cs" />
     <Compile Include="Thorny\Business\Security\Assignment.cs" />
     <Compile Include="Thorny\Business\Security\Action.cs" />
+    <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
     <Compile Include="Thorny\Constants.cs" />
     <Compile Include="Thorny\DataManager\Facade.cs" />
     <Compile Include="Thorny\DataManager\Validation.cs" />
     <Compile Include="Thorny\Enumerations.cs" />
-    <Compile Include="Thorny\Injection\BusinessOperationInjection.cs" />
+    <Compile Include="Thorny\Configuration\BusinessModuleBuilder.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Composite\IBusinessCr.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Core\IBusinessCore.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Core\IBusinessPack.cs" />

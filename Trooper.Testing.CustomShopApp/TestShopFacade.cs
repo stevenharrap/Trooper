@@ -1,22 +1,16 @@
-﻿using System.Collections.Generic;
-
-namespace Trooper.Testing.CustomShopApp
+﻿namespace Trooper.Testing.CustomShopTest
 {
-    using System.Linq;
-    using Autofac;
     using NUnit.Framework;
-    using Trooper.Thorny.Injection;
-    using Trooper.Thorny.Interface;
-    using Trooper.Thorny.UnitTestBase;
-    using Trooper.Thorny.Business.Operation.Core;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Interface;
-    using Trooper.Testing.CustomShopApi.Business.Support;
+    using System.Collections.Generic;
+    using System.Linq;
     using Trooper.Testing.CustomShopApi;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
+    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Model;
+    using Trooper.Thorny.Business.Operation.Core;
+    using Trooper.Thorny.Configuration;
+    using Trooper.Thorny.UnitTestBase;
 
     [TestFixture]
     [Category("Facade")]
@@ -332,7 +326,7 @@ namespace Trooper.Testing.CustomShopApp
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            var container = BusinessOperationInjection.BuildBusinessApp<ShopAppModule>();
+            var container = BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
 
             base.TestFixtureSetup(container);
         }

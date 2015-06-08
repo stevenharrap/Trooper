@@ -60,7 +60,7 @@
                     foreach (var vr in eve.ValidationErrors)
                     {
                         atLeastOne = true;
-                        MessageUtility.Errors.Add(vr.ErrorMessage, Validation.InvalidPropertyCode, eve.Entry.Entity, vr.PropertyName, response);
+                        MessageUtility.Errors.Add(vr.ErrorMessage, BusinessCore.InvalidPropertyCode, eve.Entry.Entity, vr.PropertyName, response);
                     }                    
                 }
 

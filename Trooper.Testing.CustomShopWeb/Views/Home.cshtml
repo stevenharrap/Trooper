@@ -1,0 +1,17 @@
+﻿@model Trooper.Testing.CustomShopWeb.Models.HomeModel
+
+<h2>Home</h2>
+
+@if (Model.AllServices == null) {
+    <p>No Services...</p>
+}
+else 
+{ 
+    <ul>
+        @foreach (var s in Model.AllServices)
+        {
+            <li>@s.Address</li>
+        }
+
+    </ul>
+}

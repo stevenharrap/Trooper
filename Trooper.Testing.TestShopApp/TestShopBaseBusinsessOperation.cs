@@ -1,7 +1,7 @@
 ﻿namespace Trooper.Testing.DefaultShopApp
 {
     using NUnit.Framework;
-    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.Configuration;
     using Trooper.Thorny.UnitTestBase;
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Testing.DefaultShopApi;

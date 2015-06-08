@@ -59,6 +59,7 @@
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,22 +68,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Model\ProductInShop.cs" />
+    <Compile Include="Business\Operation\InventoryBo.cs" />
     <Compile Include="Business\Operation\ProductBo.cs" />
     <Compile Include="Business\Operation\ShopBo.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventoryFacade.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventoryFace.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventorySearch.cs" />
     <Compile Include="Business\Support\ProductSupport\ProductAuthorization.cs" />
+    <Compile Include="Business\Support\ProductSupport\ProductBusinessCore.cs" />
+    <Compile Include="Business\Support\ProductSupport\ProductConfiguration.cs" />
     <Compile Include="Business\Support\ProductSupport\ProductValidation.cs" />
-    <Compile Include="Business\Support\ProductSupport\ProductInjection.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventoryAuthorization.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventoryValidation.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventoryConfiguration.cs" />
+    <Compile Include="Business\Support\InventorySupport\InventoryBusinessCore.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopAuthorization.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopBusinessCore.cs" />
-    <Compile Include="Business\Support\ShopSupport\ShopInjection.cs" />
+    <Compile Include="Business\Support\ShopSupport\ShopConfiguration.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopAddressSearch.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopNameSearch.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopValidation.cs" />
     <Compile Include="Interface\Business\Model\IProductInShop.cs" />
+    <Compile Include="Interface\Business\Operation\IInventoryBo.cs" />
     <Compile Include="Interface\Business\Operation\IProductBo.cs" />
     <Compile Include="Interface\Business\Operation\IShopBo.cs" />
+    <Compile Include="Interface\Business\Support\InventorySupport\IInventoryAuthorization.cs" />
+    <Compile Include="Interface\Business\Support\InventorySupport\IInventoryBusinessCore.cs" />
+    <Compile Include="Interface\Business\Support\InventorySupport\IInventoryFacade.cs" />
+    <Compile Include="Interface\Business\Support\InventorySupport\IInventorySearch.cs" />
+    <Compile Include="Interface\Business\Support\InventorySupport\IProductValidation.cs" />
     <Compile Include="Interface\Business\Support\ProductSupport\IProductAuthorization.cs" />
     <Compile Include="Interface\Business\Support\ProductSupport\IProductValidation.cs" />
+    <Compile Include="Interface\Business\Support\ProductSupport\IProductBusinessCore.cs" />
     <Compile Include="Interface\Business\Support\ShopSupport\IShopAuthorization.cs" />
     <Compile Include="Interface\Business\Support\ShopSupport\IShopBusinessCore.cs" />
     <Compile Include="Interface\Business\Support\ShopSupport\IShopValidation.cs" />

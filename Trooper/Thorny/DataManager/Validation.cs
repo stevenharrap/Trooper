@@ -5,7 +5,7 @@
     using Trooper.Thorny.Interface.OperationResponse;
     using Trooper.Thorny.Utility;
 
-    public class Validation<Tc> : Validation, IValidation<Tc> 
+    public class Validation<Tc> : IValidation<Tc> 
         where Tc : class, new()
     {
         public IUnitOfWork Uow { get; set; }
@@ -43,10 +43,5 @@
 
             return response;
         }
-    }
-
-    public class Validation
-    {
-        public const string InvalidPropertyCode = Constants.ValidationErrorCodeRoot + ".InvalidProperty";
     }
 }

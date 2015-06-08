@@ -7,10 +7,7 @@ using Trooper.Testing.ShopModel.Interface;
 
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Model
 {
-    public interface IProductInShop : IProduct
+    public interface IProductInShop : IProduct, IInventory
     {
-        int ShopId { get; set; }
-
-        int Quantity { get; set; }
     }
 }

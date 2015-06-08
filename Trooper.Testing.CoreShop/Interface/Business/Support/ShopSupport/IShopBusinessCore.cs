@@ -10,6 +10,8 @@ namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport
 {
     public interface IShopBusinessCore : IBusinessCore<Shop, IShop>
     {
-        ISingleResponse<IProduct> SaveProduct(IProductInShop productInShop, IIdentity identity);
+        ISaveResponse<IProductInShop> SaveProduct(IProductInShop productInShop, IIdentity identity);
+
+        IManyResponse<IProductInShop> GetProducts(IShop shop, IIdentity identity);
     }
 }

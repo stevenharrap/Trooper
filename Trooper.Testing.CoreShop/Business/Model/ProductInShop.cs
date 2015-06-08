@@ -18,5 +18,7 @@ namespace Trooper.Testing.CustomShopApi.Business.Model
         public int ProductId { get; set; }
 
         public string Colour { get; set; }
+
+        public string Bin { get; set; }
     }
 }

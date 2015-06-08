@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Trooper.Testing.ShopModel.Interface
 {
-    interface IInventory
+    public interface IInventory
     {
         string Bin { get; set; }
 

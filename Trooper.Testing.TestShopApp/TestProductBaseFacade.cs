@@ -4,7 +4,7 @@ namespace Trooper.Testing.DefaultShopApp
 {
     using Autofac;
     using NUnit.Framework;
-    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.Configuration;
     using Trooper.Thorny.Interface;
     using Trooper.Thorny.UnitTestBase;
     using Trooper.Interface.Thorny.Business.Operation.Core;
@@ -22,7 +22,7 @@ namespace Trooper.Testing.DefaultShopApp
 	    [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            var container = BusinessOperationInjection.BuildBusinessApp<ShopAppModule>();
+            var container = BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
 
             base.TestFixtureSetup(container);
         }

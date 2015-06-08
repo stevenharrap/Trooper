@@ -34,6 +34,8 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region public
 
+        #region GetBusinessPack
+
         public IBusinessPack<Tc, Ti> GetBusinessPack()
         {
             return this.OnRequestBusinessPack();
@@ -44,7 +46,11 @@ namespace Trooper.Thorny.Business.Operation.Core
             return this.OnRequestBusinessPack(uow);
         }
 
-        public virtual IAddResponse<Ti> Add(Ti item, IIdentity identity)
+        #endregion
+
+        #region Add
+
+        public IAddResponse<Ti> Add(Ti item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -59,174 +65,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public virtual IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
+        public IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
         {
-            using (var bp = this.GetBusinessPack())
-            {
-                var response = this.AddSome(bp, items, identity);
+            return this.Add(businessPack, item, identity, null);
+        }        
 
-                if (!response.Ok || !bp.Uow.Save(response))
-                {
-                    response.Items = null;
-                }
-
-                return response;
-            }
-        }
-
-        public virtual ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
+        public virtual IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
         {
-            using (var bp = this.GetBusinessPack())
-            {
-                return this.IsAllowed(bp, argument, identity);
-            }
-        }
-
-        public virtual ISingleResponse<System.Guid> GetSession(IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                return this.GetSession(bp, identity);
-            }
-        }
-
-        public virtual IResponse DeleteByKey(Ti item, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                var response = this.DeleteByKey(bp, item, identity);
-
-                if (response.Ok)
-                {
-                    bp.Uow.Save(response);
-                }
-
-                return response;
-            }
-        }
-
-        public virtual IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                var response = this.DeleteSomeByKey(bp, items, identity);
-
-                if (response.Ok)
-                {
-                    bp.Uow.Save(response);
-                }
-                return response;
-            }
-        }
-
-        public virtual IManyResponse<Ti> GetAll(IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                return this.GetAll(bp, identity);
-            }
-        }
-
-        public virtual IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                return this.GetSome(bp, search, identity, true);
-            }
-        }
-
-        public virtual ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                return this.GetByKey(bp, item, identity);
-            }
-        }
-
-		public virtual IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity)
-		{
-			using (var bp = this.GetBusinessPack())
-			{
-				return this.GetSomeByKey(bp, items, identity);
-			}
-		}
-
-        public virtual ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                return this.ExistsByKey(bp, item, identity);
-            }
-        }
-        
-        public virtual ISingleResponse<Ti> Update(Ti item, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                var response = this.Update(bp, item, identity);
-
-                if (!response.Ok || !bp.Uow.Save(response))
-                {
-                    response.Item = null;
-                }
-
-                return response;
-            }
-        }
-
-		public virtual IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity)
-		{
-			using (var bp = this.GetBusinessPack())
-			{
-				var response = this.UpdateSome(bp, items, identity);
-
-                if (!response.Ok || !bp.Uow.Save(response))
-                {
-                    response.Items = null;
-                }
-
-                return response;
-			}
-		}
-
-        public virtual ISaveResponse<Ti> Save(Ti item, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                var response = this.Save(bp, item, identity);
-
-                if (!response.Ok || !bp.Uow.Save(response))
-                {
-                    response.Item = null;
-                    response.Change = SaveChangeType.None;
-                }
-
-                return response;
-            }
-        }
-
-        public virtual ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
-        {
-            using (var bp = this.GetBusinessPack())
-            {
-                var response = this.SaveSome(bp, items, identity);
-
-                if (!response.Ok || !bp.Uow.Save(response))
-                {
-                    response.Items = null;
-                }
-
-                return response;
-            }
-        }
-
-        #endregion
-
-        #region protected
-
-        protected virtual IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IAddResponse<Ti> response = null)
-        {
-            response = response ?? new AddResponse<Ti>();
+            var response = MakeResponse<AddResponse<Ti>>(priorResponse);
 
             if (item == null)
             {
@@ -274,10 +120,34 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IAddSomeResponse<Ti> response = null)
-        {
-            response = response ?? new AddSomeResponse<Ti>();
+        #endregion
 
+        #region AddSome
+
+        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
+        {
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.AddSome(bp, items, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Items = null;
+                }
+
+                return response;
+            }
+        }
+
+        public IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        {
+            return this.AddSome(businessPack, items, identity, null);
+        }
+
+        public virtual IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<AddSomeResponse<Ti>>(priorResponse);
+            
             if (items == null)
             {
                 MessageUtility.Errors.Add("The items have not been supplied.", NullItemCode, response);
@@ -318,9 +188,26 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity, ISingleResponse<bool> response = null)
+        #endregion
+
+        #region IsAllowed
+
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
         {
-            response = response ?? new SingleResponse<bool> { Item = false };
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.IsAllowed(bp, argument, identity);
+            }
+        }
+
+        public ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity)
+        {
+            return this.IsAllowed(businessPack, argument, identity, null);
+        }
+
+        public virtual ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<SingleResponse<bool>>(priorResponse);
 
             if (argument == null)
             {
@@ -353,9 +240,26 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, ISingleResponse<System.Guid> response = null)
+        #endregion
+        
+        #region GetSession
+
+        public ISingleResponse<System.Guid> GetSession(IIdentity identity)
         {
-            response = response ?? new SingleResponse<System.Guid>();
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetSession(bp, identity);
+            }
+        }
+
+        public ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity)
+        {
+            return this.GetSession(businessPack, identity, null);
+        }
+
+        public virtual ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IResponse priorResponse) 
+        {
+            var response = MakeResponse<SingleResponse<System.Guid>>(priorResponse);
 
             if (identity == null)
             {
@@ -378,9 +282,33 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse response = null)
+        #endregion
+
+        #region DeleteByKey
+
+        public IResponse DeleteByKey(Ti item, IIdentity identity)
         {
-            response = response ?? new Response();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.DeleteByKey(bp, item, identity);
+
+                if (response.Ok)
+                {
+                    bp.Uow.Save(response);
+                }
+
+                return response;
+            }
+        }
+
+        public IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        {
+            return this.DeleteByKey(businessPack, item, identity, null);
+        }        
+
+        public virtual IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<Response>(priorResponse);            
 
             if (item == null)
             {
@@ -407,17 +335,40 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-	        if (!businessPack.Facade.Delete(itemAsTc))
-	        {
-		        MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
-	        }
+            if (!businessPack.Facade.Delete(itemAsTc))
+            {
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+            }
 
             return response;
         }
 
-        protected virtual IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse response = null)
+        #endregion
+
+        #region DeleteSomeByKey
+
+        public IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
         {
-            response = response ?? new Response();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.DeleteSomeByKey(bp, items, identity);
+
+                if (response.Ok)
+                {
+                    bp.Uow.Save(response);
+                }
+                return response;
+            }
+        }
+
+        public IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        {
+            return this.DeleteSomeByKey(businessPack, items, identity, null);
+        }
+
+        public virtual IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<Response>(priorResponse);
 
             if (items == null)
             {
@@ -435,7 +386,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemsAsListTc = businessPack.Facade.Map(items);
-			var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(Tc));
+            var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(Tc));
 
             var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
@@ -444,17 +395,34 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-			if (!businessPack.Facade.DeleteSome(itemsAsListTc))
-			{
-				MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
-			}
+            if (!businessPack.Facade.DeleteSome(itemsAsListTc))
+            {
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+            }
 
             return response;
         }
 
-        protected virtual IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IManyResponse<Ti> response = null)
+        #endregion
+
+        #region GetAll
+
+        public IManyResponse<Ti> GetAll(IIdentity identity)
         {
-            response = response ?? new ManyResponse<Ti>();
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetAll(bp, identity);
+            }
+        }
+
+        public IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity)
+        {
+            return this.GetAll(businessPack, identity, null);
+        }
+
+        public virtual IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
 
             if (identity == null)
             {
@@ -474,9 +442,26 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, bool limit, IManyResponse<Ti> response = null)
+        #endregion
+
+        #region GetSome
+
+        public IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
         {
-            response = response ?? new ManyResponse<Ti>();
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetSome(bp, search, identity, true);
+            }
+        }
+
+        public IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, bool limit)
+        {
+            return this.GetSome(businessPack, search, identity, null, limit);
+        }
+
+        public virtual IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit)
+        {
+            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
 
             if (search == null)
             {
@@ -514,9 +499,26 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<Ti> response = null)
+        #endregion
+
+        #region GetByKey
+
+        public ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
         {
-            response = response ?? new SingleResponse<Ti>();
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.GetByKey(bp, item, identity);
+            }
+        }
+
+        public ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        {
+            return this.GetByKey(businessPack, item, identity, null);
+        }
+
+        public virtual ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<SingleResponse<Ti>>(priorResponse);
 
             if (item == null)
             {
@@ -554,9 +556,26 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-		protected virtual IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IManyResponse<Ti> response = null)
+        #endregion
+
+        #region GetSomeByKey
+
+        public IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity)
 		{
-            response = response ?? new ManyResponse<Ti>();
+			using (var bp = this.GetBusinessPack())
+			{
+				return this.GetSomeByKey(bp, items, identity);
+			}
+		}
+
+        public IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        {
+            return this.GetSomeByKey(businessPack, items, identity, null);
+        }
+
+        public virtual IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
 
             if (items == null)
             {
@@ -581,14 +600,31 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            response.Items = businessPack.Facade.GetSomeByKey(itemsTc).ToList<Ti>();            
+            response.Items = businessPack.Facade.GetSomeByKey(itemsTc).ToList<Ti>();
 
             return response;
-		}
+        }
 
-        protected virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<bool> response = null)
+        #endregion
+
+        #region ExistsByKey
+
+        public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
         {
-            response = response ?? new SingleResponse<bool>();
+            using (var bp = this.GetBusinessPack())
+            {
+                return this.ExistsByKey(bp, item, identity);
+            }
+        }
+
+        public ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        {
+            return this.ExistsByKey(businessPack, item, identity, null);
+        }
+
+        public virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<SingleResponse<bool>>(priorResponse);
 
             if (item == null)
             {
@@ -618,9 +654,33 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISingleResponse<Ti> response = null)
+        #endregion
+
+        #region Update
+
+        public ISingleResponse<Ti> Update(Ti item, IIdentity identity)
         {
-            response = response ?? new SingleResponse<Ti>();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.Update(bp, item, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Item = null;
+                }
+
+                return response;
+            }
+        }
+
+        public ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        {
+            return this.Update(businessPack, item, identity, null);
+        }
+
+        public virtual ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<SingleResponse<Ti>>(priorResponse);
 
             if (item == null)
             {
@@ -661,9 +721,33 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-		protected virtual IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IManyResponse<Ti> response = null)
+        #endregion
+
+        #region UpdateSome
+
+        public IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity)
 		{
-            response = response ?? new ManyResponse<Ti>();
+			using (var bp = this.GetBusinessPack())
+			{
+				var response = this.UpdateSome(bp, items, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Items = null;
+                }
+
+                return response;
+			}
+		}
+
+        public IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        {
+            return this.UpdateSome(businessPack, items, identity, null);
+        }
+
+        public virtual IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
 
             if (items == null)
             {
@@ -711,11 +795,38 @@ namespace Trooper.Thorny.Business.Operation.Core
             response.Items = updated.ToList<Ti>();
 
             return response;
-		}
+        }
 
-        protected virtual ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, ISaveResponse<Ti> response = null)
+        #endregion
+
+        #region Save
+
+        public ISaveResponse<Ti> Save(Ti item, IIdentity identity)
         {
-            response = response ?? new SaveResponse<Ti> { Change = SaveChangeType.None };
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.Save(bp, item, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Item = null;
+                    response.Change = SaveChangeType.None;
+                }
+
+                return response;
+            }
+        }
+
+        public ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        {
+            return this.Save(businessPack, item, identity, null);
+        }
+
+        public virtual ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<SaveResponse<Ti>>(priorResponse);
+
+            response.Change = SaveChangeType.None;
 
             if (item == null)
             {
@@ -758,9 +869,33 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        protected virtual ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, ISaveSomeResponse<Ti> response = null)
+        #endregion
+
+        #region SaveSome
+
+        public ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
         {
-            response = response ?? new SaveSomeResponse<Ti>();
+            using (var bp = this.GetBusinessPack())
+            {
+                var response = this.SaveSome(bp, items, identity);
+
+                if (!response.Ok || !bp.Uow.Save(response))
+                {
+                    response.Items = null;
+                }
+
+                return response;
+            }
+        }
+
+        public ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        {
+            return this.SaveSome(businessPack, items, identity, null);
+        }
+
+        public virtual ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        {
+            var response = MakeResponse<SaveSomeResponse<Ti>>(priorResponse);
 
             if (items == null)
             {
@@ -820,6 +955,25 @@ namespace Trooper.Thorny.Business.Operation.Core
         #endregion
 
         #endregion
+
+        #region private
+
+        private static TResponse MakeResponse<TResponse>(IResponse priorResponse)
+            where TResponse : class, IResponse, new()
+        {
+            var response = new TResponse();
+
+            if (priorResponse != null)
+            {
+                MessageUtility.Add(priorResponse, response);
+            }
+
+            return response;
+        }
+
+        #endregion
+
+        #endregion
     }
 
     public class BusinessCore
@@ -839,5 +993,9 @@ namespace Trooper.Thorny.Business.Operation.Core
         public const string NoRecordCode = Constants.BusinessCoreErrorCodeRoot + ".NoReocrd";
 
         public const string SaveFailedCode = Constants.BusinessCoreErrorCodeRoot + ".SaveFailed";
+
+        public const string UserDeniedCode = Constants.AuthorizationErrorCodeRoot + ".UserDenied";
+
+        public const string InvalidPropertyCode = Constants.ValidationErrorCodeRoot + ".InvalidProperty";
     }
 }

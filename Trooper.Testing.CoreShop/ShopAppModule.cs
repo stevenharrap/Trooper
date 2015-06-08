@@ -1,9 +1,10 @@
 ﻿namespace Trooper.Testing.CustomShopApi
 {
     using Autofac;
-    using Trooper.Thorny.Injection;
+    using Trooper.Thorny.Configuration;
     using Trooper.Testing.CustomShopApi.Business.Support;
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.InventorySupport;
 
     public class ShopAppModule : Module
     {
@@ -11,10 +12,11 @@
         {
             base.Load(builder);
 
-            BusinessOperationInjection.AddUnitOfWork<ShopAppDbContext>(builder);
+            BusinessModuleBuilder.AddUnitOfWork<ShopAppDbContext>(builder);
 
-            ShopInjection.AddShop(builder);
-            ProductInjection.AddProduct(builder);
+            ShopConfiguration.AddShop(builder);
+            ProductConfiguration.AddProduct(builder);
+            InventoryConfiguration.AddInventory(builder);            
         }
     }
 }

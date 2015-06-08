@@ -8,6 +8,7 @@ using Trooper.Thorny.Interface.DataManager;
 using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
+using System.ServiceModel;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
@@ -15,16 +16,21 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     /// Provides the means to expose your Model and Facade, wrap it in Read operations and control
     /// access to those operations.
     /// </summary>
+    [ServiceContract]
     public interface IBusinessRead<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
         where Tc : class, Ti, new()
         where Ti : class
     {
-        IManyResponse<Ti> GetAll(IIdentity identity = null);
+        [OperationContract]
+        IManyResponse<Ti> GetAll(IIdentity identity);
 
-        IManyResponse<Ti> GetSome(ISearch search, IIdentity identity = null);
+        [OperationContract]
+        IManyResponse<Ti> GetSome(ISearch search, IIdentity identity);
 
-        ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity = null);
+        [OperationContract]
+        ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity);
 
-        ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity = null);        
+        [OperationContract]
+        ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity);        
     }
 }

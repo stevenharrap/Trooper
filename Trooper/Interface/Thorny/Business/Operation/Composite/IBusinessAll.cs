@@ -5,6 +5,7 @@
 //--------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.ServiceModel;
 using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Interface.Thorny.Business.Operation.Single;
 using Trooper.Interface.Thorny.Business.Response;
@@ -12,6 +13,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Composite
 {
+    [ServiceContract]
 	public interface IBusinessAll<Tc, Ti> : 
         IBusinessCreate<Tc, Ti>, 
         IBusinessDelete<Tc, Ti>, 
