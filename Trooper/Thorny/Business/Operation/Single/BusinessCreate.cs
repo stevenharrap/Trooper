@@ -18,23 +18,21 @@ namespace Trooper.Thorny.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public IIdentity DefaultIdentity { get; set; }
-
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
 
-        public IAddResponse<Ti> Add(Ti item, IIdentity identity = null)
+        public IAddResponse<Ti> Add(Ti item, IIdentity identity)
         {
-            return this.BusinessCore.Add(item, identity ?? this.DefaultIdentity);
+            return this.BusinessCore.Add(item, identity);
         }
 
-        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity = null)
+        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
         {
-            return this.BusinessCore.AddSome(items, identity ?? this.DefaultIdentity);
+            return this.BusinessCore.AddSome(items, identity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
         {
-            return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);
+            return this.BusinessCore.IsAllowed(argument, identity);
         }
     }
 }

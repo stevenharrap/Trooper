@@ -15,13 +15,11 @@ namespace Trooper.Thorny.Business.Operation.Single
         where Tc : class, Ti, new()
         where Ti : class
     {
-        public IIdentity DefaultIdentity { get; set; }
-
         public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity = null)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
         {
-            return this.BusinessCore.IsAllowed(argument, identity ?? this.DefaultIdentity);
+            return this.BusinessCore.IsAllowed(argument, identity);
         }
     }
 }

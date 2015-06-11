@@ -18,9 +18,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
         where Ti : class
     {
         [OperationContract]
-        IAddResponse<Ti> Add(Ti item, IIdentity identity = null);
+        IAddResponse<Ti> Add(Ti item, IIdentity identity);
 
         [OperationContract]
-        IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity = null);
+        IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity);
     }
 }

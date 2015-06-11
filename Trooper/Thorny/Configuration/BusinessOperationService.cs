@@ -19,7 +19,7 @@
 
         public void Start()
         {
-            this.Service.Open();
+            //this.Service.Open();
         }
     }
 }
