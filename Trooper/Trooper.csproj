@@ -106,6 +106,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -318,6 +319,17 @@
     <None Include="Ui\Mvc\Cruncher\StoreItemList.cs.disable" />
     <Compile Include="Ui\Mvc\Utility\RabbitHelper.cs" />
     <Compile Include="Utility\Conversion.cs" />
+    <Compile Include="DynamicServiceHost\HostBuilder.cs" />
+    <Compile Include="DynamicServiceHost\HostBuilderDynamicCodeException.cs" />
+    <Compile Include="DynamicServiceHost\HostBuilderValidateHostInfoException.cs" />
+    <Compile Include="DynamicServiceHost\HostFactoryBuilder\DynamicInstanceProvider.cs" />
+    <Compile Include="DynamicServiceHost\HostFactoryBuilder\DynamicServiceHost.cs" />
+    <Compile Include="DynamicServiceHost\HostFactoryBuilder\DynamicServiceHostFactory.cs" />
+    <Compile Include="DynamicServiceHost\HostInfo.cs" />
+    <Compile Include="DynamicServiceHost\HostInfoHelper.cs" />
+    <Compile Include="DynamicServiceHost\Method.cs" />
+    <Compile Include="DynamicServiceHost\MethodInput.cs" />
+    <Compile Include="DynamicServiceHost\Paramater.cs" />
     <Compile Include="Utility\Logging.cs" />
     <Compile Include="Utility\MappingExpressionExtensions.cs" />
     <Compile Include="Utility\ReflectionHelper.cs" />

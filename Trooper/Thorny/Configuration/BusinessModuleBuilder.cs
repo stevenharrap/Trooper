@@ -14,6 +14,7 @@
     using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Security;
+    using Trooper.DynamicServiceHost;
 
     public class BusinessModuleBuilder
     {
@@ -106,7 +107,7 @@
             var businessService = new BusinessOperationService<TiBusinessOperation>(service, address);
 
             builder.Register(c => businessService)
-                .As <IBusinessOperationService>()
+                .As<IBusinessOperationService>()
                 .As<IBusinessOperationService<TiBusinessOperation>>()
                 .As<IStartable>().SingleInstance();
         }
