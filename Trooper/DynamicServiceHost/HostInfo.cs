@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Trooper.Interface.DynamicServiceHost;
 
 namespace Trooper.DynamicServiceHost
 {
-    public class HostInfo
+    public class HostInfo : IHostInfo
     {
-        public Uri BaseAddress { get; set; }
+        public Uri Address { get; set; }
 
         public Uri ServiceNampespace { get; set; }
 

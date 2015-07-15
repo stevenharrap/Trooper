@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using Trooper.Interface.DynamicServiceHost;
 
 namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicServiceHostFactory : ServiceHostFactory
     {
-        private readonly HostInfo hostInfo;
+        private readonly IHostInfo hostInfo;
 
         public DynamicServiceHostFactory()
         {

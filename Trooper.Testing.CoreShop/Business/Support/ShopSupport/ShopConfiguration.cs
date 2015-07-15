@@ -24,7 +24,7 @@
                 ShopBo, IShopBo, 
                 Shop, IShop>(builder);
 
-            BusinessModuleBuilder.AddServiceHost<ShopBo, IShopBo>(builder);
+            BusinessModuleBuilder.AddServiceHost<ShopBo, IShopBo>(builder, "http://localhost:8000");
 
             //BusinessOperationInjection.AddBusinessOperation<IShopBusinessCore, ShopBo, IShopBo, Shop, IShop>(builder);
         }

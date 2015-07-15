@@ -1,25 +1,33 @@
 ﻿namespace Trooper.Thorny.Configuration
 {
+    using Autofac;
     using System.ServiceModel;
+    using Trooper.DynamicServiceHost;
+    using Trooper.Interface.DynamicServiceHost;
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Configuration;
 
-    public class BusinessOperationService<TiBusinessOperation> : IBusinessOperationService<TiBusinessOperation>
-        where TiBusinessOperation : IBusinessOperation
+    public class BusinessOperationService : IBusinessOperationService
     {
-        public BusinessOperationService(ServiceHost service, string address)
+        private IComponentContext container;
+
+        public BusinessOperationService(IHostInfo hostInfo, IComponentContext container)
         {
-            this.Service = service;
-            this.Address = address;
+            this.HostInfo = hostInfo;
+            this.container = container;
         }
 
-        public ServiceHost Service { get; set; }
+        public IHostInfo HostInfo { get; set; }
 
-        public string Address { get; set; }
+        public ServiceHost ServiceHost { get; private set; }
 
         public void Start()
         {
-            //this.Service.Open();
+            HostInfoHelper.BuildHostInfo(this.HostInfo, container);
+
+            this.ServiceHost = HostBuilder.BuildHost(this.HostInfo);
+
+            this.ServiceHost.Open();
         }
     }
 }

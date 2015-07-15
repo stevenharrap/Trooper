@@ -3,15 +3,16 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using Trooper.Interface.DynamicServiceHost;
 
 namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicInstanceProvider : IInstanceProvider, IContractBehavior
     {
-        private readonly HostInfo hostInfo;
+        private readonly IHostInfo hostInfo;
         private readonly Type serviceType;
 
-        public DynamicInstanceProvider(HostInfo hostInfo, Type serviceType)
+        public DynamicInstanceProvider(IHostInfo hostInfo, Type serviceType)
         {
             if (hostInfo == null)
             {

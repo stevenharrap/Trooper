@@ -27,7 +27,7 @@
                 InventoryBo, IInventoryBo,
                 Inventory, IInventory>(builder);
 
-            BusinessModuleBuilder.AddServiceHost<InventoryBo, IInventoryBo>(builder);
+            BusinessModuleBuilder.AddServiceHost<InventoryBo, IInventoryBo>(builder, "http://localhost:8000");
 
             //BusinessOperationInjection.AddBusinessOperation<IShopBusinessCore, ShopBo, IShopBo, Shop, IShop>(builder);
         }

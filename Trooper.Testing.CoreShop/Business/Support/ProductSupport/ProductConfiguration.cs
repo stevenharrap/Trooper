@@ -26,7 +26,7 @@
                 ProductBo, IProductBo, 
                 Product, IProduct>(builder);
 
-            BusinessModuleBuilder.AddServiceHost<ProductBo, IProductBo>(builder);
+            BusinessModuleBuilder.AddServiceHost<ProductBo, IProductBo>(builder, "http://localhost:8000");
 
             //BusinessOperationInjection.AddBusinessOperation<IShopBusinessCore, ShopBo, IShopBo, Shop, IShop>(builder);
         }

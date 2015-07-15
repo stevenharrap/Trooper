@@ -15,6 +15,7 @@
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Security;
     using Trooper.DynamicServiceHost;
+    using Trooper.Interface.DynamicServiceHost;
 
     public class BusinessModuleBuilder
     {
@@ -90,26 +91,23 @@
                 Tc, Ti>(builder);
         }
 
-        public static void AddServiceHost<TcBusinessOperation, TiBusinessOperation>(ContainerBuilder builder)
+        public static IHostInfo AddServiceHost<TcBusinessOperation, TiBusinessOperation>(ContainerBuilder builder, string baseAddress)
             where TcBusinessOperation : TiBusinessOperation, IBusinessOperation, new()
             where TiBusinessOperation : IBusinessOperation
-        {
-            var boType = typeof(TiBusinessOperation);
-            var service = new ServiceHost(typeof(TcBusinessOperation));
-            var binding = new NetHttpBinding(BasicHttpSecurityMode.None) { HostNameComparisonMode = HostNameComparisonMode.Exact };
-            var address = string.Format("http://localhost:8000/{0}", boType.FullName);
+        {            
+            var boType = typeof(TcBusinessOperation);
+            var hostInfo = new HostInfo 
+            { 
+                Address = new Uri(string.Format("{0}/{1}", baseAddress, boType.FullName)),
+                SupportType = boType,
+                CodeNamespace = boType.Namespace                
+            };
 
-            service.AddServiceEndpoint(
-                boType,
-                binding,
-                address);
-
-            var businessService = new BusinessOperationService<TiBusinessOperation>(service, address);
-
-            builder.Register(c => businessService)
+            builder.Register(c => new BusinessOperationService(hostInfo, c.Resolve<IComponentContext>()))
                 .As<IBusinessOperationService>()
-                .As<IBusinessOperationService<TiBusinessOperation>>()
                 .As<IStartable>().SingleInstance();
+
+            return hostInfo;
         }
 
         public static IEnumerable<IBusinessOperationService> GetAllServices(IComponentContext container)
@@ -117,41 +115,41 @@
             return container.Resolve<IEnumerable<IBusinessOperationService>>();            
         }
 
-        public static void StartService<TiBusinessOperation>(IComponentContext container)
-            where TiBusinessOperation : IBusinessOperation
-        {
-            var businessService = container.Resolve<IBusinessOperationService<TiBusinessOperation>>();
+        //public static void StartService<TiBusinessOperation>(IComponentContext container)
+        //    where TiBusinessOperation : IBusinessOperation
+        //{
+        //    var businessService = container.Resolve<IBusinessOperationService<TiBusinessOperation>>();
 
-            businessService.Service.Open();
-        }
+        //    businessService.Service.Open();
+        //}
 
-        public static void StartAllServices(IComponentContext container)
-        {
-            var allServices = container.Resolve<IEnumerable<IBusinessOperationService>>();
+        //public static void StartAllServices(IComponentContext container)
+        //{
+        //    var allServices = container.Resolve<IEnumerable<IBusinessOperationService>>();
 
-            foreach (var bos in allServices)
-            {
-                bos.Service.Open();
-            }
-        }
+        //    foreach (var bos in allServices)
+        //    {
+        //        bos.Service.Open();
+        //    }
+        //}
 
-        public static void StopService<TiBusinessOperation>(IComponentContext container)
-            where TiBusinessOperation : IBusinessOperation
-        {
-            var businessService = container.Resolve<IBusinessOperationService<TiBusinessOperation>>();
+        //public static void StopService<TiBusinessOperation>(IComponentContext container)
+        //    where TiBusinessOperation : IBusinessOperation
+        //{
+        //    var businessService = container.Resolve<IBusinessOperationService<TiBusinessOperation>>();
 
-            businessService.Service.Close();
-        }
+        //    businessService.Service.Close();
+        //}
 
-        public static void StopAllServices(IComponentContext container)
-        {
-            var allServices = container.Resolve<IEnumerable<IBusinessOperationService>>();
+        //public static void StopAllServices(IComponentContext container)
+        //{
+        //    var allServices = container.Resolve<IEnumerable<IBusinessOperationService>>();
 
-            foreach (var bos in allServices)
-            {
-                bos.Service.Close();
-            }
-        }        
+        //    foreach (var bos in allServices)
+        //    {
+        //        bos.Service.Close();
+        //    }
+        //}        
         
         #endregion
 

@@ -2,17 +2,13 @@
 {
     using Autofac;
     using System.ServiceModel;
+    using Trooper.Interface.DynamicServiceHost;
     using Trooper.Interface.Thorny.Business.Operation.Core;
-
-    public interface IBusinessOperationService<TiBusinessOperation> : IBusinessOperationService
-        where TiBusinessOperation : IBusinessOperation
-    {
-    }
 
     public interface IBusinessOperationService : IStartable
     {
-        ServiceHost Service { get; set; }
+        IHostInfo HostInfo { get; set; }
 
-        string Address { get; set; }
+        ServiceHost ServiceHost { get; }
     }
 }

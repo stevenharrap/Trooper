@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 using System.ServiceModel.Description;
 using System.IO;
 using System.CodeDom;
+using Trooper.Interface.DynamicServiceHost;
 
 namespace Trooper.DynamicServiceHost
 {
     public class HostBuilder
     {
-        public static ServiceHost BuildHost(HostInfo hostInfo)
+        public static ServiceHost BuildHost(IHostInfo hostInfo)
         {
             ValidateHostInfo(hostInfo);
 
@@ -36,14 +37,14 @@ namespace Trooper.DynamicServiceHost
             var serviceType = assembly.GetType(string.Format("{0}.{1}", codeNamespace, hostInfo.ServiceName));
             var interfaceType = assembly.GetType(string.Format("{0}.{1}", codeNamespace, hostInfo.InterfaceName));
 
-            var host = new HostFactoryBuilder.DynamicServiceHost(hostInfo, serviceType, hostInfo.BaseAddress);
+            var host = new HostFactoryBuilder.DynamicServiceHost(hostInfo, serviceType, hostInfo.Address);
 
             ServiceMetadataBehavior mBehave = new ServiceMetadataBehavior();
             host.Description.Behaviors.Add(mBehave);
             host.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexHttpBinding(), "mex");
             BasicHttpBinding httpb = new BasicHttpBinding();
 
-            var endPoint = host.AddServiceEndpoint(interfaceType, httpb, hostInfo.BaseAddress);
+            var endPoint = host.AddServiceEndpoint(interfaceType, httpb, hostInfo.Address);
             endPoint.Binding.Namespace = hostInfo.ServiceNampespace.ToString();
 
             var debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
@@ -62,7 +63,7 @@ namespace Trooper.DynamicServiceHost
             return host;
         }
 
-        private static StringBuilder GenerateClassCode(HostInfo hostInfo)
+        private static StringBuilder GenerateClassCode(IHostInfo hostInfo)
         {
             var code = new StringBuilder();
 
@@ -142,7 +143,7 @@ namespace Trooper.DynamicServiceHost
             return code;
         }
 
-        private static StringBuilder GenerateInerfaceCode(HostInfo hostInfo)
+        private static StringBuilder GenerateInerfaceCode(IHostInfo hostInfo)
         {
             var code = new StringBuilder();
 
@@ -218,7 +219,7 @@ namespace Trooper.DynamicServiceHost
             return result.CompiledAssembly;
         }
 
-        private static void ValidateHostInfo(HostInfo hostInfo)
+        private static void ValidateHostInfo(IHostInfo hostInfo)
         {
             if (hostInfo == null)
             {
@@ -319,8 +320,6 @@ namespace Trooper.DynamicServiceHost
 
             throw new Exception(message);
 
-        }
-
-        
+        }        
     }
 }

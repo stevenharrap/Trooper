@@ -4,12 +4,14 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Trooper.Interface.DynamicServiceHost;
 
 namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicServiceHost : ServiceHost
     {
-        public DynamicServiceHost(HostInfo hostInfo, Type serviceType, params Uri[] baseAddresses) : base(serviceType, baseAddresses)
+        public DynamicServiceHost(IHostInfo hostInfo, Type serviceType, params Uri[] baseAddresses)
+            : base(serviceType, baseAddresses)
         {
             if (hostInfo == null)
             {
