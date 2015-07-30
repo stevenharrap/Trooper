@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Trooper.DynamicServiceHost
+namespace Trooper.DynamicServiceHost.Exceptions
 {
     public class HostBuilderDynamicCodeException : Exception
     {

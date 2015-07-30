@@ -6,7 +6,7 @@
     using Trooper.Testing.CustomShopApi;
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
-    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Poco;
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Thorny.Configuration;
@@ -14,7 +14,7 @@
 
     [TestFixture]
     [Category("Facade")]
-    public class TestShopFacade : TestFacadeBase<IShopBusinessCore, Shop, IShop>
+    public class TestShopFacade : TestFacadeBase<IShopBusinessCore, ShopEnt, Shop>
     {
 		private const string ToBeImplemented = "Shop Facade Test to be implemented";
 
@@ -23,29 +23,29 @@
         [Test]
 	    public override void TestGetByKey()
 	    {
-            Shop shop1;
-            Shop shop2;
+            ShopEnt shop1;
+            ShopEnt shop2;
 
 			using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
 			{
-				shop1 = new Shop {Name = "Kmart", Address = "Queensland"};
-				shop2 = new Shop {Name = "Coles", Address = "NSW"};
+				shop1 = new ShopEnt {Name = "Kmart", Address = "Queensland"};
+				shop2 = new ShopEnt {Name = "Coles", Address = "NSW"};
 
-				bp.Facade.AddSome(new List<Shop> {shop1, shop2});
+				bp.Facade.AddSome(new List<ShopEnt> {shop1, shop2});
 				bp.Uow.Save();
 			}
 
 		    using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
 		    {
-                var found1 = bp.Facade.GetByKey(new Shop { ShopId = shop1.ShopId });
-                var found2 = bp.Facade.GetByKey(new { shop2.ShopId });
-                var notFound = bp.Facade.GetByKey(new Shop { ShopId = shop2.ShopId + 10 });
-                var falseKey = bp.Facade.GetByKey(new { NotAKey = "nope!" });
+                var found1 = bp.Facade.GetByKey(new ShopEnt { ShopId = shop1.ShopId });
+                //var found2 = bp.Facade.GetByKey(new { shop2.ShopId });
+                var notFound = bp.Facade.GetByKey(new ShopEnt { ShopId = shop2.ShopId + 10 });
+                //var falseKey = bp.Facade.GetByKey(new { NotAKey = "nope!" });
 
                 Assert.IsNotNull(found1);
-                Assert.IsNotNull(found2);
+                //Assert.IsNotNull(found2);
                 Assert.IsNull(notFound);
-                Assert.IsNull(falseKey);
+                //Assert.IsNull(falseKey);
 		    }
 	    }
 
@@ -54,10 +54,10 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { Name = "Coles", Address = "NSW" };
-                var shop3 = new Shop { Name = "BigW", Address = "Vic" };
-                var shop4 = new Shop { Name = "Aldi", Address = "NSW" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
+                var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+                var shop4 = new ShopEnt { Name = "Aldi", Address = "NSW" };
 
                 bp.Facade.AddSome(new[] { shop1, shop2, shop3, shop4});
                 bp.Uow.Save();
@@ -78,7 +78,7 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
                 bp.Facade.Add(shop1);
                 bp.Uow.Save();
 
@@ -97,9 +97,9 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { Name = "Coles", Address = "NSW" };
-                var shop3 = new Shop { Name = "BigW", Address = "Vic" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
+                var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
 
                 bp.Facade.AddSome(new[] { shop1, shop2, shop3 });
                 bp.Uow.Save();
@@ -121,7 +121,7 @@
             {
                 Assert.IsFalse(bp.Facade.Any());
 
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
                 bp.Facade.Add(shop1);
                 bp.Uow.Save();
 
@@ -134,15 +134,15 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { ShopId = 10, Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { ShopId = 10, Name = "Coles", Address = "NSW" };
-                var shop3 = new Shop { ShopId = 20, Name = "BigW", Address = "Vic" };
+                var shop1 = new ShopEnt { ShopId = 10, Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { ShopId = 10, Name = "Coles", Address = "NSW" };
+                var shop3 = new ShopEnt { ShopId = 20, Name = "BigW", Address = "Vic" };
 
                 Assert.IsTrue(bp.Facade.AreEqual(shop1, shop2));
                 Assert.IsFalse(bp.Facade.AreEqual(shop1, shop3));
-                Assert.IsTrue(bp.Facade.AreEqual(new { ShopId = 10 }, shop2));
-                Assert.IsFalse(bp.Facade.AreEqual(new { ShopId = 10 }, shop3));
-                Assert.IsFalse(bp.Facade.AreEqual(new { BadKey = "Nope!" }, shop1));
+                //Assert.IsTrue(bp.Facade.AreEqual(new { ShopId = 10 }, shop2));
+                //Assert.IsFalse(bp.Facade.AreEqual(new { ShopId = 10 }, shop3));
+                //Assert.IsFalse(bp.Facade.AreEqual(new { BadKey = "Nope!" }, shop1));
             }
         }
 
@@ -151,8 +151,8 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { Name = "Coles", Address = "NSW" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
 
                 bp.Facade.AddSome(new [] { shop1, shop2 });
                 bp.Uow.Save();
@@ -183,8 +183,8 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { Name = "Coles", Address = "NSW" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
 
                 bp.Facade.AddSome(new[] { shop1, shop2 });
                 bp.Uow.Save();
@@ -200,11 +200,11 @@
                 Assert.NotNull(all);
                 Assert.That(all.Count(), Is.EqualTo(1));
 
-                Assert.IsTrue(bp.Facade.Exists(new { shop1.ShopId }));
+                //Assert.IsTrue(bp.Facade.Exists(new { shop1.ShopId }));
                 Assert.IsTrue(bp.Facade.Exists(shop1));
-                Assert.IsFalse(bp.Facade.Exists(new { shop2.ShopId }));
+                //Assert.IsFalse(bp.Facade.Exists(new { shop2.ShopId }));
                 Assert.IsFalse(bp.Facade.Exists(shop2));
-                Assert.IsFalse(bp.Facade.Exists(new { BadKey = "Nope!" }));
+                //Assert.IsFalse(bp.Facade.Exists(new { BadKey = "Nope!" }));
             }
         }
 
@@ -213,8 +213,8 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { ShopId = 10, Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { ShopId = 10, Name = "Coles", Address = "NSW" };
+                var shop1 = new ShopEnt { ShopId = 10, Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { ShopId = 10, Name = "Coles", Address = "NSW" };
                 bp.Facade.AddSome(new [] { shop1, shop2 });
                 bp.Uow.Save();
 
@@ -230,10 +230,10 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { Name = "Kmart", Address = "NSW" };
-                var shop3 = new Shop { Name = "BigW", Address = "Vic" };
-                var shop4 = new Shop { Name = "Aldi", Address = "NSW" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { Name = "Kmart", Address = "NSW" };
+                var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+                var shop4 = new ShopEnt { Name = "Aldi", Address = "NSW" };
 
                 bp.Facade.AddSome(new[] { shop1, shop2, shop3, shop4 });
                 bp.Uow.Save();
@@ -256,12 +256,12 @@
         {
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-                var shop2 = new Shop { Name = "Coles", Address = "NSW" };
-                var shop3 = new Shop { Name = "BigW", Address = "Vic" };
-                var shop4 = new Shop { Name = "Kmart", Address = "SA" };
-                var shop5 = new Shop { Name = "Coles", Address = "NT" };
-                var shop6 = new Shop { Name = "BigW", Address = "WA" };
+                var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
+                var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
+                var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+                var shop4 = new ShopEnt { Name = "Kmart", Address = "SA" };
+                var shop5 = new ShopEnt { Name = "Coles", Address = "NT" };
+                var shop6 = new ShopEnt { Name = "BigW", Address = "WA" };
 
                 bp.Facade.AddSome(new [] { shop1, shop2, shop3, shop4, shop5, shop6 });
                 bp.Uow.Save();
@@ -280,37 +280,37 @@
         [Test]
         public override void TestUpdate()
         {
-            Shop shop1;
+            ShopEnt shop1;
 
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
+                shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
 
                 bp.Facade.Add(shop1);
                 bp.Uow.Save();
             
-                var shop2 = bp.Facade.GetByKey(new { shop1.ShopId });
+                var shop2 = bp.Facade.GetByKey(new ShopEnt{ ShopId = shop1.ShopId });
 
                 Assert.IsNotNull(shop2);
                 shop2.Address = "NSW";
                 bp.Facade.Update(shop2);
                 bp.Uow.Save();
 
-                var shop3 = bp.Facade.GetByKey(new { shop1.ShopId });
+                var shop3 = bp.Facade.GetByKey(new ShopEnt{ ShopId = shop1.ShopId });
                 Assert.IsNotNull(shop3);
                 Assert.AreEqual(shop3.Address, "NSW");
             }
 
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop4 = new Shop { ShopId = shop1.ShopId, Name = "Coles", Address = "Vic" };
+                var shop4 = new ShopEnt { ShopId = shop1.ShopId, Name = "Coles", Address = "Vic" };
                 bp.Facade.Update(shop4);
                 bp.Uow.Save();
             }
 
             using (var bp = this.NewBusinessCoreInstance().GetBusinessPack())
             {
-                var shop5 = bp.Facade.GetByKey(new { shop1.ShopId });
+                var shop5 = bp.Facade.GetByKey(new ShopEnt{ ShopId = shop1.ShopId });
                 Assert.IsNotNull(shop5);
                 Assert.AreEqual(shop5.Name, "Coles");
                 Assert.AreEqual(shop5.Address, "Vic");
@@ -326,7 +326,8 @@
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            var container = BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
+            var container = BusinessModule.Start<ShopAppModule>();
+                //BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
 
             base.TestFixtureSetup(container);
         }

@@ -2,16 +2,16 @@
 using Trooper.Interface.Thorny.Business.Operation.Composite;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
-using Trooper.Testing.CustomShopApi.Interface.Business.Model;
-using Trooper.Testing.ShopModel.Interface;
+using Trooper.Testing.ShopModel.Poco;
 using Trooper.Testing.ShopModel.Model;
+using Trooper.Testing.CustomShopApi.Business.Model;
 
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Operation
 {
     [ServiceContract]
-    public interface IShopBo : IBusinessCr<Shop, IShop>
+    public interface IShopBo : IBusinessCr<ShopEnt, Shop>
     {
         [OperationContract]
-        ISingleResponse<IProduct> SaveProduct(IProductInShop productInShop, IIdentity identity);
+        ISingleResponse<Product> SaveProduct(ProductInShop productInShop, IIdentity identity);
     }
 }

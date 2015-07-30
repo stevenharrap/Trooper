@@ -4,7 +4,7 @@
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
 
-    public class InventoryValidation : Validation<Inventory>, IInventoryValidation
+    public class InventoryValidation : Validation<InventoryEnt>, IInventoryValidation
     {
     }
 }

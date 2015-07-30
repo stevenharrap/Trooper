@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Trooper.DynamicServiceHost
+namespace Trooper.DynamicServiceHost.Exceptions
 {
     public class HostBuilderValidateHostInfoException : Exception
     {

@@ -6,32 +6,32 @@
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Thorny.Interface.UnitTestBase;
 
-    public class ItemGenerator<Tc, Ti> : IItemGenerator<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class ItemGenerator<TEnt, TPoco> : IItemGenerator<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         static ItemGenerator() 
         {
-            AutoMapper.Mapper.CreateMap<Tc, Tc>();
+            AutoMapper.Mapper.CreateMap<TEnt, TEnt>();
         }
 
         public int ItemObjCount { get; set; }
 
-        public virtual Tc CopyItem(Tc item)
+        public virtual TEnt CopyItem(TEnt item)
         {
-            var result = new Tc();
+            var result = new TEnt();
 
-            AutoMapper.Mapper.Map<Tc, Tc>(item, result);
+            AutoMapper.Mapper.Map<TEnt, TEnt>(item, result);
 
             Assert.IsNotNull(result, "CopyItem returned null.");
 
             return result;
         }
 
-        public virtual Tc NewItem(IFacade<Tc, Ti> facade)
+        public virtual TEnt NewItem(IFacade<TEnt, TPoco> facade)
         {
             this.ItemObjCount++;
-            var result = new Tc();
+            var result = new TEnt();
 
             foreach (var p in result.GetType().GetProperties().Where(p => facade.KeyProperties.All(kp => kp.Name != p.Name)))
             {

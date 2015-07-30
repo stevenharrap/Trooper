@@ -13,14 +13,14 @@ using Trooper.Thorny.Business.Security;
     using System.Collections.Generic;
     using Trooper.Thorny.Interface.DataManager;
 
-    public abstract class TestBusinessOperationBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
-        where TiBusinessCore : IBusinessCore<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public abstract class TestBusinessOperationBase<TiBusinessCore, TEnt, TPoco> : TestBase<TiBusinessCore, TEnt, TPoco>
+        where TiBusinessCore : IBusinessCore<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         #region Setup
 
-        public override void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
+        public override void TestFixtureSetup(IContainer container, IItemGenerator<TEnt, TPoco> itemGenerator) 
         {
             base.TestFixtureSetup(container, itemGenerator); 
         }
@@ -51,12 +51,12 @@ using Trooper.Thorny.Business.Security;
 
         public abstract IIdentity GetInvalidIdentity();
 
-        public virtual Tc GetValidItem(IFacade<Tc, Ti> facade)
+        public virtual TEnt GetValidItem(IFacade<TEnt, TPoco> facade)
         {
             return this.ItemGenerator.NewItem(facade);
         }
 
-        public abstract Tc GetInvalidItem();
+        public abstract TEnt GetInvalidItem();
 
 		public virtual void DeleteAll()
 		{
@@ -137,7 +137,7 @@ using Trooper.Thorny.Business.Security;
             var item2 = this.GetValidItem(bp.Facade);
             var item3 = this.GetValidItem(bp.Facade);
 
-			this.TestAddSome(new List<Ti> { item1, item2, item3 });
+			this.TestAddSome(new List<TPoco> { item1, item2, item3 });
         }
 
         #endregion
@@ -154,13 +154,13 @@ using Trooper.Thorny.Business.Security;
 			var item3 = this.GetValidItem(bp.Facade);
 			var identity = this.GetValidIdentity();
 
-			var addSome = this.TestAddSome(new List<Ti> { item1, item2 }).ToList();
+			var addSome = this.TestAddSome(new List<TPoco> { item1, item2 }).ToList();
 
 			var deleteByKey = bc.DeleteByKey(addSome[1], identity);
 			Assert.IsNotNull(deleteByKey);
 			Assert.IsTrue(deleteByKey.Ok);
 
-			this.TestGetAll(new List<Ti> { addSome[0] });
+			this.TestGetAll(new List<TPoco> { addSome[0] });
 
 			deleteByKey = bc.DeleteByKey(item3, identity);
 			Assert.IsNotNull(deleteByKey);
@@ -188,13 +188,13 @@ using Trooper.Thorny.Business.Security;
 			var item4 = this.GetValidItem(bp.Facade);
 			var identity = this.GetValidIdentity();
 
-			var addSome = this.TestAddSome(new List<Ti> { item1, item2, item3, item4 }).ToList();
+			var addSome = this.TestAddSome(new List<TPoco> { item1, item2, item3, item4 }).ToList();
 
-			var deleteSomeByKey = bc.DeleteSomeByKey(new List<Ti> { addSome[1], addSome[2] }, identity);
+			var deleteSomeByKey = bc.DeleteSomeByKey(new List<TPoco> { addSome[1], addSome[2] }, identity);
 			Assert.NotNull(deleteSomeByKey);
 			Assert.IsTrue(deleteSomeByKey.Ok);
 
-			this.TestGetAll(new List<Ti> { addSome[0], addSome[3] });
+			this.TestGetAll(new List<TPoco> { addSome[0], addSome[3] });
 
             Assert.IsFalse(bc.DeleteSomeByKey(null, null).Ok);
             Assert.IsFalse(bc.DeleteSomeByKey(new[] { item1 }, null).Ok);
@@ -213,7 +213,7 @@ using Trooper.Thorny.Business.Security;
 			var item1 = this.GetValidItem(bp.Facade);
 			var item2 = this.GetValidItem(bp.Facade);
 
-	        var addSome = this.TestAddSome(new List<Ti> {item1, item2});
+	        var addSome = this.TestAddSome(new List<TPoco> {item1, item2});
 
 			this.TestGetAll(addSome.ToList());
         }
@@ -236,15 +236,15 @@ using Trooper.Thorny.Business.Security;
 			var item5 = this.GetValidItem(bp.Facade);
 			var item6 = this.GetValidItem(bp.Facade);
 
-			var addSome = this.TestAddSome(new List<Ti>{item1, item2, item3, item4, item5, item6}).ToList();
+			var addSome = this.TestAddSome(new List<TPoco>{item1, item2, item3, item4, item5, item6}).ToList();
 	        var getSome = bc.GetSome(new Search {SkipItems = 3, TakeItems = 2}, identity);
 
 			Assert.IsNotNull(getSome);
 			Assert.IsTrue(getSome.Ok);
 			Assert.IsNotNull(getSome.Items);
 			Assert.That(getSome.Items.Count(), Is.EqualTo(2));
-			Assert.IsTrue(bp.Facade.AreEqual(getSome.Items.First(), bp.Facade.Map(addSome[3])));
-			Assert.IsTrue(bp.Facade.AreEqual(getSome.Items.Last(), bp.Facade.Map(addSome[4])));
+			Assert.IsTrue(bp.Facade.AreEqual(bp.Facade.Map(getSome.Items.First()), bp.Facade.Map(addSome[3])));
+			Assert.IsTrue(bp.Facade.AreEqual(bp.Facade.Map(getSome.Items.Last()), bp.Facade.Map(addSome[4])));
 
             Assert.IsFalse(bc.GetSome(null, null).Ok);
             Assert.IsFalse(bc.GetSome(new Search(), null).Ok);
@@ -265,7 +265,7 @@ using Trooper.Thorny.Business.Security;
 			var item1 = this.GetValidItem(bp.Facade);
 			var item2 = this.GetValidItem(bp.Facade);
 
-			this.TestAddSome(new List<Ti> { item1, item2 });
+			this.TestAddSome(new List<TPoco> { item1, item2 });
 	        var all = this.TestGetAll(2);
 
 			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
@@ -275,7 +275,9 @@ using Trooper.Thorny.Business.Security;
 			Assert.IsNotNull(getByKey);
 			Assert.IsTrue(getByKey.Ok);
 			Assert.IsNotNull(getByKey.Item);
-			Assert.IsTrue(bp.Facade.AreEqual(getByKey.Item, first));
+			Assert.IsTrue(bp.Facade.AreEqual(
+                bp.Facade.Map(getByKey.Item), 
+                bp.Facade.Map(first)));
 
             Assert.IsFalse(bc.GetByKey(null, null).Ok);
             Assert.IsFalse(bc.GetByKey(item1, null).Ok);
@@ -297,7 +299,7 @@ using Trooper.Thorny.Business.Security;
             var item2 = this.GetValidItem(bp.Facade);
             var item3 = this.GetValidItem(bp.Facade);
 
-            this.TestAddSome(new List<Ti> { item1, item2, item3 });
+            this.TestAddSome(new List<TPoco> { item1, item2, item3 });
             var all = this.TestGetAll(3);
 
             var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
@@ -309,8 +311,8 @@ using Trooper.Thorny.Business.Security;
             Assert.IsTrue(getSomeByKey.Ok);
             Assert.IsNotNull(getSomeByKey.Items);
             Assert.AreEqual(getSomeByKey.Items.Count(), 2);
-            Assert.That(getSomeByKey.Items.Any(i => bp.Facade.AreEqual(i, first)));
-            Assert.That(getSomeByKey.Items.Any(i => bp.Facade.AreEqual(i, second)));
+            Assert.That(getSomeByKey.Items.Any(i => bp.Facade.AreEqual(bp.Facade.Map(i), first)));
+            Assert.That(getSomeByKey.Items.Any(i => bp.Facade.AreEqual(bp.Facade.Map(i), second)));
 
             Assert.IsFalse(bc.GetSomeByKey(null, null).Ok);
             Assert.IsFalse(bc.GetSomeByKey(new [] { first }, null).Ok);
@@ -331,7 +333,7 @@ using Trooper.Thorny.Business.Security;
 			var item1 = this.GetValidItem(bp.Facade);
 			var item2 = this.GetValidItem(bp.Facade);
 
-			this.TestAddSome(new List<Ti> { item1, item2 });
+			this.TestAddSome(new List<TPoco> { item1, item2 });
 			var all = this.TestGetAll(2);
 
 			var first = this.ItemGenerator.CopyItem(bp.Facade.Map(all[0]));
@@ -392,7 +394,7 @@ using Trooper.Thorny.Business.Security;
 
         #region private methods
 
-        private IEnumerable<Ti> TestAddSome(ICollection<Ti> expected)
+        private IEnumerable<TPoco> TestAddSome(ICollection<TPoco> expected)
         {
             Assert.IsNotNull(expected);
 
@@ -409,7 +411,7 @@ using Trooper.Thorny.Business.Security;
             return addSome.Items;
         }
 
-        private IList<Ti> TestGetAll(int expected)
+        private IList<TPoco> TestGetAll(int expected)
         {
             var bc = this.NewBusinessCoreInstance();
             var bp = bc.GetBusinessPack();
@@ -430,7 +432,7 @@ using Trooper.Thorny.Business.Security;
             return getAll.Items;
         }
 
-        private void TestGetAll(List<Ti> expected)
+        private void TestGetAll(List<TPoco> expected)
         {
             var bc = this.NewBusinessCoreInstance();
             var bp = bc.GetBusinessPack();

@@ -4,7 +4,7 @@ using Trooper.Testing.ShopModel.Model;
 
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport
 {
-    public interface IShopAuthorization : IAuthorization<Shop>
+    public interface IShopAuthorization : IAuthorization<ShopEnt>
     {
     }
 }

@@ -13,121 +13,121 @@ using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Core
 {
-    public delegate IBusinessPack<Tc, Ti> BusinessPackHandler<Tc, Ti>(IUnitOfWork uow = null)        
-        where Tc : class, Ti, new()
-        where Ti : class;
+    public delegate IBusinessPack<TEnt, TPoco> BusinessPackHandler<TEnt, TPoco>(IUnitOfWork uow = null)        
+        where TEnt : class, TPoco, new()
+        where TPoco : class;
 
-    public interface IBusinessCore<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public interface IBusinessCore<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        event BusinessPackHandler<Tc, Ti> OnRequestBusinessPack;
+        event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;
 
         #region GetBusinessPack
 
-        IBusinessPack<Tc, Ti> GetBusinessPack();
+        IBusinessPack<TEnt, TPoco> GetBusinessPack();
         
-        IBusinessPack<Tc, Ti> GetBusinessPack(IUnitOfWork uow);
+        IBusinessPack<TEnt, TPoco> GetBusinessPack(IUnitOfWork uow);
 
         #endregion
 
         #region Add
 
-        IAddResponse<Ti> Add(Ti item, IIdentity identity);
+        IAddResponse<TPoco> Add(TPoco item, IIdentity identity);
 
-        IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity);
+        IAddResponse<TPoco> Add(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
 
-        IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse);
+        IAddResponse<TPoco> Add(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region AddSome
 
-        IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity);
+        IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity);
 
-        IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity);
+        IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
 
-        IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse);
+        IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region DeleteByKey
 
-        IResponse DeleteByKey(Ti item, IIdentity identity);
+        IResponse DeleteByKey(TPoco item, IIdentity identity);
 
-        IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity);
+        IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
 
-        IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse);
+        IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region DeleteSomeByKey
 
-        IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity);
+        IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity);
 
-        IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity);
+        IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
 
-        IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse);
+        IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region GetAll
 
-        IManyResponse<Ti> GetAll(IIdentity identity);
+        IManyResponse<TPoco> GetAll(IIdentity identity);
 
-        IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity);
+        IManyResponse<TPoco> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity);
 
-        IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IResponse priorResponse);
+        IManyResponse<TPoco> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region GetSome
 
-        IManyResponse<Ti> GetSome(ISearch search, IIdentity identity);
+        IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity);
 
-        IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, bool limit);
+        IManyResponse<TPoco> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, bool limit);
 
-        IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit);
+        IManyResponse<TPoco> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit);
 
         #endregion
 
         #region GetByKey
 
-        ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity);
+        ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity);
 
-        ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity);
+        ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
 
-        ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region GetSomeByKey
 
-        IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity);
+        IManyResponse<TPoco> GetSomeByKey(IEnumerable<TPoco> items, IIdentity identity);
 
-        IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity);
+        IManyResponse<TPoco> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
 
-        IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse);
+        IManyResponse<TPoco> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region ExistsByKey
 
-        ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity);
+        ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity);
 
-        ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity);
+        ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
 
-        ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region IsAllowed
 
-        ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity);
+        ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity);
 
-        ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity);
+        ISingleResponse<bool> IsAllowed(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity);
 
-        ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<bool> IsAllowed(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -135,49 +135,49 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<Guid> GetSession(IIdentity identity);
 
-        ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity);
+        ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity);
 
-        ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region Update
 
-        ISingleResponse<Ti> Update(Ti item, IIdentity identity);
+        ISingleResponse<TPoco> Update(TPoco item, IIdentity identity);
 
-        ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity);
+        ISingleResponse<TPoco> Update(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
 
-        ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<TPoco> Update(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region UpdateSome
 
-        IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity);
+        IManyResponse<TPoco> UpdateSome(IEnumerable<TPoco> items, IIdentity identity);
 
-        IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity);
+        IManyResponse<TPoco> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
 
-        IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse);
+        IManyResponse<TPoco> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region Save
 
-        ISaveResponse<Ti> Save(Ti item, IIdentity identity);
+        ISaveResponse<TPoco> Save(TPoco item, IIdentity identity);
 
-        ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity);
+        ISaveResponse<TPoco> Save(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
 
-        ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse);
+        ISaveResponse<TPoco> Save(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
         #region SaveSome
 
-        ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity);
+        ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity);
 
-        ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity);
+        ISaveSomeResponse<TPoco> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
 
-        ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse);
+        ISaveSomeResponse<TPoco> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
     }

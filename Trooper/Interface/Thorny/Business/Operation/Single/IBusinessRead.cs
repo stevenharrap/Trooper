@@ -17,20 +17,20 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     /// access to those operations.
     /// </summary>
     [ServiceContract]
-    public interface IBusinessRead<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public interface IBusinessRead<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         [OperationContract]
-        IManyResponse<Ti> GetAll(IIdentity identity);
+        IManyResponse<TPoco> GetAll(IIdentity identity);
 
         [OperationContract]
-        IManyResponse<Ti> GetSome(ISearch search, IIdentity identity);
+        IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity);
 
         [OperationContract]
-        ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity);
+        ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity);
 
         [OperationContract]
-        ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity);        
+        ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity);        
     }
 }

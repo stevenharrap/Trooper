@@ -4,7 +4,7 @@
     using System.Data.Entity.ModelConfiguration;
     using Trooper.Testing.ShopModel.Model;
 
-    public class ShopMap : EntityTypeConfiguration<Shop>
+    public class ShopMap : EntityTypeConfiguration<ShopEnt>
     {
         public ShopMap()
         {

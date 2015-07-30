@@ -2,17 +2,17 @@
 {
     using Trooper.Thorny.Interface.OperationResponse;
 
-    public interface IValidation<Tc> 
-        where Tc : class, new()
+    public interface IValidation<TEnt> 
+        where TEnt : class, new()
     {
         IUnitOfWork Uow { get; set; }
 
-        bool IsValid(Tc item);
+        bool IsValid(TEnt item);
 
-        bool IsValid(Tc item, IResponse response);
+        bool IsValid(TEnt item, IResponse response);
 
-        IResponse Validate(Tc item);
+        IResponse Validate(TEnt item);
 
-        IResponse Validate(Tc item, IResponse response);        
+        IResponse Validate(TEnt item, IResponse response);        
     }
 }

@@ -11,6 +11,7 @@ using System.ServiceModel.Description;
 using System.IO;
 using System.CodeDom;
 using Trooper.Interface.DynamicServiceHost;
+using Trooper.DynamicServiceHost.Exceptions;
 
 namespace Trooper.DynamicServiceHost
 {
@@ -18,12 +19,19 @@ namespace Trooper.DynamicServiceHost
     {
         public static ServiceHost BuildHost(IHostInfo hostInfo)
         {
-            ValidateHostInfo(hostInfo);
+            return BuildHost(hostInfo, null);
+        }
 
+        public static ServiceHost BuildHost(IHostInfo hostInfo, Func<object> supporter)
+        {
+            ValidateHostInfo(hostInfo);
+                        
             var code = new StringBuilder();
             var codeNamespace = string.Format("{0}.DynamicHost.{1}", typeof(HostBuilder).Namespace, hostInfo.CodeNamespace);
 
             AppendCode(code, 0, "namespace {0} {{", codeNamespace);
+
+            code.Append(GenerateMappingsCode(hostInfo));
 
             code.Append(GenerateClassCode(hostInfo));
 
@@ -31,13 +39,17 @@ namespace Trooper.DynamicServiceHost
 
             code.Append(GenerateInerfaceCode(hostInfo));
 
+            code.AppendLine();            
+            
             AppendCode(code, 0, "}}");
+
+            var c = code.ToString();
 
             var assembly = CompileSource(code.ToString(), codeNamespace + ".dll");
             var serviceType = assembly.GetType(string.Format("{0}.{1}", codeNamespace, hostInfo.ServiceName));
             var interfaceType = assembly.GetType(string.Format("{0}.{1}", codeNamespace, hostInfo.InterfaceName));
 
-            var host = new HostFactoryBuilder.DynamicServiceHost(hostInfo, serviceType, hostInfo.Address);
+            var host = new HostFactoryBuilder.DynamicServiceHost(hostInfo, supporter, serviceType, hostInfo.Address);
 
             ServiceMetadataBehavior mBehave = new ServiceMetadataBehavior();
             host.Description.Behaviors.Add(mBehave);
@@ -72,6 +84,7 @@ namespace Trooper.DynamicServiceHost
             AppendCode(code, 1, "using System.Linq;");
             AppendCode(code, 1, "using System.ServiceModel;");
             AppendCode(code, 1, "using System.Diagnostics;");
+            AppendCode(code, 1, "using System.Runtime.Serialization;");
             code.AppendLine();
 
             AppendCode(code, 1, "[ServiceBehavior(Namespace = \"{0}\")]", hostInfo.ServiceNampespace);
@@ -92,9 +105,9 @@ namespace Trooper.DynamicServiceHost
                     code,
                     2,
                     "public {0} {1} ({2}) {{",
-                    GetTypeName(method.Returns),
+                    ResolveTypeAlias(method.Returns, hostInfo),
                     method.Name,
-                    string.Join(",", method.Parameters.Select(p => string.Format("{0} {1}", GetTypeName(p.Type), p.Name))));
+                    string.Join(",", method.Parameters.Select(p => string.Format("{0} {1}", ResolveTypeAlias(p.Type, hostInfo), p.Name))));
 
                 if (method.DebugMethod)
                 {
@@ -115,7 +128,7 @@ namespace Trooper.DynamicServiceHost
                         "var returnValue = method.Body(new MethodInput {{ Supporter = this.supporter, Inputs = new object[] {{{0}}} }});",
                         string.Join(",", method.Parameters.Select(p => p.Name)));
 
-                    AppendCode(code, 3, "{0}.{1}.ReturnTypeCheck(method, returnValue);", typeof(HostBuilder).Namespace, typeof(HostBuilder).Name);
+                    //AppendCode(code, 3, "{0}.{1}.ReturnTypeCheck(method, returnValue);", typeof(HostBuilder).Namespace, typeof(HostBuilder).Name);
 
                     if (method.Returns.IsPrimitive)
                     {
@@ -123,7 +136,7 @@ namespace Trooper.DynamicServiceHost
                     }
                     else
                     {
-                        AppendCode(code, 3, "return returnValue as {0};", GetTypeName(method.Returns));
+                        AppendCode(code, 3, "return returnValue as {0};", ResolveTypeAlias(method.Returns, hostInfo));//GetTypeName(method.Returns));
                     }                    
                 }
                 else
@@ -154,9 +167,9 @@ namespace Trooper.DynamicServiceHost
             {
                 AppendCode(code, 2, "[OperationContract]");
                 AppendCode(code, 2, "{0} {1} ({2});",
-                    GetTypeName(method.Returns),
+                    ResolveTypeAlias(method.Returns, hostInfo),
                     method.Name,
-                    string.Join(",", method.Parameters.Select(p => string.Format("{0} {1}", GetTypeName(p.Type), p.Name))));
+                    string.Join(",", method.Parameters.Select(p => string.Format("{0} {1}", ResolveTypeAlias(p.Type, hostInfo), p.Name))));
 
                 code.AppendLine();
             }
@@ -164,6 +177,78 @@ namespace Trooper.DynamicServiceHost
             AppendCode(code, 1, "}}");
 
             return code;
+        }
+
+        private static string TryGetLocation(Assembly assembly)
+        {
+            try
+            {
+                return assembly.Location;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static StringBuilder GenerateMappingsCode(IHostInfo hostInfo) 
+        {
+            var code = new StringBuilder();
+
+            //if (string.IsNullOrEmpty(dataClass.InterfaceName))
+            //{
+            //    AppendCode(code, 1, "public class {0} {{", dataClass.Name);
+            //}
+            //else
+            //{
+            //    AppendCode(code, 1, "public class {0} : {1} {{", dataClass.Name, dataClass.InterfaceName);
+            //}
+
+            //if (dataClass.Properties != null)
+            //{
+            //    foreach (var p in dataClass.Properties)
+            //    {
+            //        AppendCode(code, 2, "public {0} {1} {{ get; set; }}", p.TypeName, p.Name);
+            //    }
+            //}
+
+            //AppendCode(code, 1, "}}");
+
+            foreach (var m in hostInfo.Mappings)
+            {
+                //AppendCode(code, 1, "[DataContract]");
+                //AppendCode(code, 1, "[ServiceContract(Namespace = \"{0}\")]", hostInfo.ServiceNampespace);
+
+                //if (m.Source.IsEquivalentTo(m.ResolveTo))
+                //{
+                //    AppendCode(code, 1, "public class {0} : {1} {{ }}", m.Alias, HostBuilder.GetTypeName(m.Source));
+                //}
+                //else
+                //{
+                //    AppendCode(code, 1, "public class {0} : {1} {{ }}", m.Alias, HostBuilder.GetTypeName(m.ResolveTo));
+                //}
+
+                AppendCode(code, 1, "using {0} = {1};", m.Alias, HostBuilder.GetTypeName(m.ResolveTo));                
+            }
+
+            return code;
+        }
+
+        private static string ResolveTypeAlias(Type sourceType, IHostInfo hostInfo)
+        {
+            if (sourceType.IsPrimitive)
+            {
+                return GetTypeName(sourceType);
+            }
+            
+            var mapping = hostInfo.Mappings.FirstOrDefault(m => m.Source.IsEquivalentTo(sourceType));
+
+            if (mapping == null)
+            {
+                return GetTypeName(sourceType);
+            }
+
+            return mapping.Alias;            
         }
 
         private static Assembly CompileSource(string sourceCode, string outputLocation)
@@ -185,9 +270,9 @@ namespace Trooper.DynamicServiceHost
             };
 
             var assemblies = (from a in AppDomain.CurrentDomain.GetAssemblies()
-                             let file = Path.GetFileName(a.Location)
-                             where ignore.All(i => i != file)
-                             select file).ToList();
+                              let file = TryGetLocation(a)
+                              where ignore.All(i => i != file)
+                              select file).ToList();
 
             options.ReferencedAssemblies.AddRange(assemblies.ToArray());
 
@@ -208,7 +293,7 @@ namespace Trooper.DynamicServiceHost
                         continue;
                     }
 
-                    errors.Add(string.Format("{0}({1},{2}: error {3}: {4}", ce.FileName, ce.Line, ce.Column, ce.ErrorNumber, ce.ErrorText));
+                    errors.Add(string.Format("{0}(line: {1}, column: {2}: error {3}: {4}", ce.FileName, ce.Line, ce.Column, ce.ErrorNumber, ce.ErrorText));
                 }
 
                 var exp = new HostBuilderDynamicCodeException("The comilation of a class and interface for a dynamic host has failed.", sourceCode, errors);
@@ -271,6 +356,14 @@ namespace Trooper.DynamicServiceHost
                     string.Format("'{0}' is an invalid code namespace for the service.", hostInfo.CodeNamespace));
             }
 
+            var baseNs = typeof(HostBuilder).Namespace.Split('.').First();
+
+            if (hostInfo.CodeNamespace.StartsWith(baseNs + "."))
+            {
+                throw new HostBuilderValidateHostInfoException(
+                    string.Format("The code namespace '{0}' is not allowed to start with '{1}.'", hostInfo.CodeNamespace, baseNs));
+            }
+
             if (!CodeGenerator.IsValidLanguageIndependentIdentifier(hostInfo.InterfaceName))
             {
                 throw new HostBuilderValidateHostInfoException(
@@ -282,6 +375,7 @@ namespace Trooper.DynamicServiceHost
                 throw new HostBuilderValidateHostInfoException(
                     string.Format("'{0}' is an invalid class name for the service.", hostInfo.CodeNamespace));
             }
+
         }
 
         private static void AppendCode(StringBuilder sb, int tabs, string format, params object[] args)
@@ -295,7 +389,7 @@ namespace Trooper.DynamicServiceHost
             sb.Append(Environment.NewLine);            
         }
 
-        private static string GetTypeName(Type type)
+        public static string GetTypeName(Type type)
         {
             var codeDomProvider = CodeDomProvider.CreateProvider("C#");
             var typeReferenceExpression = new CodeTypeReferenceExpression(new CodeTypeReference(type));
@@ -306,20 +400,20 @@ namespace Trooper.DynamicServiceHost
             }
         }
 
-        public static void ReturnTypeCheck(Method method, object returnValue)
-        {
-            if (returnValue.GetType().IsEquivalentTo(method.Returns))
-            {
-                return;
-            }
+        //public static void ReturnTypeCheck(Method method, object returnValue)
+        //{
+        //    if (returnValue.GetType().IsEquivalentTo(method.Returns))
+        //    {
+        //        return;
+        //    }
 
-            var message = string.Format(
-                "The service method return type '{0}' does not equal the method body return type '{1}'.",
-                method.Returns.FullName,
-                returnValue.GetType().FullName);
+        //    var message = string.Format(
+        //        "The service method return type '{0}' does not equal the method body return type '{1}'.",
+        //        method.Returns.FullName,
+        //        returnValue.GetType().FullName);
 
-            throw new Exception(message);
+        //    throw new Exception(message);
 
-        }        
+        //}        
     }
 }

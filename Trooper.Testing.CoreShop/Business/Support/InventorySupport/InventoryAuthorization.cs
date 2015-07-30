@@ -7,7 +7,7 @@
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
 
-    public class InventoryAuthorization : Authorization<Inventory>, IInventoryAuthorization
+    public class InventoryAuthorization : Authorization<InventoryEnt>, IInventoryAuthorization
     {
 	    public override IList<IAssignment> Assignments
 	    {

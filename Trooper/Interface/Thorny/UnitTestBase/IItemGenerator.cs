@@ -5,11 +5,11 @@
     /// <summary>
     ///     IItemGenerator creates instance of the generic type Tc
     /// </summary>
-    /// <typeparam name="Tc"></typeparam>
-    /// <typeparam name="Ti"></typeparam>
-    public interface IItemGenerator<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    /// <typeparam name="TEnt"></typeparam>
+    /// <typeparam name="TPoco"></typeparam>
+    public interface IItemGenerator<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         /// <summary>
         ///     Any genenerated instance which is not requested to be identical to a supplied
@@ -27,7 +27,7 @@
         /// <returns>
         ///     An instance of Tc
         /// </returns>
-        Tc CopyItem(Tc item);
+        TEnt CopyItem(TEnt item);
 
         /// <summary>
         ///     Makes a new instance of Tc. The properties of the instance will have values
@@ -39,6 +39,6 @@
         /// <returns>
         ///     An instance of Tc
         /// </returns>
-        Tc NewItem(IFacade<Tc, Ti> facade);
+        TEnt NewItem(IFacade<TEnt, TPoco> facade);
     }
 }

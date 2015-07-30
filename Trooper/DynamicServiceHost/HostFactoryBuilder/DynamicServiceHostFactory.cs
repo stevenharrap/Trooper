@@ -9,14 +9,17 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
     {
         private readonly IHostInfo hostInfo;
 
+        private readonly Func<object> supporter;
+
         public DynamicServiceHostFactory()
         {
-            this.hostInfo = new HostInfo();
+            this.hostInfo = null;
+            this.supporter = null;
         }
 
         protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
         {
-            return new DynamicServiceHost(this.hostInfo, serviceType, baseAddresses);
+            return new DynamicServiceHost(this.hostInfo, this.supporter, serviceType, baseAddresses);
         }
     }
 }

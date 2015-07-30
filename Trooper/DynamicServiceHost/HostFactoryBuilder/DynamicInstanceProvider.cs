@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -11,8 +12,9 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
     {
         private readonly IHostInfo hostInfo;
         private readonly Type serviceType;
+        private readonly Func<object> supporter;
 
-        public DynamicInstanceProvider(IHostInfo hostInfo, Type serviceType)
+        public DynamicInstanceProvider(IHostInfo hostInfo, Func<object> supporter, Type serviceType)
         {
             if (hostInfo == null)
             {
@@ -26,6 +28,7 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 
             this.hostInfo = hostInfo;
             this.serviceType = serviceType;
+            this.supporter = supporter;
         }
 
         #region IInstanceProvider Members
@@ -37,10 +40,10 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            Console.WriteLine("Instance of {0} created.", this.serviceType.Name);
-
-            var supporter = hostInfo.SupportType == null ? null : Activator.CreateInstance(hostInfo.SupportType);
-            var service = Activator.CreateInstance(this.serviceType, hostInfo, supporter);
+            //Console.WriteLine("Instance of {0} created.", this.serviceType.Name);
+            
+            var supporterObj = this.supporter == null ? null : this.supporter();
+            var service = Activator.CreateInstance(this.serviceType, hostInfo, supporterObj);
 
             //return new MyService(this.hostInfo);
             return service;

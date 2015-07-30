@@ -1,4 +1,5 @@
 ﻿
+using Exp018DynamicTake6.DynamicServiceHost;
 using System;
 using System.Collections.Generic;
 using Trooper.DynamicServiceHost;
@@ -19,6 +20,6 @@ namespace Trooper.Interface.DynamicServiceHost
 
         List<Method> Methods { get; set; }
 
-        Type SupportType { get; set; }
+        List<ClassMapping> Mappings { get; set; }
     }
 }

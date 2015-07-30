@@ -5,16 +5,16 @@ namespace Trooper.Thorny.UnitTestBase
 	using Autofac;
 	using Trooper.Thorny.Interface.UnitTestBase;
 
-    public class TestBase<TiBusinessCore, Tc, Ti> : TestBase
-        where TiBusinessCore : IBusinessCore<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class TestBase<TiBusinessCore, TEnt, TPoco> : TestBase
+        where TiBusinessCore : IBusinessCore<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        protected IItemGenerator<Tc, Ti> ItemGenerator { get; set; }
+        protected IItemGenerator<TEnt, TPoco> ItemGenerator { get; set; }
 
         protected IContainer Container { get; set; }
 
-        public virtual void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator)
+        public virtual void TestFixtureSetup(IContainer container, IItemGenerator<TEnt, TPoco> itemGenerator)
         {
             this.Container = container;
             this.ItemGenerator = itemGenerator;
@@ -22,7 +22,7 @@ namespace Trooper.Thorny.UnitTestBase
 
         public virtual void TestFixtureSetup(IContainer container)
         {
-            this.TestFixtureSetup(container, new ItemGenerator<Tc, Ti>());
+            this.TestFixtureSetup(container, new ItemGenerator<TEnt, TPoco>());
         }
 
         public virtual void SetUp() { }

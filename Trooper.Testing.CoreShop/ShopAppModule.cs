@@ -12,7 +12,10 @@
         {
             base.Load(builder);
 
-            BusinessModuleBuilder.AddUnitOfWork<ShopAppDbContext>(builder);
+            //BusinessModuleBuilder.Initiate<ShopAppDbContext>(builder);
+
+            BusinessModule.AddContext<ShopAppDbContext>(builder);
+            //BusinessModule.AddStandardRegistrations(builder);
 
             ShopConfiguration.AddShop(builder);
             ProductConfiguration.AddProduct(builder);

@@ -8,7 +8,7 @@
     using ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
 
-    public class ShopAuthorization : Authorization<Shop>, IShopAuthorization
+    public class ShopAuthorization : Authorization<ShopEnt>, IShopAuthorization
     {
         public static IList<IAssignment> GeneralAssigments
         {

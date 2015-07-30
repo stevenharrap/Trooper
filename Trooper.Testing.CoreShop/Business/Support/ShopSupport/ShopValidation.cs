@@ -6,7 +6,7 @@
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
 
-    public class ShopValidation : Validation<Shop>, IShopValidation
+    public class ShopValidation : Validation<ShopEnt>, IShopValidation
     {
     }
 }

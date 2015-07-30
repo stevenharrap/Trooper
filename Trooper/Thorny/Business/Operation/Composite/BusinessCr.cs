@@ -14,44 +14,49 @@ namespace Trooper.Thorny.Business.Operation.Composite
     using System.Collections.Generic;
     using Trooper.Thorny.Interface.OperationResponse;
 
-    public class BusinessCr<Tc, Ti> : IBusinessCr<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class BusinessCr<TEnt, TPoco> : IBusinessCr<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
+        public BusinessCr()
+        {
 
-        public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
+        }
 
-        public IAddResponse<Ti> Add(Ti item, IIdentity identity)
+
+        public IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
+
+        public IAddResponse<TPoco> Add(TPoco item, IIdentity identity)
         {
             return this.BusinessCore.Add(item, identity);
         }
 
-        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
+        public IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity)
         {
             return this.BusinessCore.AddSome(items, identity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity)
         {
             return this.BusinessCore.IsAllowed(argument, identity);
         }
 
-        public IManyResponse<Ti> GetAll(IIdentity identity)
+        public IManyResponse<TPoco> GetAll(IIdentity identity)
         {
             return this.BusinessCore.GetAll(identity);
         }
 
-        public IManyResponse<Ti> GetSome(Interface.DataManager.ISearch search, IIdentity identity)
+        public IManyResponse<TPoco> GetSome(Interface.DataManager.ISearch search, IIdentity identity)
         {
             return this.BusinessCore.GetSome(search, identity);
         }
 
-        public ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
+        public ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity)
         {
             return this.BusinessCore.GetByKey(item, identity);
         }
 
-        public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
+        public ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity)
         {
             return this.BusinessCore.ExistsByKey(item, identity);
         }

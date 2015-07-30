@@ -21,7 +21,6 @@ namespace Trooper.Thorny.Business.Response
     /// <typeparam name="TEntity">
     /// The type of entity to return
     /// </typeparam>
-    [Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SaveResponse<T> : Response, ISaveResponse<T>

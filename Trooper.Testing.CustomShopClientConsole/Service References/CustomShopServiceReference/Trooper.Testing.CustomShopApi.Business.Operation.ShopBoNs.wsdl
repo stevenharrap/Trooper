@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ShopBo" targetNamespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/Imports">
+      <xsd:import namespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Model" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Operation.Core" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IShopBo_SaveProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveProduct" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_SaveProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_Add_InputMessage">
+    <wsdl:part name="parameters" element="tns:Add" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_Add_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_AddSome_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSome" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_AddSome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_IsAllowed_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsAllowed" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_IsAllowed_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsAllowedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_GetAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAll" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_GetAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_GetSome_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSome" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_GetSome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_GetByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetByKey" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_GetByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_ExistsByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsByKey" />
+  </wsdl:message>
+  <wsdl:message name="IShopBo_ExistsByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsByKeyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IShopBo">
+    <wsdl:operation name="SaveProduct">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/SaveProduct" message="tns:IShopBo_SaveProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/SaveProductResponse" message="tns:IShopBo_SaveProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Add">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/Add" message="tns:IShopBo_Add_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/AddResponse" message="tns:IShopBo_Add_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSome">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/AddSome" message="tns:IShopBo_AddSome_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/AddSomeResponse" message="tns:IShopBo_AddSome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsAllowed">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/IsAllowed" message="tns:IShopBo_IsAllowed_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/IsAllowedResponse" message="tns:IShopBo_IsAllowed_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAll">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetAll" message="tns:IShopBo_GetAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetAllResponse" message="tns:IShopBo_GetAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSome">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetSome" message="tns:IShopBo_GetSome_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetSomeResponse" message="tns:IShopBo_GetSome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByKey">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetByKey" message="tns:IShopBo_GetByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetByKeyResponse" message="tns:IShopBo_GetByKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExistsByKey">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/ExistsByKey" message="tns:IShopBo_ExistsByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/ExistsByKeyResponse" message="tns:IShopBo_ExistsByKey_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IShopBo" type="tns:IShopBo">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SaveProduct">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/SaveProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/Add" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSome">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/AddSome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsAllowed">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/IsAllowed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAll">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSome">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetSome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByKey">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/GetByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistsByKey">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs/IShopBo/ExistsByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ShopBo">
+    <wsdl:port name="BasicHttpBinding_IShopBo" binding="tns:BasicHttpBinding_IShopBo">
+      <soap:address location="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBo" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

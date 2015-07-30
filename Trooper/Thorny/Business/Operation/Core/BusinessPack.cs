@@ -11,17 +11,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Trooper.Thorny.Interface.DataManager;
 
-    public class BusinessPack<Tc, Ti> : IBusinessPack<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class BusinessPack<TEnt, TPoco> : IBusinessPack<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
+        public IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
 
-        public IAuthorization<Tc> Authorization { get; set; }
+        public IAuthorization<TEnt> Authorization { get; set; }
 
-        public IValidation<Tc> Validation { get; set; }
+        public IValidation<TEnt> Validation { get; set; }
 
-        public IFacade<Tc, Ti> Facade { get; set; }
+        public IFacade<TEnt, TPoco> Facade { get; set; }
 
         public IUnitOfWork Uow { get; set; }
 

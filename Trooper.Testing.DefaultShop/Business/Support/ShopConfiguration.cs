@@ -3,14 +3,15 @@
     using Autofac;
     using Trooper.Thorny.Configuration;
     using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Poco;
     using Trooper.Testing.ShopModel.Model;
 
-    public class ShopInjection
+    public class ShopConfiguration
     {
         public static void AddShop(ContainerBuilder builder)
         {
-            BusinessModuleBuilder.AddBusinessCore<Shop, IShop>(builder);
+            var component = new BusinessComponent<ShopEnt, Shop>(builder);
+            BusinessModule.AddComponent(component);
         }
     }
 }

@@ -11,8 +11,8 @@ namespace Trooper.Thorny.Business.Security
     using Trooper.Thorny.Utility;
     using Trooper.Thorny.Business.Operation.Core;
 
-    public class Authorization<Tc> : IAuthorization<Tc>
-        where Tc : class,  new()
+    public class Authorization<TEnt> : IAuthorization<TEnt>
+        where TEnt : class,  new()
     {
         public IUnitOfWork Uow { get; set; }
 
@@ -87,24 +87,24 @@ namespace Trooper.Thorny.Business.Security
                 || action == Action.ExistsByKeyAction;
         }
 
-        public bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity)
+        public bool IsAllowed(IRequestArg<TEnt> arg, IIdentity identity)
         {
             return this.IsAllowed(arg, this.ResolveCredential(identity));
         }
 
-        public bool IsAllowed(IRequestArg<Tc> arg, ICredential credential)
+        public bool IsAllowed(IRequestArg<TEnt> arg, ICredential credential)
         {
             var response = new Response.Response();
 
             return this.IsAllowed(arg, credential, response);
         }
 
-        public bool IsAllowed(IRequestArg<Tc> arg, IIdentity identity, IResponse response)
+        public bool IsAllowed(IRequestArg<TEnt> arg, IIdentity identity, IResponse response)
         {
             return this.IsAllowed(arg, this.ResolveCredential(identity), response);
         }
 
-        public virtual bool IsAllowed(IRequestArg<Tc> arg, ICredential credential, IResponse response)
+        public virtual bool IsAllowed(IRequestArg<TEnt> arg, ICredential credential, IResponse response)
         {
             if (this.Assignments == null)
             {

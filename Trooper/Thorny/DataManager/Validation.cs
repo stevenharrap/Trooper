@@ -5,26 +5,26 @@
     using Trooper.Thorny.Interface.OperationResponse;
     using Trooper.Thorny.Utility;
 
-    public class Validation<Tc> : IValidation<Tc> 
-        where Tc : class, new()
+    public class Validation<TEnt> : IValidation<TEnt> 
+        where TEnt : class, new()
     {
         public IUnitOfWork Uow { get; set; }
 
-        public bool IsValid(Tc item)
+        public bool IsValid(TEnt item)
         {
             var result = this.Validate(item, new OperationResponse.Response());
 
             return result.Ok;
         }
 
-        public bool IsValid(Tc item, IResponse response)
+        public bool IsValid(TEnt item, IResponse response)
         {
             var result = this.Validate(item, response);
 
             return result.Ok;
         }
 
-        public IResponse Validate(Tc item)
+        public IResponse Validate(TEnt item)
         {
             var response = new OperationResponse.Response();
             var result = this.Validate(item, response);
@@ -32,7 +32,7 @@
             return result;
         }
 
-        public virtual IResponse Validate(Tc item, IResponse response)
+        public virtual IResponse Validate(TEnt item, IResponse response)
         {
             //var vr = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(item);
 

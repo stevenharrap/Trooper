@@ -6,9 +6,9 @@
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Security;
 
-    public class TestDefaultBaseBusinsessOperation<Tc, Ti, TAppModule> : TestBusinessOperationBase<IBusinessCore<Tc, Ti>, Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class TestDefaultBaseBusinsessOperation<TEnt, TPoco, TAppModule> : TestBusinessOperationBase<IBusinessCore<TEnt, TPoco>, TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
         where TAppModule : Autofac.Module, new()
     {
         private const string accesInconclusive = @"This method cannot be tested from this generic testing class. " +
@@ -28,7 +28,8 @@
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            var container = BusinessModuleBuilder.StartBusinessApp<TAppModule>();
+            var container = BusinessModule.Start<TAppModule>();
+                //BusinessModuleBuilder.StartBusinessApp<TAppModule>();
 
             base.TestFixtureSetup(container);
         }
@@ -153,7 +154,7 @@
             throw new System.NotImplementedException();
         }
 
-        public override Tc GetInvalidItem()
+        public override TEnt GetInvalidItem()
         {
             throw new System.NotImplementedException();
         }

@@ -22,13 +22,13 @@ namespace Trooper.Thorny.Business.Operation.Core
     /// Provides the means to expose your Model, wrap it in Read and Add operations and control
     /// access to those operations.
     /// </summary>
-    public class BusinessCore<Tc, Ti> : BusinessCore, IBusinessCore<Tc, Ti> 
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class BusinessCore<TEnt, TPoco> : BusinessCore, IBusinessCore<TEnt, TPoco> 
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         private static List<System.Guid> sessions = new List<System.Guid>();
 
-        public event BusinessPackHandler<Tc, Ti> OnRequestBusinessPack;
+        public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;
 
         #region Methods
 
@@ -36,12 +36,12 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region GetBusinessPack
 
-        public IBusinessPack<Tc, Ti> GetBusinessPack()
+        public IBusinessPack<TEnt, TPoco> GetBusinessPack()
         {
             return this.OnRequestBusinessPack();
         }
 
-        public IBusinessPack<Tc, Ti> GetBusinessPack(IUnitOfWork uow)
+        public IBusinessPack<TEnt, TPoco> GetBusinessPack(IUnitOfWork uow)
         {
             return this.OnRequestBusinessPack(uow);
         }
@@ -50,7 +50,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region Add
 
-        public IAddResponse<Ti> Add(Ti item, IIdentity identity)
+        public IAddResponse<TPoco> Add(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -65,14 +65,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        public IAddResponse<TPoco> Add(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity)
         {
             return this.Add(businessPack, item, identity, null);
         }        
 
-        public virtual IAddResponse<Ti> Add(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        public virtual IAddResponse<TPoco> Add(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<AddResponse<Ti>>(priorResponse);
+            var response = MakeResponse<AddResponse<TPoco>>(priorResponse);
 
             if (item == null)
             {
@@ -89,16 +89,16 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(Tc));
+            var itemEnt = businessPack.Facade.Map(item);
+            var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(TEnt));
 
-            if (businessPack.Facade.Exists(item))
+            if (businessPack.Facade.Exists(itemEnt))
             {
                 MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
                 return response;
             }
 
-            var added = businessPack.Facade.Add(itemAsTc);
+            var added = businessPack.Facade.Add(itemEnt);
 
             if (added == null)
             {
@@ -108,7 +108,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             businessPack.Validation.Validate(added, response);
 
-            var arg = new RequestArg<Tc> { Action = Action.AddAction, Item = added };
+            var arg = new RequestArg<TEnt> { Action = Action.AddAction, Item = added };
 
             if (businessPack.Authorization != null)
             {
@@ -124,7 +124,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region AddSome
 
-        public IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity)
+        public IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -139,14 +139,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        public IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity)
         {
             return this.AddSome(businessPack, items, identity, null);
         }
 
-        public virtual IAddSomeResponse<Ti> AddSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        public virtual IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<AddSomeResponse<Ti>>(priorResponse);
+            var response = MakeResponse<AddSomeResponse<TPoco>>(priorResponse);
             
             if (items == null)
             {
@@ -176,7 +176,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Action.AddSomeAction, Items = added };
+            var arg = new RequestArg<TEnt> { Action = Action.AddSomeAction, Items = added };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -192,7 +192,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region IsAllowed
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -200,12 +200,12 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity)
+        public ISingleResponse<bool> IsAllowed(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity)
         {
             return this.IsAllowed(businessPack, argument, identity, null);
         }
 
-        public virtual ISingleResponse<bool> IsAllowed(IBusinessPack<Tc, Ti> businessPack, IRequestArg<Ti> argument, IIdentity identity, IResponse priorResponse)
+        public virtual ISingleResponse<bool> IsAllowed(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SingleResponse<bool>>(priorResponse);
 
@@ -224,14 +224,14 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Action.IsAllowedAction };
+            var arg = new RequestArg<TEnt> { Action = Action.IsAllowedAction };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
 
-            var testArg = new RequestArg<Tc> { Action = argument.Action };
+            var testArg = new RequestArg<TEnt> { Action = argument.Action };
 
             var testOutcome = businessPack.Authorization.IsAllowed(testArg, identity);
 
@@ -252,12 +252,12 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity)
+        public ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity)
         {
             return this.GetSession(businessPack, identity, null);
         }
 
-        public virtual ISingleResponse<System.Guid> GetSession(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IResponse priorResponse) 
+        public virtual ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse) 
         {
             var response = MakeResponse<SingleResponse<System.Guid>>(priorResponse);
 
@@ -267,7 +267,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Security.Action.GetSession };
+            var arg = new RequestArg<TEnt> { Action = Security.Action.GetSession };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -286,7 +286,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region DeleteByKey
 
-        public IResponse DeleteByKey(Ti item, IIdentity identity)
+        public IResponse DeleteByKey(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -301,12 +301,12 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        public IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity)
         {
             return this.DeleteByKey(businessPack, item, identity, null);
         }        
 
-        public virtual IResponse DeleteByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        public virtual IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<Response>(priorResponse);            
 
@@ -326,9 +326,9 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(Tc));
+            var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
 
-            var arg = new RequestArg<Tc> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
+            var arg = new RequestArg<TEnt> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -347,7 +347,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region DeleteSomeByKey
 
-        public IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity)
+        public IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -361,12 +361,12 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        public IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity)
         {
             return this.DeleteSomeByKey(businessPack, items, identity, null);
         }
 
-        public virtual IResponse DeleteSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        public virtual IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<Response>(priorResponse);
 
@@ -386,9 +386,9 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemsAsListTc = businessPack.Facade.Map(items);
-            var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(Tc));
+            var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));
 
-            var arg = new RequestArg<Tc> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
+            var arg = new RequestArg<TEnt> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -407,7 +407,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region GetAll
 
-        public IManyResponse<Ti> GetAll(IIdentity identity)
+        public IManyResponse<TPoco> GetAll(IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -415,14 +415,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity)
+        public IManyResponse<TPoco> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity)
         {
             return this.GetAll(businessPack, identity, null);
         }
 
-        public virtual IManyResponse<Ti> GetAll(IBusinessPack<Tc, Ti> businessPack, IIdentity identity, IResponse priorResponse)
+        public virtual IManyResponse<TPoco> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
+            var response = MakeResponse<ManyResponse<TPoco>>(priorResponse);
 
             if (identity == null)
             {
@@ -430,14 +430,14 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Action.GetAllAction };
+            var arg = new RequestArg<TEnt> { Action = Action.GetAllAction };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
 
-            response.Items = businessPack.Facade.GetAll().ToList<Ti>();
+            response.Items = businessPack.Facade.GetAll().ToList<TPoco>();
 
             return response;
         }
@@ -446,7 +446,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region GetSome
 
-        public IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
+        public IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -454,14 +454,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, bool limit)
+        public IManyResponse<TPoco> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, bool limit)
         {
             return this.GetSome(businessPack, search, identity, null, limit);
         }
 
-        public virtual IManyResponse<Ti> GetSome(IBusinessPack<Tc, Ti> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit)
+        public virtual IManyResponse<TPoco> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit)
         {
-            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
+            var response = MakeResponse<ManyResponse<TPoco>>(priorResponse);
 
             if (search == null)
             {
@@ -478,7 +478,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Search = search };
+            var arg = new RequestArg<TEnt> { Action = Action.GetSomeAction, Search = search };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -489,11 +489,11 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             if (limit)
             {
-                response.Items = businessPack.Facade.Limit(some, search).ToList<Ti>();
+                response.Items = businessPack.Facade.Limit(some, search).ToList<TPoco>();
             }
             else
             {
-                response.Items = some.ToList<Ti>();
+                response.Items = some.ToList<TPoco>();
             }
 
             return response;
@@ -503,7 +503,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region GetByKey
 
-        public ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
+        public ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -511,14 +511,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        public ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity)
         {
             return this.GetByKey(businessPack, item, identity, null);
         }
 
-        public virtual ISingleResponse<Ti> GetByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        public virtual ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<SingleResponse<Ti>>(priorResponse);
+            var response = MakeResponse<SingleResponse<TPoco>>(priorResponse);            
 
             if (item == null)
             {
@@ -535,15 +535,16 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
-            var errorMessage = string.Format("The ({0}) could not be found.", typeof(Tc));
+            var itemEnt = businessPack.Facade.Map(item);
+            var arg = new RequestArg<TEnt> { Action = Action.GetSomeAction, Item = itemEnt };
+            var errorMessage = string.Format("The ({0}) could not be found.", typeof(TEnt));
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
 
-            var result = businessPack.Facade.GetByKey(item);
+            var result = businessPack.Facade.GetByKey(itemEnt);
 
             if (result == null)
             {
@@ -560,7 +561,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region GetSomeByKey
 
-        public IManyResponse<Ti> GetSomeByKey(IEnumerable<Ti> items, IIdentity identity)
+        public IManyResponse<TPoco> GetSomeByKey(IEnumerable<TPoco> items, IIdentity identity)
 		{
 			using (var bp = this.GetBusinessPack())
 			{
@@ -568,14 +569,14 @@ namespace Trooper.Thorny.Business.Operation.Core
 			}
 		}
 
-        public IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        public IManyResponse<TPoco> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity)
         {
             return this.GetSomeByKey(businessPack, items, identity, null);
         }
 
-        public virtual IManyResponse<Ti> GetSomeByKey(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        public virtual IManyResponse<TPoco> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
+            var response = MakeResponse<ManyResponse<TPoco>>(priorResponse);
 
             if (items == null)
             {
@@ -593,14 +594,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemsTc = businessPack.Facade.Map(items).ToList();
-            var arg = new RequestArg<Tc> { Action = Action.GetSomeByKeyAction, Items = itemsTc };
+            var arg = new RequestArg<TEnt> { Action = Action.GetSomeByKeyAction, Items = itemsTc };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
 
-            response.Items = businessPack.Facade.GetSomeByKey(itemsTc).ToList<Ti>();
+            response.Items = businessPack.Facade.GetSomeByKey(itemsTc).ToList<TPoco>();
 
             return response;
         }
@@ -609,7 +610,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region ExistsByKey
 
-        public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
+        public ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -617,12 +618,12 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        public ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity)
         {
             return this.ExistsByKey(businessPack, item, identity, null);
         }
 
-        public virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        public virtual ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SingleResponse<bool>>(priorResponse);
 
@@ -641,14 +642,15 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<Tc> { Action = Action.GetSomeAction, Item = item as Tc };
+            var itemEnt = businessPack.Facade.Map(item);
+            var arg = new RequestArg<TEnt> { Action = Action.GetSomeAction, Item = itemEnt };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
 
-            var result = businessPack.Facade.GetByKey(item);
+            var result = businessPack.Facade.GetByKey(itemEnt);
             response.Item = result != null;
 
             return response;
@@ -658,7 +660,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region Update
 
-        public ISingleResponse<Ti> Update(Ti item, IIdentity identity)
+        public ISingleResponse<TPoco> Update(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -673,14 +675,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        public ISingleResponse<TPoco> Update(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity)
         {
             return this.Update(businessPack, item, identity, null);
         }
 
-        public virtual ISingleResponse<Ti> Update(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        public virtual ISingleResponse<TPoco> Update(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<SingleResponse<Ti>>(priorResponse);
+            var response = MakeResponse<SingleResponse<TPoco>>(priorResponse);
 
             if (item == null)
             {
@@ -698,7 +700,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The ({0}) could not be updated.", typeof(Tc));
+            var errorMessage = string.Format("The ({0}) could not be updated.", typeof(TEnt));
             var updated = businessPack.Facade.Exists(itemAsTc) ? businessPack.Facade.Update(itemAsTc) : null;
 
             if (updated == null)
@@ -709,7 +711,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             businessPack.Validation.Validate(updated, response);
 
-            var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = updated };
+            var arg = new RequestArg<TEnt> { Action = Action.UpdateAction, Item = updated };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -725,7 +727,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region UpdateSome
 
-        public IManyResponse<Ti> UpdateSome(IEnumerable<Ti> items, IIdentity identity)
+        public IManyResponse<TPoco> UpdateSome(IEnumerable<TPoco> items, IIdentity identity)
 		{
 			using (var bp = this.GetBusinessPack())
 			{
@@ -740,14 +742,14 @@ namespace Trooper.Thorny.Business.Operation.Core
 			}
 		}
 
-        public IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        public IManyResponse<TPoco> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity)
         {
             return this.UpdateSome(businessPack, items, identity, null);
         }
 
-        public virtual IManyResponse<Ti> UpdateSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        public virtual IManyResponse<TPoco> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<ManyResponse<Ti>>(priorResponse);
+            var response = MakeResponse<ManyResponse<TPoco>>(priorResponse);
 
             if (items == null)
             {
@@ -779,7 +781,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             foreach (var i in updated)
             {
-                var arg = new RequestArg<Tc> { Action = Action.UpdateAction, Item = i };
+                var arg = new RequestArg<TEnt> { Action = Action.UpdateAction, Item = i };
 
                 if (businessPack.Authorization != null)
                 {
@@ -792,7 +794,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            response.Items = updated.ToList<Ti>();
+            response.Items = updated.ToList<TPoco>();
 
             return response;
         }
@@ -801,7 +803,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region Save
 
-        public ISaveResponse<Ti> Save(Ti item, IIdentity identity)
+        public ISaveResponse<TPoco> Save(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -817,14 +819,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity)
+        public ISaveResponse<TPoco> Save(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity)
         {
             return this.Save(businessPack, item, identity, null);
         }
 
-        public virtual ISaveResponse<Ti> Save(IBusinessPack<Tc, Ti> businessPack, Ti item, IIdentity identity, IResponse priorResponse)
+        public virtual ISaveResponse<TPoco> Save(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<SaveResponse<Ti>>(priorResponse);
+            var response = MakeResponse<SaveResponse<TPoco>>(priorResponse);
 
             response.Change = SaveChangeType.None;
 
@@ -844,7 +846,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The ({0}) could not be saved.", typeof(Tc));
+            var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));
             var exists = businessPack.Facade.Exists(itemAsTc);
             var saved = exists ? businessPack.Facade.Update(itemAsTc) : businessPack.Facade.Add(itemAsTc);
 
@@ -856,7 +858,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             businessPack.Validation.Validate(saved, response);
 
-            var arg = new RequestArg<Tc> { Action = exists ? Action.UpdateAction : Action.AddAction, Item = saved };
+            var arg = new RequestArg<TEnt> { Action = exists ? Action.UpdateAction : Action.AddAction, Item = saved };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -873,7 +875,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region SaveSome
 
-        public ISaveSomeResponse<Ti> SaveSome(IEnumerable<Ti> items, IIdentity identity)
+        public ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -888,14 +890,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity)
+        public ISaveSomeResponse<TPoco> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity)
         {
             return this.SaveSome(businessPack, items, identity, null);
         }
 
-        public virtual ISaveSomeResponse<Ti> SaveSome(IBusinessPack<Tc, Ti> businessPack, IEnumerable<Ti> items, IIdentity identity, IResponse priorResponse)
+        public virtual ISaveSomeResponse<TPoco> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<SaveSomeResponse<Ti>>(priorResponse);
+            var response = MakeResponse<SaveSomeResponse<TPoco>>(priorResponse);
 
             if (items == null)
             {
@@ -930,7 +932,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             foreach (var i in saved)
             {
-                var arg = new RequestArg<Tc> { Action = i.Exists ? Action.UpdateAction : Action.AddAction, Item = i.Item };
+                var arg = new RequestArg<TEnt> { Action = i.Exists ? Action.UpdateAction : Action.AddAction, Item = i.Item };
 
                 if (businessPack.Authorization != null)
                 {
@@ -943,7 +945,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            response.Items = saved.Select(i => new SaveSomeItem<Ti>
+            response.Items = saved.Select(i => new SaveSomeItem<TPoco>
             {
                 Change = i.Exists ? SaveChangeType.Update : SaveChangeType.Add,
                 Item = i.Item

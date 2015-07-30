@@ -12,13 +12,13 @@
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Utility;    
 
-    public class Facade<Tc, Ti> : IFacade<Tc, Ti> 
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class Facade<TEnt, TPoco> : IFacade<TEnt, TPoco> 
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         static Facade()
         {
-            AutoMapper.Mapper.CreateMap<Ti, Tc>().IgnorePropertiesOfType(typeof(ICollection));
+            AutoMapper.Mapper.CreateMap<TPoco, TEnt>().IgnorePropertiesOfType(typeof(ICollection));
         }
 
         #region fields
@@ -54,9 +54,9 @@
             {
                 if (this.keyProperties == null)
                 {
-                    var entityType = new Tc().GetType();
+                    var entityType = new TEnt().GetType();
                     var oc = this.ObjectContextAdapter.ObjectContext;
-                    var os = oc.CreateObjectSet<Tc>();
+                    var os = oc.CreateObjectSet<TEnt>();
                     var es = os.EntitySet;
 
                     this.keyProperties = es.ElementType.KeyMembers.Select(km => entityType.GetProperty(km.Name)).ToArray();
@@ -70,9 +70,9 @@
 
         #region private
 
-        private IRepository<Tc> repository;
+        private IRepository<TEnt> repository;
 
-        private IRepository<Tc> Repository
+        private IRepository<TEnt> Repository
         {
             get
             {
@@ -83,7 +83,7 @@
 
                 if (this.repository == null)
                 {
-                    this.repository = this.Uow.GetRepository<Tc>();
+                    this.repository = this.Uow.GetRepository<TEnt>();
                 }
 
                 return this.repository;
@@ -100,17 +100,17 @@
 
         #region methods
 
-        public virtual IQueryable<Tc> GetAll()
+        public virtual IQueryable<TEnt> GetAll()
         {
             return this.Repository.DbSet;
         }
 
-        public virtual IEnumerable<Tc> GetSome(ISearch search)
+        public virtual IEnumerable<TEnt> GetSome(ISearch search)
         {            
             return this.GetAll().AsEnumerable();
         }
 
-        public IEnumerable<Tc> Limit(IEnumerable<Tc> items, ISearch search)
+        public IEnumerable<TEnt> Limit(IEnumerable<TEnt> items, ISearch search)
         {
             if (search.SkipItems > 0)
             {
@@ -120,10 +120,10 @@
             return search.TakeItems > 0 ? items.Take(search.TakeItems) : items;
         }
 
-        public virtual Tc GetByKey(Tc item)
+        public virtual TEnt GetByKey(TEnt item)
         {
             var oc = this.ObjectContextAdapter.ObjectContext;
-            var os = oc.CreateObjectSet<Tc>();
+            var os = oc.CreateObjectSet<TEnt>();
             var es = os.EntitySet;
             var entitySetName = oc.DefaultContainerName + "." + es.Name;
             
@@ -140,20 +140,20 @@
 
             if (oc.TryGetObjectByKey(key, out result))
             {
-                return result as Tc;
+                return result as TEnt;
             }
 
             return null;
         }
-        
-        public Tc GetByKey(object obj)
-        {
-            var item = AutoMapper.Mapper.DynamicMap<Tc>(obj);
 
-            return this.GetByKey(item);
-        }
+        //public TEnt GetByKey(TPoco poco)
+        //{
+        //    var item = AutoMapper.Mapper.DynamicMap<TEnt>(obj);
 
-        public virtual IEnumerable<Tc> GetSomeByKey(IEnumerable<Tc> items)
+        //    return this.GetByKey(item);
+        //}
+
+        public virtual IEnumerable<TEnt> GetSomeByKey(IEnumerable<TEnt> items)
         {
             foreach (var item in items)
             {
@@ -161,19 +161,19 @@
             }
         }
 
-        public bool Exists(Tc item)
+        public bool Exists(TEnt item)
         {
             return this.GetByKey(item) != null;
         }
 
-        public bool Exists(object obj)
-        {
-            var item = AutoMapper.Mapper.DynamicMap<Tc>(obj);
+        //public bool Exists(object obj)
+        //{
+        //    var item = AutoMapper.Mapper.DynamicMap<TEnt>(obj);
 
-            return this.Exists(item);
-        }
+        //    return this.Exists(item);
+        //}
 
-	    public bool IsDefault(Tc item)
+	    public bool IsDefault(TEnt item)
 	    {
 			if (item == null)
 			{
@@ -193,7 +193,7 @@
 			return false;
 	    }
 
-        public bool AreEqual(Tc item1, Tc item2)
+        public bool AreEqual(TEnt item1, TEnt item2)
         {
             if (item1 == null || item2 == null)
             {
@@ -211,19 +211,19 @@
             return true;
         }
 
-        public bool AreEqual(object obj, Tc item2)
-        {
-            var entity1 = AutoMapper.Mapper.DynamicMap<Tc>(obj);
+        //public bool AreEqual(object obj, TEnt item2)
+        //{
+        //    var entity1 = AutoMapper.Mapper.DynamicMap<TEnt>(obj);
 
-            return this.AreEqual(entity1, item2);
-        }
+        //    return this.AreEqual(entity1, item2);
+        //}
 
-        public virtual Tc Add(Tc item)
+        public virtual TEnt Add(TEnt item)
         {
             return this.Repository.DbSet.Add(item);
         }
 
-        public IList<Tc> AddSome(IEnumerable<Tc> items)
+        public IList<TEnt> AddSome(IEnumerable<TEnt> items)
         {
             var result = from i in items
                          select this.Add(i);
@@ -231,7 +231,7 @@
             return result.ToList();
         }
 
-        public virtual bool Delete(Tc item)
+        public virtual bool Delete(TEnt item)
         {
 	        if (this.IsDefault(item))
 	        {
@@ -252,7 +252,7 @@
 	        return true;
         }
 
-        public bool DeleteSome(IEnumerable<Tc> items)
+        public bool DeleteSome(IEnumerable<TEnt> items)
         {
 	        var result = true;
 
@@ -267,7 +267,7 @@
 	        return result;
         }
 
-        public virtual Tc Update(Tc item)
+        public virtual TEnt Update(TEnt item)
         {
             var local = this.FindLocal(item);
 
@@ -292,16 +292,16 @@
             return this.GetAll().Any();
         }
 
-        public Tc Map(Ti item)
+        public TEnt Map(TPoco item)
         {
-            var result = new Tc();
+            var result = new TEnt();
 
             AutoMapper.Mapper.Map(item, result);
 
             return result;
         }
 
-        public IEnumerable<Tc> Map(IEnumerable<Ti> items)
+        public IEnumerable<TEnt> Map(IEnumerable<TPoco> items)
         {
             //return AutoMapper.Mapper.Map<IEnumerable<Tc>>(items);
 
@@ -315,9 +315,9 @@
 
         #region private methods
 
-        private Tc FindLocal(Tc item)
+        private TEnt FindLocal(TEnt item)
         {
-            return this.Repository.DbContext.Set<Tc>().Local.FirstOrDefault(i => this.AreEqual(i, item));
+            return this.Repository.DbContext.Set<TEnt>().Local.FirstOrDefault(i => this.AreEqual(i, item));
         }
 
         #endregion        

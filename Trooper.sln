@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessOperation", "Busine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopWeb", "Trooper.Testing.CustomShopWeb\Trooper.Testing.CustomShopWeb.csproj", "{452846B8-CD94-40D7-A4A6-D8175E41703C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopConsole", "Trooper.Testing.CustomShopConsole\Trooper.Testing.CustomShopConsole.csproj", "{1BC43D0A-D444-4941-83E8-673EC212AEAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Code Analysis|Any CPU = Code Analysis|Any CPU
@@ -214,6 +216,24 @@ Global
 		{452846B8-CD94-40D7-A4A6-D8175E41703C}.Staging|Any CPU.ActiveCfg = Release|Any CPU
 		{452846B8-CD94-40D7-A4A6-D8175E41703C}.Staging|Any CPU.Build.0 = Release|Any CPU
 		{452846B8-CD94-40D7-A4A6-D8175E41703C}.Staging|x86.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Release|x86.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA}.Staging|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -229,6 +249,7 @@ Global
 		{1CACA035-9664-470B-8556-695867B2DDC7} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
 		{2E2AA18A-0C31-4A29-A035-D71C957C6E66} = {DBEC3716-8814-459E-80E8-4BAEACDC129B}
 		{452846B8-CD94-40D7-A4A6-D8175E41703C} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
+		{1BC43D0A-D444-4941-83E8-673EC212AEAA} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45

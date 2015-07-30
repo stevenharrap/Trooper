@@ -3,15 +3,15 @@
     using Trooper.Thorny.Business.Operation.Composite;
     using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
     using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Poco;
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Interface.Thorny.Business.Security;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Model;
+    using Trooper.Testing.CustomShopApi.Business.Model;
 
-    public class ShopBo : BusinessCr<Shop, IShop>, IShopBo
+    public class ShopBo : BusinessCr<ShopEnt, Shop>, IShopBo
     {
-        public ISingleResponse<IProduct> SaveProduct(IProductInShop productInShop, IIdentity identity)
+        public ISingleResponse<Product> SaveProduct(ProductInShop productInShop, IIdentity identity)
         {
             return this.SaveProduct(productInShop, identity);
         }

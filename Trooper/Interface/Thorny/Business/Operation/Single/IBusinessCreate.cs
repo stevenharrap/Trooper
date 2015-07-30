@@ -13,14 +13,14 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
     [ServiceContract]
-	public interface IBusinessCreate<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+	public interface IBusinessCreate<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         [OperationContract]
-        IAddResponse<Ti> Add(Ti item, IIdentity identity);
+        IAddResponse<TPoco> Add(TPoco item, IIdentity identity);
 
         [OperationContract]
-        IAddSomeResponse<Ti> AddSome(IEnumerable<Ti> items, IIdentity identity);
+        IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity);
     }
 }

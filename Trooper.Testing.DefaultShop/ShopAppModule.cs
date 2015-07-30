@@ -10,10 +10,12 @@
         {
             base.Load(builder);
 
-            BusinessModuleBuilder.AddUnitOfWork<ShopAppDbContext>(builder);
+            BusinessModule.AddContext<ShopAppDbContext>(builder);
 
-            ShopInjection.AddShop(builder);
-            ProductInjection.AddProduct(builder);
+            //BusinessModuleBuilder.Initiate<ShopAppDbContext>(builder);
+
+            ShopConfiguration.AddShop(builder);
+            ProductConfiguration.AddProduct(builder);
         }
     }
 }

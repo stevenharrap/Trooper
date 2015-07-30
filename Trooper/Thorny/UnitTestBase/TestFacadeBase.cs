@@ -13,12 +13,12 @@ using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Thorny.Interface.UnitTestBase;
 
     
-    public abstract class TestFacadeBase<TiBusinessCore, Tc, Ti> : TestBase<TiBusinessCore, Tc, Ti>
-        where TiBusinessCore : IBusinessCore<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+    public abstract class TestFacadeBase<TiBusinessCore, TEnt, TPoco> : TestBase<TiBusinessCore, TEnt, TPoco>
+        where TiBusinessCore : IBusinessCore<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        public override void TestFixtureSetup(IContainer container, IItemGenerator<Tc, Ti> itemGenerator) 
+        public override void TestFixtureSetup(IContainer container, IItemGenerator<TEnt, TPoco> itemGenerator) 
         {
             base.TestFixtureSetup(container, itemGenerator);
         }
@@ -36,7 +36,7 @@ using Trooper.Thorny.Business.Operation.Core;
         #region ---- Facade Tests ----
 
         /// <summary>
-		///     Test <see cref="IFacade{Tc,Ti}.GetByKey(Tc)"/> and <see cref="IFacade{Tc,Ti}.GetByKey(object)"/>
+		///     Test <see cref="IFacade{TEnt,TPoco}.GetByKey(Tc)"/> and <see cref="IFacade{TEnt,TPoco}.GetByKey(object)"/>
         /// </summary>
         [Test]
         public virtual void TestGetByKey()
@@ -61,16 +61,16 @@ using Trooper.Thorny.Business.Operation.Core;
                 Assert.NotNull(all);
                 Assert.That(all.Count(), Is.EqualTo(1));
                 
-                var item1ByObject = bp.Facade.GetByKey(first as object);
+                //var item1ByObject = bp.Facade.GetByKey(first as object);
                 var item1ByEntity = bp.Facade.GetByKey(first);
-                var item2ByObject = bp.Facade.GetByKey(second as object);
+                //var item2ByObject = bp.Facade.GetByKey(second as object);
                 var item2ByEntity = bp.Facade.GetByKey(second);                
 
-                Assert.IsNotNull(item1ByObject);
+                //Assert.IsNotNull(item1ByObject);
                 Assert.IsNotNull(item1ByEntity);
                 Assert.IsNull(item2ByEntity);
-                Assert.IsNull(item2ByObject);
-                Assert.IsTrue(bp.Facade.AreEqual(first as object, item1ByObject));
+                //Assert.IsNull(item2ByObject);
+                //Assert.IsTrue(bp.Facade.AreEqual(first as object, item1ByObject));
             }
         }
 
@@ -100,14 +100,14 @@ using Trooper.Thorny.Business.Operation.Core;
                 Assert.NotNull(all);
                 Assert.That(all.Count(), Is.EqualTo(1));
 
-                var item1ByObject = bp.Facade.Exists(first as object);
+                //var item1ByObject = bp.Facade.Exists(first as object);
                 var item1ByEntity = bp.Facade.Exists(first);
-                var item2ByObject = bp.Facade.Exists(second as object);
+                //var item2ByObject = bp.Facade.Exists(second as object);
                 var item2ByEntity = bp.Facade.Exists(second);
 
-                Assert.IsTrue(item1ByObject);
+                //Assert.IsTrue(item1ByObject);
                 Assert.IsTrue(item1ByEntity);
-                Assert.IsFalse(item2ByObject);
+                //Assert.IsFalse(item2ByObject);
                 Assert.IsFalse(item2ByEntity);
             }
         }
@@ -133,10 +133,10 @@ using Trooper.Thorny.Business.Operation.Core;
                 var third = all[1];
 
                 Assert.IsTrue(bp.Facade.AreEqual(first, second));
-                Assert.IsTrue(bp.Facade.AreEqual(first as object, second));
+                //Assert.IsTrue(bp.Facade.AreEqual(first as object, second));
 
                 Assert.IsFalse(bp.Facade.AreEqual(first, third));
-                Assert.IsFalse(bp.Facade.AreEqual(first as object, third));
+                //Assert.IsFalse(bp.Facade.AreEqual(first as object, third));
             }
         }
 
@@ -229,7 +229,7 @@ using Trooper.Thorny.Business.Operation.Core;
                 bp.Facade.Add(item4);
                 bp.Uow.Save();
 
-                bp.Facade.DeleteSome(new List<Tc> { item2, item3 });
+                bp.Facade.DeleteSome(new List<TEnt> { item2, item3 });
                 bp.Uow.Save();
 
                 var all = bp.Facade.GetAll().ToList();
@@ -270,7 +270,7 @@ using Trooper.Thorny.Business.Operation.Core;
                 var item1 = this.ItemGenerator.NewItem(bp.Facade);
                 var item2 = this.ItemGenerator.NewItem(bp.Facade);
                 var item3 = this.ItemGenerator.NewItem(bp.Facade);
-                bp.Facade.AddSome(new List<Tc>{ item1, item2, item3 });
+                bp.Facade.AddSome(new List<TEnt>{ item1, item2, item3 });
                 bp.Uow.Save();
 
                 var result = bp.Facade.GetAll();

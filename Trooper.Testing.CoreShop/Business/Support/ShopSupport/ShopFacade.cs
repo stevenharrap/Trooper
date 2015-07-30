@@ -7,14 +7,14 @@ namespace Trooper.Testing.CustomShopApi.Facade.ShopSupport
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support;
     using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Poco;
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
 
-    public class ShopFacade : Facade<Shop, IShop>, IShopFacade
+    public class ShopFacade : Facade<ShopEnt, Shop>, IShopFacade
     {
-		public override System.Collections.Generic.IEnumerable<Shop> GetSome(ISearch search)
+		public override System.Collections.Generic.IEnumerable<ShopEnt> GetSome(ISearch search)
 		{
 			if (search is ShopNameSearch)
 			{

@@ -4,7 +4,7 @@
     using Trooper.Testing.ShopModel;
     using Trooper.Testing.ShopModel.Model;
 
-    public interface IShopValidation : IValidation<Shop>
+    public interface IShopValidation : IValidation<ShopEnt>
     {
     }
 }

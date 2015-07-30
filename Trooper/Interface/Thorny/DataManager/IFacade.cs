@@ -4,9 +4,9 @@
     using System.Linq;
     using System.Reflection;
 
-    public interface IFacade<Tc, Ti> 
-        where Tc : class, Ti, new()
-        where Ti : class
+    public interface IFacade<TEnt, TPoco> 
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         //bool IsKeyAuto();
 
@@ -14,42 +14,42 @@
 
         IUnitOfWork Uow { get; set; }
 
-        Tc GetByKey(Tc item);
+        TEnt GetByKey(TEnt item);
 
-        IEnumerable<Tc> GetSomeByKey(IEnumerable<Tc> items);
+        IEnumerable<TEnt> GetSomeByKey(IEnumerable<TEnt> items);
 
-        Tc GetByKey(object obj);
+        //TEnt GetByKey(object obj);
 
-        bool Exists(Tc item);
+        bool Exists(TEnt item);
 
-        bool Exists(object obj);
+        //bool Exists(object obj);
 
-	    bool IsDefault(Tc item);
+	    bool IsDefault(TEnt item);
 
-        bool AreEqual(Tc item1, Tc item2);
+        bool AreEqual(TEnt item1, TEnt item2);
 
-        bool AreEqual(object obj, Tc item2);
+        //bool AreEqual(object obj, TEnt item2);
 
-        IQueryable<Tc> GetAll();
+        IQueryable<TEnt> GetAll();
 
-        IEnumerable<Tc> GetSome(ISearch search);
+        IEnumerable<TEnt> GetSome(ISearch search);
 
-        IEnumerable<Tc> Limit(IEnumerable<Tc> items, ISearch search);
+        IEnumerable<TEnt> Limit(IEnumerable<TEnt> items, ISearch search);
         
-        Tc Add(Tc item);
+        TEnt Add(TEnt item);
 
-        IList<Tc> AddSome(IEnumerable<Tc> items);
+        IList<TEnt> AddSome(IEnumerable<TEnt> items);
 
-        bool Delete(Tc item);
+        bool Delete(TEnt item);
 
-        bool DeleteSome(IEnumerable<Tc> item);
+        bool DeleteSome(IEnumerable<TEnt> item);
 
-        Tc Update(Tc item);
+        TEnt Update(TEnt item);
 
         bool Any();
 
-        Tc Map(Ti item);
+        TEnt Map(TPoco item);
 
-        IEnumerable<Tc> Map(IEnumerable<Ti> items);
+        IEnumerable<TEnt> Map(IEnumerable<TPoco> items);
     }
 }

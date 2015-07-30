@@ -17,7 +17,6 @@ namespace Trooper.Thorny.Business.Response
     /// Implements the OperationResponse.Response interface for replying to requests
     /// where the action nothing is required other than a positive of negative response.
     /// </summary>
-    [Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class Response : IResponse

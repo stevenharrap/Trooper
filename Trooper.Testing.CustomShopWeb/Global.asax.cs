@@ -16,7 +16,8 @@ namespace Trooper.Testing.CustomShopWeb
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            var container = BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
+            var container = BusinessModule.Start<ShopAppModule>();
+                //BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
 
             Application.Add("businessAppContainer", container);            
         }

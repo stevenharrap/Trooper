@@ -9,7 +9,7 @@
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
 
-    public class ProductAuthorization : Authorization<Product>, IProductAuthorization
+    public class ProductAuthorization : Authorization<ProductEnt>, IProductAuthorization
     {
 	    public override IList<IAssignment> Assignments
 	    {

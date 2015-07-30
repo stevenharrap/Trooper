@@ -19,7 +19,6 @@ namespace Trooper.Thorny.Business.Response
     /// </summary>
     /// <typeparam name="TEntity">The Type of the entities that will be returned.
     /// </typeparam>
-    [Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class ManyResponse<T> : Response, IManyResponse<T>

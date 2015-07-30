@@ -10,19 +10,21 @@ namespace Trooper.Testing.DefaultShopApp
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Testing.DefaultShopApi;
     using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Interface;
+    using Trooper.Testing.ShopModel.Poco;
     using Trooper.Testing.ShopModel.Model;
 
     [TestFixture]
     [Category("Facade")]
-    public class TestProductBaseFacade : TestFacadeBase<IBusinessCore<Product, IProduct>, Product, IProduct>
+    public class TestProductBaseFacade : TestFacadeBase<IBusinessCore<ProductEnt, Product>, ProductEnt, Product>
     {
 		private const string IgnoreInBase = "Ignored in base testing. Tested in specific facade.";
 
 	    [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            var container = BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
+            var container = BusinessModule.Start<ShopAppModule>();
+                
+                //BusinessModuleBuilder.StartBusinessApp<ShopAppModule>();
 
             base.TestFixtureSetup(container);
         }

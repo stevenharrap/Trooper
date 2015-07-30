@@ -88,7 +88,6 @@
     <Compile Include="Business\Support\ShopSupport\ShopAddressSearch.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopNameSearch.cs" />
     <Compile Include="Business\Support\ShopSupport\ShopValidation.cs" />
-    <Compile Include="Interface\Business\Model\IProductInShop.cs" />
     <Compile Include="Interface\Business\Operation\IInventoryBo.cs" />
     <Compile Include="Interface\Business\Operation\IProductBo.cs" />
     <Compile Include="Interface\Business\Operation\IShopBo.cs" />

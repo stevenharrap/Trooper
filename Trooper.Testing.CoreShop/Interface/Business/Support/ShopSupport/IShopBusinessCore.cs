@@ -1,17 +1,17 @@
 ﻿using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
-using Trooper.Testing.CustomShopApi.Interface.Business.Model;
 using Trooper.Testing.ShopModel;
-using Trooper.Testing.ShopModel.Interface;
+using Trooper.Testing.ShopModel.Poco;
 using Trooper.Testing.ShopModel.Model;
+using Trooper.Testing.CustomShopApi.Business.Model;
 
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport
 {
-    public interface IShopBusinessCore : IBusinessCore<Shop, IShop>
+    public interface IShopBusinessCore : IBusinessCore<ShopEnt, Shop>
     {
-        ISaveResponse<IProductInShop> SaveProduct(IProductInShop productInShop, IIdentity identity);
+        ISaveResponse<ProductInShop> SaveProduct(ProductInShop productInShop, IIdentity identity);
 
-        IManyResponse<IProductInShop> GetProducts(IShop shop, IIdentity identity);
+        IManyResponse<ProductInShop> GetProducts(Shop shop, IIdentity identity);
     }
 }

@@ -26,11 +26,11 @@
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopModelDbContext>());
         }
 
-        public DbSet<Shop> Shops { get; set; }
+        public DbSet<ShopEnt> Shops { get; set; }
         
-        public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<InventoryEnt> Inventories { get; set; }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductEnt> Products { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

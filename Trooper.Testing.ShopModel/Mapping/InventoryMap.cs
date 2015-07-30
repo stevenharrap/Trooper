@@ -9,7 +9,7 @@ using Trooper.Testing.ShopModel.Model;
 
 namespace Trooper.Testing.ShopModel.Mapping
 {
-    public class InventoryMap : EntityTypeConfiguration<Inventory>
+    public class InventoryMap : EntityTypeConfiguration<InventoryEnt>
     {
         public InventoryMap()
         {

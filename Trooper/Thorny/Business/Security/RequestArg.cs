@@ -2,10 +2,16 @@
 
 namespace Trooper.Thorny.Business.Security
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
+    using System.ServiceModel;
     using Trooper.Thorny.Interface.DataManager;
 
+    [Serializable]
+    [DataContract]
+    [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class RequestArg<T> : IRequestArg<T> 
         where T : class
     {

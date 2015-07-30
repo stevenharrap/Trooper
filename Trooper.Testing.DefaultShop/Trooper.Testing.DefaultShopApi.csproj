@@ -62,8 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\Support\ProductInjection.cs" />
-    <Compile Include="Business\Support\ShopInjection.cs" />
+    <Compile Include="Business\Support\ProductConfiguration.cs" />
+    <Compile Include="Business\Support\ShopConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopAppDbContext.cs" />
     <Compile Include="ShopAppModule.cs" />

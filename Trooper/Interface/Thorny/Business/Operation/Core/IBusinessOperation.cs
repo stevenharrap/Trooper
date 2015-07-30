@@ -2,11 +2,11 @@
 
 namespace Trooper.Interface.Thorny.Business.Operation.Core
 {
-    public interface IBusinessOperation<Tc, Ti> : IBusinessOperation
-        where Tc : class, Ti, new()
-        where Ti : class
+    public interface IBusinessOperation<TEnt, TPoco> : IBusinessOperation
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        IBusinessCore<Tc, Ti> BusinessCore { get; set; }
+        IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
     }
 
     public interface IBusinessOperation

@@ -4,7 +4,7 @@ using Trooper.Testing.ShopModel.Model;
 
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport
 {
-    public interface IInventoryAuthorization : IAuthorization<Inventory>
+    public interface IInventoryAuthorization : IAuthorization<InventoryEnt>
     {
     }
 }

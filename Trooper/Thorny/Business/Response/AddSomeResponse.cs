@@ -20,7 +20,6 @@ namespace Trooper.Thorny.Business.Response
     /// <typeparam name="TEntityKey">
     /// The keys of the inserted entities.
     /// </typeparam>
-    [Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class AddSomeResponse<T> : Response, IAddSomeResponse<T>

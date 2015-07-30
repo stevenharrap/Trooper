@@ -13,14 +13,14 @@ using System.ServiceModel;
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
     [ServiceContract]
-	public interface IBusinessDelete<Tc, Ti> : IBusinessRequest<Tc, Ti>, IBusinessOperation<Tc, Ti>
-        where Tc : class, Ti, new()
-        where Ti : class
+	public interface IBusinessDelete<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
         [OperationContract]
-        IResponse DeleteByKey(Ti item, IIdentity identity = null);
+        IResponse DeleteByKey(TPoco item, IIdentity identity = null);
 
         [OperationContract]
-        IResponse DeleteSomeByKey(IEnumerable<Ti> items, IIdentity identity = null);
+        IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity = null);
     }
 }

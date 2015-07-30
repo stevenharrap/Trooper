@@ -17,14 +17,14 @@ namespace Trooper.Testing.CustomShopWeb.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var x = StringComparison.OrdinalIgnoreCase;
+            //var x = StringComparison.OrdinalIgnoreCase;
             var container = HttpContext.Application["businessAppContainer"] as IContainer;
 
             var model = new HomeModel();
 
             if (container != null)
             {
-                model.AllServices = BusinessModuleBuilder.GetAllServices(container);
+                //model.AllServices = BusinessModuleBuilder.GetAllServices(container);
             };
 
             ChannelFactory<IShopBo> scf = new ChannelFactory<IShopBo>(

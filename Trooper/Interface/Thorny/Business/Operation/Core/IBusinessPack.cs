@@ -5,17 +5,17 @@ using Autofac;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Core
 {
-	public interface IBusinessPack<Tc, Ti> : IDisposable
-        where Tc : class, Ti, new()
-        where Ti : class
+	public interface IBusinessPack<TEnt, TPoco> : IDisposable
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        IBusinessCore<Tc, Ti> BusinessCore { get; set; }
+        IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
 
-        IAuthorization<Tc> Authorization { get; set; }
+        IAuthorization<TEnt> Authorization { get; set; }
 
-        IValidation<Tc> Validation { get; set; }
+        IValidation<TEnt> Validation { get; set; }
 
-        IFacade<Tc, Ti> Facade { get; set; }
+        IFacade<TEnt, TPoco> Facade { get; set; }
 
         IUnitOfWork Uow { get; set; }
 

@@ -13,33 +13,33 @@ namespace Trooper.Thorny.Business.Operation.Single
 {
 	using Interface.DataManager;
 
-    public class BusinessRead<Tc, Ti> : IBusinessRead<Tc, Ti> 
-        where Tc : class, Ti, new()
-        where Ti : class
+    public class BusinessRead<TEnt, TPoco> : IBusinessRead<TEnt, TPoco> 
+        where TEnt : class, TPoco, new()
+        where TPoco : class
     {
-        public IBusinessCore<Tc, Ti> BusinessCore { get; set; }
+        public IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
 
-        public IManyResponse<Ti> GetAll(IIdentity identity)
+        public IManyResponse<TPoco> GetAll(IIdentity identity)
         {
             return this.BusinessCore.GetAll(identity);
         }
 
-        public IManyResponse<Ti> GetSome(ISearch search, IIdentity identity)
+        public IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity)
         {
             return this.BusinessCore.GetSome(search, identity);
         }
 
-        public ISingleResponse<Ti> GetByKey(Ti item, IIdentity identity)
+        public ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity)
         {
             return this.BusinessCore.GetByKey(item, identity);
         }
 
-        public ISingleResponse<bool> ExistsByKey(Ti item, IIdentity identity)
+        public ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity)
         {
 			return this.BusinessCore.ExistsByKey(item, identity);
         }
 
-        public ISingleResponse<bool> IsAllowed(IRequestArg<Ti> argument, IIdentity identity)
+        public ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity)
         {
 			return this.BusinessCore.IsAllowed(argument, identity);
         }

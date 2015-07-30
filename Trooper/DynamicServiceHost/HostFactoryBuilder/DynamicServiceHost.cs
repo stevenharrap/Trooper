@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -10,7 +11,7 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicServiceHost : ServiceHost
     {
-        public DynamicServiceHost(IHostInfo hostInfo, Type serviceType, params Uri[] baseAddresses)
+        public DynamicServiceHost(IHostInfo hostInfo, Func<object> supporter, Type serviceType, params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)
         {
             if (hostInfo == null)
@@ -20,7 +21,7 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 
             foreach (var cd in this.ImplementedContracts.Values)
             {
-                cd.Behaviors.Add(new DynamicInstanceProvider(hostInfo, serviceType));
+                cd.Behaviors.Add(new DynamicInstanceProvider(hostInfo, supporter, serviceType));
             }
         }
     }

@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs" elementFormDefault="qualified" targetNamespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ShopBoNs" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Model" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" />
+  <xs:element name="SaveProduct">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Model" minOccurs="0" name="productInShop" nillable="true" type="q1:ProductInShop" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q2:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveProductResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="SaveProductResult" nillable="true" type="q3:MyProduct" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Add">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q4:Shop" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q5:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="AddResult" nillable="true" type="q6:CBpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSome">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="items" nillable="true" type="q7:ArrayOfShop" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q8:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSomeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="AddSomeResult" nillable="true" type="q9:CCpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAllowed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="argument" nillable="true" type="q10:CDpoco" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q11:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAllowedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="IsAllowedResult" nillable="true" type="q12:CEpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAll">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q13:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="GetAllResult" nillable="true" type="q14:CFpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSome">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="search" nillable="true" type="q15:CGpoco" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q16:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSomeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="GetSomeResult" nillable="true" type="q17:CFpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetByKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q18:Shop" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q19:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetByKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="GetByKeyResult" nillable="true" type="q20:CApoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExistsByKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q21:Shop" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="identity" nillable="true" type="q22:CHpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExistsByKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Trooper.DynamicServiceHost.DynamicHost.TrooperTestingCustomShopApiBusinessOperation" minOccurs="0" name="ExistsByKeyResult" nillable="true" type="q23:CEpoco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
