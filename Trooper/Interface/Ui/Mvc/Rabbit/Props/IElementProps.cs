@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Thorny;
+using Trooper.Thorny.Business.Response;
 
 namespace Trooper.Ui.Interface.Mvc.Rabbit.Props
 {
@@ -10,7 +11,7 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit.Props
 
         string Id { get; set; }
 
-        IList<IMessage> Messages { get; set; }
+        IList<Message> Messages { get; set; }
 
         bool? ShowTitle { get; set; }
 

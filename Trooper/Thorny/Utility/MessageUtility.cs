@@ -59,7 +59,7 @@ namespace Trooper.Thorny.Utility
             this.level = level;
         }
 
-        public IMessage Make<TEntity>(string message, string code, Expression<Func<TEntity>> expression)
+        public Message Make<TEntity>(string message, string code, Expression<Func<TEntity>> expression)
         {
             var memberExpression = expression.Body as MemberExpression;
 
@@ -93,7 +93,7 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// The <see cref="Message"/>.
         /// </returns>
-        public IMessage Make<TEntity>(string message, string code, TEntity entity, string property)
+        public Message Make<TEntity>(string message, string code, TEntity entity, string property)
             where TEntity : class
         {
             return new Message
@@ -118,7 +118,7 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// The <see cref="Message"/>.
         /// </returns>
-        public IMessage Make(string message, string code, string property)
+        public Message Make(string message, string code, string property)
         {
             return new Message
             {
@@ -139,7 +139,7 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// The <see cref="Message"/>.
         /// </returns>
-        public IMessage Make(string message, string code)
+        public Message Make(string message, string code)
         {
             return new Message
             {
@@ -179,7 +179,7 @@ namespace Trooper.Thorny.Utility
 
             if (response.Messages == null)
             {
-                response.Messages = new List<IMessage>();
+                response.Messages = new List<Message>();
             }
 
             response.Messages.Add(e);
@@ -208,7 +208,7 @@ namespace Trooper.Thorny.Utility
 
             if (response.Messages == null)
             {
-                response.Messages = new List<IMessage>();
+                response.Messages = new List<Message>();
             }
 
             response.Messages.Add(e);
@@ -239,7 +239,7 @@ namespace Trooper.Thorny.Utility
 
             if (response.Messages == null)
             {
-                response.Messages = new List<IMessage>();
+                response.Messages = new List<Message>();
             }
 
             response.Messages.Add(e);
@@ -247,7 +247,7 @@ namespace Trooper.Thorny.Utility
             return response;
         }
 
-        public static MessageAlertLevel? GetWorstMessageLevel(IList<IMessage> messages)
+        public static MessageAlertLevel? GetWorstMessageLevel(IList<Message> messages)
         {
             if (messages == null || !messages.Any())
             {
@@ -312,7 +312,7 @@ namespace Trooper.Thorny.Utility
 		/// </summary>
 		/// <param name="messages"></param>
 		/// <returns></returns>
-	    public static bool IsOk(IList<IMessage> messages)
+	    public static bool IsOk(IList<Message> messages)
 	    {
 		    if (messages == null)
 		    {
@@ -327,7 +327,7 @@ namespace Trooper.Thorny.Utility
 		/// </summary>
 		/// <param name="messages"></param>
 		/// <returns></returns>
-		public static bool IsWarning(IList<IMessage> messages)
+		public static bool IsWarning(IList<Message> messages)
 		{
 			if (messages == null)
 			{
@@ -342,7 +342,7 @@ namespace Trooper.Thorny.Utility
 		/// </summary>
 		/// <param name="messages"></param>
 		/// <returns></returns>
-		public static bool IsError(IList<IMessage> messages)
+		public static bool IsError(IList<Message> messages)
 		{
 			if (messages == null)
 			{
@@ -365,7 +365,7 @@ namespace Trooper.Thorny.Utility
         /// <returns>
         /// Returns the operation response.
         /// </returns>
-        public static IResponse Add(IList<IMessage> messages, IResponse response)
+        public static IResponse Add(IList<Message> messages, IResponse response)
         {
             if (response == null || messages == null || !messages.Any())
             {
@@ -374,7 +374,7 @@ namespace Trooper.Thorny.Utility
 
             if (response.Messages == null)
             {
-                response.Messages = new List<IMessage>();
+                response.Messages = new List<Message>();
             }
 
             response.Messages.AddRange(messages);

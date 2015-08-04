@@ -9,6 +9,7 @@ namespace Trooper.Interface.Thorny.Business.Response
     using System.Collections.Generic;
     using System.ServiceModel;
     using Trooper.Thorny;
+    using Trooper.Thorny.Business.Response;
 
     /// <summary>
     /// The Operation Response interface. This defines the base requirements
@@ -32,6 +33,6 @@ namespace Trooper.Interface.Thorny.Business.Response
         /// <summary>
         /// Gets or sets the any messages.
         /// </summary>
-        List<IMessage> Messages { get; set; }
+        List<Message> Messages { get; set; }
     }
 }

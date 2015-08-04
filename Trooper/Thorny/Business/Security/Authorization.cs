@@ -11,6 +11,7 @@ namespace Trooper.Thorny.Business.Security
     using Trooper.Thorny.Utility;
     using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Response;
+    using Trooper.Thorny.Business.Response;
 
     public class Authorization<TEnt> : IAuthorization<TEnt>
         where TEnt : class,  new()
@@ -95,7 +96,7 @@ namespace Trooper.Thorny.Business.Security
 
         public bool IsAllowed(IRequestArg<TEnt> arg, ICredential credential)
         {
-            var response = new Response.Response();
+            var response = new Response();
 
             return this.IsAllowed(arg, credential, response);
         }
@@ -157,7 +158,7 @@ namespace Trooper.Thorny.Business.Security
 
             if (!allowed && response != null)
             {
-                response.Messages = new List<IMessage>();
+                response.Messages = new List<Message>();
 
                 MessageUtility.Errors.Add(
                 string.Format(

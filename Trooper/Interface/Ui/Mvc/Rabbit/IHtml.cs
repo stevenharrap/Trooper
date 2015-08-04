@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 using Trooper.Interface.Thorny.Business.Response;
+using Trooper.Thorny.Business.Response;
 using Trooper.Ui.Interface.Mvc.Rabbit.Props;
 using Trooper.Ui.Mvc.Rabbit.Props;
 
@@ -22,7 +23,7 @@ namespace Trooper.Ui.Interface.Mvc.Rabbit
 
         void IncludeMoment();
 
-        IList<IMessage> Messages { get; set; }
+        IList<Message> Messages { get; set; }
 
         IHtmlString MessagesPanel(MessagesPanelProps mpProps);
 

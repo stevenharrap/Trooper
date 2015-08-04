@@ -22,35 +22,9 @@
             component.RegisterBusinessCore<InventoryBusinessCore, IInventoryBusinessCore>();
             component.RegisterBusinessOperation<InventoryBo, IInventoryBo>();
 
+            component.RegisterServiceHost("http://localhost:8000");
+
             BusinessModule.AddComponent(component);
-            
-            //BusinessModuleBuilder.AddBusinessCore<
-            //    InventoryFacade, IInventoryFacade,
-            //    InventoryAuthorization, IInventoryAuthorization,
-            //    InventoryValidation, IInventoryValidation,
-            //    InventoryBusinessCore, IInventoryBusinessCore,
-            //    InventoryBo, IInventoryBo,
-            //    InventoryEnt, Inventory>(builder);
-
-            //builder.RegisterType<ManyResponseOfInventory>().As<IManyResponse<Inventory>>();
-
-            //BusinessModuleBuilder.AddServiceHost<InventoryBo, IInventoryBo>(builder, "http://localhost:8000");
-
-            
-
-            //BusinessOperationInjection.AddBusinessOperation<IShopBusinessCore, ShopBo, IShopBo, Shop, IShop>(builder);
         }
     }
-
-    //public class ManyResponseOfInventory : ManyResponse<InventoryEnt>
-    //{
-    //    public ManyResponse<InventoryEnt> Getit(IManyResponse<Inventory> input)
-    //    {
-    //        return new ManyResponse<InventoryEnt>
-    //        {
-    //            Items = input.Items as List<InventoryEnt>,
-    //            Messages = input.Messages
-    //        };
-    //    }
-    //}
 }

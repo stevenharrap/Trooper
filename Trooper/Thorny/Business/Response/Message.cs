@@ -14,10 +14,9 @@ namespace Trooper.Thorny.Business.Response
     /// <summary>
     /// Defines an error that can be returned in a service response.
     /// </summary>
-    [Serializable]
     [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
-    public class Message : IMessage
+    public class Message
     {
         /// <summary>
         /// Gets or sets the descriptive message of the error.
@@ -28,6 +27,7 @@ namespace Trooper.Thorny.Business.Response
         /// <summary>
         /// An alphanumeric code that can uniquely identify the message regardless of culture
         /// </summary>
+        [DataMember]
         public string Code { get; set; }
 
         /// <summary>
@@ -45,6 +45,7 @@ namespace Trooper.Thorny.Business.Response
         /// <summary>
         /// Gets or a sets a value indicate the nature of the message.
         /// </summary>
+        [DataMember]
         public MessageAlertLevel Level { get; set; }        
     }
 }

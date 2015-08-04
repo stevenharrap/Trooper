@@ -93,7 +93,7 @@ namespace Trooper.Testing.Web.Controllers
                 
                 var level = (MessageAlertLevel)currentModel.MessageAlertLevel;
 
-                currentModel.OperationResponse.Messages = new List<IMessage> 
+                currentModel.OperationResponse.Messages = new List<Message> 
                 {
                     MessageUtility.Messages(level).Make("Test Num01 message test: ", null, () => currentModel.TestNum01),
                     MessageUtility.Messages(level).Make("Test Num02 message test: ", null, () => currentModel.TestNum02),

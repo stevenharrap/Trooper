@@ -26,6 +26,7 @@ namespace Trooper.Ui.Mvc.Rabbit
 {
     using WebResources = Trooper.WebResources.Properties;
     using Trooper.Interface.Thorny.Business.Response;
+    using Trooper.Thorny.Business.Response;
 
 	/// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides
@@ -94,7 +95,7 @@ namespace Trooper.Ui.Mvc.Rabbit
         /// Gets or sets the errors that may be present. Providing errors to
         /// any specific control overrides this.
         /// </summary>
-        public IList<IMessage> Messages { get; set; }        
+        public IList<Message> Messages { get; set; }        
 
 		#endregion
 

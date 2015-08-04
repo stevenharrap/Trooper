@@ -206,7 +206,7 @@ namespace Trooper.DynamicServiceHost
             var options = new CompilerParameters();
 
             options.GenerateExecutable = false;
-            options.OutputAssembly = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), outputLocation);
+            options.OutputAssembly = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), outputLocation); //needs a unique name!
             options.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("TEMP"), true);
             options.IncludeDebugInformation = true;
 

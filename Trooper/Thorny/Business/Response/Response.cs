@@ -54,7 +54,7 @@ namespace Trooper.Thorny.Business.Response
         /// Gets or sets the errors that prevented the response from providing the items. 
         /// </summary>
         [DataMember]
-        public List<IMessage> Messages { get; set; }
+        public List<Message> Messages { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether warnings have been issued against the operation.

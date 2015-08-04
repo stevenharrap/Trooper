@@ -22,19 +22,9 @@
             component.RegisterBusinessCore<ProductBusinessCore, IProductBusinessCore>();
             component.RegisterBusinessOperation<ProductBo, IProductBo>();
 
+            component.RegisterServiceHost("http://localhost:8000");
+
             BusinessModule.AddComponent(component);
-
-            //BusinessModuleBuilder.AddBusinessCore<
-            //    Facade<ProductEnt, Product>, IFacade<ProductEnt, Product>, 
-            //    ProductAuthorization, IProductAuthorization, 
-            //    ProductValidation, IProductValidation,
-            //    ProductBusinessCore, IProductBusinessCore, 
-            //    ProductBo, IProductBo, 
-            //    ProductEnt, Product>(builder);
-
-            //BusinessModuleBuilder.AddServiceHost<ProductBo, IProductBo>(builder, "http://localhost:8000");
-
-            //BusinessOperationInjection.AddBusinessOperation<IShopBusinessCore, ShopBo, IShopBo, Shop, IShop>(builder);
         }
     }
 }

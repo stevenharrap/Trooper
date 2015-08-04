@@ -28,23 +28,14 @@
 
         public Action<IHostInfo> HostInfoBuilt;
 
-        //event HostBuiltHandler HostBuilt;
-
-        //protected virtual void OnHostBuilt(EventArgs e)
-        //{
-        //    if (this.HostBuilt != null)
-        //    {
-        //        this.HostBuilt(this.HostInfo);
-        //    }
-        //}
-
         public void Start()
         {
             HostInfoHelper.BuildHostInfo(this.Supporter, this.HostInfo);
 
-            this.HostInfoBuilt(this.HostInfo);
-
-            //this.OnHostBuilt(new EventArgs());
+            if (this.HostInfoBuilt != null)
+            {
+                this.HostInfoBuilt(this.HostInfo);
+            }
 
             this.ServiceHost = HostBuilder.BuildHost(this.HostInfo, this.Supporter);
 
