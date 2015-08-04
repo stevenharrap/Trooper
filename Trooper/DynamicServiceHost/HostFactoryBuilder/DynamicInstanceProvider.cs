@@ -40,12 +40,9 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            //Console.WriteLine("Instance of {0} created.", this.serviceType.Name);
-            
             var supporterObj = this.supporter == null ? null : this.supporter();
             var service = Activator.CreateInstance(this.serviceType, hostInfo, supporterObj);
 
-            //return new MyService(this.hostInfo);
             return service;
         }
 

@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using Trooper.Thorny.Interface.DataManager;
-using Trooper.Thorny.Interface.OperationResponse;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
 

@@ -7,7 +7,7 @@
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using Trooper.Thorny;
-using Trooper.Thorny.Interface.OperationResponse;
+
 
 namespace Trooper.Interface.Thorny.Business.Response
 {

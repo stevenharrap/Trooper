@@ -12,23 +12,21 @@ namespace Trooper.DynamicServiceHost
 
         public Type ResolveTo { get; private set; }
 
-        public string Alias { get; set; }
-
         private ClassMapping()
         {
         }
 
-        public static ClassMapping Make<TSource, TResolveTo>(string alias)
+        public static ClassMapping Make<TSource, TResolveTo>()
             where TSource : class
             where TResolveTo : class, TSource, new()
         {
-            return new ClassMapping { Alias = alias, Source = typeof(TSource), ResolveTo = typeof(TResolveTo) };
+            return new ClassMapping { Source = typeof(TSource), ResolveTo = typeof(TResolveTo) };
         }
 
-        public static ClassMapping Make<TSource>(string alias)
+        public static ClassMapping Make<TSource>()
             where TSource : class, new()
         {
-            return new ClassMapping { Alias = alias, Source = typeof(TSource), ResolveTo = typeof(TSource) };
+            return new ClassMapping { Source = typeof(TSource), ResolveTo = typeof(TSource) };
         }
     }
 }

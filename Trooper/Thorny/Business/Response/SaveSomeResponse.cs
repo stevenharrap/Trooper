@@ -12,7 +12,7 @@ namespace Trooper.Thorny.Business.Response
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.ServiceModel;
-    using Trooper.Thorny.Interface.OperationResponse;
+    
     
     /// <summary>
     /// The many response is an implementation of the IOperationResponse interface
@@ -21,7 +21,7 @@ namespace Trooper.Thorny.Business.Response
     /// <typeparam name="TEntity">
     /// The type of entity to return
     /// </typeparam>
-    [DataContract]
+    [DataContract(Name = "SaveSomeResponseOf{0}")]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SaveSomeResponse<T> : Response, ISaveSomeResponse<T>
     {

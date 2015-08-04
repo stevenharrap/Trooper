@@ -13,7 +13,6 @@ namespace Trooper.Thorny.Business.Operation.Composite
 {
     using System;
     using System.Collections.Generic;
-    using Trooper.Thorny.Interface.OperationResponse;
     using Trooper.Interface.Thorny.Business.Operation.Single;
 
     public class BusinessAll<TEnt, TPoco> : IBusinessAll<TEnt, TPoco>

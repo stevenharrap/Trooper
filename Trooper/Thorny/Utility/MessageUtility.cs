@@ -10,10 +10,9 @@ namespace Trooper.Thorny.Utility
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    
+    using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Thorny;
-    using Trooper.Thorny.Interface.OperationResponse;
-    using Trooper.Thorny.OperationResponse;
+    using Trooper.Thorny.Business.Response;
 
     /// <summary>
     /// The error utility for creating and converting errors

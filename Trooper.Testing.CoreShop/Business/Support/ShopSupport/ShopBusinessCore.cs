@@ -88,5 +88,10 @@
                 return response;
             }
         }
+
+        public IAddResponse<Shop> SimpleLittleThing(IIdentity identity)
+        {
+            return new AddResponse<Shop> { Item = new Shop { Name = "Coles", Address = "25 Brown St" } };
+        }       
     }
 }

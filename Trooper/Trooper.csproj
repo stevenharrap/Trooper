@@ -143,8 +143,6 @@
   <ItemGroup>
     <Compile Include="ActiveDirectory\ActiveDirectoryUser.cs" />
     <Compile Include="DynamicServiceHost\ClassMapping.cs" />
-    <Compile Include="DynamicServiceHost\ComplexTypeConverter.cs" />
-    <Compile Include="DynamicServiceHost\DataClass.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\ComplexTypeConverterException.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderDynamicCodeException.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderValidateHostInfoException.cs" />
@@ -179,7 +177,7 @@
     <Compile Include="Thorny\Business\Security\Role.cs" />
     <Compile Include="Thorny\Business\Security\Assignment.cs" />
     <Compile Include="Thorny\Business\Security\Action.cs" />
-    <Compile Include="Thorny\Configuration\BusinessHostBuilder.cs" />
+    <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
     <Compile Include="Thorny\Constants.cs" />
     <Compile Include="Thorny\DataManager\Facade.cs" />
@@ -218,11 +216,10 @@
     <Compile Include="Thorny\DataManager\Repository.cs" />
     <Compile Include="Thorny\DataManager\UnitOfWork.cs" />
     <Compile Include="Interface\Thorny\DataManager\IValidation.cs" />
-    <Compile Include="Interface\Thorny\OperationResponse\IMessage.cs" />
-    <Compile Include="Interface\Thorny\OperationResponse\IResponse.cs" />
+    <Compile Include="Interface\Thorny\Business\Response\IMessage.cs" />
+    <Compile Include="Interface\Thorny\Business\Response\IResponse.cs" />
     <Compile Include="Interface\Thorny\UnitTestBase\IItemGenerator.cs" />
-    <Compile Include="Thorny\OperationResponse\Message.cs" />
-    <Compile Include="Thorny\OperationResponse\Response.cs" />
+    <Compile Include="Thorny\Business\Response\Message.cs" />
     <Compile Include="Thorny\UnitTestBase\ItemGenerator.cs" />
     <Compile Include="Thorny\UnitTestBase\TestDefaultBusinsessOperation.cs" />
     <Compile Include="Thorny\UnitTestBase\TestBase.cs" />

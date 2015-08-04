@@ -11,7 +11,8 @@ namespace Trooper.Thorny.Business.Response
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.ServiceModel;
-    using Trooper.Thorny.Interface.OperationResponse;
+    using Trooper.Thorny.Utility;
+    using Trooper.Interface.Thorny.Business.Response;
 
     /// <summary>
     /// Implements the OperationResponse.Response interface for replying to requests
@@ -21,6 +22,10 @@ namespace Trooper.Thorny.Business.Response
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class Response : IResponse
     {
+        private bool? ok;
+
+        private bool? warn;
+
         /// <summary>
         /// Gets or sets a value indicating whether the response is ok. A false
         /// response is any response where the are Messages with Alert level as Error.
@@ -31,7 +36,17 @@ namespace Trooper.Thorny.Business.Response
         {
             get
             {
-                return this.Messages == null || !this.Messages.Any(m => m.Level == MessageAlertLevel.Error);
+                if (this.ok != null)
+                {
+                    return (bool)this.ok;
+                }
+                
+                return MessageUtility.IsOk(this.Messages);
+            }
+
+            set
+            {
+                this.ok = value;
             }
         }
 
@@ -49,7 +64,17 @@ namespace Trooper.Thorny.Business.Response
         {
             get
             {
-                return this.Messages != null && this.Messages.Any(m => m.Level == MessageAlertLevel.Warning);
+                if (this.warn != null)
+                {
+                    return (bool)this.warn;
+                }
+
+                return MessageUtility.IsWarning(this.Messages);
+            }
+
+            set
+            {
+                this.warn = value;
             }
         }
     }

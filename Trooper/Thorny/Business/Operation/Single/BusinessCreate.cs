@@ -12,7 +12,6 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Thorny.Business.Operation.Single
 {
     using System.Collections.Generic;
-    using Trooper.Thorny.Interface.OperationResponse;
 
     public class BusinessCreate<TEnt, TPoco> : IBusinessCreate<TEnt, TPoco> 
         where TEnt : class, TPoco, new()

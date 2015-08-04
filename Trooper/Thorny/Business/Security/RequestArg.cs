@@ -9,9 +9,6 @@ namespace Trooper.Thorny.Business.Security
     using System.ServiceModel;
     using Trooper.Thorny.Interface.DataManager;
 
-    [Serializable]
-    [DataContract]
-    [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class RequestArg<T> : IRequestArg<T> 
         where T : class
     {

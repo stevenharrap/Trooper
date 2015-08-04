@@ -1,8 +1,9 @@
 ﻿namespace Trooper.Thorny.DataManager
 {
     using Microsoft.Practices.EnterpriseLibrary.Validation;
+    using Trooper.Interface.Thorny.Business.Response;
+    using Trooper.Thorny.Business.Response;
     using Trooper.Thorny.Interface.DataManager;
-    using Trooper.Thorny.Interface.OperationResponse;
     using Trooper.Thorny.Utility;
 
     public class Validation<TEnt> : IValidation<TEnt> 
@@ -12,7 +13,7 @@
 
         public bool IsValid(TEnt item)
         {
-            var result = this.Validate(item, new OperationResponse.Response());
+            var result = this.Validate(item, new Response());
 
             return result.Ok;
         }
@@ -26,7 +27,7 @@
 
         public IResponse Validate(TEnt item)
         {
-            var response = new OperationResponse.Response();
+            var response = new Response();
             var result = this.Validate(item, response);
 
             return result;

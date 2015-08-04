@@ -6,6 +6,7 @@
     using Trooper.Thorny.Interface.DataManager;
 
     [DataContract]
+    [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class Search : ISearch
     {
         [DataMember]

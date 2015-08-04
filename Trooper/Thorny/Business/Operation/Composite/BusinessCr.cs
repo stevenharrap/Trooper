@@ -12,7 +12,7 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Thorny.Business.Operation.Composite
 {
     using System.Collections.Generic;
-    using Trooper.Thorny.Interface.OperationResponse;
+    
 
     public class BusinessCr<TEnt, TPoco> : IBusinessCr<TEnt, TPoco>
         where TEnt : class, TPoco, new()

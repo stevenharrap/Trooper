@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web;
-using Trooper.Thorny.Interface.OperationResponse;
+using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Ui.Interface.Mvc.Rabbit.Props;
 using Trooper.Ui.Mvc.Rabbit.Props;
 

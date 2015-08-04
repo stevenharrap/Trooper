@@ -1,6 +1,6 @@
 ﻿namespace Trooper.Thorny.Interface.DataManager
 {
-    using Trooper.Thorny.Interface.OperationResponse;
+    using Trooper.Interface.Thorny.Business.Response;
 
     public interface IValidation<TEnt> 
         where TEnt : class, new()

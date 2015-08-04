@@ -7,8 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Thorny;
-using Trooper.Thorny.Interface.OperationResponse;
 using Trooper.Ui.Mvc.Rabbit.Controls.Options;
 using Trooper.Ui.Mvc.Rabbit.Models;
 

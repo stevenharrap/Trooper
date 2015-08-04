@@ -19,7 +19,7 @@ namespace Trooper.Thorny.Business.Response
     /// </summary>
     /// <typeparam name="TEntity">The Type of the entities that will be returned.
     /// </typeparam>
-    [DataContract]
+    [DataContract(Name = "ManyResponseOf{0}")]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class ManyResponse<T> : Response, IManyResponse<T>
     {

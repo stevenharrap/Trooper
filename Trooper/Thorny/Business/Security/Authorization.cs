@@ -7,9 +7,10 @@ namespace Trooper.Thorny.Business.Security
     using System.Collections.Generic;
     using System.Linq;
     using Trooper.Thorny.Interface.DataManager;
-    using Trooper.Thorny.Interface.OperationResponse;
+    
     using Trooper.Thorny.Utility;
     using Trooper.Thorny.Business.Operation.Core;
+    using Trooper.Interface.Thorny.Business.Response;
 
     public class Authorization<TEnt> : IAuthorization<TEnt>
         where TEnt : class,  new()

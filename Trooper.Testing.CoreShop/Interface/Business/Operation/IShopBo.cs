@@ -12,6 +12,9 @@ namespace Trooper.Testing.CustomShopApi.Interface.Business.Operation
     public interface IShopBo : IBusinessCr<ShopEnt, Shop>
     {
         [OperationContract]
-        ISingleResponse<Product> SaveProduct(ProductInShop productInShop, IIdentity identity);
+        ISaveResponse<ProductInShop> SaveProduct(ProductInShop productInShop, IIdentity identity);
+
+        [OperationContract]
+        IAddResponse<Shop> SimpleLittleThing(IIdentity identity);
     }
 }

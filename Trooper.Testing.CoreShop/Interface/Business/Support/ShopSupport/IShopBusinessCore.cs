@@ -13,5 +13,7 @@ namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport
         ISaveResponse<ProductInShop> SaveProduct(ProductInShop productInShop, IIdentity identity);
 
         IManyResponse<ProductInShop> GetProducts(Shop shop, IIdentity identity);
+
+        IAddResponse<Shop> SimpleLittleThing(IIdentity identity);
     }
 }

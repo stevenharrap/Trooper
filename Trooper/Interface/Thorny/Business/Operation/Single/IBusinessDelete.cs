@@ -5,10 +5,10 @@
 //--------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using Trooper.Thorny.Interface.OperationResponse;
 using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Interface.Thorny.Business.Security;
 using System.ServiceModel;
+using Trooper.Interface.Thorny.Business.Response;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {

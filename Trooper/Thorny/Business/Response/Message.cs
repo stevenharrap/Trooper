@@ -1,42 +1,50 @@
 ﻿//--------------------------------------------------------------------------------------
-// <copyright file="IMessage.cs" company="Trooper Inc">
+// <copyright file="Error.cs" company="Trooper Inc">
 //     Copyright (c) Trooper 2014 - Onwards
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.Thorny.Interface.OperationResponse
+namespace Trooper.Thorny.Business.Response
 {
+    using System;
+    using System.Runtime.Serialization;
     using System.ServiceModel;
+    using Trooper.Interface.Thorny.Business.Response;
 
     /// <summary>
     /// Defines an error that can be returned in a service response.
     /// </summary>
+    [Serializable]
+    [DataContract]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
-    public interface IMessage
+    public class Message : IMessage
     {
         /// <summary>
         /// Gets or sets the descriptive message of the error.
         /// </summary>
-        string Content { get; set; }
+        [DataMember]
+        public string Content { get; set; }
 
         /// <summary>
         /// An alphanumeric code that can uniquely identify the message regardless of culture
         /// </summary>
-        string Code { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets the entity (if any) that the error is related to.
         /// </summary>
-        string Entity { get; set; }
+        [DataMember]
+        public string Entity { get; set; }
 
         /// <summary>
         /// Gets or sets the property of the entity (if any) that the error is related to.
         /// </summary>
-        string Property { get; set; }
+        [DataMember]
+        public string Property { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicate the nature of the message.
+        /// Gets or a sets a value indicate the nature of the message.
         /// </summary>
-        MessageAlertLevel Level { get; set; }
+        public MessageAlertLevel Level { get; set; }        
     }
 }

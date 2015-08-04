@@ -8,12 +8,22 @@
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Interface.Thorny.Business.Security;
     using Trooper.Testing.CustomShopApi.Business.Model;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
 
     public class ShopBo : BusinessCr<ShopEnt, Shop>, IShopBo
     {
-        public ISingleResponse<Product> SaveProduct(ProductInShop productInShop, IIdentity identity)
+        public ISaveResponse<ProductInShop> SaveProduct(ProductInShop productInShop, IIdentity identity)
         {
-            return this.SaveProduct(productInShop, identity);
+            var bc = this.BusinessCore as IShopBusinessCore;
+
+            return bc.SaveProduct(productInShop, identity);
+        }
+
+        public IAddResponse<Shop> SimpleLittleThing(IIdentity identity)
+        {
+            var bc = this.BusinessCore as IShopBusinessCore;
+
+            return bc.SimpleLittleThing(identity);
         }
     }
 }

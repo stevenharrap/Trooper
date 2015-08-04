@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Thorny.Interface.DataManager;
-using Trooper.Thorny.Interface.OperationResponse;
 
 namespace Trooper.Interface.Thorny.Business.Security
 {

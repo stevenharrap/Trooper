@@ -15,7 +15,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 	using Response;
 	using Security;
 	using Interface.DataManager;
-	using Interface.OperationResponse;
 	using Utility;
 
 	/// <summary>

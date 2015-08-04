@@ -6,10 +6,10 @@
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Validation;
     using System.Linq;
+    using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Thorny.DataManager;
     using Trooper.Thorny.Interface.DataManager;
-    using Trooper.Thorny.Interface.OperationResponse;
     using Trooper.Thorny.Utility;
 
     public class UnitOfWork<TContext> : IUnitOfWork 

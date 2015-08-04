@@ -34,8 +34,6 @@ namespace Trooper.DynamicServiceHost
             {
                 hostInfo.Methods.AddRange(methods);
             }
-
-            //MakeGenericTypesToDataClasses(hostInfo);
         }
 
         public static IHostInfo BuildHostInfo(Type serviceType)
@@ -52,8 +50,6 @@ namespace Trooper.DynamicServiceHost
             };
 
             hostInfo.Methods = GetMethods(serviceType).ToList();
-
-            //MakeGenericTypesToDataClasses(hostInfo);
 
             return hostInfo;
         }
@@ -94,71 +90,11 @@ namespace Trooper.DynamicServiceHost
                 yield return method;
             }
         }
-
-        //private static Type ResolveType(Type sourceType, IComponentContext container)
-        //{
-        //    if (sourceType.IsPrimitive)
-        //    {
-        //        return sourceType;
-        //    }
-        //    else
-        //    {
-        //        object returnObject = null;
-        //        container.TryResolve(sourceType, out returnObject);
-
-        //        if (returnObject == null && sourceType.IsInterface)
-        //        {
-        //            throw new Exception(string.Format("A concrete type cannot be built from the type {0}.", HostBuilder.GetTypeName(sourceType)));
-        //        }
-
-        //        return returnObject == null ? sourceType : returnObject.GetType();
-        //    }                
-        //}
-
-        //private static Type ResolveType(Type sourceType, IHostInfo hostInfo)
-        //{
-        //    if (sourceType.IsPrimitive)
-        //    {
-        //        return sourceType;
-        //    }
-        //    else
-        //    {
-        //        object returnObject = null;
-
-        //        var mapping = hostInfo.Mappings.FirstOrDefault(m => m.Source.IsEquivalentTo(sourceType));
-
-        //        if (mapping == null && sourceType.IsInterface)
-        //        {
-        //            throw new Exception(string.Format("A concrete type cannot be mapped for the type {0}.", HostBuilder.GetTypeName(sourceType)));
-        //        }
-
-        //        return returnObject == null ? sourceType : returnObject.GetType();
-        //    }
-        //}
-
-        //private static void MakeGenericTypesToDataClasses(IHostInfo hostInfo)
-        //{
-        //    var result = from m in hostInfo.Methods
-        //                 where m.Returns.GenericTypeArguments.Any()
-        //                 group m by new { m.Returns } into typeGroup
-        //                 let first = typeGroup.FirstOrDefault()
-        //                 where first != null
-        //                 select new DataClass { Name = MakeClassName(first.Returns), Extends = HostBuilder.GetTypeName(first.Returns) };
-
-        //    hostInfo.DataClasses = result.ToList();                               
-        //}
-
+        
         public static string MakeClassName(Type classType, bool incInterfacePrefix = false)
         {
-            var name = classType.Name;// HostBuilder.GetTypeName(classType);
-
-            //if (classType.GenericTypeArguments.Any())
-            //{
-            //    name = name.Replace("<", "Of");
-            //    name = name.Replace(",", "And");
-            //    name = name.Replace(">", string.Empty);
-            //}
-
+            var name = classType.Name;
+            
             if (classType.GenericTypeArguments.Any())
             {
                 name += string.Format("Of{0}", classType.GenericTypeArguments.First().Name);

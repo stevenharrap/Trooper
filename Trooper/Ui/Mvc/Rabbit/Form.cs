@@ -18,7 +18,6 @@ namespace Trooper.Ui.Mvc.Rabbit
 	using System.Web.Mvc;
 	using System.Web.Mvc.Html;
 	using Thorny;
-	using Thorny.Interface.OperationResponse;
 	using Thorny.Utility;
 	using Properties;
 	using Interface.Mvc.Cruncher;
@@ -28,6 +27,7 @@ namespace Trooper.Ui.Mvc.Rabbit
     using Trooper.Ui.Interface.Mvc.Rabbit;
     using Trooper.Ui.Mvc.Utility;
     using Trooper.Ui.Mvc.Rabbit.Models.Table;
+    using Trooper.Interface.Thorny.Business.Response;
 
 	/// <summary>
     /// Bootstrap is a CSS library from Twitter. It is very good at Html5 layout and provides

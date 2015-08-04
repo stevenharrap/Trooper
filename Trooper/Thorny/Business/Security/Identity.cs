@@ -10,6 +10,7 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Thorny.Business.Security
 {
     [DataContract]
+    [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class Identity : IIdentity
     {
         [DataMember]

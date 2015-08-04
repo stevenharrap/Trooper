@@ -4,10 +4,11 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-namespace Trooper.Thorny.Interface.OperationResponse
+namespace Trooper.Interface.Thorny.Business.Response
 {
     using System.Collections.Generic;
     using System.ServiceModel;
+    using Trooper.Thorny;
 
     /// <summary>
     /// The Operation Response interface. This defines the base requirements
@@ -21,12 +22,12 @@ namespace Trooper.Thorny.Interface.OperationResponse
         /// response is any response where the are Messages with Alert level as Error.
         /// A true response is any response where the are no Messages with Alert level as Error.
         /// </summary>
-        bool Ok { get; }
+        bool Ok { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether warnings have been issued against the operation.
         /// </summary>
-        bool Warn { get; }
+        bool Warn { get; set; }
 
         /// <summary>
         /// Gets or sets the any messages.

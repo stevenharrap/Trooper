@@ -11,10 +11,10 @@ namespace Trooper.Testing.Web.Controllers
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Trooper.Ui.Mvc.Rabbit.Models;
-    using Trooper.Thorny.OperationResponse;
     using Trooper.Thorny;
     using Trooper.Thorny.Utility;
-    using Trooper.Thorny.Interface.OperationResponse;
+    using Trooper.Thorny.Business.Response;
+    using Trooper.Interface.Thorny.Business.Response;
 
     /// <summary>
     /// Controller for BSF test page

@@ -7,7 +7,7 @@ namespace Trooper.Thorny.Business.Response
     using System.Runtime.Serialization;
     using System.ServiceModel;
 
-    [DataContract]
+    [DataContract(Name = "SaveSomeItemOf{0}")]
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SaveSomeItem<T> : ISaveSomeItem<T>
     {
