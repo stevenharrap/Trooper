@@ -162,6 +162,8 @@
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IIdentity, Identity>());
             }
 
+            this.AddSearchMethods(businessHostInfo);
+
             this.builder.Register(c =>
                 {
                     var container = c.Resolve<IComponentContext>();
@@ -224,13 +226,18 @@
 
         private void AddSearchMethods(IBusinessHostInfo businessHostInfo)
         {
-            if (businessHostInfo.SearchMappings != null && !businessHostInfo.SearchMappings.Any())
+            if (businessHostInfo.SearchMappings == null || !businessHostInfo.SearchMappings.Any())
             {
                 return;
             }
 
             foreach (var mapping in businessHostInfo.SearchMappings)
             {
+                if (businessHostInfo.Methods == null)
+                {
+                    businessHostInfo.Methods = new List<Method>();
+                }
+
                 businessHostInfo.Methods.Add(new Method
                 {
                     Name = string.Format("GetSomeBy{0}", mapping.ResolveTo.Name),
