@@ -10,7 +10,7 @@
     {
         Func<object> Supporter { get; set; }
 
-        IHostInfo HostInfo { get; set; }
+        IBusinessHostInfo HostInfo { get; set; }
 
         ServiceHost ServiceHost { get; }
     }

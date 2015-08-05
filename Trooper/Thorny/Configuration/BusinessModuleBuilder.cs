@@ -9,6 +9,7 @@
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Interface.Thorny.Business.Operation.Composite;
     using System;
+    using System.Linq;
     using System.ServiceModel;
     using Trooper.Interface.Thorny.Configuration;
     using System.Collections.Generic;
@@ -125,51 +126,50 @@
             this.businessOperationType = typeof(TcBusinessOperation);
         }
 
-        public IHostInfo RegisterServiceHost(string baseAddress, bool useDefaultTypes = true, Action<IHostInfo> hostInfoBuilt = null, bool allowDefaultBusinessOperation = false)
+        public void RegisterServiceHost(IBusinessHostInfo businessHostInfo)
         {
             var boType = this.businessOperationType;
 
-            if (boType == null && !allowDefaultBusinessOperation)
+            if (boType == null) 
             {
-                throw new Exception("The Component must have BusinessOperation registered when allowDefaultBusinessOperation is false");
+                throw new Exception("To Register as a service host please register a business operation using RegisterBusinessOperation<TcBusinessOperation, TiBusinessOperation>");
+            }                       
+
+            if (businessHostInfo.Address == null)        
+            {
+                businessHostInfo.Address = new Uri(string.Format("{0}/{1}", businessHostInfo.BaseAddress, boType.FullName));
             }
-            else if (boType == null)
+            
+            businessHostInfo.CodeNamespace = boType.Name.Replace(".", string.Empty);
+            businessHostInfo.ServiceName = HostInfoHelper.MakeClassName(boType);
+            businessHostInfo.InterfaceName = HostInfoHelper.MakeClassName(boType, true);
+            businessHostInfo.ServiceNampespace = new Uri(string.Format("{0}/{1}Ns", businessHostInfo.BaseAddress, boType.FullName));
+            
+            if (businessHostInfo.UseDefaultTypes)
             {
-                boType = typeof(BusinessAll<TEnt, TPoco>);
+                if (businessHostInfo.Mappings == null)
+                {
+                    businessHostInfo.Mappings = new List<ClassMapping>();
+                }
+
+                businessHostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<TPoco>, SingleResponse<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IAddResponse<TPoco>, AddResponse<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IAddSomeResponse<TPoco>, AddSomeResponse<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IRequestArg<TPoco>, RequestArg<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<bool>, SingleResponse<bool>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IManyResponse<TPoco>, ManyResponse<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<ISearch, Search>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IIdentity, Identity>());
             }
 
-            var hostInfo = new HostInfo
-            {
-                Address = new Uri(string.Format("{0}/{1}", baseAddress, boType.FullName)),
-                CodeNamespace = boType.Namespace.Replace(".", string.Empty),
-                ServiceName = HostInfoHelper.MakeClassName(boType),
-                InterfaceName = HostInfoHelper.MakeClassName(boType, true),
-                ServiceNampespace = new Uri(string.Format("{0}/{1}Ns", baseAddress, boType.FullName)),
-                Mappings = new List<ClassMapping>()
-            };            
-
-            this.builder.Register(c =>                 
+            this.builder.Register(c =>
                 {
                     var container = c.Resolve<IComponentContext>();
-                    return new BusinessOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), hostInfo, hostInfoBuilt);
+                    return new BusinessOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), businessHostInfo);
                 })
                 .As<IBusinessOperationService>()
                 .As<IStartable>()
-                .SingleInstance();
-
-            if (useDefaultTypes)
-            {
-                hostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<TPoco>, SingleResponse<TPoco>>());
-                hostInfo.Mappings.Add(ClassMapping.Make<IAddResponse<TPoco>, AddResponse<TPoco>>());
-                hostInfo.Mappings.Add(ClassMapping.Make<IAddSomeResponse<TPoco>, AddSomeResponse<TPoco>>());
-                hostInfo.Mappings.Add(ClassMapping.Make<IRequestArg<TPoco>, RequestArg<TPoco>>());
-                hostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<bool>, SingleResponse<bool>>());
-                hostInfo.Mappings.Add(ClassMapping.Make<IManyResponse<TPoco>, ManyResponse<TPoco>>());
-                hostInfo.Mappings.Add(ClassMapping.Make<ISearch, Search>());
-                hostInfo.Mappings.Add(ClassMapping.Make<IIdentity, Identity>());
-            }
-
-            return hostInfo;        
+                .SingleInstance();            
         }
 
         public void EnsureRegistrations()
@@ -220,6 +220,28 @@
                 Validation = validation,
                 Container = container
             };
+        }
+
+        private void AddSearchMethods(IBusinessHostInfo businessHostInfo)
+        {
+            if (businessHostInfo.SearchMappings != null && !businessHostInfo.SearchMappings.Any())
+            {
+                return;
+            }
+
+            foreach (var mapping in businessHostInfo.SearchMappings)
+            {
+                businessHostInfo.Methods.Add(new Method
+                {
+                    Name = string.Format("GetSomeBy{0}", mapping.ResolveTo.Name),
+                    Returns = typeof(IManyResponse<TPoco>),
+                    Parameters = new List<Paramater> {
+                        new Paramater(mapping.ResolveTo, "search"),
+                        new Paramater(typeof(IIdentity), "identity")
+                    },
+                    Body = (MethodInput p) => { return null; } //what now?!
+                });
+            }
         }
     }
 }

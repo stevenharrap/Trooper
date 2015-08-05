@@ -1,9 +1,11 @@
 ﻿namespace Trooper.Testing.CustomShopApi.Business.Support.ShopSupport
 {
     using Autofac;
+    using System.Collections.Generic;
     using Trooper.DynamicServiceHost;
     using Trooper.Interface.DynamicServiceHost;
     using Trooper.Interface.Thorny.Business.Response;
+    using Trooper.Interface.Thorny.Configuration;
     using Trooper.Testing.CustomShopApi.Business.Model;
     using Trooper.Testing.CustomShopApi.Business.Operation;
     using Trooper.Testing.CustomShopApi.Facade.ShopSupport;
@@ -26,11 +28,19 @@
             component.RegisterBusinessOperation<ShopBo, IShopBo>();            
 
             component.RegisterServiceHost(
-                "http://localhost:8000", 
-                hostInfoBuilt: (IHostInfo hi) => 
+                new BusinessHostInfo 
                 {
-                    hi.Mappings.Add(ClassMapping.Make<ISingleResponse<ProductInShop>, SingleResponse<ProductInShop>>());
-                    hi.Mappings.Add(ClassMapping.Make<ISaveResponse<ProductInShop>, SaveResponse<ProductInShop>>());
+                    BaseAddress = "http://localhost:8000",
+                    Mappings = new List<ClassMapping> 
+                    {
+                        ClassMapping.Make<ISingleResponse<ProductInShop>, SingleResponse<ProductInShop>>(),
+                        ClassMapping.Make<ISaveResponse<ProductInShop>, SaveResponse<ProductInShop>>()
+                    },
+                    SearchMappings = new List<ClassMapping>()
+                    {
+                        BusinessHostInfo.NewSearch<ShopAddressSearch>(),
+                        BusinessHostInfo.NewSearch<ShopNameSearch>()
+                    }                    
                 });
 
             BusinessModule.AddComponent(component);
