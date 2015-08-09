@@ -15,6 +15,7 @@
     using Trooper.Testing.ShopModel.Poco;
     using Trooper.Thorny.Business.Response;
     using Trooper.Thorny.Configuration;
+    using Trooper.Utility;
 
     public class ShopConfiguration
     {
@@ -36,11 +37,6 @@
                         ClassMapping.Make<ISingleResponse<ProductInShop>, SingleResponse<ProductInShop>>(),
                         ClassMapping.Make<ISaveResponse<ProductInShop>, SaveResponse<ProductInShop>>()
                     },
-                    SearchMappings = new List<ClassMapping>()
-                    {
-                        BusinessHostInfo.NewSearch<ShopAddressSearch>(),
-                        BusinessHostInfo.NewSearch<ShopNameSearch>()
-                    }                    
                 });
 
             BusinessModule.AddComponent(component);

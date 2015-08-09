@@ -1,14 +1,18 @@
 ﻿namespace Trooper.Thorny.Interface.DataManager
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Trooper.Utility;
 
     public interface IFacade<TEnt, TPoco> 
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
         //bool IsKeyAuto();
+
+        IEnumerable<ClassMapping> Searches { get; }
 
         PropertyInfo[] KeyProperties { get; }
 
@@ -18,19 +22,22 @@
 
         IEnumerable<TEnt> GetSomeByKey(IEnumerable<TEnt> items);
 
-        //TEnt GetByKey(object obj);
-
         bool Exists(TEnt item);
-
-        //bool Exists(object obj);
 
 	    bool IsDefault(TEnt item);
 
         bool AreEqual(TEnt item1, TEnt item2);
 
-        //bool AreEqual(object obj, TEnt item2);
-
         IQueryable<TEnt> GetAll();
+
+        void AddSearch<TISearch, TSearch>()
+            where TISearch : class, ISearch
+            where TSearch : class, TISearch, new();
+
+        void AddSearch<TSearch>()
+            where TSearch : class, ISearch, new();            
+
+        bool IsSearchAllowed(ISearch search);
 
         IEnumerable<TEnt> GetSome(ISearch search);
 

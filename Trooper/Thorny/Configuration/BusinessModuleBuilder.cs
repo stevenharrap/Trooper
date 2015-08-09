@@ -19,6 +19,7 @@
     using Trooper.Interface.DynamicServiceHost;
     using Trooper.Thorny.Business.Response;
     using Trooper.Interface.Thorny.Business.Response;
+    using Trooper.Utility;
 
     public class BusinessModule    
     {
@@ -143,7 +144,7 @@
             businessHostInfo.CodeNamespace = boType.Name.Replace(".", string.Empty);
             businessHostInfo.ServiceName = HostInfoHelper.MakeClassName(boType);
             businessHostInfo.InterfaceName = HostInfoHelper.MakeClassName(boType, true);
-            businessHostInfo.ServiceNampespace = new Uri(string.Format("{0}/{1}Ns", businessHostInfo.BaseAddress, boType.FullName));
+            businessHostInfo.ServiceNampespace = new Uri(string.Format("{0}/{1}Ns", businessHostInfo.BaseAddress, boType.FullName)); //this should be a common string
             
             if (businessHostInfo.UseDefaultTypes)
             {
@@ -158,15 +159,15 @@
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IRequestArg<TPoco>, RequestArg<TPoco>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<bool>, SingleResponse<bool>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IManyResponse<TPoco>, ManyResponse<TPoco>>());
-                businessHostInfo.Mappings.Add(ClassMapping.Make<ISearch, Search>());
-                businessHostInfo.Mappings.Add(ClassMapping.Make<IIdentity, Identity>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<ISearch, Search>(commonType: true));
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IIdentity, Identity>(commonType: true));
             }
-
-            this.AddSearchMethods(businessHostInfo);
-
+            
             this.builder.Register(c =>
                 {
                     var container = c.Resolve<IComponentContext>();
+                    var operation = c.Resolve<IBusinessOperation<TEnt, TPoco>>();
+                    businessHostInfo.HostInfoBuilt = (IBusinessHostInfo bhi) => { this.AddSearchMethods(operation, bhi); };
                     return new BusinessOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), businessHostInfo);
                 })
                 .As<IBusinessOperationService>()
@@ -224,14 +225,20 @@
             };
         }
 
-        private void AddSearchMethods(IBusinessHostInfo businessHostInfo)
+        private void AddSearchMethods(IBusinessOperation<TEnt, TPoco> operation, IBusinessHostInfo businessHostInfo)
         {
-            if (businessHostInfo.SearchMappings == null || !businessHostInfo.SearchMappings.Any())
+            var bp = operation.BusinessCore.GetBusinessPack();
+            var searches = operation.BusinessCore.GetSearches(bp);
+            var hasGetSomeMethod = operation.GetType().GetMethod(OperationAction.GetSomeAction) != null;
+
+            businessHostInfo.Methods.RemoveAll(i => i.Name == OperationAction.GetSomeAction);
+
+            if (searches == null || !searches.Any() || !hasGetSomeMethod)
             {
                 return;
-            }
+            }            
 
-            foreach (var mapping in businessHostInfo.SearchMappings)
+            foreach (var mapping in searches)
             {
                 if (businessHostInfo.Methods == null)
                 {
@@ -246,7 +253,10 @@
                         new Paramater(mapping.ResolveTo, "search"),
                         new Paramater(typeof(IIdentity), "identity")
                     },
-                    Body = (MethodInput p) => { return null; } //what now?!
+                    Body = (MethodInput p) => {
+                        var getSomeMethod = p.Supporter.GetType().GetMethod(OperationAction.GetSomeAction);
+                        return getSomeMethod.Invoke(p.Supporter, p.Inputs);
+                    } 
                 });
             }
         }

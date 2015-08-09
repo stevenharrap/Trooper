@@ -17,6 +17,6 @@ namespace Trooper.Interface.Thorny.Configuration
 
         Action<IBusinessHostInfo> HostInfoBuilt { get; set; }
 
-        IList<ClassMapping> SearchMappings { get; set; }
+        //IList<ClassMapping> SearchMappings { get; set; }
     }
 }

@@ -9,6 +9,7 @@
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Reflection;
+    using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Utility;    
 
@@ -18,7 +19,12 @@
     {
         static Facade()
         {
-            AutoMapper.Mapper.CreateMap<TPoco, TEnt>().IgnorePropertiesOfType(typeof(ICollection));
+            AutoMapper.Mapper.CreateMap<TPoco, TEnt>().IgnorePropertiesOfType(typeof(ICollection));            
+        }
+
+        public Facade()
+        {
+            this.AddSearch<ISearch, Search>();
         }
 
         #region fields
@@ -64,11 +70,21 @@
 
                 return this.keyProperties;
             }
-        }        
+        }
+
+        public IEnumerable<ClassMapping> Searches
+        {
+            get
+            {
+                return this.searches;
+            }
+        }
 
         #endregion
 
         #region private
+
+        private List<ClassMapping> searches;
 
         private IRepository<TEnt> repository;
 
@@ -103,10 +119,57 @@
         public virtual IQueryable<TEnt> GetAll()
         {
             return this.Repository.DbSet;
+        }               
+
+        public void AddSearch<TISearch, TSearch>()
+            where TISearch : class, ISearch
+            where TSearch : class, TISearch, new()
+        {
+            var searchType = typeof(TSearch);
+
+            if (this.searches == null)
+            {
+                this.searches = new List<ClassMapping>();
+            }
+
+            if (this.searches.Any(s => s.Source.IsEquivalentTo(searchType)))
+            {
+                return;
+            }
+
+            this.searches.Add(ClassMapping.Make<TISearch, TSearch>());
+        }
+
+        public void AddSearch<TSearch>()
+            where TSearch : class, ISearch, new()
+        {
+            this.AddSearch<TSearch, TSearch>();
+        }
+
+        public void ClearSearches()
+        {
+            this.searches = new List<ClassMapping>();
+        }
+
+        public bool IsSearchAllowed(ISearch search)
+        {
+            if (search == null)
+            {
+                return false;
+            }
+
+            var searchType = search.GetType();
+
+            return this.Searches.Any(s =>  s.Source.IsEquivalentTo(searchType));
         }
 
         public virtual IEnumerable<TEnt> GetSome(ISearch search)
-        {            
+        {
+            if (!this.IsSearchAllowed(search))
+            {
+                return new List<TEnt>();
+            }
+            
             return this.GetAll().AsEnumerable();
         }
 
@@ -144,14 +207,7 @@
             }
 
             return null;
-        }
-
-        //public TEnt GetByKey(TPoco poco)
-        //{
-        //    var item = AutoMapper.Mapper.DynamicMap<TEnt>(obj);
-
-        //    return this.GetByKey(item);
-        //}
+        }        
 
         public virtual IEnumerable<TEnt> GetSomeByKey(IEnumerable<TEnt> items)
         {
@@ -165,14 +221,7 @@
         {
             return this.GetByKey(item) != null;
         }
-
-        //public bool Exists(object obj)
-        //{
-        //    var item = AutoMapper.Mapper.DynamicMap<TEnt>(obj);
-
-        //    return this.Exists(item);
-        //}
-
+        
 	    public bool IsDefault(TEnt item)
 	    {
 			if (item == null)
@@ -209,14 +258,7 @@
             }
 
             return true;
-        }
-
-        //public bool AreEqual(object obj, TEnt item2)
-        //{
-        //    var entity1 = AutoMapper.Mapper.DynamicMap<TEnt>(obj);
-
-        //    return this.AreEqual(entity1, item2);
-        //}
+        }        
 
         public virtual TEnt Add(TEnt item)
         {

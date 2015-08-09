@@ -11,10 +11,18 @@ namespace Trooper.Testing.CustomShopApi.Facade.ShopSupport
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
     using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using System.Collections.Generic;
 
     public class ShopFacade : Facade<ShopEnt, Shop>, IShopFacade
     {
-		public override System.Collections.Generic.IEnumerable<ShopEnt> GetSome(ISearch search)
+        public ShopFacade() : base()
+        {
+            this.ClearSearches();
+            this.AddSearch<ShopAddressSearch>();
+            this.AddSearch<ShopNameSearch>();
+        }
+
+		public override IEnumerable<ShopEnt> GetSome(ISearch search)
 		{
 			if (search is ShopNameSearch)
 			{

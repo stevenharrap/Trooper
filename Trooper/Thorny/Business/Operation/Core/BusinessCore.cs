@@ -16,6 +16,8 @@ namespace Trooper.Thorny.Business.Operation.Core
 	using Security;
 	using Interface.DataManager;
 	using Utility;
+    using System;
+    using Trooper.Utility;
 
 	/// <summary>
     /// Provides the means to expose your Model, wrap it in Read and Add operations and control
@@ -25,9 +27,9 @@ namespace Trooper.Thorny.Business.Operation.Core
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        private static List<System.Guid> sessions = new List<System.Guid>();
+        private static List<System.Guid> sessions = new List<System.Guid>();        
 
-        public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;
+        public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;        
 
         #region Methods
 
@@ -107,7 +109,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             businessPack.Validation.Validate(added, response);
 
-            var arg = new RequestArg<TEnt> { Action = Action.AddAction, Item = added };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.AddAction, Item = added };
 
             if (businessPack.Authorization != null)
             {
@@ -175,7 +177,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = Action.AddSomeAction, Items = added };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.AddSomeAction, Items = added };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -223,7 +225,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = Action.IsAllowedAction };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.IsAllowedAction };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -266,7 +268,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = Security.Action.GetSession };
+            var arg = new RequestArg<TEnt> { Action = Security.OperationAction.GetSession };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -327,7 +329,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var itemAsTc = businessPack.Facade.Map(item);
             var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
 
-            var arg = new RequestArg<TEnt> { Action = Action.DeleteByKeyAction, Item = itemAsTc };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.DeleteByKeyAction, Item = itemAsTc };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -387,7 +389,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var itemsAsListTc = businessPack.Facade.Map(items);
             var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));
 
-            var arg = new RequestArg<TEnt> { Action = Action.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -429,7 +431,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = Action.GetAllAction };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.GetAllAction };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -443,7 +445,12 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #endregion
 
-        #region GetSome
+        #region GetSome        
+
+        public IEnumerable<ClassMapping> GetSearches(IBusinessPack<TEnt, TPoco> businessPack)
+        {
+            return businessPack.Facade.Searches;
+        }
 
         public IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity)
         {
@@ -472,12 +479,17 @@ namespace Trooper.Thorny.Business.Operation.Core
                 MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
             }
 
+            if (!businessPack.Facade.IsSearchAllowed(search))
+            {
+                MessageUtility.Errors.Add("The search type cannot be used for searching.", DeniedSearchCode, response);
+            }
+
             if (!response.Ok)
             {
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = Action.GetSomeAction, Search = search };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeAction, Search = search };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -535,7 +547,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemEnt = businessPack.Facade.Map(item);
-            var arg = new RequestArg<TEnt> { Action = Action.GetSomeAction, Item = itemEnt };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeAction, Item = itemEnt };
             var errorMessage = string.Format("The ({0}) could not be found.", typeof(TEnt));
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
@@ -593,7 +605,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemsTc = businessPack.Facade.Map(items).ToList();
-            var arg = new RequestArg<TEnt> { Action = Action.GetSomeByKeyAction, Items = itemsTc };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeByKeyAction, Items = itemsTc };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -642,7 +654,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             var itemEnt = businessPack.Facade.Map(item);
-            var arg = new RequestArg<TEnt> { Action = Action.GetSomeAction, Item = itemEnt };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeAction, Item = itemEnt };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -710,7 +722,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             businessPack.Validation.Validate(updated, response);
 
-            var arg = new RequestArg<TEnt> { Action = Action.UpdateAction, Item = updated };
+            var arg = new RequestArg<TEnt> { Action = OperationAction.UpdateAction, Item = updated };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -780,7 +792,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             foreach (var i in updated)
             {
-                var arg = new RequestArg<TEnt> { Action = Action.UpdateAction, Item = i };
+                var arg = new RequestArg<TEnt> { Action = OperationAction.UpdateAction, Item = i };
 
                 if (businessPack.Authorization != null)
                 {
@@ -857,7 +869,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             businessPack.Validation.Validate(saved, response);
 
-            var arg = new RequestArg<TEnt> { Action = exists ? Action.UpdateAction : Action.AddAction, Item = saved };
+            var arg = new RequestArg<TEnt> { Action = exists ? OperationAction.UpdateAction : OperationAction.AddAction, Item = saved };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -931,7 +943,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             foreach (var i in saved)
             {
-                var arg = new RequestArg<TEnt> { Action = i.Exists ? Action.UpdateAction : Action.AddAction, Item = i.Item };
+                var arg = new RequestArg<TEnt> { Action = i.Exists ? OperationAction.UpdateAction : OperationAction.AddAction, Item = i.Item };
 
                 if (businessPack.Authorization != null)
                 {
@@ -990,6 +1002,8 @@ namespace Trooper.Thorny.Business.Operation.Core
         public const string AddFailedCode = Constants.BusinessCoreErrorCodeRoot + ".AddFailed";
 
         public const string NullSearchCode = Constants.BusinessCoreErrorCodeRoot + ".NullSearch";
+
+        public const string DeniedSearchCode = Constants.BusinessCoreErrorCodeRoot + ".DeniedSearch";
 
         public const string NoRecordCode = Constants.BusinessCoreErrorCodeRoot + ".NoReocrd";
 

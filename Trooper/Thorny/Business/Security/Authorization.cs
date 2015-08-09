@@ -29,19 +29,19 @@ namespace Trooper.Thorny.Business.Security
             {
                 return new[]
 				{
-					Action.AddAction, 
-					Action.AddSomeAction, 
-					Action.DeleteByKeyAction, 
-					Action.DeleteSomeByKeyAction,
-					Action.ExistsByKeyAction, 
-					Action.GetAllAction, 
-					Action.GetByKeyAction, 
-					Action.GetSomeByKeyAction, 
-					Action.GetSession, 
-					Action.GetSomeAction,
-					Action.IsAllowedAction, 
-					Action.UpdateAction,
-					Action.UpdateSomeAction
+					OperationAction.AddAction, 
+					OperationAction.AddSomeAction, 
+					OperationAction.DeleteByKeyAction, 
+					OperationAction.DeleteSomeByKeyAction,
+					OperationAction.ExistsByKeyAction, 
+					OperationAction.GetAllAction, 
+					OperationAction.GetByKeyAction, 
+					OperationAction.GetSomeByKeyAction, 
+					OperationAction.GetSession, 
+					OperationAction.GetSomeAction,
+					OperationAction.IsAllowedAction, 
+					OperationAction.UpdateAction,
+					OperationAction.UpdateSomeAction
 				};
             }
         }
@@ -58,20 +58,20 @@ namespace Trooper.Thorny.Business.Security
 
         public virtual bool IsAddDataAction(string action)
         {
-            return action == Action.AddAction
-                || action == Action.AddSomeAction;
+            return action == OperationAction.AddAction
+                || action == OperationAction.AddSomeAction;
         }
 
         public virtual bool IsRemoveDataAction(string action)
         {
-            return action == Action.DeleteByKeyAction
-                || action == Action.DeleteSomeByKeyAction;
+            return action == OperationAction.DeleteByKeyAction
+                || action == OperationAction.DeleteSomeByKeyAction;
         }
 
         public virtual bool IsUpdateAction(string action)
         {
-            return action == Action.UpdateAction
-                || action == Action.UpdateSomeAction;
+            return action == OperationAction.UpdateAction
+                || action == OperationAction.UpdateSomeAction;
         }
 
         public virtual bool IsChangeAction(string action)
@@ -83,10 +83,10 @@ namespace Trooper.Thorny.Business.Security
 
         public virtual bool IsReadAction(string action)
         {
-            return action == Action.GetAllAction
-                || action == Action.GetSomeAction
-                || action == Action.GetByKeyAction
-                || action == Action.ExistsByKeyAction;
+            return action == OperationAction.GetAllAction
+                || action == OperationAction.GetSomeAction
+                || action == OperationAction.GetByKeyAction
+                || action == OperationAction.ExistsByKeyAction;
         }
 
         public bool IsAllowed(IRequestArg<TEnt> arg, IIdentity identity)
@@ -124,26 +124,26 @@ namespace Trooper.Thorny.Business.Security
             {
                 switch (behaviour.Action)
                 {
-                    case Action.AllActions:
+                    case OperationAction.AllActions:
                         behaviours.ForEach(action => action.Allow = behaviour.Allow);
                         break;
-                    case Action.AllAddActions:
+                    case OperationAction.AllAddActions:
                         behaviours.Where(action => this.IsAddDataAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
                         break;
-                    case Action.AllChangeActions:
+                    case OperationAction.AllChangeActions:
                         behaviours.Where(action => this.IsChangeAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
                         break;
-                    case Action.AllUpdateActions:
+                    case OperationAction.AllUpdateActions:
                         behaviours.Where(action => this.IsUpdateAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
                         break;
-                    case Action.AllReadActions:
+                    case OperationAction.AllReadActions:
                         behaviours.Where(action => this.IsReadAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
                         break;
-                    case Action.AllRemoveActions:
+                    case OperationAction.AllRemoveActions:
                         behaviours.Where(action => this.IsRemoveDataAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
                         break;

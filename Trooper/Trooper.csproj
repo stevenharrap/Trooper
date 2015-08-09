@@ -142,7 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveDirectory\ActiveDirectoryUser.cs" />
-    <Compile Include="DynamicServiceHost\ClassMapping.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\ComplexTypeConverterException.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderDynamicCodeException.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderValidateHostInfoException.cs" />
@@ -177,7 +176,7 @@
     <Compile Include="Thorny\Business\Security\RequestArg.cs" />
     <Compile Include="Thorny\Business\Security\Role.cs" />
     <Compile Include="Thorny\Business\Security\Assignment.cs" />
-    <Compile Include="Thorny\Business\Security\Action.cs" />
+    <Compile Include="Thorny\Business\Security\OperationAction.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
@@ -325,6 +324,7 @@
     <Compile Include="Ui\Mvc\Cruncher\StoreItem.cs" />
     <None Include="Ui\Mvc\Cruncher\StoreItemList.cs.disable" />
     <Compile Include="Ui\Mvc\Utility\RabbitHelper.cs" />
+    <Compile Include="Utility\ClassMapping.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="DynamicServiceHost\HostBuilder.cs" />
     <Compile Include="DynamicServiceHost\HostFactoryBuilder\DynamicInstanceProvider.cs" />

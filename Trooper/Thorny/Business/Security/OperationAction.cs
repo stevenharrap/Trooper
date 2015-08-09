@@ -10,7 +10,7 @@ namespace Trooper.Thorny.Business.Security
     /// This class provides the Business Operation methods names as constant strings. 
     /// These are used against the CanUser method in Access interface.
     /// </summary>
-    public class Action
+    public class OperationAction
     {
         /// <summary>
         /// Represents all actions. Testing against this action implies that

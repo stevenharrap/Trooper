@@ -3,6 +3,7 @@ using Exp018DynamicTake6.DynamicServiceHost;
 using System;
 using System.Collections.Generic;
 using Trooper.DynamicServiceHost;
+using Trooper.Utility;
 
 namespace Trooper.Interface.DynamicServiceHost
 {

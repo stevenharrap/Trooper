@@ -24,6 +24,11 @@ namespace Trooper.Thorny
         /// </summary>
         public const string ServiceContractNameSpace = "Trooper.ServiceOperations";
 
+        /// <summary>
+        /// The service contract name space.
+        /// </summary>
+        public const string DataContractNameSpace = "Trooper.DataOperations";
+
         public const string BusinessCoreErrorCodeRoot = "Trooper.Thorny.BusinessCore";
 
         public const string ValidationErrorCodeRoot = "Trooper.Thorny.Validation";

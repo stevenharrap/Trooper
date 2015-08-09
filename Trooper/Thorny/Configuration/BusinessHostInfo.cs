@@ -22,22 +22,22 @@ namespace Trooper.Thorny.Configuration
 
         public Action<IBusinessHostInfo> HostInfoBuilt { get; set; }
 
-        public IList<ClassMapping> SearchMappings { get; set; }
+        //public IList<ClassMapping> SearchMappings { get; set; }
 
-        public static ClassMapping NewSearch<TISearch, TSearch>()
-            where TISearch : class, ISearch
-            where TSearch : class, TISearch, new()
-        {
-            return ClassMapping.Make<TISearch, TSearch>();
+        //public static ClassMapping NewSearch<TISearch, TSearch>()
+        //    where TISearch : class, ISearch
+        //    where TSearch : class, TISearch, new()
+        //{
+        //    return ClassMapping.Make<TISearch, TSearch>();
 
-        }
+        //}
 
-        public static ClassMapping NewSearch<TSearch>()
-            where TSearch : class, ISearch, new()
-        {
-            return ClassMapping.Make<TSearch>();
+        //public static ClassMapping NewSearch<TSearch>()
+        //    where TSearch : class, ISearch, new()
+        //{
+        //    return ClassMapping.Make<TSearch>();
 
-        }
+        //}
     }
 
     

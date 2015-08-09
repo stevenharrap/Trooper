@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Trooper.Thorny.Interface.DataManager;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
+using Trooper.Utility;
 
 namespace Trooper.Interface.Thorny.Business.Operation.Core
 {
@@ -21,6 +22,8 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         where TPoco : class
     {
         event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;
+
+        IEnumerable<ClassMapping> GetSearches(IBusinessPack<TEnt, TPoco> businessPack);
 
         #region GetBusinessPack
 
@@ -80,7 +83,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         #endregion
 
-        #region GetSome
+        #region GetSome             
 
         IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity);
 

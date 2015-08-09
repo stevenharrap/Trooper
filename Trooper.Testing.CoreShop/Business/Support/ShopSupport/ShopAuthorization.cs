@@ -16,18 +16,18 @@
             {
                 var adminGroup = new List<string> { TestBase.ValidUsername, string.Format("{0}_1", TestBase.ValidUsername) };
 
-                var adminRole = new Role { new Behaviour { Action = Action.AllActions, Allow = true } };
-                var deniedRole = new Role { new Behaviour { Action = Action.AllActions, Allow = false } };
+                var adminRole = new Role { new Behaviour { Action = OperationAction.AllActions, Allow = true } };
+                var deniedRole = new Role { new Behaviour { Action = OperationAction.AllActions, Allow = false } };
                 var readerRole = new Role
 				{
-					new Behaviour {Action = Action.AllActions, Allow = false},
-					new Behaviour {Action = Action.GetByKeyAction, Allow = true},
-					new Behaviour {Action = Action.GetAllAction, Allow = true}
+					new Behaviour {Action = OperationAction.AllActions, Allow = false},
+					new Behaviour {Action = OperationAction.GetByKeyAction, Allow = true},
+					new Behaviour {Action = OperationAction.GetAllAction, Allow = true}
 				};
                 var noAddingRole = new Role
 				{
-					new Behaviour {Action = Action.AllActions, Allow = true},
-					new Behaviour {Action = Action.AllAddActions, Allow = false}
+					new Behaviour {Action = OperationAction.AllActions, Allow = true},
+					new Behaviour {Action = OperationAction.AllAddActions, Allow = false}
 				};
 
                 var adminAssignment = new Assignment { Role = adminRole, UserGroups = adminGroup };

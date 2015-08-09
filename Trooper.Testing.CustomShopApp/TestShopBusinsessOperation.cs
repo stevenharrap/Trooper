@@ -849,15 +849,15 @@
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-			var isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = Action.AddAction }, new Identity { Username = "NoAdderUser" });
+			var isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.AddAction }, new Identity { Username = "NoAdderUser" });
 			Assert.IsTrue(isAllowed.Ok);
 			Assert.IsFalse(isAllowed.Item);
 
-            isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = Action.GetAllAction }, validIdentity);
+            isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.GetAllAction }, validIdentity);
             Assert.IsTrue(isAllowed.Ok);
             Assert.IsTrue(isAllowed.Item);
 
-			isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = Action.GetAllAction }, invalidIdentity);
+			isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.GetAllAction }, invalidIdentity);
 			Assert.IsFalse(isAllowed.Ok);
 			Assert.IsFalse(isAllowed.Item);
 			Assert.IsNotNull(isAllowed.Messages);
@@ -871,7 +871,7 @@
 			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
 			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullArgumentCode));
 
-			isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = Action.GetAllAction }, null);
+			isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.GetAllAction }, null);
 			Assert.IsFalse(isAllowed.Ok);
 			Assert.IsFalse(isAllowed.Item);
 			Assert.IsNotNull(isAllowed.Messages);

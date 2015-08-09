@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Trooper.Interface.DynamicServiceHost;
+using Trooper.Utility;
 
 namespace Trooper.DynamicServiceHost
 {
@@ -20,5 +21,7 @@ namespace Trooper.DynamicServiceHost
         public List<Method> Methods { get; set; }
 
         public List<ClassMapping> Mappings { get; set; }
+
+
     }
 }

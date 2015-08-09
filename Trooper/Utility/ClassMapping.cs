@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trooper.DynamicServiceHost
+namespace Trooper.Utility
 {
     public class ClassMapping
     {
@@ -12,21 +12,23 @@ namespace Trooper.DynamicServiceHost
 
         public Type ResolveTo { get; private set; }
 
+        public bool CommonType { get; set; }
+
         private ClassMapping()
         {
         }
 
-        public static ClassMapping Make<TSource, TResolveTo>()
+        public static ClassMapping Make<TSource, TResolveTo>(bool commonType = false)
             where TSource : class
             where TResolveTo : class, TSource, new()
         {
-            return new ClassMapping { Source = typeof(TSource), ResolveTo = typeof(TResolveTo) };
+            return new ClassMapping { Source = typeof(TSource), ResolveTo = typeof(TResolveTo), CommonType = commonType };
         }
 
-        public static ClassMapping Make<TSource>()
+        public static ClassMapping Make<TSource>(bool commonType = false)
             where TSource : class, new()
         {
-            return new ClassMapping { Source = typeof(TSource), ResolveTo = typeof(TSource) };
+            return new ClassMapping { Source = typeof(TSource), ResolveTo = typeof(TSource), CommonType = commonType };
         }
     }
 }

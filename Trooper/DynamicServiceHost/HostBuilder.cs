@@ -33,7 +33,7 @@ namespace Trooper.DynamicServiceHost
 
             code.AppendLine();
 
-            code.Append(GenerateInerfaceCode(hostInfo));
+            code.Append(GenerateInterfaceCode(hostInfo));
 
             code.AppendLine();
             
@@ -102,7 +102,7 @@ namespace Trooper.DynamicServiceHost
                     "public {0} {1} ({2}) {{",
                     ResolveSource(method.Returns, hostInfo),
                     method.Name,
-                    string.Join(",", method.Parameters.Select(p => string.Format("{0} {1}", ResolveSource(p.Type, hostInfo), p.Name))));
+                    string.Join(", ", method.Parameters.Select(p => string.Format("{0} {1}", ResolveSource(p.Type, hostInfo), p.Name))));
 
                 if (method.DebugMethod)
                 {
@@ -149,9 +149,14 @@ namespace Trooper.DynamicServiceHost
             return code;
         }
 
-        private static StringBuilder GenerateInerfaceCode(IHostInfo hostInfo)
+        private static StringBuilder GenerateInterfaceCode(IHostInfo hostInfo)
         {
             var code = new StringBuilder();
+
+            foreach (var m in hostInfo.Mappings.Where(m => m.CommonType))
+            {
+                AppendCode(code, 1, "[ServiceKnownType(typeof({0}))]", GetTypeName(m.ResolveTo));
+            }
 
             AppendCode(code, 1, "[ServiceContract(Namespace = \"{0}\")]", hostInfo.ServiceNampespace);
             AppendCode(code, 1, "public interface {0} {{", hostInfo.InterfaceName);
@@ -162,7 +167,7 @@ namespace Trooper.DynamicServiceHost
                 AppendCode(code, 2, "{0} {1} ({2});",
                     ResolveSource(method.Returns, hostInfo),
                     method.Name,
-                    string.Join(",", method.Parameters.Select(p => string.Format("{0} {1}", ResolveSource(p.Type, hostInfo), p.Name))));
+                    string.Join(", ", method.Parameters.Select(p => string.Format("{0} {1}", ResolveSource(p.Type, hostInfo), p.Name))));
 
                 code.AppendLine();
             }
