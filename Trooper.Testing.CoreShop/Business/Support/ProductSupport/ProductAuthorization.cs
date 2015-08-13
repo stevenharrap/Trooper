@@ -7,7 +7,7 @@
     using Interface.Business.Support;
     using ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
-    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
 
     public class ProductAuthorization : Authorization<ProductEnt>, IProductAuthorization
     {
@@ -15,7 +15,7 @@
 	    {
 			get
 			{
-                return ShopAuthorization.GeneralAssigments;
+                return OutletAuthorization.GeneralAssigments;
 			}
 	    }
     }

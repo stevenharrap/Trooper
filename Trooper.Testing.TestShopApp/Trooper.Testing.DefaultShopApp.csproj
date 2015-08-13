@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestProductBaseBusinsessOperation.cs" />
-    <Compile Include="TestShopBaseBusinsessOperation.cs" />
+    <Compile Include="TestOutletBaseBusinsessOperation.cs" />
     <Compile Include="TestProductBaseFacade.cs" />
     <Compile Include="TestShopBaseFacade.cs" />
   </ItemGroup>

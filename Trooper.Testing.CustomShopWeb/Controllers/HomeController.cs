@@ -27,7 +27,7 @@ namespace Trooper.Testing.CustomShopWeb.Controllers
                 //model.AllServices = BusinessModuleBuilder.GetAllServices(container);
             };
 
-            ChannelFactory<IShopBo> scf = new ChannelFactory<IShopBo>(
+            ChannelFactory<IOutletBo> scf = new ChannelFactory<IOutletBo>(
                 new NetHttpBinding(),
                 "http://localhost:8000/Trooper.Testing.CustomShopApi.Interface.Business.Operation.IShopBo");
 

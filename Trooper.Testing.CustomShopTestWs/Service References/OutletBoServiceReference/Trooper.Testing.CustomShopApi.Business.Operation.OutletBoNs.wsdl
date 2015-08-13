@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OutletBo" targetNamespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/Imports">
+      <xsd:import namespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="Trooper.DataOperations" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Operation.Core" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Model" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Support.OutletSupport" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOutletBo_SaveProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveProduct" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_SaveProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_SimpleLittleThing_InputMessage">
+    <wsdl:part name="parameters" element="tns:SimpleLittleThing" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_SimpleLittleThing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SimpleLittleThingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_Add_InputMessage">
+    <wsdl:part name="parameters" element="tns:Add" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_Add_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_AddSome_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSome" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_AddSome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_IsAllowed_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsAllowed" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_IsAllowed_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsAllowedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAll" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetByKey" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_ExistsByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsByKey" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_ExistsByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetSomeByOutletAddressSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSomeByOutletAddressSearch" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetSomeByOutletAddressSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSomeByOutletAddressSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetSomeByOutletNameSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSomeByOutletNameSearch" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetSomeByOutletNameSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSomeByOutletNameSearchResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IOutletBo">
+    <wsdl:operation name="SaveProduct">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveProduct" message="tns:IOutletBo_SaveProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveProductResponse" message="tns:IOutletBo_SaveProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SimpleLittleThing">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SimpleLittleThing" message="tns:IOutletBo_SimpleLittleThing_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SimpleLittleThingResponse" message="tns:IOutletBo_SimpleLittleThing_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Add">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/Add" message="tns:IOutletBo_Add_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/AddResponse" message="tns:IOutletBo_Add_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSome">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/AddSome" message="tns:IOutletBo_AddSome_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/AddSomeResponse" message="tns:IOutletBo_AddSome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsAllowed">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/IsAllowed" message="tns:IOutletBo_IsAllowed_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/IsAllowedResponse" message="tns:IOutletBo_IsAllowed_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAll">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetAll" message="tns:IOutletBo_GetAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetAllResponse" message="tns:IOutletBo_GetAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByKey">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetByKey" message="tns:IOutletBo_GetByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetByKeyResponse" message="tns:IOutletBo_GetByKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExistsByKey">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/ExistsByKey" message="tns:IOutletBo_ExistsByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/ExistsByKeyResponse" message="tns:IOutletBo_ExistsByKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSomeByOutletAddressSearch">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletAddressSearch" message="tns:IOutletBo_GetSomeByOutletAddressSearch_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletAddressSearchResponse" message="tns:IOutletBo_GetSomeByOutletAddressSearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSomeByOutletNameSearch">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletNameSearch" message="tns:IOutletBo_GetSomeByOutletNameSearch_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletNameSearchResponse" message="tns:IOutletBo_GetSomeByOutletNameSearch_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOutletBo" type="tns:IOutletBo">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SaveProduct">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SimpleLittleThing">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SimpleLittleThing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/Add" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSome">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/AddSome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsAllowed">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/IsAllowed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAll">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByKey">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistsByKey">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/ExistsByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSomeByOutletAddressSearch">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletAddressSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSomeByOutletNameSearch">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletNameSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OutletBo">
+    <wsdl:port name="BasicHttpBinding_IOutletBo" binding="tns:BasicHttpBinding_IOutletBo">
+      <soap:address location="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBo" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

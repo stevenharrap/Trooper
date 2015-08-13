@@ -4,7 +4,7 @@
     using Thorny.Business.Security;
     using Trooper.Interface.Thorny.Business.Security;
     using ShopModel.Model;
-    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
 
     public class InventoryAuthorization : Authorization<InventoryEnt>, IInventoryAuthorization
@@ -13,7 +13,7 @@
 	    {
 			get
 			{
-                return ShopAuthorization.GeneralAssigments;
+                return OutletAuthorization.GeneralAssigments;
 			}
 	    }
     }

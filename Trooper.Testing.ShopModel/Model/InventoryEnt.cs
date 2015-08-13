@@ -11,6 +11,6 @@ namespace Trooper.Testing.ShopModel.Model
     {
         public virtual ProductEnt Product { get; set; }
 
-        public virtual ShopEnt Shop { get; set; }
+        public virtual OutletEnt Shop { get; set; }
     }
 }

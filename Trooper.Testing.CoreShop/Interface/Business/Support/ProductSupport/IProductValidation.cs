@@ -1,4 +1,4 @@
-﻿namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport
+﻿namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport
 {
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Testing.ShopModel;

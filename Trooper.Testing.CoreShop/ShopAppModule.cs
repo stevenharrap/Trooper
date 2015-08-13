@@ -3,7 +3,7 @@
     using Autofac;
     using Trooper.Thorny.Configuration;
     using Trooper.Testing.CustomShopApi.Business.Support;
-    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
     using Trooper.Testing.CustomShopApi.Business.Support.InventorySupport;
 
     public class ShopAppModule : Module
@@ -14,7 +14,7 @@
 
             BusinessModule.AddContext<ShopAppDbContext>(builder);
 
-            ShopConfiguration.AddShop(builder);
+            OutletConfiguration.AddShop(builder);
             ProductConfiguration.AddProduct(builder);
             InventoryConfiguration.AddInventory(builder);            
         }

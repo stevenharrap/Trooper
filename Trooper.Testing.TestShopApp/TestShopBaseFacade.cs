@@ -15,7 +15,7 @@ namespace Trooper.Testing.DefaultShopApp
 
     [TestFixture]
     [Category("Facade")]
-    public class TestShopBaseFacade : TestFacadeBase<IBusinessCore<ShopEnt, Shop>, ShopEnt, Shop>
+    public class TestShopBaseFacade : TestFacadeBase<IBusinessCore<OutletEnt, Outlet>, OutletEnt, Outlet>
     {
 		private const string IgnoreInBase = "Ignored in base testing. Tested in specific facade.";
 

@@ -1,11 +1,11 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.ShopSupport
+﻿namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
 {
     using Autofac;
     using Trooper.Testing.CustomShopApi.Business.Operation;
     using Trooper.Testing.CustomShopApi.Business.Support.ProductSupport;
     using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
     using Trooper.Testing.ShopModel.Model;
     using Trooper.Testing.ShopModel.Poco;
     using Trooper.Thorny.Configuration;

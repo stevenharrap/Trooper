@@ -1,4 +1,4 @@
-﻿namespace Trooper.Testing.CustomShopTest
+﻿namespace Trooper.Testing.CustomShopTestApi
 {
     using Autofac;
     using CustomShopApi;
@@ -15,16 +15,16 @@
     using Thorny.Configuration;
     using Thorny.UnitTestBase;
     using Trooper.Testing.CustomShopApi.Business.Model;
-    using Trooper.Testing.CustomShopApi.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ShopSupport;
+    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
 
 	/// <summary>
 	/// Shop Testing. Tests need to be broken into specific components rather than giant catch-alls.
 	/// </summary>
     [TestFixture]
     [Category("BusinessOperation")]
-    public class TestShopBusinsessOperation : TestBusinessOperationBase<IShopBusinessCore, ShopEnt, Shop>
+    public class TestShopBusinsessOperation : TestBusinessOperationBase<IOutletBusinessCore, OutletEnt, Outlet>
     {
         private const string ToBeImplemented = "Shop BO Test to be implemented";
 
@@ -54,8 +54,8 @@
         [Test]
         public override void Test_Base_Add()
         {
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "Queensland" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "Queensland" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
@@ -152,14 +152,14 @@
         {
             var bc = this.NewBusinessCoreInstance();
 
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var addSome = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var addSome = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
 
             Assert.IsNotNull(addSome);
             Assert.IsTrue(addSome.Ok);
@@ -171,13 +171,13 @@
             var all = bc.GetAll(validIdentity);
             Assert.That(all.Items.Count, Is.EqualTo(3));
 
-            addSome = bc.AddSome(new List<Shop> { invalidShop }, validIdentity);
+            addSome = bc.AddSome(new List<Outlet> { invalidShop }, validIdentity);
             Assert.IsFalse(addSome.Ok);
 
             all = bc.GetAll(validIdentity);
             Assert.That(all.Items.Count, Is.EqualTo(3));
 
-            addSome = bc.AddSome(new List<Shop> { shop1, invalidShop }, validIdentity);
+            addSome = bc.AddSome(new List<Outlet> { shop1, invalidShop }, validIdentity);
             Assert.IsFalse(addSome.Ok);
 
             all = bc.GetAll(validIdentity);
@@ -275,20 +275,20 @@
         public override void Test_Base_DeleteByKey()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var result = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var result = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
             Assert.IsTrue(result.Ok);
 
             var all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
-            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as ShopEnt;
+            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as OutletEnt;
             Assert.IsNotNull(shop2);
             var deleteByKey = bc.DeleteByKey(shop2, validIdentity);
             Assert.IsNotNull(deleteByKey);
@@ -366,14 +366,14 @@
         public override void Test_Base_DeleteSomeByKey()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var added = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var added = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
             Assert.IsTrue(added.Ok);
 
             var all = bc.GetAll(validIdentity);
@@ -488,14 +488,14 @@
         public override void Test_Base_ExistsByKey()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new Shop { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new Shop { Name = "Coles", Address = "NSW" };
-            var shop3 = new Shop { Name = "BigW", Address = "Vic" };
+            var shop1 = new Outlet { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new Outlet { Name = "Coles", Address = "NSW" };
+            var shop3 = new Outlet { Name = "BigW", Address = "Vic" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var result = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var result = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
             Assert.IsTrue(result.Ok);
 
             var all = bc.GetAll(validIdentity);
@@ -574,13 +574,13 @@
         public override void Test_Base_GetAll()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var addSome = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var addSome = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
             Assert.IsTrue(addSome.Ok);
 
             var getAll = bc.GetAll(validIdentity);
@@ -614,19 +614,19 @@
         public override void Test_Base_GetByKey()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var added = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var added = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
             Assert.IsTrue(added.Ok);
 
             var all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
-            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as ShopEnt;
+            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as OutletEnt;
             Assert.IsNotNull(shop2);
 
             var getByKey = bc.GetByKey(shop2, validIdentity);
@@ -696,22 +696,22 @@
         public override void Test_Base_GetSomeByKey()
 		{
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var added = bc.AddSome(new List<Shop> { shop1, shop2, shop3 }, validIdentity);
+            var added = bc.AddSome(new List<Outlet> { shop1, shop2, shop3 }, validIdentity);
             Assert.IsTrue(added.Ok);
 
             var all = bc.GetAll(validIdentity);
             Assert.AreEqual(all.Items.Count, 3);
 
-            shop1 = all.Items.FirstOrDefault(i => i.Name == "Kmart") as ShopEnt;
+            shop1 = all.Items.FirstOrDefault(i => i.Name == "Kmart") as OutletEnt;
             Assert.IsNotNull(shop1);
-            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as ShopEnt;
+            shop2 = all.Items.FirstOrDefault(i => i.Name == "Coles") as OutletEnt;
             Assert.IsNotNull(shop2);
 
             var getSomeByKey = bc.GetSomeByKey(new [] { shop1, shop2 }, validIdentity);
@@ -784,18 +784,18 @@
         public override void Test_Base_GetSome()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Kmart", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
-            var shop4 = new ShopEnt { Name = "Aldi", Address = "NSW" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Kmart", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
+            var shop4 = new OutletEnt { Name = "Aldi", Address = "NSW" };
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-            var result = bc.AddSome(new List<Shop> { shop1, shop2, shop3, shop4 }, validIdentity);
+            var result = bc.AddSome(new List<Outlet> { shop1, shop2, shop3, shop4 }, validIdentity);
             Assert.IsTrue(result.Ok);
 
-            var names = bc.GetSome(new ShopNameSearch { Name = "Kmart" }, validIdentity);
-            var addresses = bc.GetSome(new ShopAddressSearch { Address = "NSW" }, validIdentity);
+            var names = bc.GetSome(new OutletNameSearch { Name = "Kmart" }, validIdentity);
+            var addresses = bc.GetSome(new OutletAddressSearch { Address = "NSW" }, validIdentity);
 
             Assert.IsTrue(names.Ok);
             Assert.AreEqual(names.Items.Count(), 2);
@@ -807,7 +807,7 @@
             Assert.IsTrue(addresses.Items.Any(s => s.Name == "Kmart" && s.Address == "NSW"));
             Assert.IsTrue(addresses.Items.Any(s => s.Name == "Aldi" && s.Address == "NSW"));
 
-            var getSome = bc.GetSome(new ShopNameSearch(), invalidIdentity);
+            var getSome = bc.GetSome(new OutletNameSearch(), invalidIdentity);
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
@@ -819,7 +819,7 @@
             Assert.IsNotNull(getSome.Messages);
 			Assert.That(getSome.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
 
-            getSome = bc.GetSome(new ShopNameSearch(), null);
+            getSome = bc.GetSome(new OutletNameSearch(), null);
             Assert.IsFalse(getSome.Ok);
             Assert.IsNull(getSome.Items);
             Assert.IsNotNull(getSome.Messages);
@@ -849,15 +849,15 @@
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
 
-			var isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.AddAction }, new Identity { Username = "NoAdderUser" });
+			var isAllowed = bc.IsAllowed(new RequestArg<Outlet> { Action = OperationAction.AddAction }, new Identity { Username = "NoAdderUser" });
 			Assert.IsTrue(isAllowed.Ok);
 			Assert.IsFalse(isAllowed.Item);
 
-            isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.GetAllAction }, validIdentity);
+            isAllowed = bc.IsAllowed(new RequestArg<Outlet> { Action = OperationAction.GetAllAction }, validIdentity);
             Assert.IsTrue(isAllowed.Ok);
             Assert.IsTrue(isAllowed.Item);
 
-			isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.GetAllAction }, invalidIdentity);
+			isAllowed = bc.IsAllowed(new RequestArg<Outlet> { Action = OperationAction.GetAllAction }, invalidIdentity);
 			Assert.IsFalse(isAllowed.Ok);
 			Assert.IsFalse(isAllowed.Item);
 			Assert.IsNotNull(isAllowed.Messages);
@@ -871,7 +871,7 @@
 			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullIdentityCode));
 			Assert.That(isAllowed.Messages.Any(m => m.Code == BusinessCore.NullArgumentCode));
 
-			isAllowed = bc.IsAllowed(new RequestArg<Shop> { Action = OperationAction.GetAllAction }, null);
+			isAllowed = bc.IsAllowed(new RequestArg<Outlet> { Action = OperationAction.GetAllAction }, null);
 			Assert.IsFalse(isAllowed.Ok);
 			Assert.IsFalse(isAllowed.Item);
 			Assert.IsNotNull(isAllowed.Messages);
@@ -892,8 +892,8 @@
         public override void Test_Base_Update()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Kmart", Address = "NSW" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Kmart", Address = "NSW" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
@@ -975,10 +975,10 @@
 		public override void Test_Base_UpdateSome()
 		{
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "Aldi", Address = "Queensland" };
-            var shop4 = new ShopEnt { Name = "IGA", Address = "NSW" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "Aldi", Address = "Queensland" };
+            var shop4 = new OutletEnt { Name = "IGA", Address = "NSW" };
 
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
@@ -987,9 +987,9 @@
             var add = bc.AddSome(new [] {shop1, shop2, shop3, shop4}, validIdentity);
             Assert.IsTrue(add.Ok);
 
-            shop1 = add.Items.FirstOrDefault(i => i.Name == "Kmart") as ShopEnt;
+            shop1 = add.Items.FirstOrDefault(i => i.Name == "Kmart") as OutletEnt;
             Assert.IsNotNull(shop1);
-            shop3 = add.Items.FirstOrDefault(i => i.Name == "Aldi") as ShopEnt;
+            shop3 = add.Items.FirstOrDefault(i => i.Name == "Aldi") as OutletEnt;
             Assert.IsNotNull(shop3);
 
             shop1.Address = "NT";
@@ -1080,8 +1080,8 @@
         public override void Test_Base_Save()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Kmart", Address = "NSW" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Kmart", Address = "NSW" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
@@ -1100,7 +1100,7 @@
             var getByKey = bc.GetByKey(save.Item, validIdentity);
             Assert.IsTrue(getByKey.Ok);
             Assert.AreEqual(getByKey.Item.Address, "NT");
-            shop1 = getByKey.Item as ShopEnt;
+            shop1 = getByKey.Item as OutletEnt;
 
             save = bc.Save(shop2, validIdentity);
             Assert.IsTrue(save.Ok);
@@ -1111,7 +1111,7 @@
             getByKey = bc.GetByKey(save.Item, validIdentity);
             Assert.IsTrue(getByKey.Ok);
             Assert.AreEqual(getByKey.Item.Address, "NSW");
-            shop2 = getByKey.Item as ShopEnt;
+            shop2 = getByKey.Item as OutletEnt;
 
             save = bc.Save(shop2, invalidIdentity);            
             Assert.IsFalse(save.Ok);
@@ -1176,10 +1176,10 @@
         public override void Test_Base_SaveSome()
         {
             var bc = this.NewBusinessCoreInstance();
-            var shop1 = new ShopEnt { Name = "Kmart", Address = "Queensland" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" };
-            var shop3 = new ShopEnt { Name = "BigW", Address = "Vic" };
-            var shop4 = new ShopEnt { Name = "Aldi", Address = "NSW" };
+            var shop1 = new OutletEnt { Name = "Kmart", Address = "Queensland" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" };
+            var shop3 = new OutletEnt { Name = "BigW", Address = "Vic" };
+            var shop4 = new OutletEnt { Name = "Aldi", Address = "NSW" };
             var invalidShop = this.GetInvalidItem();
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
@@ -1206,7 +1206,7 @@
             var getShop1 = bc.GetByKey(s1.Item, validIdentity);
             Assert.IsTrue(getShop1.Ok);
             Assert.AreEqual(getShop1.Item.Address, "SA");
-            Assert.IsTrue(saveSome.Items.Any(i => i.Item.ShopId == getShop1.Item.ShopId));
+            Assert.IsTrue(saveSome.Items.Any(i => i.Item.OutletId == getShop1.Item.OutletId));
 
             var s2 = saveSome.Items.FirstOrDefault(i => i.Item.Name == "Coles");
             Assert.IsNotNull(s2);
@@ -1214,7 +1214,7 @@
             var getShop2 = bc.GetByKey(s2.Item, validIdentity);
             Assert.IsTrue(getShop2.Ok);
             Assert.AreEqual(getShop2.Item.Address, "WA");
-            Assert.IsTrue(saveSome.Items.Any(i => i.Item.ShopId == getShop2.Item.ShopId));
+            Assert.IsTrue(saveSome.Items.Any(i => i.Item.OutletId == getShop2.Item.OutletId));
 
             var s3 = saveSome.Items.FirstOrDefault(i => i.Item.Name == "BigW");
             Assert.IsNotNull(s3);
@@ -1222,7 +1222,7 @@
             var getShop3 = bc.GetByKey(s3.Item, validIdentity);
             Assert.IsTrue(getShop3.Ok);
             Assert.AreEqual(getShop3.Item.Address, "Vic");
-            Assert.IsTrue(saveSome.Items.Any(i => i.Item.ShopId == getShop3.Item.ShopId));
+            Assert.IsTrue(saveSome.Items.Any(i => i.Item.OutletId == getShop3.Item.OutletId));
 
             var s4 = saveSome.Items.FirstOrDefault(i => i.Item.Name == "Aldi");
             Assert.IsNotNull(s4);
@@ -1230,7 +1230,7 @@
             var getShop4 = bc.GetByKey(s4.Item, validIdentity);
             Assert.IsTrue(getShop4.Ok);
             Assert.AreEqual(getShop4.Item.Address, "NSW");
-            Assert.IsTrue(saveSome.Items.Any(i => i.Item.ShopId == getShop4.Item.ShopId));
+            Assert.IsTrue(saveSome.Items.Any(i => i.Item.OutletId == getShop4.Item.OutletId));
 
             saveSome = bc.SaveSome(new[] { shop4 }, invalidIdentity);
             Assert.IsFalse(saveSome.Ok);
@@ -1348,8 +1348,8 @@
         [Test]
         public void Test_SaveProduct()
         {
-            var shop1 = new ShopEnt { Name = "BigW", Address = "Vic" };
-            var shop2 = new ShopEnt { Name = "Coles", Address = "NSW" }; 
+            var shop1 = new OutletEnt { Name = "BigW", Address = "Vic" };
+            var shop2 = new OutletEnt { Name = "Coles", Address = "NSW" }; 
             var validIdentity = this.GetValidIdentity();
             var invalidIdentity = this.GetInvalidIdentity();
             var bc = this.NewBusinessCoreInstance();
@@ -1360,13 +1360,13 @@
             var addShop2 = bc.Add(shop2, validIdentity);
             Assert.IsTrue(addShop1.Ok);
 
-            var productInShop1 = new ProductInShop { ShopId = addShop1.Item.ShopId, Quantity = 100, Colour = "Red", Name = "Vegemite" };
+            var productInShop1 = new ProductInOutlet { ShopId = addShop1.Item.OutletId, Quantity = 100, Colour = "Red", Name = "Vegemite" };
 
             var addProduct1 = bc.SaveProduct(productInShop1, validIdentity);
             Assert.IsNotNull(addProduct1);
             Assert.IsTrue(addProduct1.Ok);
 
-            var productInShop2 = new ProductInShop { ShopId = addShop2.Item.ShopId, Quantity = 200, Colour = "Blue", Name = "Jam" };
+            var productInShop2 = new ProductInOutlet { ShopId = addShop2.Item.OutletId, Quantity = 200, Colour = "Blue", Name = "Jam" };
 
             var addProduct2 = bc.SaveProduct(productInShop2, validIdentity);
             Assert.IsNotNull(addProduct2);
@@ -1376,13 +1376,13 @@
             Assert.IsNotNull(getProduct1);
             Assert.IsTrue(getProduct1.Ok);
             Assert.IsNotNull(getProduct1.Items);
-            Assert.IsTrue(getProduct1.Items.Count(i => i.ShopId == addShop1.Item.ShopId && i.Quantity == 100 && i.Colour == "Red" && i.Name == "Vegemite") == 1);
+            Assert.IsTrue(getProduct1.Items.Count(i => i.ShopId == addShop1.Item.OutletId && i.Quantity == 100 && i.Colour == "Red" && i.Name == "Vegemite") == 1);
 
             var getProduct2 = bc.GetProducts(addShop2.Item, validIdentity);
             Assert.IsNotNull(getProduct2);
             Assert.IsTrue(getProduct2.Ok);
             Assert.IsNotNull(getProduct2.Items);
-            Assert.IsTrue(getProduct2.Items.Count(i => i.ShopId == addShop2.Item.ShopId && i.Quantity == 200 && i.Colour == "Blue" && i.Name == "Jam") == 1);
+            Assert.IsTrue(getProduct2.Items.Count(i => i.ShopId == addShop2.Item.OutletId && i.Quantity == 200 && i.Colour == "Blue" && i.Name == "Jam") == 1);
 
             var getProduct3 = bc.GetProducts(addShop2.Item, invalidIdentity);
             Assert.IsNotNull(getProduct3);
@@ -1418,14 +1418,14 @@
             };
         }
 
-        public ShopEnt GetValidItem()
+        public OutletEnt GetValidItem()
         {
-            return new ShopEnt { Name = "Kmart", Address = "Queensland" };
+            return new OutletEnt { Name = "Kmart", Address = "Queensland" };
         }
 
-        public override ShopEnt GetInvalidItem()
+        public override OutletEnt GetInvalidItem()
         {
-            return new ShopEnt
+            return new OutletEnt
             {
                 Address = "To long street To long street To long street To long street To long street To long street To long street To long street To long street To long street To long street",
                 Name = "To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name To long name"

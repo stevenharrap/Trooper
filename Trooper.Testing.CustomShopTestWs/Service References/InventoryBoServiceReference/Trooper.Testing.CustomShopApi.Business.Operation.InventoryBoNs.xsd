@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.InventoryBoNs" elementFormDefault="qualified" targetNamespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.InventoryBoNs" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="Trooper.DataOperations" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Operation.Core" />
+  <xs:element name="GetAll">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q1:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetAllResult" nillable="true" type="q2:ManyResponseOfInventory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetByKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q3:Inventory" />
+        <xs:element xmlns:q4="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q4:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetByKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetByKeyResult" nillable="true" type="q5:SingleResponseOfInventory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExistsByKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q6:Inventory" />
+        <xs:element xmlns:q7="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q7:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExistsByKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="ExistsByKeyResult" nillable="true" type="q8:SingleResponseOfboolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAllowed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" minOccurs="0" name="argument" nillable="true" type="q9:RequestArgOfInventory5WpXDBwg" />
+        <xs:element xmlns:q10="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q10:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsAllowedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="IsAllowedResult" nillable="true" type="q11:SingleResponseOfboolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSomeBySearch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Operation.Core" minOccurs="0" name="search" nillable="true" type="q12:Search" />
+        <xs:element xmlns:q13="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q13:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSomeBySearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetSomeBySearchResult" nillable="true" type="q14:ManyResponseOfInventory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

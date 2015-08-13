@@ -26,7 +26,7 @@
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ShopModelDbContext>());
         }
 
-        public DbSet<ShopEnt> Shops { get; set; }
+        public DbSet<OutletEnt> Outlets { get; set; }
         
         public DbSet<InventoryEnt> Inventories { get; set; }
 
@@ -34,7 +34,7 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new ShopMap());
+            modelBuilder.Configurations.Add(new OutletMap());
             modelBuilder.Configurations.Add(new InventoryMap());
             modelBuilder.Configurations.Add(new ProductMap());
         }

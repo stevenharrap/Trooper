@@ -14,7 +14,7 @@
 
             //BusinessModuleBuilder.Initiate<ShopAppDbContext>(builder);
 
-            ShopConfiguration.AddShop(builder);
+            OutletConfiguration.AddOutlet(builder);
             ProductConfiguration.AddProduct(builder);
         }
     }

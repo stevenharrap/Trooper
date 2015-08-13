@@ -3,7 +3,7 @@ using Trooper.Testing.ShopModel.Poco;
 using Trooper.Testing.ShopModel.Model;
 using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
 
-namespace Trooper.Testing.CustomShopApi.Business.Support.ShopSupport
+namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
 {
     public class ProductBusinessCore : BusinessCore<ProductEnt, Product>, IProductBusinessCore
     {

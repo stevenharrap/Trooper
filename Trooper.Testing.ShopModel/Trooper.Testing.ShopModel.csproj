@@ -51,16 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Poco\Inventory.cs" />
-    <Compile Include="Poco\Shop.cs" />
+    <Compile Include="Poco\Outlet.cs" />
     <Compile Include="Poco\Product.cs" />
     <Compile Include="Model\InventoryEnt.cs" />
     <Compile Include="Mapping\InventoryMap.cs" />
     <Compile Include="Model\ProductEnt.cs" />
     <Compile Include="Mapping\ProductMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\ShopEnt.cs" />
+    <Compile Include="Model\OutletEnt.cs" />
     <Compile Include="Config\ShopModelDbContext.cs" />
-    <Compile Include="Mapping\ShopMap.cs" />
+    <Compile Include="Mapping\OutletMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
