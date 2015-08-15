@@ -78,7 +78,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Trooper.Testing.CoreShop\Trooper.Testing.CustomShopApi.csproj">
+    <ProjectReference Include="..\Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShopApi.csproj">
       <Project>{8c65ebf3-0012-44d0-8447-a808706dacd4}</Project>
       <Name>Trooper.Testing.CustomShopApi</Name>
     </ProjectReference>

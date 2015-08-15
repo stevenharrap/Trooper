@@ -5,9 +5,9 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper", "Trooper\Trooper.csproj", "{27F46F59-C7C9-4E02-93B9-91F7041A7980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopApi", "Trooper.Testing.CoreShop\Trooper.Testing.CustomShopApi.csproj", "{8C65EBF3-0012-44D0-8447-A808706DACD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopApi", "Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShopApi.csproj", "{8C65EBF3-0012-44D0-8447-A808706DACD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.DefaultShopApp", "Trooper.Testing.TestShopApp\Trooper.Testing.DefaultShopApp.csproj", "{E782159E-B9B9-4AFE-889D-048D2DB180EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.DefaultShopApp", "Trooper.Testing.DefaultShopApp\Trooper.Testing.DefaultShopApp.csproj", "{E782159E-B9B9-4AFE-889D-048D2DB180EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.Web", "Trooper.Testing.Web\Trooper.Testing.Web.csproj", "{1F67547F-6E3B-462D-9E89-8F40412EFDE7}"
 EndProject
@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.WebResources", "Tro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.ShopModel", "Trooper.Testing.ShopModel\Trooper.Testing.ShopModel.csproj", "{E5C177A6-5E8C-4E72-A1DD-AB511D053ABD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.DefaultShopApi", "Trooper.Testing.DefaultShop\Trooper.Testing.DefaultShopApi.csproj", "{85CB26E0-22BD-472E-AE6A-73DC1DBECDE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.DefaultShopApi", "Trooper.Testing.DefaultShopApi\Trooper.Testing.DefaultShopApi.csproj", "{85CB26E0-22BD-472E-AE6A-73DC1DBECDE7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trooper.Testing", "Trooper.Testing", "{DBEC3716-8814-459E-80E8-4BAEACDC129B}"
 EndProject
@@ -30,13 +30,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Default", "Default", "{2550
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopTestApi", "Trooper.Testing.CustomShopApp\Trooper.Testing.CustomShopTestApi.csproj", "{1CACA035-9664-470B-8556-695867B2DDC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopTestApi", "Trooper.Testing.CustomShopTestApi\Trooper.Testing.CustomShopTestApi.csproj", "{1CACA035-9664-470B-8556-695867B2DDC7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessOperation", "BusinessOperation", "{2E2AA18A-0C31-4A29-A035-D71C957C6E66}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopWeb", "Trooper.Testing.CustomShopWeb\Trooper.Testing.CustomShopWeb.csproj", "{452846B8-CD94-40D7-A4A6-D8175E41703C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopSrvCon", "Trooper.Testing.CustomShopConsole\Trooper.Testing.CustomShopSrvCon.csproj", "{1BC43D0A-D444-4941-83E8-673EC212AEAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopSrvCon", "Trooper.Testing.CustomShopSrvCon\Trooper.Testing.CustomShopSrvCon.csproj", "{1BC43D0A-D444-4941-83E8-673EC212AEAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopTestWs", "Trooper.Testing.CustomShopTestWs\Trooper.Testing.CustomShopTestWs.csproj", "{F3EC911F-48A7-4037-9CAD-D316AB81DD83}"
 EndProject

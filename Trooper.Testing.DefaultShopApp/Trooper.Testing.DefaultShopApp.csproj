@@ -4,13 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CACA035-9664-470B-8556-695867B2DDC7}</ProjectGuid>
+    <ProjectGuid>{E782159E-B9B9-4AFE-889D-048D2DB180EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Trooper.Testing.CustomShopTestApi</RootNamespace>
-    <AssemblyName>Trooper.Testing.CustomShopTestApi</AssemblyName>
+    <RootNamespace>Trooper.NUnitTesting.TestShopApp</RootNamespace>
+    <AssemblyName>Trooper.NUnitTesting.TestShopApp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -33,8 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -48,9 +52,8 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -66,18 +69,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestShopBusinsessOperation.cs" />
-    <Compile Include="TestShopFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestProductBaseBusinsessOperation.cs" />
+    <Compile Include="TestOutletBaseBusinsessOperation.cs" />
+    <Compile Include="TestProductBaseFacade.cs" />
+    <Compile Include="TestShopBaseFacade.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Trooper.Testing.CoreShop\Trooper.Testing.CustomShopApi.csproj">
-      <Project>{8c65ebf3-0012-44d0-8447-a808706dacd4}</Project>
-      <Name>Trooper.Testing.CustomShopApi</Name>
+    <ProjectReference Include="..\Trooper.Testing.DefaultShopApi\Trooper.Testing.DefaultShopApi.csproj">
+      <Project>{85cb26e0-22bd-472e-ae6a-73dc1dbecde7}</Project>
+      <Name>Trooper.Testing.DefaultShopApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trooper.Testing.ShopModel\Trooper.Testing.ShopModel.csproj">
       <Project>{e5c177a6-5e8c-4e72-a1dd-ab511d053abd}</Project>
