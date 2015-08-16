@@ -83,7 +83,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         #endregion
 
-        #region GetSome             
+        #region GetSome
 
         IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity);
 
