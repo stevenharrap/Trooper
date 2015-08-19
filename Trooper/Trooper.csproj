@@ -151,7 +151,9 @@
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService.cs" />
+    <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IUpdating.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IExistingByKey.cs" />
+    <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IGettingSession.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IGettingSomeByKey.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IGettingByKey.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IGettingSome.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IDeletingByKey.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IAddingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IAdding.cs" />
+    <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IIsAllowing.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessAll.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessCore.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
