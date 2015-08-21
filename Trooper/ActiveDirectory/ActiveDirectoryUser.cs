@@ -18,7 +18,6 @@ namespace Trooper.ActiveDirectory
     /// <summary>
     /// Minor Active Directory wrapper for accessing active directory user information.
     /// </summary>
-    /// <remarks>Meant to be accessed through a derived class reflecting your application, e.g. FleetUser : ActiveDirectoryUser. If no further functionality is required, use the default <see cref="SecurityUser"/>.</remarks>
     public class ActiveDirectoryUser
     {
         /// <summary>
@@ -81,98 +80,98 @@ namespace Trooper.ActiveDirectory
         }
 
         /// <summary>
-        /// Gets or sets the user's forename.
+        /// Gets the user's forename.
         /// </summary>
         /// <value>The forename.</value>
         public string Forename { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's initials.
+        /// Gets the user's initials.
         /// </summary>
         /// <value>The initials.</value>
         public string Initials { get; private set; }
 
         /// <summary>
-        /// Gets or sets the middle name of the user.
+        /// Gets the middle name of the user.
         /// </summary>
         /// <value>The middle nam.</value>
         public string MiddleName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's surname.
+        /// Gets the user's surname.
         /// </summary>
         /// <value>The surname.</value>
         public string Surname { get; private set; }
 
         /// <summary>
-        /// Gets or sets the description of the user.
+        /// Gets the description of the user.
         /// </summary>
         /// <value>The description.</value>
         public string Description { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the user.
+        /// Gets the name of the user.
         /// </summary>
         /// <value>The name of the user.</value>
         public string UserName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's email address.
+        /// Gets the user's email address.
         /// </summary>
         /// <value>The email address.</value>
         public string EmailAddress { get; private set; }
 
         /// <summary>
-        /// Gets or sets the mobile phone number for the user.
+        /// Gets the mobile phone number for the user.
         /// </summary>
         /// <value>The mobile number.</value>
         public string Mobile { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's department.
+        /// Gets the user's department.
         /// </summary>
         /// <value>The department.</value>
         public string Department { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's full name.
+        /// Gets the user's full name.
         /// </summary>
         /// <value>The full name.</value>
         public string FullName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's log-on name.
+        /// Gets the user's log-on name.
         /// </summary>
         /// <value>The name of the user logon.</value>
         public string UserLogOnName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's distinguished name.
+        /// Gets the user's distinguished name.
         /// </summary>
         /// <value>The distinguished name.</value>
         /// <remarks>This is the unique identifier for any object in Active Directory.</remarks>
         public string DistinguishedName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the distinguished.
+        /// Gets the name of the distinguished.
         /// </summary>
         /// <value>The name of the distinguished.</value>
         public string Office { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's display name.
+        /// Gets the user's display name.
         /// </summary>
         /// <value>The display name.</value>
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user's telephone.
+        /// Gets the user's telephone.
         /// </summary>
         /// <value>The telephone.</value>
         public string Telephone { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating that the user exists.
+        /// Gets a value indicating whether the user exists.
         /// </summary>
         public bool Exists { get; private set; }
 

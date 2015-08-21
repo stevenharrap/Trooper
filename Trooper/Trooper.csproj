@@ -63,6 +63,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidationNA">
       <HintPath>..\packages\FluentValidationNA.1.2.16\lib\net40\FluentValidationNA.dll</HintPath>
     </Reference>
@@ -151,6 +157,7 @@
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService.cs" />
+    <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISavingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISaving.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IUpdatingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IUpdating.cs" />
@@ -165,6 +172,7 @@
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IAddingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IAdding.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IIsAllowing.cs" />
+    <Compile Include="Interface\Thorny\TestSuit\ITestSuitHelper.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessAll.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessCore.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
@@ -191,6 +199,7 @@
     <Compile Include="Thorny\Business\Security\Role.cs" />
     <Compile Include="Thorny\Business\Security\Assignment.cs" />
     <Compile Include="Thorny\Business\Security\OperationAction.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Adding.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
