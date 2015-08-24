@@ -17,8 +17,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     /// access to those operations.
     /// </summary>
     [ServiceContract]
-    public interface IBusinessRead<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
-        where TEnt : class, TPoco, new()
+    public interface IBusinessRead<TPoco> : IBusinessRequest<TPoco>
         where TPoco : class
     {
         [OperationContract]

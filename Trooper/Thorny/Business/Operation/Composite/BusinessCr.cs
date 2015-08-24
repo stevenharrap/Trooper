@@ -12,18 +12,12 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Thorny.Business.Operation.Composite
 {
     using System.Collections.Generic;
-    
 
-    public class BusinessCr<TEnt, TPoco> : IBusinessCr<TEnt, TPoco>
+
+    public class BusinessCr<TEnt, TPoco> : IBusinessCr<TPoco>, IBusinessOperation<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        public BusinessCr()
-        {
-
-        }
-
-
         public IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
 
         public IAddResponse<TPoco> Add(TPoco item, IIdentity identity)

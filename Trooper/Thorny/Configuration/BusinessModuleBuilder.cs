@@ -114,7 +114,6 @@
 
         public void RegisterBusinessOperation<TcBusinessOperation, TiBusinessOperation>()
             where TcBusinessOperation : TiBusinessOperation, IBusinessOperation<TEnt, TPoco>, new()
-            where TiBusinessOperation : IBusinessOperation<TEnt, TPoco>
         {
             builder.Register(c => new TcBusinessOperation
             {
@@ -199,7 +198,7 @@
 
             if (!this.businessOperaitonRegistered)
             {
-                this.RegisterBusinessOperation<BusinessAll<TEnt, TPoco>, IBusinessAll<TEnt, TPoco>>();
+                this.RegisterBusinessOperation<BusinessAll<TEnt, TPoco>, IBusinessAll<TPoco>>();
             }
         }
 

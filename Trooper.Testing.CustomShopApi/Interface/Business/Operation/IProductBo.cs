@@ -8,7 +8,7 @@ using Trooper.Testing.ShopModel.Model;
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Operation
 {
     [ServiceContract]
-    public interface IProductBo : IBusinessRead<ProductEnt, Product>
+    public interface IProductBo : IBusinessRead<Product>
     {
     }
 }

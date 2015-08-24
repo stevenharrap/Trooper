@@ -7,11 +7,10 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
     [ServiceContract]
-	public interface IBusinessRequest<TEnt, TPoco> : IBusinessOperation<TEnt, TPoco>
-        where TEnt : class, TPoco, new()
+	public interface IBusinessRequest<TPoco>
         where TPoco : class
     {
         [OperationContract]
-        ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity = null);
+        ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity);
     }
 }

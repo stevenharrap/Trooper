@@ -13,7 +13,7 @@ namespace Trooper.Thorny.Business.Operation.Single
 {
     using System.Collections.Generic;
 
-    public class BusinessCreate<TEnt, TPoco> : IBusinessCreate<TEnt, TPoco> 
+    public class BusinessCreate<TEnt, TPoco> : IBusinessCreate<TPoco>, IBusinessOperation<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {

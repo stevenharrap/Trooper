@@ -13,8 +13,7 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
     [ServiceContract]
-	public interface IBusinessCreate<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
-        where TEnt : class, TPoco, new()
+	public interface IBusinessCreate<TPoco> : IBusinessRequest<TPoco>
         where TPoco : class
     {
         [OperationContract]

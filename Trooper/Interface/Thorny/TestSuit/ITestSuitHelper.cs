@@ -2,20 +2,25 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Security.Principal;
 
-    public interface ITestSuitHelper<TItem>
+    using Trooper.Interface.Thorny.Business.Operation.Single;
+    using Trooper.Interface.Thorny.Business.Security;
+
+    public interface ITestSuitHelper<TPoco>
+        where TPoco : class
     {
-        TItem GetValidItem();
+        TPoco MakeValidItem();
 
-        TItem GetInvalidItem();
+        TPoco MakeInvalidItem();
 
-        IIdentity GetValidIdentity();
+        IIdentity MakeValidIdentity();
 
-        IIdentity GetInvalidIdentity();
+        IIdentity MakeInvalidIdentity();
 
-        bool ItemExistsIn(TItem item, IEnumerable<TItem> items);
+        bool ItemExists(TPoco item, IBusinessRead<TPoco> boReader);
 
-        bool ItemsAreEqual(TItem itemA, TItem itemB);
+        bool IdentifierAsEqual(TPoco itemA, TPoco itemB);
+
+        bool NonIdentifersAsEqual(TPoco itemA, TPoco itemB);
     }
 }

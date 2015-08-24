@@ -15,7 +15,7 @@ namespace Trooper.Thorny.Business.Operation.Composite
     using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Single;
 
-    public class BusinessAll<TEnt, TPoco> : IBusinessAll<TEnt, TPoco>
+    public class BusinessAll<TEnt, TPoco> : IBusinessAll<TPoco>, IBusinessOperation<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {

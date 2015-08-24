@@ -5,7 +5,6 @@
 //--------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Interface.Thorny.Business.Security;
 using System.ServiceModel;
 using Trooper.Interface.Thorny.Business.Response;
@@ -13,14 +12,13 @@ using Trooper.Interface.Thorny.Business.Response;
 namespace Trooper.Interface.Thorny.Business.Operation.Single
 {
     [ServiceContract]
-	public interface IBusinessDelete<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
-        where TEnt : class, TPoco, new()
+	public interface IBusinessDelete<TPoco> : IBusinessRequest<TPoco>
         where TPoco : class
     {
         [OperationContract]
-        IResponse DeleteByKey(TPoco item, IIdentity identity = null);
+        IResponse DeleteByKey(TPoco item, IIdentity identity);
 
         [OperationContract]
-        IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity = null);
+        IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity);
     }
 }

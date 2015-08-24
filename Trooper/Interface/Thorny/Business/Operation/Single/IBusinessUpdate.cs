@@ -4,8 +4,6 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-
-using Trooper.Interface.Thorny.Business.Operation.Core;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
 using System.ServiceModel;
@@ -17,17 +15,16 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     /// access to those operations.
     /// </summary>
     [ServiceContract]
-    public interface IBusinessUpdate<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>, IBusinessOperation<TEnt, TPoco>
-        where TEnt : class, TPoco, new()
+    public interface IBusinessUpdate<TPoco> : IBusinessRequest<TPoco>
         where TPoco : class
     {
         [OperationContract]
-        IAddResponse<TPoco> Add(TPoco item, IIdentity identity = null);
+        IAddResponse<TPoco> Add(TPoco item, IIdentity identity);
 
         [OperationContract]
-        ISingleResponse<TPoco> Update(TPoco item, IIdentity identity = null);
+        ISingleResponse<TPoco> Update(TPoco item, IIdentity identity);
 
         [OperationContract]
-        ISaveResponse<TPoco> Save(TPoco item, IIdentity identity = null);
+        ISaveResponse<TPoco> Save(TPoco item, IIdentity identity);
     }
 }

@@ -9,7 +9,7 @@ using Trooper.Testing.CustomShopApi.Business.Model;
 namespace Trooper.Testing.CustomShopApi.Interface.Business.Operation
 {
     [ServiceContract]
-    public interface IOutletBo : IBusinessCr<OutletEnt, Outlet>
+    public interface IOutletBo : IBusinessCr<Outlet>
     {
         [OperationContract]
         ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInShop, IIdentity identity);

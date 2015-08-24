@@ -14,15 +14,13 @@ using Trooper.Interface.Thorny.Business.Security;
 namespace Trooper.Interface.Thorny.Business.Operation.Composite
 {
     [ServiceContract]
-	public interface IBusinessAll<TEnt, TPoco> : 
-        IBusinessCreate<TEnt, TPoco>, 
-        IBusinessDelete<TEnt, TPoco>, 
-        IBusinessRead<TEnt, TPoco>, 
-        IBusinessRequest<TEnt, TPoco>,
+	public interface IBusinessAll<TPoco> : 
+        IBusinessCreate<TPoco>, 
+        IBusinessDelete<TPoco>, 
+        IBusinessRead<TPoco>, 
+        IBusinessRequest<TPoco>,
         IBusinessSession,
-        IBusinessUpdate<TEnt, TPoco>,
-        IBusinessOperation<TEnt, TPoco>
-        where TEnt : class, TPoco, new()
+        IBusinessUpdate<TPoco>
         where TPoco : class
     {
     }

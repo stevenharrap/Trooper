@@ -11,7 +11,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
 namespace Trooper.Thorny.Business.Operation.Single
 {
-	public class BusinessRequest<TEnt, TPoco> : IBusinessRequest<TEnt, TPoco>
+    public class BusinessRequest<TEnt, TPoco> : IBusinessRequest<TPoco>, IBusinessOperation<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {

@@ -13,7 +13,7 @@ namespace Trooper.Thorny.Business.Operation.Single
 {
 	using Interface.DataManager;
 
-    public class BusinessRead<TEnt, TPoco> : IBusinessRead<TEnt, TPoco> 
+    public class BusinessRead<TEnt, TPoco> : IBusinessRead<TPoco>, IBusinessOperation<TEnt, TPoco> 
         where TEnt : class, TPoco, new()
         where TPoco : class
     {

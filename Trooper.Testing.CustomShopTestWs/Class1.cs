@@ -27,7 +27,7 @@ namespace Trooper.Testing.CustomShopTestWs
 
             var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
             directory = directory.Parent.Parent.Parent;
-            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopConsole", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
+            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopSrvCon", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
 
             Assert.That(File.Exists(path), Is.True);
 
