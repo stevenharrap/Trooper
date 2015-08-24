@@ -14,33 +14,31 @@ namespace Trooper.Thorny.Business.TestSuit
     using Trooper.Interface.Thorny.TestSuit;
     using Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit;
 
-    public class Adding<TPoco> : IAdding
+    public abstract class Adding<TPoco> : IAdding
         where TPoco : class
     {
-        private readonly ITestSuitHelper<TPoco> helper;
+        public abstract ITestSuitHelper<TPoco> GetHelper();
 
-        private readonly IBusinessCreate<TPoco> boCreat;
+        public abstract IBusinessCreate<TPoco> GetCreater();
 
-        private readonly IBusinessRead<TPoco> boReader;
-        
-        protected Adding(ITestSuitHelper<TPoco> helper, IBusinessCreate<TPoco> boCreat, IBusinessRead<TPoco> boReader)
-        {
-            this.helper = helper;
-            this.boCreat = boCreat;
-            this.boReader = boReader;
-        }
+        public abstract IBusinessRead<TPoco> GetReader();
 
+        [Test]
         public void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
         {
-            var item = this.helper.MakeValidItem();
-            var identity = this.helper.MakeValidIdentity();
-            var response = this.boCreat.Add(item, identity);
+            var helper = this.GetHelper();
+            var creater = this.GetCreater();
+            var reader = this.GetReader();
+
+            var item = helper.MakeValidItem();
+            var identity = helper.MakeValidIdentity();
+            var response = creater.Add(item, identity);
             
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Ok);
             Assert.IsNotNull(response.Item);
-            Assert.That(this.helper.NonIdentifersAsEqual(item, response.Item));
-            Assert.IsTrue(this.helper.ItemExists(response.Item, this.boReader));
+            Assert.That(helper.NonIdentifersAsEqual(item, response.Item));
+            Assert.IsTrue(helper.ItemExists(response.Item, reader));
         }
 
         public void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
