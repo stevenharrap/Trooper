@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestOutlet\TestAddingOutlet.cs" />
+    <Compile Include="TestOutlet\TestAddingOutletHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShopApi.csproj">

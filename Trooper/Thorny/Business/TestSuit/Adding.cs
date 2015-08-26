@@ -17,18 +17,18 @@ namespace Trooper.Thorny.Business.TestSuit
     public abstract class Adding<TPoco> : IAdding
         where TPoco : class
     {
-        public abstract ITestSuitHelper<TPoco> GetHelper();
+        public abstract ITestSuitHelper<TPoco> Helper { get; set; }
 
-        public abstract IBusinessCreate<TPoco> GetCreater();
+        public abstract IBusinessCreate<TPoco> Creater { get; set; }
 
-        public abstract IBusinessRead<TPoco> GetReader();
+        public abstract IBusinessRead<TPoco> Reader { get; set; } 
 
         [Test]
-        public void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
+        public virtual void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
         {
-            var helper = this.GetHelper();
-            var creater = this.GetCreater();
-            var reader = this.GetReader();
+            var helper = this.Helper;
+            var creater = this.Creater;
+            var reader = this.Reader;
 
             var item = helper.MakeValidItem();
             var identity = helper.MakeValidIdentity();
@@ -41,57 +41,57 @@ namespace Trooper.Thorny.Business.TestSuit
             Assert.IsTrue(helper.ItemExists(response.Item, reader));
         }
 
-        public void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
+        public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNull()
+        public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNull()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsInvalidAndIdentityIsAllowed()
+        public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsInvalidAndIdentityIsNotAllowed()
+        public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsNotAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsInvalidAndIdentityIsNull()
+        public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsNull()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsNullAndIdentityIsAllowed()
+        public virtual void DoesNotAddWhenItemIsNullAndIdentityIsAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsNullAndIdentityIsNotAllowed()
+        public virtual void DoesNotAddWhenItemIsNullAndIdentityIsNotAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemIsNullAndIdentityIsNull()
+        public virtual void DoesNotAddWhenItemIsNullAndIdentityIsNull()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemAlreadyExistsAndIdentityIsAllowed()
+        public virtual void DoesNotAddWhenItemAlreadyExistsAndIdentityIsAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemAlreadyExistsAndIdentityIsNotAllowed()
+        public virtual void DoesNotAddWhenItemAlreadyExistsAndIdentityIsNotAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public void DoesNotAddWhenItemAlreadyExistslAndIdentityIsNull()
+        public virtual void DoesNotAddWhenItemAlreadyExistslAndIdentityIsNull()
         {
             throw new NotImplementedException();
         }

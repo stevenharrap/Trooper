@@ -200,6 +200,7 @@
     <Compile Include="Thorny\Business\Security\Assignment.cs" />
     <Compile Include="Thorny\Business\Security\OperationAction.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding.cs" />
+    <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />

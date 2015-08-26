@@ -14,24 +14,19 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
     [TestFixture]
     public class TestAddingOutlet : Adding<Outlet>
     {
-        public override ITestSuitHelper<Outlet> GetHelper()
-        {
-            throw new NotImplementedException();
-        }
+        public override ITestSuitHelper<Outlet> Helper { get; set; }
 
-        public override IBusinessCreate<Outlet> GetCreater()
-        {
-            throw new NotImplementedException();
-        }
+        public override IBusinessCreate<Outlet> Creater { get; set; }
 
-        public override IBusinessRead<Outlet> GetReader()
-        {
-            throw new NotImplementedException();
-        }
+        public override IBusinessRead<Outlet> Reader { get; set; }
 
         [SetUp]
         public void Setup()
         {
+            this.Helper = new TestAddingOutletHelper();
+
+
+
             //this happens before each test.
             //init an object for gethelper (maybe), getcreater and gereader
         }
