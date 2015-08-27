@@ -19,6 +19,8 @@
 
         bool ItemExists(TPoco item, IBusinessRead<TPoco> boReader);
 
+        void RemoveAllItems(IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter);
+
         bool IdentifierAsEqual(TPoco itemA, TPoco itemB);
 
         bool NonIdentifersAsEqual(TPoco itemA, TPoco itemB);

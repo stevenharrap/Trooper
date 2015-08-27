@@ -36,6 +36,18 @@ namespace Trooper.Thorny.Business.TestSuit
             return response.Item;
         }
 
+        public void RemoveAllItems(IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter)
+        {
+            var allResponse = boReader.GetAll(this.MakeValidIdentity());
+
+            Assert.IsTrue(allResponse.Ok);
+            Assert.IsNotNull(allResponse.Items);
+
+            var deleteResponse = boDeleter.DeleteSomeByKey(allResponse.Items, this.MakeValidIdentity());
+
+            Assert.IsTrue(deleteResponse.Ok);
+        }
+
         public abstract bool IdentifierAsEqual(TPoco itemA, TPoco itemB);
 
         public abstract bool NonIdentifersAsEqual(TPoco itemA, TPoco itemB);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Trooper.Thorny.Business.TestSuit
 {
     using FluentAssertions;
@@ -17,28 +18,28 @@ namespace Trooper.Thorny.Business.TestSuit
     public abstract class Adding<TPoco> : IAdding
         where TPoco : class
     {
-        public abstract ITestSuitHelper<TPoco> Helper { get; set; }
+        public ITestSuitHelper<TPoco> Helper { get; set; }
 
-        public abstract IBusinessCreate<TPoco> Creater { get; set; }
+        public IBusinessCreate<TPoco> Creater { get; set; }
 
-        public abstract IBusinessRead<TPoco> Reader { get; set; } 
+        public IBusinessRead<TPoco> Reader { get; set; }
+
+        public IBusinessDelete<TPoco> Deleter { get; set; }
 
         [Test]
         public virtual void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
         {
-            var helper = this.Helper;
-            var creater = this.Creater;
-            var reader = this.Reader;
+            var item = this.Helper.MakeValidItem();
+            var identity = this.Helper.MakeValidIdentity();
+            var response = this.Creater.Add(item, identity);
 
-            var item = helper.MakeValidItem();
-            var identity = helper.MakeValidIdentity();
-            var response = creater.Add(item, identity);
-            
+            this.Helper.RemoveAllItems(this.Reader, this.Deleter);
+
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Ok);
             Assert.IsNotNull(response.Item);
-            Assert.That(helper.NonIdentifersAsEqual(item, response.Item));
-            Assert.IsTrue(helper.ItemExists(response.Item, reader));
+            Assert.That(this.Helper.NonIdentifersAsEqual(item, response.Item));
+            Assert.IsTrue(this.Helper.ItemExists(response.Item, this.Reader));
         }
 
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
