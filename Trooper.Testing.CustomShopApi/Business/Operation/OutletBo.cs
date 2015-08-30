@@ -10,7 +10,7 @@
     using Trooper.Testing.CustomShopApi.Business.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
 
-    public class OutletBo : BusinessCr<OutletEnt, Outlet>, IOutletBo
+    public class OutletBo : BusinessAll<OutletEnt, Outlet>, IOutletBo
     {
         public ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInOutlet, IIdentity identity)
         {

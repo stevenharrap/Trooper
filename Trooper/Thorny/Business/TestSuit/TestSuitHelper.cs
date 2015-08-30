@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trooper.Interface.Thorny.Business.Operation.Single;
+using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
 using Trooper.Interface.Thorny.TestSuit;
 
@@ -30,9 +31,10 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public bool ItemExists(TPoco item, IBusinessRead<TPoco> boReader)
         {
-            var response = boReader.ExistsByKey(item, this.MakeInvalidIdentity());
+            var response = boReader.ExistsByKey(item, this.MakeValidIdentity());
 
-            Assert.IsTrue(response.Ok);
+            this.CheckResponseForErrors(response);
+
             return response.Item;
         }
 
@@ -40,16 +42,46 @@ namespace Trooper.Thorny.Business.TestSuit
         {
             var allResponse = boReader.GetAll(this.MakeValidIdentity());
 
-            Assert.IsTrue(allResponse.Ok);
+            this.CheckResponseForErrors(allResponse);
+
             Assert.IsNotNull(allResponse.Items);
 
             var deleteResponse = boDeleter.DeleteSomeByKey(allResponse.Items, this.MakeValidIdentity());
 
-            Assert.IsTrue(deleteResponse.Ok);
+            this.CheckResponseForErrors(deleteResponse);
+        }
+
+        public void NoItemsExist(IBusinessRead<TPoco> boReader)
+        {
+            var response = boReader.GetAll(this.MakeValidIdentity());
+            this.CheckResponseForErrors(response);
+            Assert.That(!response.Items.Any());
         }
 
         public abstract bool IdentifierAsEqual(TPoco itemA, TPoco itemB);
 
         public abstract bool NonIdentifersAsEqual(TPoco itemA, TPoco itemB);
+
+        public void CheckResponseForErrors(IResponse response)
+        {
+            Assert.IsNotNull(response, "The response is null");
+
+            if (!response.Ok)
+            {
+                Assert.IsNotNull(response.Messages, "The response is not ok and there are no messages why.");
+
+                var messages = response.Messages.Select(m => string.Format("[Code: {0}] [Level: {1}] [Content: {2}]", m.Code, m.Level, m.Content));
+
+                Assert.Fail("The response is not ok.\n" + string.Join(Environment.NewLine, messages));
+            }
+        }
+
+        public void ResponseFailsWithError(IResponse response, string code)
+        {
+            Assert.IsNotNull(response, "The response is null");
+            Assert.IsFalse(response.Ok);
+            Assert.IsNotNull(response.Messages);
+            Assert.That(response.Messages.Any(m => m.Code == code && m.Level == MessageAlertLevel.Error));
+        }
     }
 }

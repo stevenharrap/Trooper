@@ -34,8 +34,8 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
         public override IIdentity MakeValidIdentity()
         {
             return new Identity 
-            { 
-                Username = "OutletUser"
+            {
+                Username = "ValidTestUser"
             };
         }
 
@@ -43,7 +43,7 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
         {
             return new Identity
             {
-                Username = "Stranger"
+                Username = "InvalidTestUser"
             };
         }
 
