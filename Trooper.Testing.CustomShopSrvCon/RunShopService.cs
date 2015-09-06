@@ -9,6 +9,7 @@ namespace Trooper.Testing.CustomShopSrvCon
         public static void Main(string[] args)
         {
             var container = BusinessModule.Start<ShopAppModule>();
+            var container2 = BusinessModule.Start<ShopAppModule>();
 
             Console.WriteLine("ShopApp-started");
             Console.ReadLine();

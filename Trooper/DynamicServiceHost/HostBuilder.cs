@@ -41,7 +41,7 @@ namespace Trooper.DynamicServiceHost
 
             var c = code.ToString();
 
-            var assembly = CompileSource(code.ToString(), codeNamespace + ".dll");
+            var assembly = CompileSource(code.ToString(), codeNamespace);
             var serviceType = assembly.GetType(string.Format("{0}.{1}", codeNamespace, hostInfo.ServiceName));
             var interfaceType = assembly.GetType(string.Format("{0}.{1}", codeNamespace, hostInfo.InterfaceName));
 
@@ -206,12 +206,12 @@ namespace Trooper.DynamicServiceHost
             return GetTypeName(mapping.ResolveTo);
         }
 
-        private static Assembly CompileSource(string sourceCode, string outputLocation)
+        private static Assembly CompileSource(string sourceCode, string filename)
         {
-            var options = new CompilerParameters();
+            var options = new CompilerParameters();            
 
             options.GenerateExecutable = false;
-            options.OutputAssembly = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), outputLocation); //needs a unique name!
+            options.OutputAssembly = GetUniqueOutputLocation(filename); //needs a unique name!
             options.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("TEMP"), true);
             options.IncludeDebugInformation = true;
 
@@ -257,6 +257,19 @@ namespace Trooper.DynamicServiceHost
             }
 
             return result.CompiledAssembly;
+        }
+
+        private static string GetUniqueOutputLocation(string filename) 
+        {
+            var outputLocation = string.Format("{0}.dll", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
+            var number = 0;
+
+            while (File.Exists(outputLocation))
+            {
+                outputLocation = string.Format("{0}_{1}.dll", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename), ++number);
+            }
+
+            return outputLocation;
         }
 
         private static void ValidateHostInfo(IHostInfo hostInfo)
@@ -330,6 +343,16 @@ namespace Trooper.DynamicServiceHost
                 throw new HostBuilderValidateHostInfoException(
                     string.Format("'{0}' is an invalid class name for the service.", hostInfo.CodeNamespace));
             }
+
+            var fullServiceNamespace = string.Format("{0}.{1}", hostInfo.CodeNamespace, hostInfo.ServiceName);
+
+            if (Type.GetType(fullServiceNamespace) != null)
+            {
+                throw new HostBuilderValidateHostInfoException(
+                    string.Format("The class '{0}' already exists. Are you trying to generate more than 1 service from the same class?", fullServiceNamespace));
+            }
+
+
 
         }
 
