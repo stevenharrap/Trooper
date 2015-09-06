@@ -16,16 +16,46 @@ namespace Trooper.Thorny.Business.TestSuit
     using Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit;
     using Trooper.Thorny.Business.Operation.Core;
 
+    public class x<TPoco> : IDisposable
+        where TPoco : class
+    {
+        public ITestSuitHelper<TPoco> Helper { get; private set; }
+
+        public IBusinessCreate<TPoco> Creater { get; private set; }
+
+        public IBusinessRead<TPoco> Reader { get; private set; }
+
+        public IBusinessDelete<TPoco> Deleter { get; private set; }
+
+        public x(ITestSuitHelper<TPoco> helper, IBusinessCreate<TPoco> creater, IBusinessRead<TPoco> reader, IBusinessDelete<TPoco> deleter)
+        {
+            this.Helper = helper;
+            this.Creater = creater;
+            this.Reader = reader;
+            this.Deleter = deleter;
+        }
+
+        public void Dispose()
+        {
+            this.Helper = null;
+            this.Creater = null;
+            this.Reader = null;
+            this.Deleter = null;
+        }
+    }
+
     public abstract class Adding<TPoco> : IAdding
         where TPoco : class
     {
-        public ITestSuitHelper<TPoco> Helper { get; set; }
+        public abstract Func<x<TPoco>> XMaker { get; }
 
-        public IBusinessCreate<TPoco> Creater { get; set; }
+        //public ITestSuitHelper<TPoco> Helper { get; set; }
 
-        public IBusinessRead<TPoco> Reader { get; set; }
+        //public IBusinessCreate<TPoco> Creater { get; set; }
 
-        public IBusinessDelete<TPoco> Deleter { get; set; }
+        //public IBusinessRead<TPoco> Reader { get; set; }
+
+        //public IBusinessDelete<TPoco> Deleter { get; set; }
 
         /// <summary>
         ///     Response.Item = added item
@@ -35,16 +65,19 @@ namespace Trooper.Thorny.Business.TestSuit
         [Test]
         public virtual void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
         {
-            var item = this.Helper.MakeValidItem();
-            var identity = this.Helper.MakeValidIdentity();            
+            using (var x1 = this.XMaker())
+            {
+                var item = x1.Helper.MakeValidItem();
+                var identity = x1.Helper.MakeValidIdentity();
 
-            this.Helper.RemoveAllItems(this.Reader, this.Deleter);
-            var response = this.Creater.Add(item, identity);
-            this.Helper.CheckResponseForErrors(response);
+                x1.Helper.RemoveAllItems(x1.Reader, x1.Deleter);
+                var response = x1.Creater.Add(item, identity);
+                x1.Helper.CheckResponseForErrors(response);
 
-            Assert.IsNotNull(response.Item);
-            Assert.That(this.Helper.NonIdentifersAsEqual(item, response.Item));
-            Assert.That(!this.Helper.IdentifierAsEqual(item, response.Item));
+                Assert.IsNotNull(response.Item);
+                Assert.That(x1.Helper.NonIdentifersAsEqual(item, response.Item));
+                Assert.That(!x1.Helper.IdentifierAsEqual(item, response.Item));
+            }
         }
 
         /// <summary>
@@ -55,15 +88,18 @@ namespace Trooper.Thorny.Business.TestSuit
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
         {
-            var item = this.Helper.MakeValidItem();
-            var identity = this.Helper.MakeInvalidIdentity();
+            using (var x1 = this.XMaker())
+            {
+                var item = x1.Helper.MakeValidItem();
+                var identity = x1.Helper.MakeInvalidIdentity();
 
-            this.Helper.RemoveAllItems(this.Reader, this.Deleter);
-            var response = this.Creater.Add(item, identity);
+                x1.Helper.RemoveAllItems(x1.Reader, x1.Deleter);
+                var response = x1.Creater.Add(item, identity);
 
-            Assert.IsNull(response.Item);
-            this.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-            this.Helper.NoItemsExist(this.Reader);
+                Assert.IsNull(response.Item);
+                x1.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
+                x1.Helper.NoItemsExist(x1.Reader);
+            }
         }
 
         /// <summary>
@@ -74,14 +110,17 @@ namespace Trooper.Thorny.Business.TestSuit
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNull()
         {
-            var item = this.Helper.MakeValidItem();
+            using (var x1 = this.XMaker())
+            {
+                var item = x1.Helper.MakeValidItem();
 
-            this.Helper.RemoveAllItems(this.Reader, this.Deleter);
-            var response = this.Creater.Add(item, null);
+                x1.Helper.RemoveAllItems(x1.Reader, x1.Deleter);
+                var response = x1.Creater.Add(item, null);
 
-            Assert.IsNull(response.Item);
-            this.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-            this.Helper.NoItemsExist(this.Reader);
+                Assert.IsNull(response.Item);
+                x1.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
+                x1.Helper.NoItemsExist(x1.Reader);
+            }
         }
 
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsAllowed()
