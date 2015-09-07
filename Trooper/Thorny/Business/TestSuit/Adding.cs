@@ -35,7 +35,7 @@ namespace Trooper.Thorny.Business.TestSuit
             this.Deleter = deleter;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.Helper = null;
             this.Creater = null;

@@ -16,6 +16,25 @@ using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
 
 namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
 {
+    public class xx<TPoco> : x<TPoco>
+        where TPoco : class
+    {
+        public IContainer Container { get; private set; }
+
+        public xx(IContainer container, ITestSuitHelper<TPoco> helper, IBusinessCreate<TPoco> creater, IBusinessRead<TPoco> reader, IBusinessDelete<TPoco> deleter) :
+            base(helper, creater, reader, deleter)
+        {
+            this.Container = container;
+        }
+
+        public override void Dispose()
+        {
+            BusinessModule.Stop(this.Container);            
+            base.Dispose();
+            this.Container = null;
+        }
+    }
+
     [TestFixture]
     public class TestAddingOutlet : Adding<Outlet>
     {
@@ -31,7 +50,7 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
                     var creater = container.Resolve<IOutletBo>();
                     var deleter = container.Resolve<IOutletBo>();
 
-                    return new x<Outlet>(helper, creater, reader, deleter);
+                    return new xx<Outlet>(container, helper, creater, reader, deleter);
                 };
             }
         }
@@ -39,7 +58,7 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
         [SetUp]
         public void Setup()
         {
-            var container = BusinessModule.Start<ShopAppModule>();
+            //var container = BusinessModule.Start<ShopAppModule>();
 
             //this.Helper = new TestAddingOutletHelper();
             //this.Reader = container.Resolve<IOutletBo>();

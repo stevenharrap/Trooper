@@ -46,6 +46,12 @@
 
             return container;
         }
+
+        public static void Stop(IContainer container)
+        {
+            var x = container.Resolve<IBusinessOperationService>();
+            x.ServiceHost.Close();
+        }
     }
 
     public class BusinessComponent<TEnt, TPoco>
