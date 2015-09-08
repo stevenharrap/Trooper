@@ -49,8 +49,11 @@
 
         public static void Stop(IContainer container)
         {
-            var x = container.Resolve<IBusinessOperationService>();
-            x.ServiceHost.Close();
+            var services = container.Resolve<IEnumerable<IBusinessOperationService>>();
+            foreach (var service in services)
+            {
+                service.Stop();
+            }
         }
     }
 

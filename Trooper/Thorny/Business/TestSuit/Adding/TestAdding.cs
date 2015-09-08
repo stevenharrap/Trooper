@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Trooper.Thorny.Business.TestSuit
+namespace Trooper.Thorny.Business.TestSuit.Adding
 {
     using FluentAssertions;
 
@@ -14,48 +14,12 @@ namespace Trooper.Thorny.Business.TestSuit
     using Trooper.Interface.Thorny.Business.Operation.Single;
     using Trooper.Interface.Thorny.TestSuit;
     using Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit;
-    using Trooper.Thorny.Business.Operation.Core;
-
-    public class x<TPoco> : IDisposable
-        where TPoco : class
-    {
-        public ITestSuitHelper<TPoco> Helper { get; private set; }
-
-        public IBusinessCreate<TPoco> Creater { get; private set; }
-
-        public IBusinessRead<TPoco> Reader { get; private set; }
-
-        public IBusinessDelete<TPoco> Deleter { get; private set; }
-
-        public x(ITestSuitHelper<TPoco> helper, IBusinessCreate<TPoco> creater, IBusinessRead<TPoco> reader, IBusinessDelete<TPoco> deleter)
-        {
-            this.Helper = helper;
-            this.Creater = creater;
-            this.Reader = reader;
-            this.Deleter = deleter;
-        }
-
-        public virtual void Dispose()
-        {
-            this.Helper = null;
-            this.Creater = null;
-            this.Reader = null;
-            this.Deleter = null;
-        }
-    }
+    using Trooper.Thorny.Business.Operation.Core;    
 
     public abstract class Adding<TPoco> : IAdding
         where TPoco : class
     {
-        public abstract Func<x<TPoco>> XMaker { get; }
-
-        //public ITestSuitHelper<TPoco> Helper { get; set; }
-
-        //public IBusinessCreate<TPoco> Creater { get; set; }
-
-        //public IBusinessRead<TPoco> Reader { get; set; }
-
-        //public IBusinessDelete<TPoco> Deleter { get; set; }
+        public abstract Func<AddingRequirment<TPoco>> XMaker { get; }
 
         /// <summary>
         ///     Response.Item = added item

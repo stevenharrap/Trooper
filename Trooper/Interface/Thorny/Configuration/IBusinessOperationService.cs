@@ -13,5 +13,7 @@
         IBusinessHostInfo HostInfo { get; set; }
 
         ServiceHost ServiceHost { get; }
+
+        void Stop();
     }
 }

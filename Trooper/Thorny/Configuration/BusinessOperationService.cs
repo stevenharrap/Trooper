@@ -36,5 +36,10 @@
 
             this.ServiceHost.Open();
         }
+
+        public void Stop()
+        {
+            this.ServiceHost.Close();
+        }
     }
 }
