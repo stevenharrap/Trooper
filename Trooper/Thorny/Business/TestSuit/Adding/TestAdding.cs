@@ -19,7 +19,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
     public abstract class Adding<TPoco> : IAdding
         where TPoco : class
     {
-        public abstract Func<AddingRequirment<TPoco>> XMaker { get; }
+        public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
 
         /// <summary>
         ///     Response.Item = added item
@@ -29,18 +29,18 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         [Test]
         public virtual void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
         {
-            using (var x1 = this.XMaker())
+            using (var recquirment = this.Requirement())
             {
-                var item = x1.Helper.MakeValidItem();
-                var identity = x1.Helper.MakeValidIdentity();
+                var item = recquirment.Helper.MakeValidItem();
+                var identity = recquirment.Helper.MakeValidIdentity();
 
-                x1.Helper.RemoveAllItems(x1.Reader, x1.Deleter);
-                var response = x1.Creater.Add(item, identity);
-                x1.Helper.CheckResponseForErrors(response);
+                recquirment.Helper.RemoveAllItems(recquirment.Reader, recquirment.Deleter);
+                var response = recquirment.Creater.Add(item, identity);
+                recquirment.Helper.CheckResponseForErrors(response);
 
                 Assert.IsNotNull(response.Item);
-                Assert.That(x1.Helper.NonIdentifersAsEqual(item, response.Item));
-                Assert.That(!x1.Helper.IdentifierAsEqual(item, response.Item));
+                Assert.That(recquirment.Helper.NonIdentifersAsEqual(item, response.Item));
+                Assert.That(!recquirment.Helper.IdentifierAsEqual(item, response.Item));
             }
         }
 
@@ -52,17 +52,17 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
         {
-            using (var x1 = this.XMaker())
+            using (var requirment = this.Requirement())
             {
-                var item = x1.Helper.MakeValidItem();
-                var identity = x1.Helper.MakeInvalidIdentity();
+                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
 
-                x1.Helper.RemoveAllItems(x1.Reader, x1.Deleter);
-                var response = x1.Creater.Add(item, identity);
+                var item = requirment.Helper.MakeValidItem();
+                var identity = requirment.Helper.MakeInvalidIdentity();                
+                var response = requirment.Creater.Add(item, identity);
 
                 Assert.IsNull(response.Item);
-                x1.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-                x1.Helper.NoItemsExist(x1.Reader);
+                requirment.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
+                requirment.Helper.NoItemsExist(requirment.Reader);
             }
         }
 
@@ -74,32 +74,82 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNull()
         {
-            using (var x1 = this.XMaker())
+            using (var requirement = this.Requirement())
             {
-                var item = x1.Helper.MakeValidItem();
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
 
-                x1.Helper.RemoveAllItems(x1.Reader, x1.Deleter);
-                var response = x1.Creater.Add(item, null);
-
+                var item = requirement.Helper.MakeValidItem();                
+                var response = requirement.Creater.Add(item, null);
+                                
                 Assert.IsNull(response.Item);
-                x1.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-                x1.Helper.NoItemsExist(x1.Reader);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
+                requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
 
+        /// <summary>
+        ///     Response.Item = null
+        ///     Response.Ok = false
+        ///     Response.Messages = [Invalid item]
+        /// </summary>
+        [Test]
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+
+                var item = requirement.Helper.MakeInvalidItem();
+                var identity = requirement.Helper.MakeValidIdentity();
+                var response = requirement.Creater.Add(item, identity);
+
+                Assert.IsNull(response.Item);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidPropertyCode);
+                requirement.Helper.NoItemsExist(requirement.Reader);
+            }
         }
 
+        /// <summary>
+        ///     Response.Item = null
+        ///     Response.Ok = false
+        ///     Response.Messages = [Access Denied]
+        /// </summary>
+        [Test]
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsNotAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+
+                var item = requirement.Helper.MakeInvalidItem();
+                var identity = requirement.Helper.MakeInvalidIdentity();
+                var response = requirement.Creater.Add(item, identity);
+
+                Assert.IsNull(response.Item);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
+                requirement.Helper.NoItemsExist(requirement.Reader);
+            }
         }
 
+        /// <summary>
+        ///     Response.Item = null
+        ///     Response.Ok = false
+        ///     Response.Messages = [Identity not supplied]
+        /// </summary>
+        [Test]
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsNull()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+
+                var item = requirement.Helper.MakeInvalidItem();
+                var response = requirement.Creater.Add(item, null);
+
+                Assert.IsNull(response.Item);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
+                requirement.Helper.NoItemsExist(requirement.Reader);
+            }
         }
 
         public virtual void DoesNotAddWhenItemIsNullAndIdentityIsAllowed()

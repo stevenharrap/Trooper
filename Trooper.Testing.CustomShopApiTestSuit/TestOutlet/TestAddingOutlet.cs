@@ -20,7 +20,7 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
     [TestFixture]
     public class TestAddingOutlet : Adding<Outlet>
     {
-        public override Func<AddingRequirment<Outlet>> XMaker
+        public override Func<AddingRequirment<Outlet>> Requirement
         {
             get
             {

@@ -10,52 +10,26 @@ using Trooper.Thorny.Configuration;
 
 namespace Trooper.Thorny.Business.TestSuit.Adding
 {
-    public class AddingRequirment<TPoco> : IDisposable
+    public class AddingRequirment<TPoco> : BaseRequirment<TPoco>
         where TPoco : class
     {
-        public ITestSuitHelper<TPoco> Helper { get; private set; }
-
-        public IBusinessCreate<TPoco> Creater { get; private set; }
-
-        public IBusinessRead<TPoco> Reader { get; private set; }
-
-        public IBusinessDelete<TPoco> Deleter { get; private set; }
-
-        private IContainer container;
-
         public AddingRequirment(
             IContainer container,
             ITestSuitHelper<TPoco> helper,
             IBusinessCreate<TPoco> creater,
             IBusinessRead<TPoco> reader,
-            IBusinessDelete<TPoco> deleter) : this(helper, creater, reader, deleter)
-        {
-            this.container = container;
+            IBusinessDelete<TPoco> deleter) 
+            : base(container, helper, creater, reader, deleter)
+        {            
         }
 
         public AddingRequirment(
             ITestSuitHelper<TPoco> helper, 
             IBusinessCreate<TPoco> creater, 
-            IBusinessRead<TPoco> reader, 
+            IBusinessRead<TPoco> reader,
             IBusinessDelete<TPoco> deleter)
-        {
-            this.Helper = helper;
-            this.Creater = creater;
-            this.Reader = reader;
-            this.Deleter = deleter;
-        }
-
-        public void Dispose()
-        {
-            if (this.container != null)
-            {
-                BusinessModule.Stop(this.container);  
-            }
-
-            this.Helper = null;
-            this.Creater = null;
-            this.Reader = null;
-            this.Deleter = null;
+            : base(helper, creater, reader, deleter)
+        {            
         }
     }
 }
