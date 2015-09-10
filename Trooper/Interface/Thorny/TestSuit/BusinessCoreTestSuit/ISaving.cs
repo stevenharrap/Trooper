@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface ISaving
+    public interface ISaving : IHelping
     {
         #region Item is valid and does exist
 

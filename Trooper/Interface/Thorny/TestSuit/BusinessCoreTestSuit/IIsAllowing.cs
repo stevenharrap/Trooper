@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IIsAllowing
+    public interface IIsAllowing : IHelping
     {
         /// <summary>
         ///     Response.Item = false

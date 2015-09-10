@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IGettingSession
+    public interface IGettingSession : IHelping
     {
         /// <summary>
         ///     Response.Item = new Guid

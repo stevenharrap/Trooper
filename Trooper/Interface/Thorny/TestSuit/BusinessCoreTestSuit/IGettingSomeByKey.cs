@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IGettingSomeByKey
+    public interface IGettingSomeByKey : IHelping
     {
         #region All keys exist
 

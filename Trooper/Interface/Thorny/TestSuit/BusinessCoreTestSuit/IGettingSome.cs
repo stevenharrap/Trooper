@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IGettingSome
+    public interface IGettingSome : IHelping
     {
         #region search is allowed
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IGettingAll
+    public interface IGettingAll : IHelping
     {
         /// <summary>
         ///     Response.Items = all items

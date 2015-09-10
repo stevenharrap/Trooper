@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IAdding
+    public interface IAdding : IHelping
     {
         #region Item is valid
 
@@ -89,6 +89,8 @@ namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
         ///     Response.Item = null
         ///     Response.Ok = false
         ///     Response.Messages = [Item already exists]
+        ///     
+        ///     The existing item should not change
         /// </summary>
         void DoesNotAddWhenItemAlreadyExistsAndIdentityIsAllowed();
 
@@ -96,6 +98,8 @@ namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
         ///     Response.Item = null
         ///     Response.Ok = false
         ///     Response.Messages = [Access denied]
+        ///     
+        ///     The existing item should not change
         /// </summary>
         void DoesNotAddWhenItemAlreadyExistsAndIdentityIsNotAllowed();
 
@@ -103,6 +107,8 @@ namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
         ///     Response.Item = null
         ///     Response.Ok = false
         ///     Response.Messages = [Identity not supplied]
+        ///     
+        ///     The existing item should not change
         /// </summary>
         void DoesNotAddWhenItemAlreadyExistslAndIdentityIsNull();
 

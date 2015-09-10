@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IAddingSome
+    public interface IAddingSome : IHelping
     {
         #region Items are all valid
 

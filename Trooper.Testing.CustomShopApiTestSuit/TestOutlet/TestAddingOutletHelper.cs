@@ -47,7 +47,7 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
             };
         }
 
-        public override bool IdentifierAsEqual(Outlet itemA, Outlet itemB)
+        public override bool IdentifierAreEqual(Outlet itemA, Outlet itemB)
         {
             Assert.IsNotNull(itemA);
             Assert.IsNotNull(itemB);
@@ -55,12 +55,32 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
             return itemA.OutletId == itemB.OutletId;
         }
 
-        public override bool NonIdentifersAsEqual(Outlet itemA, Outlet itemB)
+        public override bool NonIdentifersAreEqual(Outlet itemA, Outlet itemB)
         {
             Assert.IsNotNull(itemA);
             Assert.IsNotNull(itemB);
 
             return itemA.Name == itemB.Name && itemA.Address == itemB.Address;
+        }
+
+        public override void ChangeNonIdentifiers(Outlet item)
+        {
+            Assert.IsNotNull(item);
+
+            item.Address = item.Address + "1";
+            item.Name = item.Name + "1";
+        }
+
+        public override Outlet CopyItem(Outlet item)
+        {
+            Assert.IsNotNull(item);
+
+            return new Outlet
+            {
+                Address = item.Address,
+                Name = item.Name,
+                OutletId = item.OutletId
+            };
         }
     }
 }

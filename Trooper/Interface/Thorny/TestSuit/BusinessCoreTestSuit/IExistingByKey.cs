@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IExistingByKey
+    public interface IExistingByKey : IHelping
     {
         #region key exists
 

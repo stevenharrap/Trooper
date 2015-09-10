@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
 {
-    public interface IDeletingByKey
+    public interface IDeletingByKey : IHelping
     {
         #region Any item exists
 

@@ -13,22 +13,48 @@ using Trooper.Interface.Thorny.Business.Security;
 
         TPoco MakeInvalidItem();
 
+        TPoco CopyItem(TPoco item);
+
         IIdentity MakeValidIdentity();
 
-        IIdentity MakeInvalidIdentity();
+        IIdentity MakeInvalidIdentity();        
 
-        bool ItemExists(TPoco item, IBusinessRead<TPoco> boReader);
+        TPoco AddItem(TPoco validItem, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+
+        TPoco AddItem(TPoco validItem, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+
+        TPoco GetItem(TPoco exitingItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+
+        TPoco GetItem(TPoco existingItem, IBusinessRead<TPoco> boReader);
+
+        bool ItemExists(TPoco validItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+
+        bool ItemExists(TPoco validItem, IBusinessRead<TPoco> boReader);
+
+        void RemoveAllItems(IIdentity validIdentity, IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter);
 
         void RemoveAllItems(IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter);
 
-        bool IdentifierAsEqual(TPoco itemA, TPoco itemB);
+        IList<TPoco> GetAllItems(IIdentity validIdentity, IBusinessRead<TPoco> boReader);
 
-        bool NonIdentifersAsEqual(TPoco itemA, TPoco itemB);
+        IList<TPoco> GetAllItems(IBusinessRead<TPoco> boReader);
+
+        bool AreEqual(TPoco itemA, TPoco itemB);
+
+        bool IdentifierAreEqual(TPoco itemA, TPoco itemB);
+
+        bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
+
+        void ChangeNonIdentifiers(TPoco item);
 
         void CheckResponseForErrors(IResponse response);
 
         void ResponseFailsWithError(IResponse response, string code);
 
+        void NoItemsExist(IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+
         void NoItemsExist(IBusinessRead<TPoco> boReader);
+
+        void SelfTestHelper();
     }
 }
