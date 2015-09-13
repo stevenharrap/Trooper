@@ -39,7 +39,7 @@ namespace Trooper.Thorny.Business.TestSuit
             Assert.IsNotNull(response.Item);
             Assert.That(this.NonIdentifersAreEqual(validItem, response.Item));
             Assert.That(!this.IdentifierAreEqual(validItem, response.Item));
-            Assert.That(this.ItemExists(validItem, boReader));
+            Assert.That(this.ItemExists(response.Item, boReader));
 
             return response.Item;
         }

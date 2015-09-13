@@ -235,7 +235,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode);
 
                 var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(requirement.Helper.AreEqual(retrievedItem, exitingItem));
+                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
                 Assert.That(requirement.Helper.GetAllItems(requirement.Reader).Count == 1);
             }
         }
@@ -266,7 +266,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode);
 
                 var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(requirement.Helper.AreEqual(retrievedItem, exitingItem));
+                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
                 Assert.That(requirement.Helper.GetAllItems(requirement.Reader).Count == 1);
             }
         }
@@ -296,7 +296,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode);
 
                 var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(requirement.Helper.AreEqual(retrievedItem, exitingItem));
+                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
                 Assert.That(requirement.Helper.GetAllItems(requirement.Reader).Count == 1);
             }
         }
