@@ -19,7 +19,7 @@ namespace Trooper.Thorny.Business.TestSuit
         protected int IncCounter()
         {
             return this.counter++;
-        }
+        }        
 
         public abstract TPoco MakeValidItem();
 
@@ -31,10 +31,34 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public abstract IIdentity MakeInvalidIdentity();
 
+        public IList<TPoco> AddItems(
+            List<TPoco> validItems, 
+            IIdentity validIdentity, 
+            IBusinessCreate<TPoco> boCreater, 
+            IBusinessRead<TPoco> boReader)
+        {
+            var before = this.GetAllItems(validIdentity, boReader).Count();
+            var response = boCreater.AddSome(validItems, validIdentity);
+            this.ResponseIsOk(response);
+
+            Assert.IsNotNull(response.Items);
+
+            var after = this.GetAllItems(validIdentity, boReader).Count();
+
+            Assert.That(after == before + validItems.Count());
+
+            return response.Items.ToList();
+        }
+
+        public IList<TPoco> AddItems(List<TPoco> validItems, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader)
+        {
+            return this.AddItems(validItems, this.MakeValidIdentity(), boCreater, boReader);
+        }
+
         public TPoco AddItem(TPoco validItem, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader)
         {
             var response = boCreater.Add(validItem, validIdentity);
-            this.CheckResponseForErrors(response);
+            this.ResponseIsOk(response);
 
             Assert.IsNotNull(response.Item);
             Assert.That(this.NonIdentifersAreEqual(validItem, response.Item));
@@ -52,7 +76,7 @@ namespace Trooper.Thorny.Business.TestSuit
         public TPoco GetItem(TPoco exitingItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader)
         {
             var response = boReader.GetByKey(exitingItem, validIdentity);
-            this.CheckResponseForErrors(response);
+            this.ResponseIsOk(response);
 
             Assert.IsNotNull(response.Item);
             Assert.That(this.IdentifierAreEqual(exitingItem, response.Item));
@@ -69,7 +93,7 @@ namespace Trooper.Thorny.Business.TestSuit
         {
             var response = boReader.ExistsByKey(validItem, validIdentity);
 
-            this.CheckResponseForErrors(response);
+            this.ResponseIsOk(response);
 
             return response.Item;
         }
@@ -83,13 +107,13 @@ namespace Trooper.Thorny.Business.TestSuit
         {
             var allResponse = boReader.GetAll(validIdentity);
 
-            this.CheckResponseForErrors(allResponse);
+            this.ResponseIsOk(allResponse);
 
             Assert.IsNotNull(allResponse.Items);
 
             var deleteResponse = boDeleter.DeleteSomeByKey(allResponse.Items, validIdentity);
 
-            this.CheckResponseForErrors(deleteResponse);
+            this.ResponseIsOk(deleteResponse);
         }
 
         public void RemoveAllItems(IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter)
@@ -101,7 +125,7 @@ namespace Trooper.Thorny.Business.TestSuit
         {
             var allResponse = boReader.GetAll(validIdentity);
 
-            this.CheckResponseForErrors(allResponse);
+            this.ResponseIsOk(allResponse);
 
             Assert.IsNotNull(allResponse.Items);
 
@@ -113,10 +137,20 @@ namespace Trooper.Thorny.Business.TestSuit
             return this.GetAllItems(this.MakeValidIdentity(), boReader);
         }
 
+        public bool ItemCountIs(int count, IIdentity validIdentity, IBusinessRead<TPoco> boReader)
+        {
+            return this.GetAllItems(validIdentity, boReader).Count() == count;
+        }
+
+        public bool ItemCountIs(int count, IBusinessRead<TPoco> boReader)
+        {
+            return this.ItemCountIs(count, this.MakeValidIdentity(), boReader);
+        }
+
         public void NoItemsExist(IIdentity validIdentity, IBusinessRead<TPoco> boReader)
         {
             var response = boReader.GetAll(validIdentity);
-            this.CheckResponseForErrors(response);
+            this.ResponseIsOk(response);
             Assert.That(!response.Items.Any());
         }
 
@@ -136,7 +170,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public abstract void ChangeNonIdentifiers(TPoco item);
 
-        public void CheckResponseForErrors(IResponse response)
+        public void ResponseIsOk(IResponse response)
         {
             Assert.IsNotNull(response, "The response is null");
 
@@ -160,28 +194,49 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public void SelfTestHelper()
         {
-            NonIdentifiersAreDifferentWhenChanged();
-            AnItemIsNewAndIdenticalWhenCopied();
+            this.NewValidItemsAreDifferent();
+            this.NewValidItemsIncrementCounter();
+            this.NonIdentifiersAreDifferentWhenChanged();
+            this.AnItemIsNewAndIdenticalWhenCopied();
         }
 
-        private void NonIdentifiersAreDifferentWhenChanged()
+        public virtual void NewValidItemsAreDifferent()
+        {
+            var item1 = this.MakeInvalidItem();
+            var item2 = this.MakeInvalidItem();
+
+            Assert.That(!this.NonIdentifersAreEqual(item1, item2),
+                "When making new valid items the none-identifying properties should be different. Consider 'Counter' generate unique properties");
+        }
+
+        public virtual void NewValidItemsIncrementCounter()
+        {
+            var item1 = this.MakeInvalidItem();
+            var c1 = this.counter;
+            var item2 = this.MakeInvalidItem();
+            var c2 = this.counter;
+
+            Assert.That(c1 != c2, "The implementation of MakeInvalidItem() is not calling IncCounter()");
+        }
+
+        public virtual void NonIdentifiersAreDifferentWhenChanged()
         {
             var item1 = this.MakeValidItem();
             var item2 = this.CopyItem(item1);
 
             this.ChangeNonIdentifiers(item2);
 
-            Assert.That(this.IdentifierAreEqual(item1, item2));
-            Assert.That(!this.NonIdentifersAreEqual(item1, item2));
+            Assert.That(this.IdentifierAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
+            Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
         }
 
-        private void AnItemIsNewAndIdenticalWhenCopied()
+        public virtual void AnItemIsNewAndIdenticalWhenCopied()
         {
             var item1 = this.MakeValidItem();
             var item2 = this.CopyItem(item1);
 
-            Assert.That(this.AreEqual(item1, item2));
-            Assert.That(!Object.ReferenceEquals(item1, item2));
+            Assert.That(this.AreEqual(item1, item2), "The CopyItem method did not correctly copy all the properties of the item.");
+            Assert.That(!Object.ReferenceEquals(item1, item2), "The CopyItem should return a new instance not the provided instance.");
         }
     }
 }

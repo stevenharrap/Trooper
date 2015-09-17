@@ -7,8 +7,9 @@
     using Interface.Business.Support;
     using ShopModel.Model;
     using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
+    using ShopModel.Poco;
 
-    public class OutletAuthorization : Authorization<OutletEnt>, IOutletAuthorization
+    public class OutletAuthorization : Authorization<Outlet>, IOutletAuthorization
     {
         public static IList<IAssignment> GeneralAssigments
         {

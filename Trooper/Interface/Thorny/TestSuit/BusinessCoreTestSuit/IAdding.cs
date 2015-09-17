@@ -88,20 +88,16 @@ namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
         /// <summary>
         ///     Response.Item = null
         ///     Response.Ok = false
-        ///     Response.Messages = [Item already exists]
-        ///     
-        ///     The existing item should not change
+        ///     Response.Messages = [Add failed]
         /// </summary>
-        void DoesNotAddWhenItemAlreadyExistsAndIdentityIsAllowed();
+        void DoesNotAddWhenItemAlreadyExistsAndIdentityIsAllowed();        
 
         /// <summary>
         ///     Response.Item = null
         ///     Response.Ok = false
         ///     Response.Messages = [Access denied]
-        ///     
-        ///     The existing item should not change
         /// </summary>
-        void DoesNotAddWhenItemAlreadyExistsAndIdentityIsNotAllowed();
+        void DoesNotAddWhenItemAlreadyExistsAndIdentityIsNotAllowed();        
 
         /// <summary>
         ///     Response.Item = null
@@ -111,6 +107,27 @@ namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
         ///     The existing item should not change
         /// </summary>
         void DoesNotAddWhenItemAlreadyExistslAndIdentityIsNull();
+
+        /// <summary>
+        ///     Response.Item = null
+        ///     Response.Ok = false
+        ///     Response.Messages = [Add failed]
+        /// </summary>
+        void ItemDoesNotChangeWhenAddedItemAlreadyExistsAndIdentityIsAllowed();
+
+        /// <summary>
+        ///     Response.Item = null
+        ///     Response.Ok = false
+        ///     Response.Messages = [Access denied]
+        /// </summary>
+        void ItemDoesNotChangeWhenAddedItemAlreadyExistsAndIdentityIsNotAllowed();
+
+        /// <summary>
+        ///     Response.Item = null
+        ///     Response.Ok = false
+        ///     Response.Messages = [Item already exists]
+        /// </summary>
+        void ItemDoesNotChangeWhenAddedItemAlreadyExistslAndIdentityIsNull();
 
         #endregion
     }

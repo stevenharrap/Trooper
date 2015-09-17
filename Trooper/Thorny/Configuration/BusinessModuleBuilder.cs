@@ -35,12 +35,19 @@
         {
             component.EnsureRegistrations();
         }
-        
+
         public static IContainer Start<TAppModule>()
+            where TAppModule : Module, new()
+        {
+            return Start<TAppModule>(new BusinessModuleStartParameters());
+        }
+
+        public static IContainer Start<TAppModule>(IBusinessModuleStartParameters startParameters)
             where TAppModule : Module, new()
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule<TAppModule>();
+            builder.Register(c => startParameters).As<IBusinessModuleStartParameters>();
 
             var container = builder.Build();
 
@@ -85,12 +92,12 @@
         }
 
         public void RegisterAuthorization<TcAuthorization, TiAuthorization>()
-            where TcAuthorization : TiAuthorization, IAuthorization<TEnt>, new()
-            where TiAuthorization : IAuthorization<TEnt>
+            where TcAuthorization : TiAuthorization, IAuthorization<TPoco>, new()
+            where TiAuthorization : IAuthorization<TPoco>
         {
             builder.Register(c => new TcAuthorization())
                 .As<TiAuthorization>()
-                .As<IAuthorization<TEnt>>();
+                .As<IAuthorization<TPoco>>();
             this.authorizationRegistered = true;
         }
 
@@ -175,8 +182,12 @@
                 {
                     var container = c.Resolve<IComponentContext>();
                     var operation = c.Resolve<IBusinessOperation<TEnt, TPoco>>();
+                    var startParameters = c.Resolve<IBusinessModuleStartParameters>();
                     businessHostInfo.HostInfoBuilt = (IBusinessHostInfo bhi) => { this.AddSearchMethods(operation, bhi); };
-                    return new BusinessOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), businessHostInfo);
+                    return new BusinessOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), businessHostInfo)
+                    {
+                        AutoStart = startParameters.AutoStartServices
+                    };
                 })
                 .As<IBusinessOperationService>()
                 .As<IStartable>()
@@ -192,7 +203,7 @@
 
             if (!this.authorizationRegistered)
             {
-                this.RegisterAuthorization<Authorization<TEnt>, IAuthorization<TEnt>>();
+                this.RegisterAuthorization<Authorization<TPoco>, IAuthorization<TPoco>>();
             }
 
             if (!this.validationRegistered)
@@ -215,7 +226,7 @@
         {
             uow = uow ?? container.Resolve<IUnitOfWork>();
             var facade = container.Resolve<IFacade<TEnt, TPoco>>();
-            var authorization = container.Resolve<IAuthorization<TEnt>>();
+            var authorization = container.Resolve<IAuthorization<TPoco>>();
             var validation = container.Resolve<IValidation<TEnt>>();
 
             facade.Uow = uow;

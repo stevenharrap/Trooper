@@ -8,6 +8,8 @@
 
     public interface IBusinessOperationService : IStartable
     {
+        bool AutoStart { get; set; }
+
         Func<object> Supporter { get; set; }
 
         IBusinessHostInfo HostInfo { get; set; }

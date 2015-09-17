@@ -155,6 +155,7 @@
     <Compile Include="Interface\DynamicServiceHost\IHostInfo.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IBehaviour.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessModuleStartParameters.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IHelping.cs" />
@@ -200,12 +201,14 @@
     <Compile Include="Thorny\Business\Security\Role.cs" />
     <Compile Include="Thorny\Business\Security\Assignment.cs" />
     <Compile Include="Thorny\Business\Security\OperationAction.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Adding\TestAddingSome.cs" />
     <Compile Include="Thorny\Business\TestSuit\BaseRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\AddingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\TestAdding.cs" />
     <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
+    <Compile Include="Thorny\Configuration\BusinessModuleStartParameters.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
     <Compile Include="Thorny\Constants.cs" />
     <Compile Include="Thorny\DataManager\Facade.cs" />

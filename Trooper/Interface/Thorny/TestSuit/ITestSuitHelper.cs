@@ -8,7 +8,8 @@ using Trooper.Interface.Thorny.Business.Security;
 
     public interface ITestSuitHelper<TPoco>
         where TPoco : class
-    {
+    {        
+
         TPoco MakeValidItem();
 
         TPoco MakeInvalidItem();
@@ -17,7 +18,11 @@ using Trooper.Interface.Thorny.Business.Security;
 
         IIdentity MakeValidIdentity();
 
-        IIdentity MakeInvalidIdentity();        
+        IIdentity MakeInvalidIdentity();
+
+        IList<TPoco> AddItems(List<TPoco> validItems, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+
+        IList<TPoco> AddItems(List<TPoco> validItems, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
 
         TPoco AddItem(TPoco validItem, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
 
@@ -39,6 +44,10 @@ using Trooper.Interface.Thorny.Business.Security;
 
         IList<TPoco> GetAllItems(IBusinessRead<TPoco> boReader);
 
+        bool ItemCountIs(int count, IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+
+        bool ItemCountIs(int count, IBusinessRead<TPoco> boReader);
+
         bool AreEqual(TPoco itemA, TPoco itemB);
 
         bool IdentifierAreEqual(TPoco itemA, TPoco itemB);
@@ -47,7 +56,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
         void ChangeNonIdentifiers(TPoco item);
 
-        void CheckResponseForErrors(IResponse response);
+        void ResponseIsOk(IResponse response);
 
         void ResponseFailsWithError(IResponse response, string code);
 

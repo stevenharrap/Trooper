@@ -15,21 +15,21 @@ namespace Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit
         ///     Response.Ok = true
         ///     Response.Messages = empty
         /// </summary>
-        void DoesAddWhenAllItemsAreValidAndIdentityIsAllowed();
+        void DoesAddWhenAllItemsDoNotExistAndAreValidAndIdentityIsAllowed();
 
         /// <summary>
         ///     Response.Items = empty
         ///     Response.Ok = true
         ///     Response.Messages = [Access denied]
         /// </summary>
-        void DoesNotAddWhenAllItemsAreValidAndIdentityIsNotAllowed();
+        void DoesNotAddWhenAllItemsDoNotExistAndAreAreValidAndIdentityIsNotAllowed();
 
         /// <summary>
         ///     Response.Items = empty
         ///     Response.Ok = true
         ///     Response.Messages = [Identity not supplied]
         /// </summary>
-        void DoesNotAddWhenAllItemsAreValidAndIdentityIsNull();
+        void DoesNotAddWhenAllItemsDoNotExistAndAreValidAndIdentityIsNull();
 
         #endregion
 

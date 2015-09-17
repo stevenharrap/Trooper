@@ -20,12 +20,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         where TPoco : class
     {
         public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
-
-        /// <summary>
-        ///     Response.Item = added item
-        ///     Response.Ok = true
-        ///     Response.Messages = empty
-        /// </summary>
+        
         [Test]
         public virtual void DoesAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsAllowed()
         {
@@ -38,12 +33,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirment.Helper.AddItem(item, requirment.Creater, requirment.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Access Denied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
         {
@@ -60,12 +50,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirment.Helper.NoItemsExist(requirment.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Identity not supplied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNull()
         {
@@ -81,12 +66,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Invalid item]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsAllowed()
         {
@@ -103,12 +83,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Access Denied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsNotAllowed()
         {
@@ -125,12 +100,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Identity not supplied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsInvalidAndIdentityIsNull()
         {
@@ -146,12 +116,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Item not supplied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsNullAndIdentityIsAllowed()
         {
@@ -163,16 +128,11 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 var response = requirement.Creater.Add(null, identity);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullItemCode);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Item not supplied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsNullAndIdentityIsNotAllowed()
         {
@@ -184,16 +144,11 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 var response = requirement.Creater.Add(null, identity);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullItemCode);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Item not supplied, Itentity not supplied]
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemIsNullAndIdentityIsNull()
         {
@@ -204,19 +159,12 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 var response = requirement.Creater.Add(null, null);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullItemCode);
+                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
                 requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
                 requirement.Helper.NoItemsExist(requirement.Reader);
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Item already exists]
-        ///     
-        ///     The existing item should not change
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemAlreadyExistsAndIdentityIsAllowed()
         {
@@ -233,20 +181,11 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 var addRresponse = requirement.Creater.Add(exitingItem, identity);
                 Assert.IsNull(addRresponse.Item);
                 requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode);
-
-                var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
-                Assert.That(requirement.Helper.GetAllItems(requirement.Reader).Count == 1);
+                
+                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Access denied]
-        ///     
-        ///     The existing item should not change
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemAlreadyExistsAndIdentityIsNotAllowed()
         {
@@ -265,19 +204,10 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 Assert.IsNull(addRresponse.Item);
                 requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode);
 
-                var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
-                Assert.That(requirement.Helper.GetAllItems(requirement.Reader).Count == 1);
+                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
             }
         }
-
-        /// <summary>
-        ///     Response.Item = null
-        ///     Response.Ok = false
-        ///     Response.Messages = [Identity not supplied]
-        ///     
-        ///     The existing item should not change
-        /// </summary>
+        
         [Test]
         public virtual void DoesNotAddWhenItemAlreadyExistslAndIdentityIsNull()
         {
@@ -295,9 +225,73 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                 Assert.IsNull(addRresponse.Item);
                 requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode);
 
+                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
+            }
+        }
+        
+        [Test]
+        public virtual void ItemDoesNotChangeWhenAddedItemAlreadyExistsAndIdentityIsAllowed()
+        {
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+
+                var item = requirement.Helper.MakeValidItem();
+                var identity = requirement.Helper.MakeValidIdentity();
+                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+
+                requirement.Helper.ChangeNonIdentifiers(exitingItem);
+
+                var addRresponse = requirement.Creater.Add(exitingItem, identity);
+                Assert.IsNull(addRresponse.Item);
+                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode);
+
                 var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
                 Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
-                Assert.That(requirement.Helper.GetAllItems(requirement.Reader).Count == 1);
+            }
+        }
+        
+        [Test]
+        public virtual void ItemDoesNotChangeWhenAddedItemAlreadyExistsAndIdentityIsNotAllowed()
+        {
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+
+                var item = requirement.Helper.MakeValidItem();
+                var validIdentity = requirement.Helper.MakeValidIdentity();
+                var invalidIdentity = requirement.Helper.MakeInvalidIdentity();
+                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+
+                requirement.Helper.ChangeNonIdentifiers(exitingItem);
+
+                var addRresponse = requirement.Creater.Add(exitingItem, invalidIdentity);
+                Assert.IsNull(addRresponse.Item);
+                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode);
+
+                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
+            }
+        }
+        
+        [Test]
+        public virtual void ItemDoesNotChangeWhenAddedItemAlreadyExistslAndIdentityIsNull()
+        {
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+
+                var item = requirement.Helper.MakeValidItem();
+                var validIdentity = requirement.Helper.MakeValidIdentity();
+                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+
+                requirement.Helper.ChangeNonIdentifiers(exitingItem);
+
+                var addRresponse = requirement.Creater.Add(exitingItem, null);
+                Assert.IsNull(addRresponse.Item);
+                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode);
+
+                var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
+                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
             }
         }
 
@@ -308,6 +302,6 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
             {
                 requirement.Helper.SelfTestHelper();
             }
-        }
+        }        
     }
 }

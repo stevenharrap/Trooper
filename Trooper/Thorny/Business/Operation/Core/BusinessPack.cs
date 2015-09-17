@@ -17,7 +17,7 @@ using Trooper.Thorny.Interface.DataManager;
     {
         public IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
 
-        public IAuthorization<TEnt> Authorization { get; set; }
+        public IAuthorization<TPoco> Authorization { get; set; }
 
         public IValidation<TEnt> Validation { get; set; }
 

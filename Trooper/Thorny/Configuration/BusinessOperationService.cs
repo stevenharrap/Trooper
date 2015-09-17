@@ -15,7 +15,10 @@
         {
             this.Supporter = supporter;
             this.HostInfo = hostInfo;
+            this.AutoStart = true;
         }
+
+        public bool AutoStart { get; set; }
 
         public Func<object> Supporter { get; set; }
 
@@ -34,7 +37,10 @@
 
             this.ServiceHost = HostBuilder.BuildHost(this.HostInfo, this.Supporter);
 
-            this.ServiceHost.Open();
+            if (this.AutoStart)
+            {
+                this.ServiceHost.Open();
+            }
         }
 
         public void Stop()

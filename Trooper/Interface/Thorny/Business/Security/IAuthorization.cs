@@ -4,8 +4,8 @@ using Trooper.Thorny.Interface.DataManager;
 
 namespace Trooper.Interface.Thorny.Business.Security
 {
-	public interface IAuthorization<TEnt> 
-        where TEnt : class, new()
+	public interface IAuthorization<TPoco> 
+        where TPoco : class
     {
         IUnitOfWork Uow { get; set; }
 
@@ -25,12 +25,12 @@ namespace Trooper.Interface.Thorny.Business.Security
 
         bool IsReadAction(string action);
 
-		bool IsAllowed(IRequestArg<TEnt> arg, IIdentity identity);
+		bool IsAllowed(IRequestArg<TPoco> arg, IIdentity identity);
 
-        bool IsAllowed(IRequestArg<TEnt> arg, ICredential credential);
+        bool IsAllowed(IRequestArg<TPoco> arg, ICredential credential);
 
-		bool IsAllowed(IRequestArg<TEnt> arg, IIdentity identity, IResponse response);
+		bool IsAllowed(IRequestArg<TPoco> arg, IIdentity identity, IResponse response);
 
-        bool IsAllowed(IRequestArg<TEnt> arg, ICredential credential, IResponse response);
+        bool IsAllowed(IRequestArg<TPoco> arg, ICredential credential, IResponse response);
     }
 }

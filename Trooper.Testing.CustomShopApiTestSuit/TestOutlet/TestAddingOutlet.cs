@@ -26,7 +26,9 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
             {
                 return () =>
                 {
-                    var container = BusinessModule.Start<ShopAppModule>();
+                    var parameters = new BusinessModuleStartParameters { AutoStartServices = false };
+                    var container = BusinessModule.Start<ShopAppModule>(parameters);
+
                     var helper = new TestAddingOutletHelper();
                     var reader = container.Resolve<IOutletBo>();
                     var creater = container.Resolve<IOutletBo>();

@@ -11,7 +11,7 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
     {
         IBusinessCore<TEnt, TPoco> BusinessCore { get; set; }
 
-        IAuthorization<TEnt> Authorization { get; set; }
+        IAuthorization<TPoco> Authorization { get; set; }
 
         IValidation<TEnt> Validation { get; set; }
 

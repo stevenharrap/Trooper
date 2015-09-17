@@ -4,10 +4,6 @@
 // </copyright>
 //--------------------------------------------------------------------------------------
 
-using Trooper.Interface.Thorny.Business.Operation.Core;
-using Trooper.Interface.Thorny.Business.Response;
-using Trooper.Interface.Thorny.Business.Security;
-
 namespace Trooper.Thorny.Business.Operation.Core
 {
 	using System.Collections.Generic;
@@ -18,16 +14,15 @@ namespace Trooper.Thorny.Business.Operation.Core
 	using Utility;
     using System;
     using Trooper.Utility;
+    using Trooper.Interface.Thorny.Business.Operation.Core;
+    using Trooper.Interface.Thorny.Business.Response;
+    using Trooper.Interface.Thorny.Business.Security;
 
-	/// <summary>
-    /// Provides the means to expose your Model, wrap it in Read and Add operations and control
-    /// access to those operations.
-    /// </summary>
     public class BusinessCore<TEnt, TPoco> : BusinessCore, IBusinessCore<TEnt, TPoco> 
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        private static List<System.Guid> sessions = new List<System.Guid>();        
+        private static List<Guid> sessions = new List<Guid>();        
 
         public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;        
 
@@ -75,20 +70,17 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<AddResponse<TPoco>>(priorResponse);
 
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(item, identity, response))
             {
                 return response;
             }
+
+            var arg = new RequestArg<TPoco> { Action = OperationAction.AddAction, Item = item };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }            
 
             var itemEnt = businessPack.Facade.Map(item);
             var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(TEnt));
@@ -107,14 +99,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            businessPack.Validation.Validate(added, response);
-
-            var arg = new RequestArg<TEnt> { Action = OperationAction.AddAction, Item = added };
-
-            if (businessPack.Authorization != null)
-            {
-                businessPack.Authorization.IsAllowed(arg, identity, response);
-            }
+            businessPack.Validation.Validate(added, response);            
 
             response.Item = added;
 
@@ -148,21 +133,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public virtual IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<AddSomeResponse<TPoco>>(priorResponse);
-            
-            if (items == null)
-            {
-                MessageUtility.Errors.Add("The items have not been supplied.", NullItemCode, response);
-            }
 
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(items, identity, response))
             {
                 return response;
             }
+
+            var arg = new RequestArg<TPoco> { Action = OperationAction.AddSomeAction, Items = items.ToList() };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }            
 
             var itemsTc = businessPack.Facade.Map(items);
             var added = businessPack.Facade.AddSome(itemsTc);
@@ -175,14 +157,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (!response.Ok)
             {
                 return response;
-            }
-
-            var arg = new RequestArg<TEnt> { Action = OperationAction.AddSomeAction, Items = added };
-
-            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
-            {
-                return response;
-            }
+            }            
 
             response.Items = added;
 
@@ -225,14 +200,14 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = OperationAction.IsAllowedAction };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.IsAllowedAction };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
 
-            var testArg = new RequestArg<TEnt> { Action = argument.Action };
+            var testArg = new RequestArg<TPoco> { Action = argument.Action };
 
             var testOutcome = businessPack.Authorization.IsAllowed(testArg, identity);
 
@@ -245,7 +220,7 @@ namespace Trooper.Thorny.Business.Operation.Core
         
         #region GetSession
 
-        public ISingleResponse<System.Guid> GetSession(IIdentity identity)
+        public ISingleResponse<Guid> GetSession(IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
@@ -253,14 +228,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity)
+        public ISingleResponse<Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity)
         {
             return this.GetSession(businessPack, identity, null);
         }
 
-        public virtual ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse) 
+        public virtual ISingleResponse<Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse) 
         {
-            var response = MakeResponse<SingleResponse<System.Guid>>(priorResponse);
+            var response = MakeResponse<SingleResponse<Guid>>(priorResponse);
 
             if (identity == null)
             {
@@ -268,7 +243,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = Security.OperationAction.GetSession };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.GetSession };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -309,36 +284,26 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public virtual IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<Response>(priorResponse);            
+            var response = MakeResponse<Response>(priorResponse);
 
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(item, identity, response))
             {
                 return response;
             }
 
-            var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
-
-            var arg = new RequestArg<TEnt> { Action = OperationAction.DeleteByKeyAction, Item = itemAsTc };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.DeleteByKeyAction, Item = item };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
+            
+            var itemAsTc = businessPack.Facade.Map(item);
+            var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));            
 
             if (!businessPack.Facade.Delete(itemAsTc))
             {
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+                MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
             }
 
             return response;
@@ -371,30 +336,20 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<Response>(priorResponse);
 
-            if (items == null)
-            {
-                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(items, identity, response))
             {
                 return response;
             }
 
-            var itemsAsListTc = businessPack.Facade.Map(items);
-            var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));
-
-            var arg = new RequestArg<TEnt> { Action = OperationAction.DeleteSomeByKeyAction, Items = itemsAsListTc.ToList() };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.DeleteSomeByKeyAction, Items = items.ToList() };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
+
+            var itemsAsListTc = businessPack.Facade.Map(items);
+            var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));                    
 
             if (!businessPack.Facade.DeleteSome(itemsAsListTc))
             {
@@ -431,7 +386,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            var arg = new RequestArg<TEnt> { Action = OperationAction.GetAllAction };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.GetAllAction };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
@@ -487,14 +442,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             if (!response.Ok)
             {
                 return response;
-            }
+            }  
 
-            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeAction, Search = search };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.GetSomeAction, Search = search };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
-            }
+            }                      
 
             var some = businessPack.Facade.GetSome(search);
 
@@ -529,32 +484,22 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public virtual ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse)
         {
-            var response = MakeResponse<SingleResponse<TPoco>>(priorResponse);            
+            var response = MakeResponse<SingleResponse<TPoco>>(priorResponse);
 
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(item, identity, response))
             {
                 return response;
             }
 
-            var itemEnt = businessPack.Facade.Map(item);
-            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeAction, Item = itemEnt };
-            var errorMessage = string.Format("The ({0}) could not be found.", typeof(TEnt));
+            var arg = new RequestArg<TPoco> { Action = OperationAction.GetSomeAction, Item = item };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
-
+            
+            var itemEnt = businessPack.Facade.Map(item);            
+            var errorMessage = string.Format("The ({0}) could not be found.", typeof(TEnt));   
             var result = businessPack.Facade.GetByKey(itemEnt);
 
             if (result == null)
@@ -589,29 +534,19 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<ManyResponse<TPoco>>(priorResponse);
 
-            if (items == null)
-            {
-                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(items, identity, response))
             {
                 return response;
             }
 
-            var itemsTc = businessPack.Facade.Map(items).ToList();
-            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeByKeyAction, Items = itemsTc };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.GetSomeByKeyAction, Items = items.ToList() };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
-
+            
+            var itemsTc = businessPack.Facade.Map(items).ToList();
             response.Items = businessPack.Facade.GetSomeByKey(itemsTc).ToList<TPoco>();
 
             return response;
@@ -638,29 +573,19 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<SingleResponse<bool>>(priorResponse);
 
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(item, identity, response))
             {
                 return response;
             }
 
-            var itemEnt = businessPack.Facade.Map(item);
-            var arg = new RequestArg<TEnt> { Action = OperationAction.GetSomeAction, Item = itemEnt };
+            var arg = new RequestArg<TPoco> { Action = OperationAction.GetSomeAction, Item = item };
 
             if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
-            }
+            }            
 
+            var itemEnt = businessPack.Facade.Map(item);
             var result = businessPack.Facade.GetByKey(itemEnt);
             response.Item = result != null;
 
@@ -695,17 +620,14 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<SingleResponse<TPoco>>(priorResponse);
 
-            if (item == null)
+            if (!ParameterCheck(item, identity, response))
             {
-                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
+                return response;
             }
 
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
+            var arg = new RequestArg<TPoco> { Action = OperationAction.UpdateAction, Item = item };
 
-            if (!response.Ok)
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
             {
                 return response;
             }
@@ -721,13 +643,6 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             businessPack.Validation.Validate(updated, response);
-
-            var arg = new RequestArg<TEnt> { Action = OperationAction.UpdateAction, Item = updated };
-
-            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
-            {
-                return response;
-            }
 
             response.Item = updated;
 
@@ -762,14 +677,19 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<ManyResponse<TPoco>>(priorResponse);
 
-            if (items == null)
+            if (!ParameterCheck(items, identity, response))
             {
-                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
+                return response;
             }
 
-            if (identity == null)
+            foreach (var i in items)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+                var arg = new RequestArg<TPoco> { Action = OperationAction.UpdateAction, Item = i };
+
+                if (businessPack.Authorization != null)
+                {
+                    businessPack.Authorization.IsAllowed(arg, identity, response);
+                }
             }
 
             if (!response.Ok)
@@ -783,21 +703,6 @@ namespace Trooper.Thorny.Business.Operation.Core
             foreach (var i in updated)
             {
                 businessPack.Validation.Validate(i, response);
-            }
-
-            if (!response.Ok)
-            {
-                return response;
-            }
-
-            foreach (var i in updated)
-            {
-                var arg = new RequestArg<TEnt> { Action = OperationAction.UpdateAction, Item = i };
-
-                if (businessPack.Authorization != null)
-                {
-                    businessPack.Authorization.IsAllowed(arg, identity, response);
-                }
             }
 
             if (!response.Ok)
@@ -841,24 +746,22 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             response.Change = SaveChangeType.None;
 
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item has not been supplied.", NullItemCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(item, identity, response))
             {
                 return response;
             }
 
             var itemAsTc = businessPack.Facade.Map(item);
-            var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));
             var exists = businessPack.Facade.Exists(itemAsTc);
+
+            var arg = new RequestArg<TPoco> { Action = exists ? OperationAction.UpdateAction : OperationAction.AddAction, Item = item };
+
+            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
+            {
+                return response;
+            }
+            
+            var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));            
             var saved = exists ? businessPack.Facade.Update(itemAsTc) : businessPack.Facade.Add(itemAsTc);
 
             if (saved == null)
@@ -867,14 +770,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return response;
             }
 
-            businessPack.Validation.Validate(saved, response);
-
-            var arg = new RequestArg<TEnt> { Action = exists ? OperationAction.UpdateAction : OperationAction.AddAction, Item = saved };
-
-            if (businessPack.Authorization != null && !businessPack.Authorization.IsAllowed(arg, identity, response))
-            {
-                return response;
-            }
+            businessPack.Validation.Validate(saved, response);            
 
             response.Item = saved;
             response.Change = exists ? SaveChangeType.Update : SaveChangeType.Add;
@@ -910,17 +806,7 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<SaveSomeResponse<TPoco>>(priorResponse);
 
-            if (items == null)
-            {
-                MessageUtility.Errors.Add("The items have not been supplied.", NullItemsCode, response);
-            }
-
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-
-            if (!response.Ok)
+            if (!ParameterCheck(items, identity, response))
             {
                 return response;
             }
@@ -928,22 +814,11 @@ namespace Trooper.Thorny.Business.Operation.Core
             var itemsTc = businessPack.Facade.Map(items);
             var saved = (from i in itemsTc
                          let exists = businessPack.Facade.Exists(i)
-                         let item = exists ? businessPack.Facade.Update(i) : businessPack.Facade.Add(i)
-                         select new { Item = item, Exists = exists }).ToList();
+                         select new { Item = i, Exists = exists }).ToList();
 
             foreach (var i in saved)
             {
-                businessPack.Validation.Validate(i.Item, response);
-            }
-
-            if (!response.Ok)
-            {
-                return response;
-            }
-
-            foreach (var i in saved)
-            {
-                var arg = new RequestArg<TEnt> { Action = i.Exists ? OperationAction.UpdateAction : OperationAction.AddAction, Item = i.Item };
+                var arg = new RequestArg<TPoco> { Action = i.Exists ? OperationAction.UpdateAction : OperationAction.AddAction, Item = i.Item };
 
                 if (businessPack.Authorization != null)
                 {
@@ -955,6 +830,30 @@ namespace Trooper.Thorny.Business.Operation.Core
             {
                 return response;
             }
+            
+            foreach (var a in saved)
+            {
+                var item = a.Item;
+
+                if (a.Exists)
+                {
+                    businessPack.Facade.Update(a.Item);
+                }
+                else
+                {
+                    businessPack.Facade.Add(a.Item);
+                }
+            }
+            
+            foreach (var i in saved)
+            {
+                businessPack.Validation.Validate(i.Item, response);
+            }
+
+            if (!response.Ok)
+            {
+                return response;
+            }            
 
             response.Items = saved.Select(i => new SaveSomeItem<TPoco>
             {
@@ -984,6 +883,21 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
+        private static bool ParameterCheck(object data, IIdentity identity, IResponse response)
+        {
+            if (data == null)
+            {
+                MessageUtility.Errors.Add("The item(s) have not been supplied.", NullDataCode, response);
+            }
+
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+            }
+
+            return response.Ok;
+        }
+
         #endregion
 
         #endregion
@@ -991,9 +905,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
     public class BusinessCore
     {
-        public const string NullItemCode = Constants.BusinessCoreErrorCodeRoot + ".NullItem";
-
-        public const string NullItemsCode = Constants.BusinessCoreErrorCodeRoot + ".NullItems";
+        public const string NullDataCode = Constants.BusinessCoreErrorCodeRoot + ".NullData";
 
         public const string NullIdentityCode = Constants.BusinessCoreErrorCodeRoot + ".NullIdentity";
 
