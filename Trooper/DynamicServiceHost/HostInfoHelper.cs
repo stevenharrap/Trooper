@@ -9,14 +9,14 @@ namespace Trooper.DynamicServiceHost
 {
     public class HostInfoHelper
     {
-        public static void BuildHostInfo(Func<object> supporter, IHostInfo hostInfo)
+        public static void BuildHostInfo(Func<object> supporter, IDynamicHostInfo hostInfo)
         {
             var supportType = supporter().GetType();
 
             BuildHostInfo(supportType, hostInfo);
         }
 
-        public static void BuildHostInfo(Type supportType, IHostInfo hostInfo)
+        public static void BuildHostInfo(Type supportType, IDynamicHostInfo hostInfo)
         {
             var serviceTypeName = supportType.Name;
             var typeInterfaces = supportType.GetInterfaces();
@@ -36,7 +36,7 @@ namespace Trooper.DynamicServiceHost
             }
         }
 
-        public static IHostInfo BuildHostInfo(Type serviceType)
+        public static IDynamicHostInfo BuildHostInfo(Type serviceType)
         {            
             var serviceTypeName = serviceType.Name;
             var typeInterfaces = serviceType.GetInterfaces();

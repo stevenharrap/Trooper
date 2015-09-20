@@ -29,12 +29,15 @@ namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
                     var parameters = new BusinessModuleStartParameters { AutoStartServices = false };
                     var container = BusinessModule.Start<ShopAppModule>(parameters);
 
-                    var helper = new TestAddingOutletHelper();
                     var reader = container.Resolve<IOutletBo>();
                     var creater = container.Resolve<IOutletBo>();
                     var deleter = container.Resolve<IOutletBo>();
+                    var helper = new TestAddingOutletHelper(creater, creater, deleter);
 
-                    return new AddingRequirment<Outlet>(container, helper, creater, reader, deleter);
+                    var addingRequirement = new AddingRequirment<Outlet>(helper, creater);
+                    addingRequirement.OnDisposing += (f) => { BusinessModule.Stop(container); };
+
+                    return addingRequirement;
                 };
             }
         }

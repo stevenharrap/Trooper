@@ -43,6 +43,10 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.Wcf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Wcf.4.0.0\lib\net45\Autofac.Integration.Wcf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
@@ -62,12 +66,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core">
-      <HintPath>..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidationNA">
       <HintPath>..\packages\FluentValidationNA.1.2.16\lib\net40\FluentValidationNA.dll</HintPath>
@@ -152,12 +150,15 @@
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderDynamicCodeException.cs" />
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderValidateHostInfoException.cs" />
     <Compile Include="DynamicServiceHost\Property.cs" />
-    <Compile Include="Interface\DynamicServiceHost\IHostInfo.cs" />
+    <Compile Include="Interface\DynamicServiceHost\IDynamicHostInfo.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IBehaviour.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessStandardHostInfo.cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService .cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessStandardOperationService.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessModuleStartParameters.cs" />
-    <Compile Include="Interface\Thorny\Configuration\IBusinessHostInfo.cs" />
-    <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService.cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicHostInfo.cs" />
+    <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicOperationService.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IHelping.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISavingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISaving.cs" />
@@ -206,10 +207,12 @@
     <Compile Include="Thorny\Business\TestSuit\Adding\AddingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\TestAdding.cs" />
     <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />
+    <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
+    <Compile Include="Thorny\Configuration\BusinessStandardOperationService.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleStartParameters.cs" />
-    <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
+    <Compile Include="Thorny\Configuration\BusinessDynamicOperationService.cs" />
     <Compile Include="Thorny\Constants.cs" />
     <Compile Include="Thorny\DataManager\Facade.cs" />
     <Compile Include="Thorny\DataManager\Validation.cs" />

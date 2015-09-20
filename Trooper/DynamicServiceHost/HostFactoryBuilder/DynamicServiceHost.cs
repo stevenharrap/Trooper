@@ -11,7 +11,7 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicServiceHost : ServiceHost
     {
-        public DynamicServiceHost(IHostInfo hostInfo, Func<object> supporter, Type serviceType, params Uri[] baseAddresses)
+        public DynamicServiceHost(IDynamicHostInfo hostInfo, Func<object> supporter, Type serviceType, params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)
         {
             if (hostInfo == null)

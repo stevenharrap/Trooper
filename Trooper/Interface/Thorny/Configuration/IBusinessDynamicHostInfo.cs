@@ -9,14 +9,12 @@ using Trooper.Thorny.Interface.DataManager;
 
 namespace Trooper.Interface.Thorny.Configuration
 {
-    public interface IBusinessHostInfo : IHostInfo
+    public interface IBusinessDynamicHostInfo : IDynamicHostInfo
     {
         string BaseAddress { get; set; }
 
         bool UseDefaultTypes { get; set; }
 
-        Action<IBusinessHostInfo> HostInfoBuilt { get; set; }
-
-        //IList<ClassMapping> SearchMappings { get; set; }
+        Action<IBusinessDynamicHostInfo> HostInfoBuilt { get; set; }
     }
 }

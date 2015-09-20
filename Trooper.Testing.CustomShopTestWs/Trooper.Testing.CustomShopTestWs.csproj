@@ -64,6 +64,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="TestOutlet\TestAddingOutlet.cs" />
+    <Compile Include="TestOutlet\TestAddingOutletHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -22,7 +22,7 @@
             component.RegisterBusinessCore<InventoryBusinessCore, IInventoryBusinessCore>();
             component.RegisterBusinessOperation<InventoryBo, IInventoryBo>();
 
-            component.RegisterServiceHost(new BusinessHostInfo { BaseAddress = "http://localhost:8000" });
+            component.RegisterDynamicServiceHost(new BusinessHostInfo { BaseAddress = "http://localhost:8000" });
 
             BusinessModule.AddComponent(component);
         }

@@ -9,7 +9,7 @@ using Trooper.Thorny.Interface.DataManager;
 
 namespace Trooper.Thorny.Configuration
 {
-    public class BusinessHostInfo : HostInfo, IBusinessHostInfo
+    public class BusinessHostInfo : HostInfo, IBusinessDynamicHostInfo
     {
         public BusinessHostInfo()
         {
@@ -20,24 +20,7 @@ namespace Trooper.Thorny.Configuration
 
         public bool UseDefaultTypes { get; set; }
 
-        public Action<IBusinessHostInfo> HostInfoBuilt { get; set; }
-
-        //public IList<ClassMapping> SearchMappings { get; set; }
-
-        //public static ClassMapping NewSearch<TISearch, TSearch>()
-        //    where TISearch : class, ISearch
-        //    where TSearch : class, TISearch, new()
-        //{
-        //    return ClassMapping.Make<TISearch, TSearch>();
-
-        //}
-
-        //public static ClassMapping NewSearch<TSearch>()
-        //    where TSearch : class, ISearch, new()
-        //{
-        //    return ClassMapping.Make<TSearch>();
-
-        //}
+        public Action<IBusinessDynamicHostInfo> HostInfoBuilt { get; set; }
     }
 
     

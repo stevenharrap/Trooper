@@ -10,11 +10,11 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicInstanceProvider : IInstanceProvider, IContractBehavior
     {
-        private readonly IHostInfo hostInfo;
+        private readonly IDynamicHostInfo hostInfo;
         private readonly Type serviceType;
         private readonly Func<object> supporter;
 
-        public DynamicInstanceProvider(IHostInfo hostInfo, Func<object> supporter, Type serviceType)
+        public DynamicInstanceProvider(IDynamicHostInfo hostInfo, Func<object> supporter, Type serviceType)
         {
             if (hostInfo == null)
             {

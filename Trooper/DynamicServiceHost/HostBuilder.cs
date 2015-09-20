@@ -10,17 +10,18 @@ using System.ServiceModel.Description;
 using System.Text;
 using Trooper.DynamicServiceHost.Exceptions;
 using Trooper.Interface.DynamicServiceHost;
+using Trooper.Thorny.Configuration;
 
 namespace Trooper.DynamicServiceHost
 {
     public class HostBuilder
     {
-        public static ServiceHost BuildHost(IHostInfo hostInfo)
+        public static ServiceHost BuildHost(IDynamicHostInfo hostInfo)
         {
             return BuildHost(hostInfo, null);
         }
 
-        public static ServiceHost BuildHost(IHostInfo hostInfo, Func<object> supporter)
+        public static ServiceHost BuildHost(IDynamicHostInfo hostInfo, Func<object> supporter)
         {
             ValidateHostInfo(hostInfo);
                         
@@ -47,31 +48,12 @@ namespace Trooper.DynamicServiceHost
 
             var host = new HostFactoryBuilder.DynamicServiceHost(hostInfo, supporter, serviceType, hostInfo.Address);
 
-            ServiceMetadataBehavior mBehave = new ServiceMetadataBehavior();
-            host.Description.Behaviors.Add(mBehave);
-            host.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexHttpBinding(), "mex");
-            BasicHttpBinding httpb = new BasicHttpBinding();
-
-            var endPoint = host.AddServiceEndpoint(interfaceType, httpb, hostInfo.Address);
-            endPoint.Binding.Namespace = hostInfo.ServiceNampespace.ToString();
-
-            var debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
-            if (debug == null)
-            {
-                host.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
-            }
-            else
-            {
-                if (!debug.IncludeExceptionDetailInFaults)
-                {
-                    debug.IncludeExceptionDetailInFaults = true;
-                }
-            }
+            BusinessOperationService.ConfigureHost(host, hostInfo.Address, interfaceType, hostInfo.ServiceNampespace);
 
             return host;
         }
 
-        private static StringBuilder GenerateClassCode(IHostInfo hostInfo)
+        private static StringBuilder GenerateClassCode(IDynamicHostInfo hostInfo)
         {
             var code = new StringBuilder();
 
@@ -149,7 +131,7 @@ namespace Trooper.DynamicServiceHost
             return code;
         }
 
-        private static StringBuilder GenerateInterfaceCode(IHostInfo hostInfo)
+        private static StringBuilder GenerateInterfaceCode(IDynamicHostInfo hostInfo)
         {
             var code = new StringBuilder();
 
@@ -189,7 +171,7 @@ namespace Trooper.DynamicServiceHost
             }
         }        
 
-        private static string ResolveSource(Type sourceType, IHostInfo hostInfo)
+        private static string ResolveSource(Type sourceType, IDynamicHostInfo hostInfo)
         {
             if (sourceType.IsPrimitive)
             {
@@ -272,7 +254,7 @@ namespace Trooper.DynamicServiceHost
             return outputLocation;
         }
 
-        private static void ValidateHostInfo(IHostInfo hostInfo)
+        private static void ValidateHostInfo(IDynamicHostInfo hostInfo)
         {
             if (hostInfo == null)
             {

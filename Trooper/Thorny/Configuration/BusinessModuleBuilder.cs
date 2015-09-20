@@ -56,11 +56,17 @@
 
         public static void Stop(IContainer container)
         {
-            var services = container.Resolve<IEnumerable<IBusinessOperationService>>();
-            foreach (var service in services)
+            var dynamicServices = container.Resolve<IEnumerable<IBusinessDynamicOperationService>>();
+            foreach (var service in dynamicServices)
             {
                 service.Stop();
             }
+
+            var standardServices = container.Resolve<IEnumerable<IBusinessStandardOperationService>>();
+            foreach (var service in standardServices)
+            {
+                service.Stop();
+            }            
         }
     }
 
@@ -76,7 +82,8 @@
 
         private ContainerBuilder builder;
 
-        private Type businessOperationType;
+        private Type businessOperationClassType;
+        private Type businessOperationInterfaceType;
 
         public BusinessComponent(ContainerBuilder builder)
         {
@@ -139,12 +146,43 @@
             .As<IBusinessOperation<TEnt, TPoco>>();
 
             this.businessOperaitonRegistered = true;
-            this.businessOperationType = typeof(TcBusinessOperation);
+            this.businessOperationClassType = typeof(TcBusinessOperation);
+            this.businessOperationInterfaceType = typeof(TiBusinessOperation);
         }
 
-        public void RegisterServiceHost(IBusinessHostInfo businessHostInfo)
+        public void RegisterStandardServiceHost(IBusinessStandardHostInfo businessHostInfo)
         {
-            var boType = this.businessOperationType;
+            if (businessHostInfo.Address == null)
+            {
+                businessHostInfo.Address = new Uri(
+                    string.Format("{0}/{1}", 
+                    businessHostInfo.BaseAddress, 
+                    this.businessOperationClassType.FullName));
+            }
+
+            businessHostInfo.ServiceNampespace = new Uri(
+                string.Format("{0}/{1}Ns", 
+                businessHostInfo.BaseAddress, 
+                this.businessOperationClassType.FullName));
+
+            this.builder.Register(c =>
+            {
+                var container = c.Resolve<ILifetimeScope>();
+                var startParameters = c.Resolve<IBusinessModuleStartParameters>();
+                return new BusinessStandardOperationService(businessHostInfo, container)
+                {
+                    AutoStart = startParameters.AutoStartServices
+                };
+            })
+                .As<IBusinessStandardOperationService>()
+                .As<IStartable>()
+                .SingleInstance();
+
+        }
+
+        public void RegisterDynamicServiceHost(IBusinessDynamicHostInfo businessHostInfo)
+        {
+            var boType = this.businessOperationClassType;
 
             if (boType == null) 
             {
@@ -155,12 +193,12 @@
             {
                 businessHostInfo.Address = new Uri(string.Format("{0}/{1}", businessHostInfo.BaseAddress, boType.FullName));
             }
-            
+
             businessHostInfo.CodeNamespace = boType.Name.Replace(".", string.Empty);
             businessHostInfo.ServiceName = HostInfoHelper.MakeClassName(boType);
             businessHostInfo.InterfaceName = HostInfoHelper.MakeClassName(boType, true);
-            businessHostInfo.ServiceNampespace = new Uri(string.Format("{0}/{1}Ns", businessHostInfo.BaseAddress, boType.FullName)); //this should be a common string
-            
+            businessHostInfo.ServiceNampespace = new Uri(string.Format("{0}/{1}Ns", businessHostInfo.BaseAddress, boType.FullName));
+
             if (businessHostInfo.UseDefaultTypes)
             {
                 if (businessHostInfo.Mappings == null)
@@ -183,15 +221,15 @@
                     var container = c.Resolve<IComponentContext>();
                     var operation = c.Resolve<IBusinessOperation<TEnt, TPoco>>();
                     var startParameters = c.Resolve<IBusinessModuleStartParameters>();
-                    businessHostInfo.HostInfoBuilt = (IBusinessHostInfo bhi) => { this.AddSearchMethods(operation, bhi); };
-                    return new BusinessOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), businessHostInfo)
+                    businessHostInfo.HostInfoBuilt = (IBusinessDynamicHostInfo bhi) => { this.AddSearchMethods(operation, bhi); };
+                    return new BusinessDynamicOperationService(() => container.Resolve<IBusinessOperation<TEnt, TPoco>>(), businessHostInfo)
                     {
                         AutoStart = startParameters.AutoStartServices
                     };
                 })
-                .As<IBusinessOperationService>()
+                .As<IBusinessDynamicOperationService>()
                 .As<IStartable>()
-                .SingleInstance();            
+                .SingleInstance();
         }
 
         public void EnsureRegistrations()
@@ -244,7 +282,7 @@
             };
         }
 
-        private void AddSearchMethods(IBusinessOperation<TEnt, TPoco> operation, IBusinessHostInfo businessHostInfo)
+        private void AddSearchMethods(IBusinessOperation<TEnt, TPoco> operation, IBusinessDynamicHostInfo businessHostInfo)
         {
             var bp = operation.BusinessCore.GetBusinessPack();
             var searches = operation.BusinessCore.GetSearches(bp);

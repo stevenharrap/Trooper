@@ -1,16 +1,11 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Trooper.Interface.Thorny.Business.Operation.Single;
 using Trooper.Interface.Thorny.Business.Security;
-using Trooper.Testing.ShopModel.Poco;
+using Trooper.Testing.CustomShopTestWs.OutletBoServiceReference;
 using Trooper.Thorny.Business.Security;
 using Trooper.Thorny.Business.TestSuit;
 
-namespace Trooper.Testing.CustomShopApiTestSuit.TestOutlet
+namespace Trooper.Testing.CustomShopTestWs.TestOutlet
 {
     public class TestAddingOutletHelper : TestSuitHelper<Outlet>
     {

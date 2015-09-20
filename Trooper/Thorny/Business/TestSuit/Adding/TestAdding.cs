@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
+﻿
 namespace Trooper.Thorny.Business.TestSuit.Adding
 {
-    using FluentAssertions;
-
-    using NUnit.Framework;
-
-    using Trooper.Interface.Thorny.Business.Operation.Single;
-    using Trooper.Interface.Thorny.TestSuit;
+    using System;
+    using NUnit.Framework;    
     using Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit;
-    using Trooper.Thorny.Business.Operation.Core;    
+    using Operation.Core;    
 
     public abstract class Adding<TPoco> : IAdding
         where TPoco : class
@@ -26,28 +16,28 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirment = this.Requirement())
             {
-                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
+                requirment.Helper.RemoveAllItems();
 
                 var item = requirment.Helper.MakeValidItem();
 
-                requirment.Helper.AddItem(item, requirment.Creater, requirment.Reader);
+                Assert.IsNotNull(requirment.Helper.AddItem(item));
             }
         }
         
         [Test]
         public virtual void DoesNotAddWhenItemIsValidAndItemDoesNotExistAndIdentityIsNotAllowed()
         {
-            using (var requirment = this.Requirement())
+            using (var requirement = this.Requirement())
             {
-                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
+                requirement.Helper.RemoveAllItems();
 
-                var item = requirment.Helper.MakeValidItem();
-                var identity = requirment.Helper.MakeInvalidIdentity();                
-                var response = requirment.Creater.Add(item, identity);
+                var item = requirement.Helper.MakeValidItem();
+                var identity = requirement.Helper.MakeInvalidIdentity();                
+                var response = requirement.Creater.Add(item, identity);
 
                 Assert.IsNull(response.Item);
-                requirment.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-                requirment.Helper.NoItemsExist(requirment.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -56,14 +46,14 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();                
                 var response = requirement.Creater.Add(item, null);
                                 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -72,15 +62,15 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeInvalidItem();
                 var identity = requirement.Helper.MakeValidIdentity();
                 var response = requirement.Creater.Add(item, identity);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidPropertyCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidPropertyCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -89,15 +79,15 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeInvalidItem();
                 var identity = requirement.Helper.MakeInvalidIdentity();
                 var response = requirement.Creater.Add(item, identity);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -106,14 +96,14 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeInvalidItem();
                 var response = requirement.Creater.Add(item, null);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -122,14 +112,14 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var identity = requirement.Helper.MakeValidIdentity();
                 var response = requirement.Creater.Add(null, identity);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -138,14 +128,14 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var identity = requirement.Helper.MakeInvalidIdentity();
                 var response = requirement.Creater.Add(null, identity);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -154,14 +144,14 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var response = requirement.Creater.Add(null, null);
 
                 Assert.IsNull(response.Item);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-                requirement.Helper.NoItemsExist(requirement.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
         
@@ -170,19 +160,20 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();
                 var identity = requirement.Helper.MakeValidIdentity();
-                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+                var exitingItem = requirement.Helper.AddItem(item);
+                var state = requirement.Helper.GetAllItems();
 
                 requirement.Helper.ChangeNonIdentifiers(exitingItem);
 
                 var addRresponse = requirement.Creater.Add(exitingItem, identity);
+
                 Assert.IsNull(addRresponse.Item);
-                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode);
-                
-                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
+                Assert.That(requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
         
@@ -191,20 +182,19 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();
-                var validIdentity = requirement.Helper.MakeValidIdentity();
-                var invalidIdentity = requirement.Helper.MakeInvalidIdentity();
-                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+                var identity = requirement.Helper.MakeInvalidIdentity();
+                var exitingItem = requirement.Helper.AddItem(item);
+                var state = requirement.Helper.GetAllItems();
 
                 requirement.Helper.ChangeNonIdentifiers(exitingItem);
+                var addRresponse = requirement.Creater.Add(exitingItem, identity);
 
-                var addRresponse = requirement.Creater.Add(exitingItem, invalidIdentity);
                 Assert.IsNull(addRresponse.Item);
-                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode);
-
-                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
+                Assert.That(requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
         
@@ -213,19 +203,18 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();
-                var validIdentity = requirement.Helper.MakeValidIdentity();
-                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+                var exitingItem = requirement.Helper.AddItem(item);
+                var state = requirement.Helper.GetAllItems();
 
                 requirement.Helper.ChangeNonIdentifiers(exitingItem);
-
                 var addRresponse = requirement.Creater.Add(exitingItem, null);
-                Assert.IsNull(addRresponse.Item);
-                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode);
 
-                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
+                Assert.IsNull(addRresponse.Item);
+                Assert.That(requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
         
@@ -234,20 +223,19 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();
                 var identity = requirement.Helper.MakeValidIdentity();
-                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+                var exitingItem = requirement.Helper.AddItem(item);
+                var state = requirement.Helper.GetAllItems();
 
                 requirement.Helper.ChangeNonIdentifiers(exitingItem);
-
                 var addRresponse = requirement.Creater.Add(exitingItem, identity);
-                Assert.IsNull(addRresponse.Item);
-                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode);
 
-                var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
+                Assert.IsNull(addRresponse.Item);
+                Assert.That(requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.AddFailedCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
         
@@ -256,20 +244,19 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();
-                var validIdentity = requirement.Helper.MakeValidIdentity();
-                var invalidIdentity = requirement.Helper.MakeInvalidIdentity();
-                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+                var identity = requirement.Helper.MakeInvalidIdentity(); 
+                var exitingItem = requirement.Helper.AddItem(item);
+                var state = requirement.Helper.GetAllItems();
 
                 requirement.Helper.ChangeNonIdentifiers(exitingItem);
+                var addRresponse = requirement.Creater.Add(exitingItem, identity);
 
-                var addRresponse = requirement.Creater.Add(exitingItem, invalidIdentity);
                 Assert.IsNull(addRresponse.Item);
-                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode);
-
-                Assert.That(requirement.Helper.ItemCountIs(1, requirement.Reader));
+                Assert.That(requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
         
@@ -278,20 +265,18 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems(requirement.Reader, requirement.Deleter);
+                requirement.Helper.RemoveAllItems();
 
                 var item = requirement.Helper.MakeValidItem();
-                var validIdentity = requirement.Helper.MakeValidIdentity();
-                var exitingItem = requirement.Helper.AddItem(item, requirement.Creater, requirement.Reader);
+                var exitingItem = requirement.Helper.AddItem(item);
+                var state = requirement.Helper.GetAllItems();
 
                 requirement.Helper.ChangeNonIdentifiers(exitingItem);
-
                 var addRresponse = requirement.Creater.Add(exitingItem, null);
-                Assert.IsNull(addRresponse.Item);
-                requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode);
 
-                var retrievedItem = requirement.Helper.GetItem(exitingItem, requirement.Reader);
-                Assert.That(!requirement.Helper.AreEqual(retrievedItem, exitingItem));
+                Assert.IsNull(addRresponse.Item);
+                Assert.That(requirement.Helper.ResponseFailsWithError(addRresponse, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
 

@@ -7,7 +7,7 @@ namespace Trooper.DynamicServiceHost.HostFactoryBuilder
 {
     public class DynamicServiceHostFactory : ServiceHostFactory
     {
-        private readonly IHostInfo hostInfo;
+        private readonly IDynamicHostInfo hostInfo;
 
         private readonly Func<object> supporter;
 

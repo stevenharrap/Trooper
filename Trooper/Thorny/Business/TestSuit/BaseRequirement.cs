@@ -15,47 +15,24 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
     {
         public ITestSuitHelper<TPoco> Helper { get; private set; }
 
-        public IBusinessCreate<TPoco> Creater { get; private set; }
+        public delegate void Disposing(BaseRequirment<TPoco> br);
 
-        public IBusinessRead<TPoco> Reader { get; private set; }
-
-        public IBusinessDelete<TPoco> Deleter { get; private set; }
-
-        private IContainer container;
+        public event Disposing OnDisposing;       
 
         public BaseRequirment(
-            IContainer container,
-            ITestSuitHelper<TPoco> helper,
-            IBusinessCreate<TPoco> creater,
-            IBusinessRead<TPoco> reader,
-            IBusinessDelete<TPoco> deleter) : this(helper, creater, reader, deleter)
-        {
-            this.container = container;
-        }
-
-        public BaseRequirment(
-            ITestSuitHelper<TPoco> helper, 
-            IBusinessCreate<TPoco> creater, 
-            IBusinessRead<TPoco> reader, 
-            IBusinessDelete<TPoco> deleter)
+            ITestSuitHelper<TPoco> helper)
         {
             this.Helper = helper;
-            this.Creater = creater;
-            this.Reader = reader;
-            this.Deleter = deleter;
-        }
+        }        
 
         public void Dispose()
         {
-            if (this.container != null)
+            if (this.OnDisposing != null)
             {
-                BusinessModule.Stop(this.container);  
+                this.OnDisposing(this);
             }
-
+            
             this.Helper = null;
-            this.Creater = null;
-            this.Reader = null;
-            this.Deleter = null;
         }
     }
 }

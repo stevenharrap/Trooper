@@ -28,7 +28,7 @@
             component.RegisterBusinessCore<OutletBusinessCore, IOutletBusinessCore>();
             component.RegisterBusinessOperation<OutletBo, IOutletBo>();            
 
-            component.RegisterServiceHost(
+            component.RegisterDynamicServiceHost(
                 new BusinessHostInfo 
                 {
                     BaseAddress = "http://localhost:8000",

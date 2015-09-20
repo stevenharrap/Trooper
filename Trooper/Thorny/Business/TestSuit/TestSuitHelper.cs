@@ -16,10 +16,21 @@ namespace Trooper.Thorny.Business.TestSuit
     {
         private int counter = 0;
 
+        private IBusinessCreate<TPoco> boCreater;
+        private IBusinessRead<TPoco> boReader;
+        private IBusinessDelete<TPoco> boDeleter;
+
+        public TestSuitHelper(IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter)
+        {
+            this.boCreater = boCreater;
+            this.boReader = boReader;
+            this.boDeleter = boDeleter;
+        }
+
         protected int IncCounter()
         {
             return this.counter++;
-        }        
+        }
 
         public abstract TPoco MakeValidItem();
 
@@ -31,192 +42,210 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public abstract IIdentity MakeInvalidIdentity();
 
-        public IList<TPoco> AddItems(
-            List<TPoco> validItems, 
-            IIdentity validIdentity, 
-            IBusinessCreate<TPoco> boCreater, 
-            IBusinessRead<TPoco> boReader)
+        public virtual IList<TPoco> AddItems(List<TPoco> validItems, IIdentity validIdentity)
         {
-            var before = this.GetAllItems(validIdentity, boReader).Count();
+            var before = this.GetAllItems(validIdentity).Count();
             var response = boCreater.AddSome(validItems, validIdentity);
-            this.ResponseIsOk(response);
 
+            Assert.That(this.ResponseIsOk(response));
             Assert.IsNotNull(response.Items);
 
-            var after = this.GetAllItems(validIdentity, boReader).Count();
+            var after = this.GetAllItems(validIdentity).Count();
 
             Assert.That(after == before + validItems.Count());
 
             return response.Items.ToList();
         }
 
-        public IList<TPoco> AddItems(List<TPoco> validItems, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader)
+        public IList<TPoco> AddItems(List<TPoco> validItems)
         {
-            return this.AddItems(validItems, this.MakeValidIdentity(), boCreater, boReader);
+            return this.AddItems(validItems, this.MakeValidIdentity());
         }
 
-        public TPoco AddItem(TPoco validItem, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader)
+        public virtual TPoco AddItem(TPoco validItem, IIdentity validIdentity)
         {
             var response = boCreater.Add(validItem, validIdentity);
-            this.ResponseIsOk(response);
 
+            Assert.That(this.ResponseIsOk(response));
             Assert.IsNotNull(response.Item);
             Assert.That(this.NonIdentifersAreEqual(validItem, response.Item));
-            Assert.That(!this.IdentifierAreEqual(validItem, response.Item));
-            Assert.That(this.ItemExists(response.Item, boReader));
+            Assert.That(!this.IdentifiersAreEqual(validItem, response.Item));
+            Assert.That(this.ItemExists(response.Item));
 
             return response.Item;
         }
 
-        public TPoco AddItem(TPoco validItem, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader)
+        public TPoco AddItem(TPoco validItem)
         {
-            return this.AddItem(validItem, this.MakeValidIdentity(), boCreater, boReader);
+            return this.AddItem(validItem, this.MakeValidIdentity());
         }
 
-        public TPoco GetItem(TPoco exitingItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader)
+        public virtual TPoco GetItem(TPoco exitingItem, IIdentity validIdentity)
         {
             var response = boReader.GetByKey(exitingItem, validIdentity);
-            this.ResponseIsOk(response);
-
+            Assert.That(this.ResponseIsOk(response));
             Assert.IsNotNull(response.Item);
-            Assert.That(this.IdentifierAreEqual(exitingItem, response.Item));
+            Assert.That(this.IdentifiersAreEqual(exitingItem, response.Item));
 
             return response.Item;
         }
 
-        public TPoco GetItem(TPoco existingItem, IBusinessRead<TPoco> boReader)
+        public TPoco GetItem(TPoco existingItem)
         {
-            return this.GetItem(existingItem, this.MakeValidIdentity(), boReader);
+            return this.GetItem(existingItem, this.MakeValidIdentity());
         }
 
-        public bool ItemExists(TPoco validItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader)
+        public virtual bool ItemExists(TPoco validItem, IIdentity validIdentity)
         {
             var response = boReader.ExistsByKey(validItem, validIdentity);
 
-            this.ResponseIsOk(response);
+            Assert.That(this.ResponseIsOk(response));
 
             return response.Item;
         }
 
-        public bool ItemExists(TPoco validItem, IBusinessRead<TPoco> boReader)
+        public bool ItemExists(TPoco validItem)
         {
-            return ItemExists(validItem, this.MakeValidIdentity(), boReader);
+            return ItemExists(validItem, this.MakeValidIdentity());
         }
 
-        public void RemoveAllItems(IIdentity validIdentity, IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter)
+        public virtual void RemoveAllItems(IIdentity validIdentity)
         {
             var allResponse = boReader.GetAll(validIdentity);
 
-            this.ResponseIsOk(allResponse);
-
+            Assert.That(this.ResponseIsOk(allResponse));
             Assert.IsNotNull(allResponse.Items);
 
             var deleteResponse = boDeleter.DeleteSomeByKey(allResponse.Items, validIdentity);
 
-            this.ResponseIsOk(deleteResponse);
+            Assert.That(this.ResponseIsOk(deleteResponse));
         }
 
-        public void RemoveAllItems(IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter)
+        public void RemoveAllItems()
         {
-            this.RemoveAllItems(this.MakeValidIdentity(), boReader, boDeleter);
+            this.RemoveAllItems(this.MakeValidIdentity());
         }
 
-        public IList<TPoco> GetAllItems(IIdentity validIdentity, IBusinessRead<TPoco> boReader)
+        public virtual IList<TPoco> GetAllItems(IIdentity validIdentity)
         {
             var allResponse = boReader.GetAll(validIdentity);
 
-            this.ResponseIsOk(allResponse);
-
+            Assert.That(this.ResponseIsOk(allResponse));
             Assert.IsNotNull(allResponse.Items);
 
             return allResponse.Items;
         }
 
-        public IList<TPoco> GetAllItems(IBusinessRead<TPoco> boReader)
+        public IList<TPoco> GetAllItems()
         {
-            return this.GetAllItems(this.MakeValidIdentity(), boReader);
+            return this.GetAllItems(this.MakeValidIdentity());
         }
 
-        public bool ItemCountIs(int count, IIdentity validIdentity, IBusinessRead<TPoco> boReader)
+        public virtual bool ItemCountIs(int count, IIdentity validIdentity)
         {
-            return this.GetAllItems(validIdentity, boReader).Count() == count;
+            return this.GetAllItems(validIdentity).Count() == count;
         }
 
-        public bool ItemCountIs(int count, IBusinessRead<TPoco> boReader)
+        public bool ItemCountIs(int count)
         {
-            return this.ItemCountIs(count, this.MakeValidIdentity(), boReader);
+            return this.ItemCountIs(count, this.MakeValidIdentity());
         }
 
-        public void NoItemsExist(IIdentity validIdentity, IBusinessRead<TPoco> boReader)
+        public virtual bool StoredItemsAreEqualTo(IList<TPoco> items, IIdentity validIdentity)
+        {
+            var storedItems = this.GetAllItems(validIdentity);
+            
+            if (items.Count != storedItems.Count)
+            {
+                return false;
+            }
+
+            return items.All(i => storedItems.Any(si => this.AreEqual(i, si)));
+        }
+
+        public bool StoredItemsAreEqualTo(IList<TPoco> items)
+        {
+            return this.StoredItemsAreEqualTo(items, this.MakeValidIdentity());
+        }
+
+        public virtual bool NoItemsExist(IIdentity validIdentity)
         {
             var response = boReader.GetAll(validIdentity);
-            this.ResponseIsOk(response);
-            Assert.That(!response.Items.Any());
+
+            Assert.That(this.ResponseIsOk(response));
+
+            return !response.Items.Any();
         }
 
-        public void NoItemsExist(IBusinessRead<TPoco> boReader)
+        public bool NoItemsExist()
         {
-            this.NoItemsExist(this.MakeValidIdentity(), boReader);
+            return this.NoItemsExist(this.MakeValidIdentity());
         }
 
-        public bool AreEqual(TPoco itemA, TPoco itemB)
+        public virtual bool AreEqual(TPoco itemA, TPoco itemB)
         {
-            return this.IdentifierAreEqual(itemA, itemB) && this.NonIdentifersAreEqual(itemA, itemB);            
+            return this.IdentifiersAreEqual(itemA, itemB) && this.NonIdentifersAreEqual(itemA, itemB);            
         }
 
-        public abstract bool IdentifierAreEqual(TPoco itemA, TPoco itemB);
+        public abstract bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
 
         public abstract bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
 
         public abstract void ChangeNonIdentifiers(TPoco item);
 
-        public void ResponseIsOk(IResponse response)
+        public TPoco CopyAndChangeItemNonIdentifiers(TPoco item)
         {
-            Assert.IsNotNull(response, "The response is null");
+            var copy = this.CopyItem(item);
+            this.ChangeNonIdentifiers(item);
 
-            if (!response.Ok)
-            {
-                Assert.IsNotNull(response.Messages, "The response is not ok and there are no messages why.");
-
-                var messages = response.Messages.Select(m => string.Format("[Code: {0}] [Level: {1}] [Content: {2}]", m.Code, m.Level, m.Content));
-
-                Assert.Fail("The response is not ok.\n" + string.Join(Environment.NewLine, messages));
-            }
+            return copy;
         }
 
-        public void ResponseFailsWithError(IResponse response, string code)
+        public bool ResponseIsOk(IResponse response)
         {
-            Assert.IsNotNull(response, "The response is null");
-            Assert.IsFalse(response.Ok);
-            Assert.IsNotNull(response.Messages);
-            Assert.That(response.Messages.Any(m => m.Code == code && m.Level == MessageAlertLevel.Error));
+            if (response == null)
+            {
+                return false;
+            }
+
+            return response.Ok;            
+        }
+
+        public string ResponseNotOkMessages(IResponse response)
+        {
+            if (response == null)
+            {
+                return "The response is null";
+            }
+
+            if (response.Ok)
+            {
+                return string.Empty;
+            }
+
+            if (response.Messages == null)
+            {
+                return "The response is not ok and there are no messages why.";
+            }
+
+            var messages = response.Messages.Select(m => string.Format("[Code: {0}] [Level: {1}] [Content: {2}]", m.Code, m.Level, m.Content));
+
+            return "The response is not ok.\n" + string.Join(Environment.NewLine, messages);
+
+        }
+
+        public bool ResponseFailsWithError(IResponse response, string code)
+        {
+            return response != null 
+                && !response.Ok 
+                && response.Messages.Any(m => m.Code == code && m.Level == MessageAlertLevel.Error);
         }
 
         public void SelfTestHelper()
-        {
-            this.NewValidItemsAreDifferent();
-            this.NewValidItemsIncrementCounter();
+        {           
             this.NonIdentifiersAreDifferentWhenChanged();
             this.AnItemIsNewAndIdenticalWhenCopied();
-        }
-
-        public virtual void NewValidItemsAreDifferent()
-        {
-            var item1 = this.MakeInvalidItem();
-            var item2 = this.MakeInvalidItem();
-
-            Assert.That(!this.NonIdentifersAreEqual(item1, item2),
-                "When making new valid items the none-identifying properties should be different. Consider 'Counter' generate unique properties");
-        }
-
-        public virtual void NewValidItemsIncrementCounter()
-        {
-            var item1 = this.MakeInvalidItem();
-            var c1 = this.counter;
-            var item2 = this.MakeInvalidItem();
-            var c2 = this.counter;
-
-            Assert.That(c1 != c2, "The implementation of MakeInvalidItem() is not calling IncCounter()");
+            this.AnItemIsCopiedAndItsNonIdentifiersChanged();
         }
 
         public virtual void NonIdentifiersAreDifferentWhenChanged()
@@ -226,7 +255,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
             this.ChangeNonIdentifiers(item2);
 
-            Assert.That(this.IdentifierAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
+            Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
             Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
         }
 
@@ -237,6 +266,17 @@ namespace Trooper.Thorny.Business.TestSuit
 
             Assert.That(this.AreEqual(item1, item2), "The CopyItem method did not correctly copy all the properties of the item.");
             Assert.That(!Object.ReferenceEquals(item1, item2), "The CopyItem should return a new instance not the provided instance.");
+        }               
+
+        public virtual void AnItemIsCopiedAndItsNonIdentifiersChanged()
+        {
+            var item1 = this.MakeInvalidItem();
+            var item2 = this.CopyAndChangeItemNonIdentifiers(item1);
+
+            Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
+            Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
+            Assert.That(!Object.ReferenceEquals(item1, item2), "The CopyItem should return a new instance not the provided instance.");
         }
+
     }
 }

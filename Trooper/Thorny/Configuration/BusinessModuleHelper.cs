@@ -17,9 +17,9 @@ namespace Trooper.Thorny.Configuration
 {
     public class BusinessModuleHelper
     {
-        public static IEnumerable<IBusinessOperationService> GetAllServices(IComponentContext container)
+        public static IEnumerable<IBusinessDynamicOperationService> GetAllServices(IComponentContext container)
         {
-            return container.Resolve<IEnumerable<IBusinessOperationService>>();
+            return container.Resolve<IEnumerable<IBusinessDynamicOperationService>>();
         }
 
         //public static void StartService<TiBusinessOperation>(IComponentContext container)

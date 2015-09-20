@@ -6,7 +6,7 @@ using Trooper.Utility;
 
 namespace Trooper.DynamicServiceHost
 {
-    public class HostInfo : IHostInfo
+    public class HostInfo : IDynamicHostInfo
     {
         public Uri Address { get; set; }
 

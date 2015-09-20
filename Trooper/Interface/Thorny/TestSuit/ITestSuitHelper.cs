@@ -20,49 +20,57 @@ using Trooper.Interface.Thorny.Business.Security;
 
         IIdentity MakeInvalidIdentity();
 
-        IList<TPoco> AddItems(List<TPoco> validItems, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+        IList<TPoco> AddItems(List<TPoco> validItems, IIdentity validIdentity);
 
-        IList<TPoco> AddItems(List<TPoco> validItems, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+        IList<TPoco> AddItems(List<TPoco> validItems);
 
-        TPoco AddItem(TPoco validItem, IIdentity validIdentity, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+        TPoco AddItem(TPoco validItem, IIdentity validIdentity);
 
-        TPoco AddItem(TPoco validItem, IBusinessCreate<TPoco> boCreater, IBusinessRead<TPoco> boReader);
+        TPoco AddItem(TPoco validItem);
 
-        TPoco GetItem(TPoco exitingItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+        TPoco GetItem(TPoco exitingItem, IIdentity validIdentity);
 
-        TPoco GetItem(TPoco existingItem, IBusinessRead<TPoco> boReader);
+        TPoco GetItem(TPoco existingItem);
 
-        bool ItemExists(TPoco validItem, IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+        bool ItemExists(TPoco validItem, IIdentity validIdentity);
 
-        bool ItemExists(TPoco validItem, IBusinessRead<TPoco> boReader);
+        bool ItemExists(TPoco validItem);
 
-        void RemoveAllItems(IIdentity validIdentity, IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter);
+        void RemoveAllItems(IIdentity validIdentity);
 
-        void RemoveAllItems(IBusinessRead<TPoco> boReader, IBusinessDelete<TPoco> boDeleter);
+        void RemoveAllItems();
 
-        IList<TPoco> GetAllItems(IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+        IList<TPoco> GetAllItems(IIdentity validIdentity);
 
-        IList<TPoco> GetAllItems(IBusinessRead<TPoco> boReader);
+        IList<TPoco> GetAllItems();
 
-        bool ItemCountIs(int count, IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+        bool ItemCountIs(int count, IIdentity validIdentity);
 
-        bool ItemCountIs(int count, IBusinessRead<TPoco> boReader);
+        bool ItemCountIs(int count);
+
+        bool StoredItemsAreEqualTo(IList<TPoco> items);
+
+        bool StoredItemsAreEqualTo(IList<TPoco> items, IIdentity validIdentity);
 
         bool AreEqual(TPoco itemA, TPoco itemB);
 
-        bool IdentifierAreEqual(TPoco itemA, TPoco itemB);
+        bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
 
         bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
 
         void ChangeNonIdentifiers(TPoco item);
 
-        void ResponseIsOk(IResponse response);
+        TPoco CopyAndChangeItemNonIdentifiers(TPoco item);
 
-        void ResponseFailsWithError(IResponse response, string code);
+        bool ResponseIsOk(IResponse response);
 
-        void NoItemsExist(IIdentity validIdentity, IBusinessRead<TPoco> boReader);
+        string ResponseNotOkMessages(IResponse response);
 
-        void NoItemsExist(IBusinessRead<TPoco> boReader);
+        bool ResponseFailsWithError(IResponse response, string code);
+
+        bool NoItemsExist(IIdentity validIdentity);
+
+        bool NoItemsExist();
 
         void SelfTestHelper();
     }

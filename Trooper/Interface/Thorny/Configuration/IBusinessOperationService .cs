@@ -10,10 +10,6 @@
     {
         bool AutoStart { get; set; }
 
-        Func<object> Supporter { get; set; }
-
-        IBusinessHostInfo HostInfo { get; set; }
-
         ServiceHost ServiceHost { get; }
 
         void Stop();

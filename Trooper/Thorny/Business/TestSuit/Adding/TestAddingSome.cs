@@ -19,135 +19,272 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirment = this.Requirement())
             {
-                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
+                requirment.Helper.RemoveAllItems();
 
                 var item1 = requirment.Helper.MakeValidItem();
                 var item2 = requirment.Helper.MakeValidItem();
                 var identity = requirment.Helper.MakeValidIdentity();
 
-                requirment.Helper.AddItems(new List<TPoco>{ item1, item2 }, requirment.Creater, requirment.Reader);
+                Assert.IsNotNull(requirment.Helper.AddItems(new List<TPoco>{ item1, item2 }));
             }
         }
 
         [Test]
         public void DoesNotAddWhenAllItemsDoNotExistAndAreAreValidAndIdentityIsNotAllowed()
         {
-            using (var requirment = this.Requirement())
+            using (var requirement = this.Requirement())
             {
-                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
+                requirement.Helper.RemoveAllItems();
 
-                var item1 = requirment.Helper.MakeValidItem();
-                var item2 = requirment.Helper.MakeValidItem();
-                var identity = requirment.Helper.MakeInvalidIdentity();
-                var response = requirment.Creater.AddSome(new List<TPoco> { item1, item2 }, identity);
+                var item1 = requirement.Helper.MakeValidItem();
+                var item2 = requirement.Helper.MakeValidItem();
+                var identity = requirement.Helper.MakeInvalidIdentity();
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, item2 }, identity);
 
                 Assert.IsNull(response.Items);
-                requirment.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-                requirment.Helper.NoItemsExist(requirment.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
 
         [Test]
         public void DoesNotAddWhenAllItemsDoNotExistAndAreValidAndIdentityIsNull()
         {
-            using (var requirment = this.Requirement())
+            using (var requirement = this.Requirement())
             {
-                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
+                requirement.Helper.RemoveAllItems();
 
-                var item1 = requirment.Helper.MakeValidItem();
-                var item2 = requirment.Helper.MakeValidItem();
-                var response = requirment.Creater.AddSome(new List<TPoco> { item1, item2 }, null);
+                var item1 = requirement.Helper.MakeValidItem();
+                var item2 = requirement.Helper.MakeValidItem();
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, item2 }, null);
 
                 Assert.IsNull(response.Items);
-                requirment.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-                requirment.Helper.NoItemsExist(requirment.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
             }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemAlreadyExistsAndIdentityIsAllowed()
         {
-            using (var requirment = this.Requirement())
+            using (var requirement = this.Requirement())
             {
-                requirment.Helper.RemoveAllItems(requirment.Reader, requirment.Deleter);
+                requirement.Helper.RemoveAllItems();
 
-                var item1 = requirment.Helper.MakeValidItem();
-                var item2 = requirment.Helper.MakeValidItem();
-                var identity = requirment.Helper.MakeValidIdentity();
+                var item1 = requirement.Helper.MakeValidItem();                
+                var identity = requirement.Helper.MakeValidIdentity();
+                var addedItem1 = requirement.Helper.AddItem(item1);
+                var item2 = requirement.Helper.CopyAndChangeItemNonIdentifiers(addedItem1);
+                var item3 = requirement.Helper.MakeInvalidItem();
+                var state = requirement.Helper.GetAllItems();
 
-                var addedItem1 = requirment.Helper.AddItems(new List<TPoco> { item1 }, requirment.Creater, requirment.Reader).First();
-                var response = requirment.Creater.AddSome(new List<TPoco> { addedItem1, item2 }, identity);
+                var response = requirement.Creater.AddSome(new List<TPoco> { item2, item3 }, identity);
 
                 Assert.IsNull(response.Items);
-                requirment.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode);
-                requirment.Helper.ItemCountIs(1, requirment.Reader);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
             }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemAlreadyExistsAndIdentityIsNotAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();                
+                var identity = requirement.Helper.MakeInvalidIdentity();
+                var addedItem1 = requirement.Helper.AddItem(item1);
+                var item2 = requirement.Helper.CopyAndChangeItemNonIdentifiers(addedItem1);
+                var item3 = requirement.Helper.MakeInvalidItem();
+                var state = requirement.Helper.GetAllItems();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item2, item3 }, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemAlreadyExistslAndIdentityIsNull()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+                var addedItem1 = requirement.Helper.AddItem(item1);
+                var item2 = requirement.Helper.CopyAndChangeItemNonIdentifiers(addedItem1);
+                var item3 = requirement.Helper.MakeInvalidItem();
+                var state = requirement.Helper.GetAllItems();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item2, item3 }, null);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemsAreInvalidAndIdentityIsAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+                var item2 = requirement.Helper.MakeInvalidItem();
+                var identity = requirement.Helper.MakeValidIdentity();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, item2 }, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemsAreInvalidAndIdentityIsNotAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+                var item2 = requirement.Helper.MakeInvalidItem();
+                var identity = requirement.Helper.MakeInvalidIdentity();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, item2 }, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemsAreInvalidAndIdentityIsNull()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+                var item2 = requirement.Helper.MakeInvalidItem();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, item2 }, null);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemsAreNullAndIdentityIsAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+                var identity = requirement.Helper.MakeValidIdentity();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, null }, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemsAreNullAndIdentityIsNotAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+                var identity = requirement.Helper.MakeValidIdentity();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, null }, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenAnyItemsAreNullAndIdentityIsNull()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var item1 = requirement.Helper.MakeValidItem();
+
+                var response = requirement.Creater.AddSome(new List<TPoco> { item1, null }, null);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenItemsIsNullAndIdentityIsAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var identity = requirement.Helper.MakeValidIdentity();
+
+                var response = requirement.Creater.AddSome(null, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenItemsIsNullAndIdentityIsNotAllowed()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var identity = requirement.Helper.MakeInvalidIdentity();
+
+                var response = requirement.Creater.AddSome(null, identity);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
         public void DoesNotAddWhenItemsIsNullAndIdentityIsNull()
         {
-            throw new NotImplementedException();
+            using (var requirement = this.Requirement())
+            {
+                requirement.Helper.RemoveAllItems();
+
+                var response = requirement.Creater.AddSome(null, null);
+
+                Assert.IsNull(response.Items);
+                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                Assert.That(requirement.Helper.NoItemsExist());
+            }
         }
 
         [Test]
