@@ -61,12 +61,6 @@
             {
                 service.Stop();
             }
-
-            var standardServices = container.Resolve<IEnumerable<IBusinessStandardOperationService>>();
-            foreach (var service in standardServices)
-            {
-                service.Stop();
-            }            
         }
     }
 
@@ -148,36 +142,6 @@
             this.businessOperaitonRegistered = true;
             this.businessOperationClassType = typeof(TcBusinessOperation);
             this.businessOperationInterfaceType = typeof(TiBusinessOperation);
-        }
-
-        public void RegisterStandardServiceHost(IBusinessStandardHostInfo businessHostInfo)
-        {
-            if (businessHostInfo.Address == null)
-            {
-                businessHostInfo.Address = new Uri(
-                    string.Format("{0}/{1}", 
-                    businessHostInfo.BaseAddress, 
-                    this.businessOperationClassType.FullName));
-            }
-
-            businessHostInfo.ServiceNampespace = new Uri(
-                string.Format("{0}/{1}Ns", 
-                businessHostInfo.BaseAddress, 
-                this.businessOperationClassType.FullName));
-
-            this.builder.Register(c =>
-            {
-                var container = c.Resolve<ILifetimeScope>();
-                var startParameters = c.Resolve<IBusinessModuleStartParameters>();
-                return new BusinessStandardOperationService(businessHostInfo, container)
-                {
-                    AutoStart = startParameters.AutoStartServices
-                };
-            })
-                .As<IBusinessStandardOperationService>()
-                .As<IStartable>()
-                .SingleInstance();
-
         }
 
         public void RegisterDynamicServiceHost(IBusinessDynamicHostInfo businessHostInfo)

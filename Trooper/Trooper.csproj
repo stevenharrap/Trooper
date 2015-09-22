@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Trooper</RootNamespace>
     <AssemblyName>Trooper</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,10 +43,6 @@
     </Reference>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac.Integration.Wcf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Wcf.4.0.0\lib\net45\Autofac.Integration.Wcf.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -86,6 +83,10 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -151,11 +152,10 @@
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderValidateHostInfoException.cs" />
     <Compile Include="DynamicServiceHost\Property.cs" />
     <Compile Include="Interface\DynamicServiceHost\IDynamicHostInfo.cs" />
+    <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessSave.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IBehaviour.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
-    <Compile Include="Interface\Thorny\Configuration\IBusinessStandardHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessOperationService .cs" />
-    <Compile Include="Interface\Thorny\Configuration\IBusinessStandardOperationService.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessModuleStartParameters.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicOperationService.cs" />
@@ -207,8 +207,10 @@
     <Compile Include="Thorny\Business\TestSuit\Adding\AddingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\TestAdding.cs" />
     <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />
+    <Compile Include="Thorny\Business\TestSuit\WebServiceDeleterMapper.cs" />
+    <Compile Include="Thorny\Business\TestSuit\WebServiceReaderMapper.cs" />
+    <Compile Include="Thorny\Business\TestSuit\WebServiceCreaterMapper.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
-    <Compile Include="Thorny\Configuration\BusinessStandardOperationService.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleStartParameters.cs" />

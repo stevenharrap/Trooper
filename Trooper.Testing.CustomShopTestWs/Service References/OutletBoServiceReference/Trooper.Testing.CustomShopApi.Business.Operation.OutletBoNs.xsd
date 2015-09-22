@@ -80,77 +80,181 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAll">
+  <xs:element name="GetSession">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q15="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q15:Identity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSessionResult" nillable="true" type="xs:anyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAll">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q16:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetAllResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetAllResult" nillable="true" type="q16:ManyResponseOfOutlet" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetAllResult" nillable="true" type="q17:ManyResponseOfOutlet" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetByKey">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q17:Outlet" />
-        <xs:element xmlns:q18="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q18:Identity" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q18:Outlet" />
+        <xs:element xmlns:q19="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q19:Identity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetByKeyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetByKeyResult" nillable="true" type="q19:SingleResponseOfOutlet" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetByKeyResult" nillable="true" type="q20:SingleResponseOfOutlet" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ExistsByKey">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q20:Outlet" />
-        <xs:element xmlns:q21="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q21:Identity" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q21:Outlet" />
+        <xs:element xmlns:q22="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q22:Identity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ExistsByKeyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="ExistsByKeyResult" nillable="true" type="q22:SingleResponseOfboolean" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="ExistsByKeyResult" nillable="true" type="q23:SingleResponseOfboolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteByKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q24:Outlet" />
+        <xs:element xmlns:q25="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q25:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteByKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteByKeyResult" nillable="true" type="xs:anyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteSomeByKey">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="items" nillable="true" type="q26:ArrayOfOutlet" />
+        <xs:element xmlns:q27="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q27:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteSomeByKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteSomeByKeyResult" nillable="true" type="xs:anyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Update">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q28:Outlet" />
+        <xs:element xmlns:q29="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q29:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="UpdateResult" nillable="true" type="q30:SingleResponseOfOutlet" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateSome">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="items" nillable="true" type="q31:ArrayOfOutlet" />
+        <xs:element xmlns:q32="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q32:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateSomeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="UpdateSomeResult" nillable="true" type="q33:ManyResponseOfOutlet" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Save">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="item" nillable="true" type="q34:Outlet" />
+        <xs:element xmlns:q35="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q35:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SaveResult" nillable="true" type="xs:anyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveSome">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco" minOccurs="0" name="items" nillable="true" type="q36:ArrayOfOutlet" />
+        <xs:element xmlns:q37="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q37:Identity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveSomeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SaveSomeResult" nillable="true" type="xs:anyType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSomeByOutletAddressSearch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Support.OutletSupport" minOccurs="0" name="search" nillable="true" type="q23:OutletAddressSearch" />
-        <xs:element xmlns:q24="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q24:Identity" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Support.OutletSupport" minOccurs="0" name="search" nillable="true" type="q38:OutletAddressSearch" />
+        <xs:element xmlns:q39="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q39:Identity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSomeByOutletAddressSearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetSomeByOutletAddressSearchResult" nillable="true" type="q25:ManyResponseOfOutlet" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetSomeByOutletAddressSearchResult" nillable="true" type="q40:ManyResponseOfOutlet" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSomeByOutletNameSearch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Support.OutletSupport" minOccurs="0" name="search" nillable="true" type="q26:OutletNameSearch" />
-        <xs:element xmlns:q27="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q27:Identity" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/Trooper.Testing.CustomShopApi.Business.Support.OutletSupport" minOccurs="0" name="search" nillable="true" type="q41:OutletNameSearch" />
+        <xs:element xmlns:q42="Trooper.DataOperations" minOccurs="0" name="identity" nillable="true" type="q42:Identity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSomeByOutletNameSearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetSomeByOutletNameSearchResult" nillable="true" type="q28:ManyResponseOfOutlet" />
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" minOccurs="0" name="GetSomeByOutletNameSearchResult" nillable="true" type="q43:ManyResponseOfOutlet" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

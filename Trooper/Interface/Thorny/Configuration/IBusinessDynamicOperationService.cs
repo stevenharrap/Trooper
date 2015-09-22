@@ -6,10 +6,10 @@
     using Trooper.Interface.DynamicServiceHost;
     using Trooper.Interface.Thorny.Business.Operation.Core;
 
-    public interface IBusinessStandardOperationService : IBusinessOperationService
+    public interface IBusinessDynamicOperationService : IBusinessOperationService
     {
-        IBusinessStandardHostInfo HostInfo { get; set; }
+        Func<object> Supporter { get; set; }
 
-        ILifetimeScope Container { get; set; }
+        IBusinessDynamicHostInfo HostInfo { get; set; }
     }
 }

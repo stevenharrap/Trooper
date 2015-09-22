@@ -44,6 +44,12 @@
   <wsdl:message name="IOutletBo_IsAllowed_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsAllowedResponse" />
   </wsdl:message>
+  <wsdl:message name="IOutletBo_GetSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSession" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_GetSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionResponse" />
+  </wsdl:message>
   <wsdl:message name="IOutletBo_GetAll_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAll" />
   </wsdl:message>
@@ -61,6 +67,42 @@
   </wsdl:message>
   <wsdl:message name="IOutletBo_ExistsByKey_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExistsByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_DeleteByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteByKey" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_DeleteByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_DeleteSomeByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSomeByKey" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_DeleteSomeByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSomeByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_Update_InputMessage">
+    <wsdl:part name="parameters" element="tns:Update" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_Update_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_UpdateSome_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSome" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_UpdateSome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_Save_InputMessage">
+    <wsdl:part name="parameters" element="tns:Save" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_Save_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_SaveSome_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSome" />
+  </wsdl:message>
+  <wsdl:message name="IOutletBo_SaveSome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSomeResponse" />
   </wsdl:message>
   <wsdl:message name="IOutletBo_GetSomeByOutletAddressSearch_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSomeByOutletAddressSearch" />
@@ -95,6 +137,10 @@
       <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/IsAllowed" message="tns:IOutletBo_IsAllowed_InputMessage" />
       <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/IsAllowedResponse" message="tns:IOutletBo_IsAllowed_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetSession">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSession" message="tns:IOutletBo_GetSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSessionResponse" message="tns:IOutletBo_GetSession_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAll">
       <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetAll" message="tns:IOutletBo_GetAll_InputMessage" />
       <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetAllResponse" message="tns:IOutletBo_GetAll_OutputMessage" />
@@ -106,6 +152,30 @@
     <wsdl:operation name="ExistsByKey">
       <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/ExistsByKey" message="tns:IOutletBo_ExistsByKey_InputMessage" />
       <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/ExistsByKeyResponse" message="tns:IOutletBo_ExistsByKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteByKey">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/DeleteByKey" message="tns:IOutletBo_DeleteByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/DeleteByKeyResponse" message="tns:IOutletBo_DeleteByKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSomeByKey">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/DeleteSomeByKey" message="tns:IOutletBo_DeleteSomeByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/DeleteSomeByKeyResponse" message="tns:IOutletBo_DeleteSomeByKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Update">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/Update" message="tns:IOutletBo_Update_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/UpdateResponse" message="tns:IOutletBo_Update_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSome">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/UpdateSome" message="tns:IOutletBo_UpdateSome_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/UpdateSomeResponse" message="tns:IOutletBo_UpdateSome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Save">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/Save" message="tns:IOutletBo_Save_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveResponse" message="tns:IOutletBo_Save_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSome">
+      <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveSome" message="tns:IOutletBo_SaveSome_InputMessage" />
+      <wsdl:output wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveSomeResponse" message="tns:IOutletBo_SaveSome_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSomeByOutletAddressSearch">
       <wsdl:input wsaw:Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSomeByOutletAddressSearch" message="tns:IOutletBo_GetSomeByOutletAddressSearch_InputMessage" />
@@ -163,6 +233,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetSession">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAll">
       <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/GetAll" style="document" />
       <wsdl:input>
@@ -183,6 +262,60 @@
     </wsdl:operation>
     <wsdl:operation name="ExistsByKey">
       <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/ExistsByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteByKey">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/DeleteByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSomeByKey">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/DeleteSomeByKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Update">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSome">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/UpdateSome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Save">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/Save" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSome">
+      <soap:operation soapAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs/IOutletBo/SaveSome" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

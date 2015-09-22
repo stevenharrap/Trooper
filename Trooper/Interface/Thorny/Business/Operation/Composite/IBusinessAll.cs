@@ -20,7 +20,8 @@ namespace Trooper.Interface.Thorny.Business.Operation.Composite
         IBusinessRead<TPoco>, 
         IBusinessRequest<TPoco>,
         IBusinessSession,
-        IBusinessUpdate<TPoco>
+        IBusinessUpdate<TPoco>,
+        IBusinessSave<TPoco>
         where TPoco : class
     {
     }

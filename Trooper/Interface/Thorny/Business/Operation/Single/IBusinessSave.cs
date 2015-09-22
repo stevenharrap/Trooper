@@ -16,13 +16,13 @@ namespace Trooper.Interface.Thorny.Business.Operation.Single
     /// access to those operations.
     /// </summary>
     [ServiceContract]
-    public interface IBusinessUpdate<TPoco> : IBusinessRequest<TPoco>
+    public interface IBusinessSave<TPoco> : IBusinessRequest<TPoco>
         where TPoco : class
     {
         [OperationContract]
-        ISingleResponse<TPoco> Update(TPoco item, IIdentity identity);
+        ISaveResponse<TPoco> Save(TPoco item, IIdentity identity);
 
         [OperationContract]
-        IManyResponse<TPoco> UpdateSome(IEnumerable<TPoco> items, IIdentity identity);
+        ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity);
     }
 }

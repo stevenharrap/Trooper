@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Trooper.Testing.CustomShopTestWs
 {
-    [TestFixture]
-    [Category("BusinessOperation")]
+    //[TestFixture]
+    //[Category("BusinessOperation")]
     public class Class1
     {
 
         private Process srvCon;
 
-        [TestFixtureSetUp]
+        //TestFixtureSetUp]
         public void TestFixtureSetup()
         {
             var startInfo = new ProcessStartInfo();
@@ -38,14 +38,14 @@ namespace Trooper.Testing.CustomShopTestWs
             Assert.IsTrue(output.Contains("ShopApp-started"));            
         }
 
-        [Test]
+        //[Test]
         public void DoATest()
         {
             Thread.Sleep(5000);
             Assert.True(true);
         }
         
-        [TestFixtureTearDown]
+        //[TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
             this.srvCon.StandardInput.WriteLine();
