@@ -36,7 +36,7 @@ namespace Trooper.Thorny.Business.TestSuit
             return result as ISingleResponse<bool>;
         }
 
-        IAddResponse<TPoco> IBusinessCreate<TPoco>.Add(TPoco item, IIdentity identity)
+        public IAddResponse<TPoco> Add(TPoco item, IIdentity identity)
         {
             var t = webserviceReference.GetType();
             var n = nameof(IBusinessCreate<TPoco>.Add);
@@ -51,7 +51,7 @@ namespace Trooper.Thorny.Business.TestSuit
             return result as IAddResponse<TPoco>;
         }
 
-        IAddSomeResponse<TPoco> IBusinessCreate<TPoco>.AddSome(IEnumerable<TPoco> items, IIdentity identity)
+        public IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity)
         {
             var t = webserviceReference.GetType();
             var n = nameof(IBusinessCreate<TPoco>.AddSome);

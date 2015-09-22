@@ -36,7 +36,7 @@ namespace Trooper.Thorny.Business.TestSuit
             return result as ISingleResponse<bool>;
         }
 
-        ISingleResponse<bool> IBusinessRead<TPoco>.ExistsByKey(TPoco item, IIdentity identity)
+        public ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity)
         {
             var t = webserviceReference.GetType();
             var n = nameof(IBusinessRead<TPoco>.ExistsByKey);
@@ -51,7 +51,7 @@ namespace Trooper.Thorny.Business.TestSuit
             return result as ISingleResponse<bool>;
         }
 
-        IManyResponse<TPoco> IBusinessRead<TPoco>.GetAll(IIdentity identity)
+        public IManyResponse<TPoco> GetAll(IIdentity identity)
         {
             var t = webserviceReference.GetType();
             var n = nameof(IBusinessRead<TPoco>.GetAll);
@@ -66,7 +66,7 @@ namespace Trooper.Thorny.Business.TestSuit
             return result as IManyResponse<TPoco>;
         }
 
-        ISingleResponse<TPoco> IBusinessRead<TPoco>.GetByKey(TPoco item, IIdentity identity)
+        public ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity)
         {
             var t = webserviceReference.GetType();
             var n = nameof(IBusinessRead<TPoco>.GetByKey);
@@ -81,7 +81,7 @@ namespace Trooper.Thorny.Business.TestSuit
             return result as ISingleResponse<TPoco>;
         }
 
-        IManyResponse<TPoco> IBusinessRead<TPoco>.GetSome(ISearch search, IIdentity identity)
+        public IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity)
         {
             var t = webserviceReference.GetType();
             var n = nameof(IBusinessRead<TPoco>.GetSome);

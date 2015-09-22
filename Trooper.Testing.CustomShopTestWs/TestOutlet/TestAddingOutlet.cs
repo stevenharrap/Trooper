@@ -20,12 +20,16 @@ namespace Trooper.Testing.CustomShopTestWs.TestOutlet
             {
                 return () =>
                 {
-                    var client = new OutletBoClient();
+                    var client = new OutletBoClient();                    
 
                     var reader = new WebServiceReaderMapper<Outlet>(client);
                     var creater = new WebServiceCreaterMapper<Outlet>(client);
                     var deleter = new WebServiceDeleterMapper<Outlet>(client);                                        
                     var helper = new TestAddingOutletHelper(creater, reader, deleter);
+
+                    var x = client.GetAll(null);
+                    var y = reader.GetAll(null);
+                    var z = reader.GetAll(null);
 
                     var addingRequirement = new AddingRequirment<Outlet>(helper, creater);
                     addingRequirement.OnDisposing += (f) => { client.Close(); };
