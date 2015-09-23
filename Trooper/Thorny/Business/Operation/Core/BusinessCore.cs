@@ -394,7 +394,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             response.Items = businessPack.Facade.GetAll().ToList<TPoco>();
-
+            
             return response;
         }
 

@@ -16,6 +16,7 @@
     using Trooper.Thorny.Business.Response;
     using Trooper.Thorny.Configuration;
     using Trooper.Utility;
+    using System.Linq;
 
     public class OutletConfiguration
     {
@@ -26,18 +27,21 @@
             component.RegisterAuthorization<OutletAuthorization, IOutletAuthorization>();
             component.RegisterValidation<OutletValidation, IOutletValidation>();
             component.RegisterBusinessCore<OutletBusinessCore, IOutletBusinessCore>();
-            component.RegisterBusinessOperation<OutletBo, IOutletBo>();            
+            component.RegisterBusinessOperation<OutletBo, IOutletBo>();
 
-            component.RegisterDynamicServiceHost(
-                new BusinessHostInfo 
-                {
-                    BaseAddress = "http://localhost:8000",
-                    Mappings = new List<ClassMapping> 
+            var x = new BusinessHostInfo
+            {
+                BaseAddress = "http://localhost:8000",
+                Mappings = new List<ClassMapping>
                     {
                         ClassMapping.Make<ISingleResponse<ProductInOutlet>, SingleResponse<ProductInOutlet>>(),
                         ClassMapping.Make<ISaveResponse<ProductInOutlet>, SaveResponse<ProductInOutlet>>()
                     },
-                });
+            };
+
+            x.HostInfoBuilt += (IBusinessDynamicHostInfo g) => { g.Methods.FirstOrDefault(m => m.Name == "GetAll").DebugMethod = true; };
+
+            component.RegisterDynamicServiceHost(x);
 
             BusinessModule.AddComponent(component);
         }

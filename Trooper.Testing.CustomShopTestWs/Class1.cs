@@ -10,48 +10,53 @@ using System.Threading.Tasks;
 
 namespace Trooper.Testing.CustomShopTestWs
 {
-    //[TestFixture]
+    [TestFixture]
     //[Category("BusinessOperation")]
     public class Class1
     {
 
         private Process srvCon;
 
-        //TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            var startInfo = new ProcessStartInfo();
-            startInfo.RedirectStandardInput = true;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.UseShellExecute = false;
+        //[TestFixtureSetUp]
+        //public void TestFixtureSetup()
+        //{
+        //    var startInfo = new ProcessStartInfo();
+        //    startInfo.RedirectStandardInput = true;
+        //    startInfo.RedirectStandardOutput = true;
+        //    startInfo.UseShellExecute = false;
 
-            var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
-            directory = directory.Parent.Parent.Parent;
-            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopSrvCon", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
+        //    var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+        //    directory = directory.Parent.Parent.Parent;
+        //    var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopSrvCon", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
 
-            Assert.That(File.Exists(path), Is.True);
+        //    Assert.That(File.Exists(path), Is.True);
 
-            startInfo.FileName = path;
-            this.srvCon = Process.Start(startInfo);
+        //    startInfo.FileName = path;
+        //    this.srvCon = Process.Start(startInfo);
 
-            var output = this.srvCon.StandardOutput.ReadLine();
-            Assert.IsTrue(output.Contains("ShopApp-started"));            
-        }
+        //    var output = this.srvCon.StandardOutput.ReadLine();
+        //    Assert.IsTrue(output.Contains("ShopApp-started"));            
+        //}
 
-        //[Test]
+        [Test]
         public void DoATest()
         {
+            using (var x = new OutletBoServiceReference.OutletBoClient())
+            {
+                x.GetAll(new Thorny.Business.Security.Identity { Username = "ValidTestUser" });
+            }
+
             Thread.Sleep(5000);
             Assert.True(true);
         }
         
         //[TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            this.srvCon.StandardInput.WriteLine();
-            var output = this.srvCon.StandardOutput.ReadLine();
-            Assert.IsTrue(output.Contains("ShopApp-stopped")); 
-            this.srvCon.WaitForExit();
-        }
+        //public void TestFixtureTearDown()
+        //{
+        //    this.srvCon.StandardInput.WriteLine();
+        //    var output = this.srvCon.StandardOutput.ReadLine();
+        //    Assert.IsTrue(output.Contains("ShopApp-stopped")); 
+        //    this.srvCon.WaitForExit();
+        //}
     }
 }

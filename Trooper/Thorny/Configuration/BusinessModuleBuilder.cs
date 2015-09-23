@@ -173,6 +173,8 @@
                 businessHostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<TPoco>, SingleResponse<TPoco>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IAddResponse<TPoco>, AddResponse<TPoco>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IAddSomeResponse<TPoco>, AddSomeResponse<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<ISaveResponse<TPoco>, SaveResponse<TPoco>>());
+                businessHostInfo.Mappings.Add(ClassMapping.Make<ISaveSomeResponse<TPoco>, SaveSomeResponse<TPoco>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IRequestArg<TPoco>, RequestArg<TPoco>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<ISingleResponse<bool>, SingleResponse<bool>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IManyResponse<TPoco>, ManyResponse<TPoco>>());

@@ -368,6 +368,8 @@ namespace Trooper.Testing.CustomShopTestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[]))]
@@ -395,6 +397,8 @@ namespace Trooper.Testing.CustomShopTestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[]))]
@@ -453,6 +457,8 @@ namespace Trooper.Testing.CustomShopTestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[]))]
@@ -481,6 +487,8 @@ namespace Trooper.Testing.CustomShopTestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[]))]
@@ -517,58 +525,22 @@ namespace Trooper.Testing.CustomShopTestWs.OutletBoServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/Save", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/SaveResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.Identity))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Operation.Core.Search))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.ProductInOutlet))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.ProductInOutlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Response))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Message[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Message))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.AddResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.AddSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.OutletAddressSearch))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.OutletNameSearch))]
-        object Save(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity);
+        Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet> Save(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/Save", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/SaveResponse")]
-        System.Threading.Tasks.Task<object> SaveAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity);
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>> SaveAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/SaveSome", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/SaveSomeResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.Identity))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Operation.Core.Search))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.ProductInOutlet))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.ProductInOutlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Response))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Message[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Message))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.AddResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.AddSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.OutletAddressSearch))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.OutletNameSearch))]
-        object SaveSome(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity);
+        Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet> SaveSome(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/SaveSome", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/SaveSomeResponse")]
-        System.Threading.Tasks.Task<object> SaveSomeAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity);
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>> SaveSomeAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
             "/IOutletBo/GetSomeByOutletAddressSearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBoNs" +
@@ -722,19 +694,19 @@ namespace Trooper.Testing.CustomShopTestWs.OutletBoServiceReference {
             return base.Channel.UpdateSomeAsync(items, identity);
         }
         
-        public object Save(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet> Save(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.Save(item, identity);
         }
         
-        public System.Threading.Tasks.Task<object> SaveAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SaveResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>> SaveAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet item, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.SaveAsync(item, identity);
         }
         
-        public object SaveSome(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet> SaveSome(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.SaveSome(items, identity);
         }
         
-        public System.Threading.Tasks.Task<object> SaveSomeAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet>> SaveSomeAsync(Trooper.Testing.CustomShopTestWs.OutletBoServiceReference.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.SaveSomeAsync(items, identity);
         }
         

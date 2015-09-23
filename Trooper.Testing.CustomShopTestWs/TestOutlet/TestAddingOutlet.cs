@@ -7,66 +7,70 @@ using Trooper.Testing.CustomShopTestWs.OutletBoServiceReference;
 using Trooper.Thorny.Business.TestSuit;
 using Trooper.Thorny.Business.TestSuit.Adding;
 
-namespace Trooper.Testing.CustomShopTestWs.TestOutlet
-{
-    [TestFixture]
-    public class TestAddingOutlet : Adding<Outlet>
-    {
-        private Process srvCon;
+//namespace Trooper.Testing.CustomShopTestWs.TestOutlet
+//{
+//    [TestFixture]
+//    public class TestAddingOutlet : Adding<Outlet>
+//    {
+//        private Process srvCon;
+//        private OutletBoClient client;
+//        private WebServiceReaderMapper<Outlet> reader;
+//        private WebServiceCreaterMapper<Outlet> creater;
+//        private WebServiceDeleterMapper<Outlet> deleter;
+//        private TestAddingOutletHelper helper;
+//        private AddingRequirment<Outlet> addingRequirement;
 
-        public override Func<AddingRequirment<Outlet>> Requirement
-        {
-            get
-            {
-                return () =>
-                {
-                    var client = new OutletBoClient();                    
+//        public override Func<AddingRequirment<Outlet>> Requirement
+//        {
+//            get
+//            {
+//                return () =>
+//                {
+//                    //var x = this.reader.GetAll(this.helper.MakeValidIdentity());
+                              
+//                    return this.addingRequirement;                    
+//                };
+//            }
+//        }
 
-                    var reader = new WebServiceReaderMapper<Outlet>(client);
-                    var creater = new WebServiceCreaterMapper<Outlet>(client);
-                    var deleter = new WebServiceDeleterMapper<Outlet>(client);                                        
-                    var helper = new TestAddingOutletHelper(creater, reader, deleter);
+//        [TestFixtureSetUp]
+//        public void TestFixtureSetup()
+//        {
+//            var startInfo = new ProcessStartInfo();
+//            startInfo.RedirectStandardInput = true;
+//            startInfo.RedirectStandardOutput = true;
+//            startInfo.UseShellExecute = false;
 
-                    var x = client.GetAll(null);
-                    var y = reader.GetAll(null);
-                    var z = reader.GetAll(null);
+//            var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+//            directory = directory.Parent.Parent.Parent;
+//            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopSrvCon", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
 
-                    var addingRequirement = new AddingRequirment<Outlet>(helper, creater);
-                    addingRequirement.OnDisposing += (f) => { client.Close(); };
+//            Assert.That(File.Exists(path), Is.True);
 
-                    return addingRequirement;                    
-                };
-            }
-        }
+//            startInfo.FileName = path;
+//            this.srvCon = Process.Start(startInfo);
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            var startInfo = new ProcessStartInfo();
-            startInfo.RedirectStandardInput = true;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.UseShellExecute = false;
+//            var output = this.srvCon.StandardOutput.ReadLine();
+//            Assert.IsTrue(output.Contains("ShopApp-started"));
 
-            var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
-            directory = directory.Parent.Parent.Parent;
-            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopSrvCon", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
+//            this.client = new OutletBoClient();
+//            this.client.Open();
+//            this.reader = new WebServiceReaderMapper<Outlet>(this.client);
+//            this.creater = new WebServiceCreaterMapper<Outlet>(this.client);
+//            this.deleter = new WebServiceDeleterMapper<Outlet>(this.client);
+//            this.helper = new TestAddingOutletHelper(creater, reader, deleter);
+//            this.addingRequirement = new AddingRequirment<Outlet>(helper, creater);
+//        }
 
-            Assert.That(File.Exists(path), Is.True);
+//        [TestFixtureTearDown]
+//        public void TestFixtureTearDown()
+//        {
+//            this.client.Close();
 
-            startInfo.FileName = path;
-            this.srvCon = Process.Start(startInfo);
-
-            var output = this.srvCon.StandardOutput.ReadLine();
-            Assert.IsTrue(output.Contains("ShopApp-started"));
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            this.srvCon.StandardInput.WriteLine();
-            var output = this.srvCon.StandardOutput.ReadLine();
-            Assert.IsTrue(output.Contains("ShopApp-stopped"));
-            this.srvCon.WaitForExit();
-        }
-    }
-}
+//            this.srvCon.StandardInput.WriteLine();
+//            var output = this.srvCon.StandardOutput.ReadLine();
+//            Assert.IsTrue(output.Contains("ShopApp-stopped"));
+//            this.srvCon.WaitForExit();
+//        }
+//    }
+//}
