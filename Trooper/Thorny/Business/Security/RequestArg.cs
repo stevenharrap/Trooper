@@ -9,36 +9,29 @@ namespace Trooper.Thorny.Business.Security
     using System.ServiceModel;
     using Trooper.Thorny.Interface.DataManager;
 
-    public class RequestArg<T> : IRequestArg<T> 
-        where T : class
+    public class RequestArg<TPoco> : IRequestArg<TPoco> 
+        where TPoco : class
     {
+        public RequestArg() { }
+
+        public RequestArg(TPoco item)
+        {
+            if (item == null) return;
+
+            this.Items = new List<TPoco> { item };
+        }
+
+        public RequestArg(IEnumerable<TPoco> items)
+        {
+            if (Items == null) return;
+
+            this.Items = items;
+        }
+
         public string Action { get; set; }
 
         public ISearch Search { get; set; }
-
-        public T Item
-        {
-            get
-            {
-                return this.Items == null ? null : this.Items.FirstOrDefault();
-            }
-            set
-            {
-                if (this.Items == null)
-                {
-                    this.Items = new List<T> { value };
-                }
-                else if (this.Items.Any())
-                {
-                    this.Items[0] = value;
-                }
-                else
-                {
-                    this.Items.Add(value);
-                }
-            }
-        }
-
-        public IList<T> Items { get; set; }
+                
+        public IEnumerable<TPoco> Items { get; set; }
     }
 }

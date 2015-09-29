@@ -1,4 +1,6 @@
-﻿namespace Trooper.Thorny
+﻿using System.Runtime.Serialization;
+
+namespace Trooper.Thorny
 {
     /// <summary>
     /// Indicates if the save was an add or update.
@@ -48,25 +50,4 @@
         /// </summary>
         Success
     }
-
-    /// <summary>
-    /// The manage action types.
-    /// </summary>
-    public enum ManageAction
-    {
-        /// <summary>
-        /// The delete record referenced by this item
-        /// </summary>
-        Delete,
-
-        /// <summary>
-        /// Remove the reference to this in the primary record
-        /// </summary>
-        Remove,
-
-        /// <summary>
-        /// The the properties of this item
-        /// </summary>
-        Change
-    }
-}
+ }

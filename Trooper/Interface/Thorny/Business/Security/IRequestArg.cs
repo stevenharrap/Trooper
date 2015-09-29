@@ -13,7 +13,7 @@ namespace Trooper.Interface.Thorny.Business.Security
     /// Instances deriving this interface are passed to the CanUser Method
     /// of Access.
     /// </summary>
-    public interface IRequestArg<T>         
+    public interface IRequestArg<TPoco>         
     {
         /// <summary>
         /// Gets or sets The action being undertaken. If this is left blank then the check determines
@@ -31,12 +31,6 @@ namespace Trooper.Interface.Thorny.Business.Security
         /// Gets or sets the first item in Entities. 
         /// These should always be fully connected entities.
         /// </summary>
-        T Item { get; set; }
-
-        /// <summary>
-        /// Gets or sets the entities. All entity information stored in here. 
-        /// These should always be fully connected entities.
-        /// </summary>
-        IList<T> Items { get; set; }
+        IEnumerable<TPoco> Items { get; set; }
     }
 }

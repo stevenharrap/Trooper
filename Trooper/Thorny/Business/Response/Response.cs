@@ -26,6 +26,25 @@ namespace Trooper.Thorny.Business.Response
 
         private bool? warn;
 
+        public Response() { }
+
+        public Response(IResponse otherResponse)
+        {
+            if (otherResponse is Response)
+            {
+                var r = otherResponse as Response;
+                this.ok = r.ok;
+                this.warn = r.warn;
+            }
+            else
+            {
+                this.Ok = otherResponse.Ok;
+                this.Warn = otherResponse.Warn;
+            }
+            
+            this.Messages = otherResponse.Messages;
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the response is ok. A false
         /// response is any response where the are Messages with Alert level as Error.

@@ -24,7 +24,6 @@ namespace Trooper.Interface.Thorny.Business.Response
         /// <summary>
         /// Gets or sets the item being returned.
         /// </summary>
-        [DataMember]
         T Item { get; set; }
     }
 }

@@ -1,164 +1,164 @@
-﻿namespace Trooper.Thorny.UnitTestBase
-{
-    using NUnit.Framework;
-    using Trooper.Thorny.Configuration;
-    using Trooper.Thorny.UnitTestBase;
-    using Trooper.Interface.Thorny.Business.Operation.Core;
-    using Trooper.Interface.Thorny.Business.Security;
+﻿//namespace Trooper.Thorny.UnitTestBase
+//{
+//    using NUnit.Framework;
+//    using Trooper.Thorny.Configuration;
+//    using Trooper.Thorny.UnitTestBase;
+//    using Trooper.Interface.Thorny.Business.Operation.Core;
+//    using Trooper.Interface.Thorny.Business.Security;
 
-    public class TestDefaultBaseBusinsessOperation<TEnt, TPoco, TAppModule> : TestBusinessOperationBase<IBusinessCore<TEnt, TPoco>, TEnt, TPoco>
-        where TEnt : class, TPoco, new()
-        where TPoco : class
-        where TAppModule : Autofac.Module, new()
-    {
-        private const string accesInconclusive = @"This method cannot be tested from this generic testing class. " +
-            "You will need to override this test method from TestBusinessOperationBase. " + 
-            "Test for a user who has access and a user does not have acccess.";
+//    public class TestDefaultBaseBusinsessOperation<TEnt, TPoco, TAppModule> : TestBusinessOperationBase<IBusinessCore<TEnt, TPoco>, TEnt, TPoco>
+//        where TEnt : class, TPoco, new()
+//        where TPoco : class
+//        where TAppModule : Autofac.Module, new()
+//    {
+//        private const string accesInconclusive = @"This method cannot be tested from this generic testing class. " +
+//            "You will need to override this test method from TestBusinessOperationBase. " + 
+//            "Test for a user who has access and a user does not have acccess.";
 
-        private const string validateInconclusive = @"This method cannot be tested from this generic testing class. " +
-            "You will need to override this test method from TestBusinessOperationBase. " +
-            "Test against an item which has valid and invalid property values.";
+//        private const string validateInconclusive = @"This method cannot be tested from this generic testing class. " +
+//            "You will need to override this test method from TestBusinessOperationBase. " +
+//            "Test against an item which has valid and invalid property values.";
 
-        private const string baseInconclusive = @"This method cannot be tested from this generic testing class. " +
-            "You will need to override this test method from TestBusinessOperationBase. " +
-            "This should test the ability of the method to get or set data and avoid access and validation issues.";
+//        private const string baseInconclusive = @"This method cannot be tested from this generic testing class. " +
+//            "You will need to override this test method from TestBusinessOperationBase. " +
+//            "This should test the ability of the method to get or set data and avoid access and validation issues.";
 
-        #region Setup
+//        #region Setup
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            var container = BusinessModule.Start<TAppModule>();
-                //BusinessModuleBuilder.StartBusinessApp<TAppModule>();
+//        [TestFixtureSetUp]
+//        public void TestFixtureSetup()
+//        {
+//            var container = BusinessModule.Start<TAppModule>();
+//                //BusinessModuleBuilder.StartBusinessApp<TAppModule>();
 
-            base.TestFixtureSetup(container);
-        }
+//            base.TestFixtureSetup(container);
+//        }
 
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-        }        
+//        [SetUp]
+//        public override void SetUp()
+//        {
+//            base.SetUp();
+//        }        
 
-        #endregion
+//        #endregion
 
-        #region Tests
+//        #region Tests
 
-        #region Add
+//        #region Add
 
-        #endregion
+//        #endregion
 
-        #region AddSome
+//        #region AddSome
 
-        #endregion
+//        #endregion
 
-        #region DeleteByKey
+//        #region DeleteByKey
 
-        #endregion
+//        #endregion
 
-        #region DeleteSomeByKey
+//        #region DeleteSomeByKey
         
-        #endregion
+//        #endregion
 
-        #region GetAll
+//        #region GetAll
         
-        #endregion
+//        #endregion
 
-        #region GetSome
+//        #region GetSome
     
-        #endregion
+//        #endregion
 
-        #region GetByKey
+//        #region GetByKey
     
-        #endregion
+//        #endregion
 
-        #region GetSomeByKey
+//        #region GetSomeByKey
 
-        #endregion
+//        #endregion
 
-        #region ExistsByKey
+//        #region ExistsByKey
 
-        #endregion
+//        #endregion
 
-        #region IsAllowed
+//        #region IsAllowed
 
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Base_IsAllowed()
-        {
-            Assert.Inconclusive(baseInconclusive);
-        }
+//        /// <summary>
+//        /// untestable here
+//        /// </summary>
+//        [Test]
+//        public override void Test_Base_IsAllowed()
+//        {
+//            Assert.Inconclusive(baseInconclusive);
+//        }
 
-        #endregion
+//        #endregion
 
-        #region Update
+//        #region Update
 
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Base_Update()
-        {
-            Assert.Inconclusive(baseInconclusive);
-        }
+//        /// <summary>
+//        /// untestable here
+//        /// </summary>
+//        [Test]
+//        public override void Test_Base_Update()
+//        {
+//            Assert.Inconclusive(baseInconclusive);
+//        }
 
-        #endregion
+//        #endregion
 
-        #region UpdateSome
+//        #region UpdateSome
 
-        /// <summary>
-		/// untestable here
-		/// </summary>
-		[Test]
-		public override void Test_Base_UpdateSome()
-		{
-			Assert.Inconclusive(baseInconclusive);
-		}
+//        /// <summary>
+//		/// untestable here
+//		/// </summary>
+//		[Test]
+//		public override void Test_Base_UpdateSome()
+//		{
+//			Assert.Inconclusive(baseInconclusive);
+//		}
         
-        #endregion
+//        #endregion
 
-        #region Save
+//        #region Save
 
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Base_Save()
-        {
-            Assert.Inconclusive(baseInconclusive);
-        }
+//        /// <summary>
+//        /// untestable here
+//        /// </summary>
+//        [Test]
+//        public override void Test_Base_Save()
+//        {
+//            Assert.Inconclusive(baseInconclusive);
+//        }
         
-        #endregion
+//        #endregion
 
-        #region SaveSome
+//        #region SaveSome
 
-        /// <summary>
-        /// untestable here
-        /// </summary>
-        [Test]
-        public override void Test_Base_SaveSome()
-        {
-            Assert.Inconclusive(baseInconclusive);
-        }
+//        /// <summary>
+//        /// untestable here
+//        /// </summary>
+//        [Test]
+//        public override void Test_Base_SaveSome()
+//        {
+//            Assert.Inconclusive(baseInconclusive);
+//        }
     
-        #endregion
+//        #endregion
 
-        #endregion
+//        #endregion
 
-        #region Support
+//        #region Support
 
-        public override IIdentity GetInvalidIdentity()
-        {
-            throw new System.NotImplementedException();
-        }
+//        public override IIdentity GetInvalidIdentity()
+//        {
+//            throw new System.NotImplementedException();
+//        }
 
-        public override TEnt GetInvalidItem()
-        {
-            throw new System.NotImplementedException();
-        }
+//        public override TEnt GetInvalidItem()
+//        {
+//            throw new System.NotImplementedException();
+//        }
 
-        #endregion
-    }
-}
+//        #endregion
+//    }
+//}

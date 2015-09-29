@@ -23,6 +23,12 @@ namespace Trooper.Thorny.Business.Response
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class ManyResponse<T> : Response, IManyResponse<T>
     {
+        public ManyResponse() { }
+
+        public ManyResponse(IResponse response) : base(response)
+        {
+        }
+
         /// <summary>
         /// Gets or sets the items being returned.
         /// </summary>

@@ -38,17 +38,17 @@ namespace Trooper.Testing.CustomShopTestWs
         //    Assert.IsTrue(output.Contains("ShopApp-started"));            
         //}
 
-        [Test]
-        public void DoATest()
-        {
-            using (var x = new OutletBoServiceReference.OutletBoClient())
-            {
-                x.GetAll(new Thorny.Business.Security.Identity { Username = "ValidTestUser" });
-            }
+        //[Test]
+        //public void DoATest()
+        //{
+        //    using (var x = new OutletBoServiceReference.OutletBoClient())
+        //    {
+        //        x.GetAll(new Thorny.Business.Security.Identity { Username = "ValidTestUser" });
+        //    }
 
-            Thread.Sleep(5000);
-            Assert.True(true);
-        }
+        //    Thread.Sleep(5000);
+        //    Assert.True(true);
+        //}
         
         //[TestFixtureTearDown]
         //public void TestFixtureTearDown()

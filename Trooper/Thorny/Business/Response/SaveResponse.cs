@@ -24,6 +24,10 @@ namespace Trooper.Thorny.Business.Response
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SaveResponse<T> : Response, ISaveResponse<T>
     {
+        public SaveResponse() { }
+
+        public SaveResponse(IResponse response) : base(response) { }
+
         /// <summary>
         /// Gets or sets the item being returned.
         /// </summary>
@@ -34,6 +38,7 @@ namespace Trooper.Thorny.Business.Response
         /// Gets or sets the the change type which indicates if it was an Add or Update.
         /// Null indicates failure.
         /// </summary>
-        public SaveChangeType? Change { get; set; }
+        [DataMember]
+        public SaveChangeType Change { get; set; }
     }
 }

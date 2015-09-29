@@ -27,9 +27,9 @@
             component.RegisterAuthorization<OutletAuthorization, IOutletAuthorization>();
             component.RegisterValidation<OutletValidation, IOutletValidation>();
             component.RegisterBusinessCore<OutletBusinessCore, IOutletBusinessCore>();
-            component.RegisterBusinessOperation<OutletBo, IOutletBo>();
+            component.RegisterBusinessOperation<OutletBo, IOutletBo>();            
 
-            var x = new BusinessHostInfo
+            component.RegisterDynamicServiceHost(new BusinessHostInfo
             {
                 BaseAddress = "http://localhost:8000",
                 Mappings = new List<ClassMapping>
@@ -37,11 +37,7 @@
                         ClassMapping.Make<ISingleResponse<ProductInOutlet>, SingleResponse<ProductInOutlet>>(),
                         ClassMapping.Make<ISaveResponse<ProductInOutlet>, SaveResponse<ProductInOutlet>>()
                     },
-            };
-
-            x.HostInfoBuilt += (IBusinessDynamicHostInfo g) => { g.Methods.FirstOrDefault(m => m.Name == "GetAll").DebugMethod = true; };
-
-            component.RegisterDynamicServiceHost(x);
+            });
 
             BusinessModule.AddComponent(component);
         }

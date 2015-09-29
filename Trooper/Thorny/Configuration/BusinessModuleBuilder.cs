@@ -31,7 +31,7 @@
 
         public static void AddComponent<TEnt, TPoco>(BusinessComponent<TEnt, TPoco> component)
             where TEnt : class, TPoco, new()
-            where TPoco : class
+            where TPoco : class, new()
         {
             component.EnsureRegistrations();
         }
@@ -66,7 +66,7 @@
 
     public class BusinessComponent<TEnt, TPoco>
         where TEnt : class, TPoco, new()
-        where TPoco : class
+        where TPoco : class, new()
     {        
         private bool facadeRegistered;
         private bool authorizationRegistered;

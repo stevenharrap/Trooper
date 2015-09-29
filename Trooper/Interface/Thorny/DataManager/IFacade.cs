@@ -53,10 +53,14 @@
 
         TEnt Update(TEnt item);
 
-        bool Any();
+        bool Any();  
 
-        TEnt Map(TPoco item);
+        TPoco ToPoco(TEnt item);
 
-        IEnumerable<TEnt> Map(IEnumerable<TPoco> items);
+        TEnt ToEnt(TPoco item);
+
+        IEnumerable<TPoco> ToPocos(IEnumerable<TEnt> items);
+
+        IEnumerable<TEnt> ToEnts(IEnumerable<TPoco> items);
     }
 }

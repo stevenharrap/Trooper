@@ -23,14 +23,12 @@ namespace Trooper.Interface.Thorny.Business.Response
         /// <summary>
         /// Gets or sets the item being returned.
         /// </summary>
-        [DataMember]
         T Item { get; set; }
 
         /// <summary>
         /// Gets or sets the the change type which indicates if it was an Add or Update.
         /// Null indicates failure.
         /// </summary>
-        [DataMember]
-        SaveChangeType? Change { get; set; }
+        SaveChangeType Change { get; set; }
     }
 }

@@ -16,82 +16,85 @@
 
     public class OutletBusinessCore : BusinessCore<OutletEnt, Outlet>, IOutletBusinessCore
     {
-        public ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInShop, IIdentity identity)
-        {
-            using (var shopPack = this.GetBusinessPack())
-            {
-                var response = new SaveResponse<ProductInOutlet>();
-                var productPack = shopPack.ResolveBusinessPack<IProductBusinessCore, ProductEnt, Product>();
-                var inventoryPack = shopPack.ResolveBusinessPack<IInventoryBusinessCore, InventoryEnt, Inventory>();
+        //public ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInShop, IIdentity identity)
+        //{
+        //    using (var outletPack = this.GetBusinessPack())
+        //    {
+        //        var response = new SaveResponse<ProductInOutlet>();
+        //        var productPack = outletPack.ResolveBusinessPack<IProductBusinessCore, ProductEnt, Product>();
+        //        var inventoryPack = outletPack.ResolveBusinessPack<IInventoryBusinessCore, InventoryEnt, Inventory>();
 
-                var getShop = this.GetByKey(shopPack, new OutletEnt { OutletId = productInShop.ShopId }, identity, response);
+        //        var getShop = this.GetByKey(outletPack, new OutletEnt { OutletId = productInShop.ShopId }, identity, response);
 
-                if (!getShop.Ok)
-                {                    
-                    return MessageUtility.Add(getShop, response);
-                }
+        //        if (!getShop.Ok)
+        //        {                    
+        //            return MessageUtility.Add(getShop, response);
+        //        }
 
-                var savedProduct = productPack.BusinessCore.Save(productPack, productInShop.AsProduct(), identity, getShop);
+        //        var productEnt = productPack.Facade.ToEnt(productInShop.AsProduct());
+        //        var savedProduct = productPack.BusinessCore.Save(productPack, productEnt, identity, getShop);
 
-                if (!savedProduct.Ok)
-                {
-                    return MessageUtility.Add(savedProduct, response);
-                }
+        //        if (!savedProduct.Ok)
+        //        {
+        //            return MessageUtility.Add(savedProduct, response);
+        //        }
 
-                var saveInventory = inventoryPack.BusinessCore.Save(inventoryPack, productInShop.AsInventory(), identity, savedProduct);
+        //        var inventoryEnt = inventoryPack.Facade.ToEnt(productInShop.AsInventory());
+        //        var saveInventory = inventoryPack.BusinessCore.Save(inventoryPack, inventoryEnt, identity, savedProduct);
 
-                if (saveInventory.Ok)
-                {
-                    shopPack.Uow.Save(saveInventory);
-                }
+        //        if (saveInventory.Ok)
+        //        {
+        //            outletPack.Uow.Save(saveInventory);
+        //        }
 
-                return MessageUtility.Add(savedProduct, response);            
-            }
-        }
+        //        return MessageUtility.Add(savedProduct, response);            
+        //    }
+        //}
 
-        public IManyResponse<ProductInOutlet> GetProducts(Outlet shop, IIdentity identity)
-        {
-            using (var shopPack = this.GetBusinessPack())
-            {
-                var inventoryPack = shopPack.ResolveBusinessPack<IInventoryBusinessCore, InventoryEnt, Inventory>();
-                var response = new ManyResponse<ProductInOutlet>();
+        //public IManyResponse<ProductInOutlet> GetProducts(Outlet outlet, IIdentity identity)
+        //{
+        //    using (var outletPack = this.GetBusinessPack())
+        //    {
+        //        var inventoryPack = outletPack.ResolveBusinessPack<IInventoryBusinessCore, InventoryEnt, Inventory>();
+        //        var response = new ManyResponse<ProductInOutlet>();
 
-                var getShop = this.GetByKey(shopPack, shop, identity);
+        //        var outletEnt = outletPack.Facade.ToEnt(outlet);
+        //        var getOutlet = this.GetByKey(outletPack, outletEnt, identity);
 
-                if (!getShop.Ok)
-                {
-                    return MessageUtility.Add(getShop, response);
-                }
+        //        if (!getOutlet.Ok)
+        //        {
+        //            return MessageUtility.Add(getOutlet, response);
+        //        }
 
-                var search = new InventorySearch { ShopId = shop.OutletId };
-                var getSome = inventoryPack.BusinessCore.GetSome(inventoryPack, search, identity, false);
+        //        var search = new InventorySearch { ShopId = outlet.OutletId };
+        //        var getSome = inventoryPack.BusinessCore.GetSome(inventoryPack, search, identity, false);
 
-                if (!getShop.Ok)
-                {
-                    return MessageUtility.Add(getSome, response);
-                }
+        //        if (!getOutlet.Ok)
+        //        {
+        //            return MessageUtility.Add(getSome, response);
+        //        }
 
-                var items = from i in getSome.Items
-                            let inventory = i as InventoryEnt
-                            select new ProductInOutlet
-                            {
-                                Bin = i.Bin,
-                                Colour = inventory.Product.Colour,
-                                Name = inventory.Product.Name,
-                                ProductId = i.ProductId,
-                                Quantity = i.Quantity,
-                                ShopId = i.ShopId
-                            };
+        //        var items = from i in getSome.Items
+        //                    let inventory = i as InventoryEnt
+        //                    select new ProductInOutlet
+        //                    {
+        //                        Bin = i.Bin,
+        //                        Colour = inventory.Product.Colour,
+        //                        Name = inventory.Product.Name,
+        //                        ProductId = i.ProductId,
+        //                        Quantity = i.Quantity,
+        //                        ShopId = i.ShopId
+        //                    };
 
-                response.Items = items.ToList();
+        //        response.Items = items.ToList();
 
-                return response;
-            }
-        }
+        //        return response;
+        //    }
+        //}
 
-        public IAddResponse<Outlet> SimpleLittleThing(IIdentity identity)
-        {
-            return new AddResponse<Outlet> { Item = new Outlet { Name = "Coles", Address = "25 Brown St" } };
-        }       
+        //public IAddResponse<Outlet> SimpleLittleThing(IIdentity identity)
+        //{
+        //    return new AddResponse<Outlet> { Item = new Outlet { Name = "Coles", Address = "25 Brown St" } };
+        //}       
     }
 }

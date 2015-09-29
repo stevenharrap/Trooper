@@ -22,6 +22,6 @@ namespace Trooper.Thorny.Business.Response
         /// Null indicates failure.
         /// </summary>
         [DataMember]
-        public SaveChangeType? Change { get; set; }
+        public SaveChangeType Change { get; set; }
     }
 }

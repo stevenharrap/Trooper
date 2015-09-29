@@ -11,10 +11,10 @@ namespace Trooper.Testing.CustomShopApi.Interface.Business.Operation
     [ServiceContract]
     public interface IOutletBo : IBusinessAll<Outlet>
     {
-        [OperationContract]
-        ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInShop, IIdentity identity);
+        //[OperationContract]
+        //ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInShop, IIdentity identity);
 
-        [OperationContract]
-        IAddResponse<Outlet> SimpleLittleThing(IIdentity identity);
+        //[OperationContract]
+        //IAddResponse<Outlet> SimpleLittleThing(IIdentity identity);
     }
 }

@@ -24,6 +24,10 @@ namespace Trooper.Thorny.Business.Response
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SingleResponse<T> : Response, ISingleResponse<T>
     {
+        public SingleResponse() { }
+
+        public SingleResponse(IResponse response) : base(response) { }
+
         /// <summary>
         /// Gets or sets the item being returned.
         /// </summary>

@@ -91,9 +91,9 @@ namespace Trooper.Thorny.Business.Operation.Composite
             return this.BusinessCore.Save(item, identity);
         }
 
-		public ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity)
-		{
-			return this.BusinessCore.SaveSome(items, identity);
-		}
+        public ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity)
+        {
+            return this.BusinessCore.SaveSome(items, identity);
+        }
     }
 }

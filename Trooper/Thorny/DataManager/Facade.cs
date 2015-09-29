@@ -1,6 +1,6 @@
 ﻿namespace Trooper.Thorny.Interface
 {
-    using AutoMapper;
+    //using AutoMapper;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -15,11 +15,32 @@
 
     public class Facade<TEnt, TPoco> : IFacade<TEnt, TPoco> 
         where TEnt : class, TPoco, new()
-        where TPoco : class
+        where TPoco : class, new()
     {
+        private static Mapping[] entToPocoMap;
+        private static Mapping[] pocoToEntMap;
+
         static Facade()
         {
-            AutoMapper.Mapper.CreateMap<TPoco, TEnt>().IgnorePropertiesOfType(typeof(ICollection));            
+            //Mapper.CreateMap<TPoco, TEnt>().IgnorePropertiesOfType(typeof(ICollection));
+            //Mapper.CreateMap<TEnt, TPoco>();
+
+            var result = new TPoco();
+
+            var mappings = from pocoProp in typeof(TPoco).GetProperties()
+                           let entProp = typeof(TEnt).GetProperties().FirstOrDefault(
+                               p => p.Name == pocoProp.Name
+                               && p.PropertyType.IsEquivalentTo(pocoProp.PropertyType))
+                           where entProp != null
+                           let pocoGetter = pocoProp.GetGetMethod()
+                           let pocoSetter = pocoProp.GetSetMethod()
+                           let entGetter = entProp.GetGetMethod()
+                           let entSetter = entProp.GetSetMethod()
+                           where pocoGetter != null && pocoSetter != null && entGetter != null && entSetter != null
+                           select new { pocoGetter, pocoSetter, entGetter, entSetter };
+
+            entToPocoMap = mappings.Select(m => new Mapping(m.entGetter, m.pocoSetter)).ToArray();
+            pocoToEntMap = mappings.Select(m => new Mapping(m.pocoGetter, m.entSetter)).ToArray();
         }
 
         public Facade()
@@ -332,24 +353,49 @@
         public bool Any()
         {
             return this.GetAll().Any();
-        }
+        }        
 
-        public TEnt Map(TPoco item)
+        public TPoco ToPoco(TEnt item)
         {
-            var result = new TEnt();
+            if (item == null) { return null; }
 
-            AutoMapper.Mapper.Map(item, result);
+            var result = new TPoco();
+
+            foreach (var m in entToPocoMap)
+            {
+                m.SetterMethod.Invoke(result, new object[] { m.GetterMethod.Invoke(item, null) });
+            }           
 
             return result;
         }
 
-        public IEnumerable<TEnt> Map(IEnumerable<TPoco> items)
+        public IEnumerable<TPoco> ToPocos(IEnumerable<TEnt> items)
         {
-            //return AutoMapper.Mapper.Map<IEnumerable<Tc>>(items);
-
-            foreach (var i in items)
+            foreach (var item in items ?? Enumerable.Empty<TEnt>())
             {
-                yield return this.Map(i);
+                yield return this.ToPoco(item);
+            }
+        }
+
+        public TEnt ToEnt(TPoco item)
+        {
+            if (item == null) { return null; }
+
+            var result = new TEnt();
+
+            foreach (var m in pocoToEntMap)
+            {
+                m.SetterMethod.Invoke(result, new object[] { m.GetterMethod.Invoke(item, null) });
+            }
+
+            return result;
+        }
+
+        public IEnumerable<TEnt> ToEnts(IEnumerable<TPoco> items)
+        {
+            foreach (var item in items ?? Enumerable.Empty<TPoco>())
+            {
+                yield return this.ToEnt(item);
             }
         }
 
@@ -360,6 +406,19 @@
         private TEnt FindLocal(TEnt item)
         {
             return this.Repository.DbContext.Set<TEnt>().Local.FirstOrDefault(i => this.AreEqual(i, item));
+        }
+
+        private class Mapping
+        {
+            public Mapping(MethodInfo getter, MethodInfo setter)
+            {
+                this.GetterMethod = getter;
+                this.SetterMethod = setter;
+            }
+
+            public MethodInfo GetterMethod { get;  }
+
+            public MethodInfo SetterMethod {get;  }
         }
 
         #endregion        

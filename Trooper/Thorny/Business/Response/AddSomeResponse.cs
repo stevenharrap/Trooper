@@ -24,6 +24,10 @@ namespace Trooper.Thorny.Business.Response
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class AddSomeResponse<T> : Response, IAddSomeResponse<T>
     {
+        public AddSomeResponse() { }
+
+        public AddSomeResponse(IResponse response) : base(response) { }
+
         /// <summary>
         /// Gets or sets the item being returned.
         /// </summary>

@@ -12,18 +12,18 @@
 
     public class OutletBo : BusinessAll<OutletEnt, Outlet>, IOutletBo
     {
-        public ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInOutlet, IIdentity identity)
-        {
-            var bc = this.BusinessCore as IOutletBusinessCore;
+        //public ISaveResponse<ProductInOutlet> SaveProduct(ProductInOutlet productInOutlet, IIdentity identity)
+        //{
+        //    var bc = this.BusinessCore as IOutletBusinessCore;
 
-            return bc.SaveProduct(productInOutlet, identity);
-        }
+        //    return bc.SaveProduct(productInOutlet, identity);
+        //}
 
-        public IAddResponse<Outlet> SimpleLittleThing(IIdentity identity)
-        {
-            var bc = this.BusinessCore as IOutletBusinessCore;
-
-            return bc.SimpleLittleThing(identity);
-        }
+        //public IAddResponse<Outlet> SimpleLittleThing(IIdentity identity)
+        //{
+        //    var bc = this.BusinessCore as IOutletBusinessCore;
+            
+        //    return bc.SimpleLittleThing(identity);
+        //}
     }
 }

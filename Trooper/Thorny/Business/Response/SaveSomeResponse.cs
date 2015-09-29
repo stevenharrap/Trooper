@@ -25,6 +25,11 @@ namespace Trooper.Thorny.Business.Response
     [ServiceContract(Namespace = Constants.ServiceContractNameSpace)]
     public class SaveSomeResponse<T> : Response, ISaveSomeResponse<T>
     {
+        public SaveSomeResponse() { }
+
+        public SaveSomeResponse(IResponse response) : base(response) { }
+
+        [DataMember]
         public IEnumerable<ISaveSomeItem<T>> Items { get; set; }
     }
 }

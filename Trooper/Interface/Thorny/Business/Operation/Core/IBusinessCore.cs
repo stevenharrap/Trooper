@@ -37,9 +37,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IAddResponse<TPoco> Add(TPoco item, IIdentity identity);
 
-        IAddResponse<TPoco> Add(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
+        IAddResponse<TEnt> Add(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity);
 
-        IAddResponse<TPoco> Add(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
+        IAddResponse<TEnt> Add(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -47,9 +47,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity);
 
-        IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
+        IAddSomeResponse<TEnt> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity);
 
-        IAddSomeResponse<TPoco> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
+        IAddSomeResponse<TEnt> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -57,9 +57,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IResponse DeleteByKey(TPoco item, IIdentity identity);
 
-        IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
+        IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity);
 
-        IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
+        IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -67,9 +67,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity);
 
-        IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
+        IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity);
 
-        IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
+        IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -77,9 +77,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IManyResponse<TPoco> GetAll(IIdentity identity);
 
-        IManyResponse<TPoco> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity);
+        IManyResponse<TEnt> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity);
 
-        IManyResponse<TPoco> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse);
+        IManyResponse<TEnt> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -87,9 +87,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity);
 
-        IManyResponse<TPoco> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, bool limit);
+        IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, bool limit);
 
-        IManyResponse<TPoco> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit);
+        IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit);
 
         #endregion
 
@@ -97,9 +97,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity);
 
-        ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
+        ISingleResponse<TEnt> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity);
 
-        ISingleResponse<TPoco> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<TEnt> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -107,9 +107,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IManyResponse<TPoco> GetSomeByKey(IEnumerable<TPoco> items, IIdentity identity);
 
-        IManyResponse<TPoco> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
+        IManyResponse<TEnt> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity);
 
-        IManyResponse<TPoco> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
+        IManyResponse<TEnt> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -117,9 +117,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity);
 
-        ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
+        ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity);
 
-        ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -137,9 +137,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<Guid> GetSession(IIdentity identity);
 
-        ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity);
+        ISingleResponse<Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity);
 
-        ISingleResponse<System.Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -147,9 +147,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISingleResponse<TPoco> Update(TPoco item, IIdentity identity);
 
-        ISingleResponse<TPoco> Update(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
+        ISingleResponse<TEnt> Update(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity);
 
-        ISingleResponse<TPoco> Update(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
+        ISingleResponse<TEnt> Update(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -157,9 +157,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IManyResponse<TPoco> UpdateSome(IEnumerable<TPoco> items, IIdentity identity);
 
-        IManyResponse<TPoco> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
+        IManyResponse<TEnt> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity);
 
-        IManyResponse<TPoco> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
+        IManyResponse<TEnt> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -167,9 +167,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISaveResponse<TPoco> Save(TPoco item, IIdentity identity);
 
-        ISaveResponse<TPoco> Save(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity);
+        ISaveResponse<TEnt> Save(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity);
 
-        ISaveResponse<TPoco> Save(IBusinessPack<TEnt, TPoco> businessPack, TPoco item, IIdentity identity, IResponse priorResponse);
+        ISaveResponse<TEnt> Save(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse);
 
         #endregion
 
@@ -177,9 +177,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity);
 
-        ISaveSomeResponse<TPoco> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity);
+        ISaveSomeResponse<TEnt> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity);
 
-        ISaveSomeResponse<TPoco> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TPoco> items, IIdentity identity, IResponse priorResponse);
+        ISaveSomeResponse<TEnt> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse);
 
         #endregion
     }
