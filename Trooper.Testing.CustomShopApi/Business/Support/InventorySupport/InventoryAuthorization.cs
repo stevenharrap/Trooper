@@ -1,12 +1,11 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.InventorySupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.InventorySupport
 {
     using System.Collections.Generic;
     using Thorny.Business.Security;
     using Trooper.Interface.Thorny.Business.Security;
-    using ShopModel.Model;
-    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
-    using ShopModel.Poco;
+    using ShopPoco;
+    using Interface.Business.Support.InventorySupport;
+    using OutletSupport;
 
     public class InventoryAuthorization : Authorization<Inventory>, IInventoryAuthorization
     {

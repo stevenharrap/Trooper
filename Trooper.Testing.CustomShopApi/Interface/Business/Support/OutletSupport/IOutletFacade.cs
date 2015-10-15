@@ -1,10 +1,8 @@
-﻿namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Interface.Business.Support.OutletSupport
 {
-    using Trooper.Thorny.Interface;
-    using Trooper.Thorny.Interface.DataManager;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Testing.ShopModel.Model;
+    using ShopModel.Model;
+    using ShopPoco;
+    using Thorny.Interface.DataManager;
 
     public interface IOutletFacade : IFacade<OutletEnt, Outlet>
     {        

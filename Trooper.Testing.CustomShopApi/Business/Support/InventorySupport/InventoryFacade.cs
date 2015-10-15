@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
-using Trooper.Testing.ShopModel.Poco;
-using Trooper.Testing.ShopModel.Model;
-using Trooper.Thorny.Interface;
-using Trooper.Thorny.Interface.DataManager;
-
-namespace Trooper.Testing.CustomShopApi.Business.Support.InventorySupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.InventorySupport
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using ShopPoco;
+    using ShopModel.Model;
+    using Thorny.Interface;
+    using Thorny.Interface.DataManager;
+    using Interface.Business.Support.InventorySupport;
+
     public class InventoryFacade : Facade<InventoryEnt, Inventory>, IInventoryFacade
     {
         public override IEnumerable<InventoryEnt> GetSome(ISearch search)

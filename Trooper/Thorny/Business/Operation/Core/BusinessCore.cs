@@ -943,6 +943,8 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public const string NullIdentityCode = Constants.BusinessCoreErrorCodeRoot + ".NullIdentity";
 
+        public const string InvalidIdentityCode = Constants.BusinessCoreErrorCodeRoot + ".InvalidIdentity";
+
         public const string NullArgumentCode = Constants.BusinessCoreErrorCodeRoot + ".:NullArgument";
 
         public const string AddFailedCode = Constants.BusinessCoreErrorCodeRoot + ".AddFailed";
@@ -957,6 +959,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public const string UserDeniedCode = Constants.AuthorizationErrorCodeRoot + ".UserDenied";
 
-        public const string InvalidPropertyCode = Constants.ValidationErrorCodeRoot + ".InvalidProperty";
+        public const string InvalidDataCode = Constants.ValidationErrorCodeRoot + ".InvalidData";
     }
 }

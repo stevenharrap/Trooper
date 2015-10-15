@@ -31,8 +31,6 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
             {
                 this.OnDisposing(this);
             }
-            
-            this.Helper = null;
         }
     }
 }

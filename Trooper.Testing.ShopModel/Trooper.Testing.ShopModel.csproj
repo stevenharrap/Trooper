@@ -51,9 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Poco\Inventory.cs" />
-    <Compile Include="Poco\Outlet.cs" />
-    <Compile Include="Poco\Product.cs" />
     <Compile Include="Model\InventoryEnt.cs" />
     <Compile Include="Mapping\InventoryMap.cs" />
     <Compile Include="Model\ProductEnt.cs" />
@@ -68,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Trooper.Testing.ShopPoco\Trooper.Testing.ShopPoco.csproj">
+      <Project>{94df7ec1-38bd-4916-93a0-b24b0a616bf4}</Project>
+      <Name>Trooper.Testing.ShopPoco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Trooper\Trooper.csproj">
       <Project>{27f46f59-c7c9-4e02-93b9-91f7041a7980}</Project>
       <Name>Trooper</Name>

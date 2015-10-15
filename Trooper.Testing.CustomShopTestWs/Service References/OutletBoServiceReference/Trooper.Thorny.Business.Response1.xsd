@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Messages" nillable="true" type="tns:ArrayOfMessage" />
+      <xs:element minOccurs="0" name="Ok" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Warn" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Response" nillable="true" type="tns:Response" />
+  <xs:complexType name="ArrayOfMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true" type="tns:Message" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessage" nillable="true" type="tns:ArrayOfMessage" />
+  <xs:complexType name="Message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Entity" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Trooper.Thorny" minOccurs="0" name="Level" type="q1:MessageAlertLevel" />
+      <xs:element minOccurs="0" name="Property" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Message" nillable="true" type="tns:Message" />
+  <xs:complexType name="AddResponseOfOutlet">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="AddResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Outlet" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" minOccurs="0" name="Item" nillable="true" type="q2:Outlet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddResponseOfOutlet" nillable="true" type="tns:AddResponseOfOutlet" />
+  <xs:complexType name="AddSomeResponseOfOutlet">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="AddSomeResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Outlet" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" minOccurs="0" name="Items" nillable="true" type="q3:ArrayOfOutlet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddSomeResponseOfOutlet" nillable="true" type="tns:AddSomeResponseOfOutlet" />
+  <xs:complexType name="SingleResponseOfboolean">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="SingleResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Item" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SingleResponseOfboolean" nillable="true" type="tns:SingleResponseOfboolean" />
+  <xs:complexType name="ManyResponseOfOutlet">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ManyResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Outlet" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" minOccurs="0" name="Items" nillable="true" type="q4:ArrayOfOutlet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ManyResponseOfOutlet" nillable="true" type="tns:ManyResponseOfOutlet" />
+  <xs:complexType name="SingleResponseOfOutlet">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="SingleResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Outlet" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" minOccurs="0" name="Item" nillable="true" type="q5:Outlet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SingleResponseOfOutlet" nillable="true" type="tns:SingleResponseOfOutlet" />
+  <xs:complexType name="SaveResponseOfOutlet">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="SaveResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Outlet" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Trooper.Thorny" minOccurs="0" name="Change" type="q6:SaveChangeType" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" minOccurs="0" name="Item" nillable="true" type="q7:Outlet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SaveResponseOfOutlet" nillable="true" type="tns:SaveResponseOfOutlet" />
+  <xs:complexType name="SaveSomeResponseOfOutlet">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="SaveSomeResponseOf{0}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Response" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Outlet" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence>
+          <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Items" nillable="true" type="q8:ArrayOfanyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SaveSomeResponseOfOutlet" nillable="true" type="tns:SaveSomeResponseOfOutlet" />
+</xs:schema>

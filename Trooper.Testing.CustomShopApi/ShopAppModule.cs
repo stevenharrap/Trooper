@@ -1,10 +1,10 @@
 ﻿namespace Trooper.Testing.CustomShopApi
 {
     using Autofac;
-    using Trooper.Thorny.Configuration;
-    using Trooper.Testing.CustomShopApi.Business.Support;
-    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
-    using Trooper.Testing.CustomShopApi.Business.Support.InventorySupport;
+    using Thorny.Configuration;
+    using CustomShop.Api.Business.Support.OutletSupport;
+    using CustomShop.Api.Business.Support.InventorySupport;
+    using CustomShop.Api.Business.Support.ProductSupport;
 
     public class ShopAppModule : Module
     {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="qpIFslVzZKc8n4SEu8CFObWIN3Q=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="+2c5OoISmCbd9fVd8vuS2LxvRqc=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IProductBo">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IProductBo" contract="ProductBoServiceReference.IProductBo" bindingType="basicHttpBinding" address="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo" bindingConfiguration="BasicHttpBinding_IProductBo">
+    <endpoint name="BasicHttpBinding_IProductBo" contract="ProductBoServiceReference.IProductBo" bindingType="basicHttpBinding" address="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" bindingConfiguration="BasicHttpBinding_IProductBo">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo</serializedValue>
+          <serializedValue>http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

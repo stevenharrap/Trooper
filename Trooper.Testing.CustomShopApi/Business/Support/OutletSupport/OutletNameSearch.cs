@@ -1,8 +1,8 @@
-﻿using Trooper.Thorny.Business.Operation.Core;
-
-namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.OutletSupport
 {
-	public class OutletNameSearch : Search
+    using Trooper.Thorny.Business.Operation.Core;
+
+    public class OutletNameSearch : Search
 	{
 		public string Name { get; set; }
 	}

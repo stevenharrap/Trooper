@@ -1,10 +1,8 @@
-﻿using Trooper.Interface.Thorny.Business.Security;
-using Trooper.Testing.ShopModel;
-using Trooper.Testing.ShopModel.Model;
-using Trooper.Testing.ShopModel.Poco;
-
-namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Interface.Business.Support.ProductSupport
 {
+    using Trooper.Interface.Thorny.Business.Security;
+    using ShopPoco;
+
     public interface IProductAuthorization : IAuthorization<Product>
     {
     }

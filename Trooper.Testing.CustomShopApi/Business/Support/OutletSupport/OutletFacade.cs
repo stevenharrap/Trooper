@@ -1,17 +1,13 @@
-﻿using System.Linq;
-using Trooper.Testing.CustomShopApi.Business.Support;
-
-namespace Trooper.Testing.CustomShopApi.Facade.ShopSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Facade.ShopSupport
 {
-    using Trooper.Thorny.Interface;
-    using Trooper.Thorny.Interface.DataManager;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
-    using Trooper.Testing.CustomShopApi.Business.Support.OutletSupport;
+    using System.Linq;
+    using Thorny.Interface;
+    using Thorny.Interface.DataManager;
+    using ShopPoco;
+    using ShopModel.Model;
     using System.Collections.Generic;
+    using Interface.Business.Support.OutletSupport;
+    using Business.Support.OutletSupport;
 
     public class OutletFacade : Facade<OutletEnt, Outlet>, IOutletFacade
     {

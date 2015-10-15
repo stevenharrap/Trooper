@@ -19,18 +19,18 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Trooper.Testing.CustomShopApi.Business.Operation.ProductBoNs.wsdl" MetadataType="Wsdl" ID="2ceb15f5-17ee-4294-8ea9-d782ffcc1950" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="3816341c-2651-4563-8012-3ef1ecb407cd" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.Thorny.Business.Operation.Core.xsd" MetadataType="Schema" ID="100f36d3-5f22-457a-aed0-0c006bacdda4" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.DataOperations.xsd" MetadataType="Schema" ID="45aa9dfe-330e-4362-8a9c-4e83ba8dc434" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.Testing.CustomShopApi.Business.Operation.ProductBoNs.xsd" MetadataType="Schema" ID="a9ba76b9-199a-417d-ad3b-8b92886da503" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.Thorny.Business.Response.xsd" MetadataType="Schema" ID="be53bb12-f9f5-476b-82d8-e5fa6d87651d" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.Thorny.xsd" MetadataType="Schema" ID="be0d3f03-7822-4565-8ab6-43f4bd9595df" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.Testing.ShopModel.Poco.xsd" MetadataType="Schema" ID="781d1a3c-20ca-42f2-86bc-47a5c4672495" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
-    <MetadataFile FileName="Trooper.Thorny.Business.Security.xsd" MetadataType="Schema" ID="6b30da83-57ff-4b63-8eb9-caa0002cf6aa" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Testing.CustomShop.Api.Business.Operation.ProductBoNs.wsdl" MetadataType="Wsdl" ID="ede23276-3ee9-4a8b-949f-86285d33f078" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="e1175222-3be5-45d3-9fba-e47ccc517c6c" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Thorny.Business.Response1.xsd" MetadataType="Schema" ID="fd234030-ad42-4475-a177-186ae232aab8" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Thorny1.xsd" MetadataType="Schema" ID="96c2914c-fb08-49de-9df6-bb66feec7b5a" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.DataOperations1.xsd" MetadataType="Schema" ID="499ab6ab-ec7f-4939-9117-b20720e716d2" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Thorny.Business.Operation.Core1.xsd" MetadataType="Schema" ID="4e55c7f9-3fa6-4c5d-82da-67119462f63a" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Testing.CustomShop.Api.Business.Operation.ProductBoNs.xsd" MetadataType="Schema" ID="a2e05e78-ef24-4ace-af97-d9960db351a7" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Testing.ShopPoco.xsd" MetadataType="Schema" ID="8feecf88-5a41-4c67-8abc-2a63a08a1972" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
+    <MetadataFile FileName="Trooper.Thorny.Business.Security1.xsd" MetadataType="Schema" ID="6ad466bb-e8a2-4f01-b60b-85565b1a1b7c" SourceId="1" SourceUrl="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

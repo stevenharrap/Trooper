@@ -1,8 +1,8 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.InventorySupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.InventorySupport
 {
-    using Trooper.Thorny.DataManager;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
+    using Thorny.DataManager;
+    using ShopModel.Model;
+    using Interface.Business.Support.InventorySupport;
 
     public class InventoryValidation : Validation<InventoryEnt>, IInventoryValidation
     {

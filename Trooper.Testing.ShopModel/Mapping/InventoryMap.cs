@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trooper.Testing.ShopModel.Model;
-
-namespace Trooper.Testing.ShopModel.Mapping
+﻿namespace Trooper.Testing.ShopModel.Mapping
 {
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
+    using Model;
+
     public class InventoryMap : EntityTypeConfiguration<InventoryEnt>
     {
         public InventoryMap()

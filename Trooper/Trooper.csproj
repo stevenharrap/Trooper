@@ -118,7 +118,6 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
@@ -173,7 +172,6 @@
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IDeletingSomeByKey.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IDeletingByKey.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IAddingSome.cs" />
-    <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IAdding.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IIsAllowing.cs" />
     <Compile Include="Interface\Thorny\TestSuit\ITestSuitHelper.cs" />
     <Compile Include="Thorny\Business\Operation\Composite\BusinessAll.cs" />
@@ -212,7 +210,6 @@
     <Compile Include="Thorny\Business\TestSuit\WebServiceCreaterMapper.cs" />
     <Compile Include="Thorny\Configuration\BusinessOperationService.cs" />
     <Compile Include="Thorny\Configuration\BusinessHostInfo.cs" />
-    <Compile Include="Thorny\Configuration\BusinessModuleHelper.cs" />
     <Compile Include="Thorny\Configuration\BusinessModuleStartParameters.cs" />
     <Compile Include="Thorny\Configuration\BusinessDynamicOperationService.cs" />
     <Compile Include="Thorny\Constants.cs" />

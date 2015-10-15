@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper", "Trooper\Trooper.csproj", "{27F46F59-C7C9-4E02-93B9-91F7041A7980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopApi", "Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShopApi.csproj", "{8C65EBF3-0012-44D0-8447-A808706DACD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShop.Api", "Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShop.Api.csproj", "{8C65EBF3-0012-44D0-8447-A808706DACD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.DefaultShopApp", "Trooper.Testing.DefaultShopApp\Trooper.Testing.DefaultShopApp.csproj", "{E782159E-B9B9-4AFE-889D-048D2DB180EB}"
 EndProject
@@ -36,11 +36,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessOperation", "Busine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopWeb", "Trooper.Testing.CustomShopWeb\Trooper.Testing.CustomShopWeb.csproj", "{452846B8-CD94-40D7-A4A6-D8175E41703C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopSrvCon", "Trooper.Testing.CustomShopSrvCon\Trooper.Testing.CustomShopSrvCon.csproj", "{1BC43D0A-D444-4941-83E8-673EC212AEAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShop.SrvCon", "Trooper.Testing.CustomShopSrvCon\Trooper.Testing.CustomShop.SrvCon.csproj", "{1BC43D0A-D444-4941-83E8-673EC212AEAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopTestWs", "Trooper.Testing.CustomShopTestWs\Trooper.Testing.CustomShopTestWs.csproj", "{F3EC911F-48A7-4037-9CAD-D316AB81DD83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShop.TestFromWs", "Trooper.Testing.CustomShopTestWs\Trooper.Testing.CustomShop.TestFromWs.csproj", "{F3EC911F-48A7-4037-9CAD-D316AB81DD83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShopApiTestSuit", "Trooper.Testing.CustomShopApiTestSuit\Trooper.Testing.CustomShopApiTestSuit.csproj", "{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShop.TestApi", "Trooper.Testing.CustomShopApiTestSuit\Trooper.Testing.CustomShop.TestApi.csproj", "{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.CustomShop.TestSuit.Common", "Trooper.Testing.CustomShop.TestSuit.Common\Trooper.Testing.CustomShop.TestSuit.Common.csproj", "{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trooper.Testing.ShopPoco", "Trooper.Testing.ShopPoco\Trooper.Testing.ShopPoco.csproj", "{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -274,6 +278,54 @@ Global
 		{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B}.Staging|Any CPU.ActiveCfg = Release|Any CPU
 		{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B}.Staging|Any CPU.Build.0 = Release|Any CPU
 		{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B}.Staging|x86.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Code Analysis|x86.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Debug|x86.Build.0 = Debug|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Pro|x86.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release Testing|x86.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release|x86.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Release|x86.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Staging|x86.ActiveCfg = Release|Any CPU
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4}.Staging|x86.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Code Analysis|Any CPU.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Code Analysis|Any CPU.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Code Analysis|x86.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Code Analysis|x86.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Debug|x86.Build.0 = Debug|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Pro|Any CPU.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Pro|Any CPU.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Pro|x86.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Pro|x86.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Testing|Any CPU.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Testing|Any CPU.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Testing|x86.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release Testing|x86.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release|x86.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Release|x86.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Staging|x86.ActiveCfg = Release|Any CPU
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4}.Staging|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -292,6 +344,8 @@ Global
 		{1BC43D0A-D444-4941-83E8-673EC212AEAA} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
 		{F3EC911F-48A7-4037-9CAD-D316AB81DD83} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
 		{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
+		{34AF3438-2CFE-49EF-A3EB-DDE8F9BED6D4} = {5E8E7ACB-1E09-4957-ADB2-3C6B13BA6E62}
+		{94DF7EC1-38BD-4916-93A0-B24B0A616BF4} = {2E2AA18A-0C31-4A29-A035-D71C957C6E66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45

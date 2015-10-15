@@ -1,18 +1,9 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.OutletSupport
 {
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Business.Security;
-    using Trooper.Testing.CustomShopApi.Business.Support.InventorySupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Thorny.Business.Operation.Core;
-    using Trooper.Thorny.Business.Response;
-    using Trooper.Thorny.Utility;
-    using System.Linq;
-    using Trooper.Testing.CustomShopApi.Business.Model;
+    using ShopPoco;
+    using ShopModel.Model;
+    using Thorny.Business.Operation.Core;
+    using Interface.Business.Support.OutletSupport;
 
     public class OutletBusinessCore : BusinessCore<OutletEnt, Outlet>, IOutletBusinessCore
     {

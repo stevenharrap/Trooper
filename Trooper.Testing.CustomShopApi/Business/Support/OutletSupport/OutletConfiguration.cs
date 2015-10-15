@@ -1,22 +1,18 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.OutletSupport
 {
     using Autofac;
     using System.Collections.Generic;
-    using Trooper.DynamicServiceHost;
-    using Trooper.Interface.DynamicServiceHost;
     using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Configuration;
-    using Trooper.Testing.CustomShopApi.Business.Model;
-    using Trooper.Testing.CustomShopApi.Business.Operation;
-    using Trooper.Testing.CustomShopApi.Facade.ShopSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Thorny.Business.Response;
-    using Trooper.Thorny.Configuration;
-    using Trooper.Utility;
-    using System.Linq;
+    using ShopModel.Model;
+    using ShopPoco;
+    using Thorny.Business.Response;
+    using Thorny.Configuration;
+    using Utility;
+    using Facade.ShopSupport;
+    using Interface.Business.Support.OutletSupport;
+    using Operation;
+    using Interface.Business.Operation;
+    using Model;
 
     public class OutletConfiguration
     {

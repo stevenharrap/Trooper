@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Trooper.Testing.ShopModel.Poco;
+using Trooper.Testing.ShopPoco;
 
 namespace Trooper.Testing.ShopModel.Model
 {

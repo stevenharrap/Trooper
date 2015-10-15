@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
-    using Trooper.Testing.ShopModel.Model;
+    using Model;
 
     public class OutletMap : EntityTypeConfiguration<OutletEnt>
     {

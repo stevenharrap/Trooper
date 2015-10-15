@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="8nRRXY3760boTjOmsBw9ZvX57gI=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="buaP/Kvt0D5vpFe2sqAFoID1T5E=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IOutletBo">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IOutletBo" contract="OutletBoServiceReference.IOutletBo" bindingType="basicHttpBinding" address="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBo" bindingConfiguration="BasicHttpBinding_IOutletBo">
+    <endpoint name="BasicHttpBinding_IOutletBo" contract="OutletBoServiceReference.IOutletBo" bindingType="basicHttpBinding" address="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBo" bindingConfiguration="BasicHttpBinding_IOutletBo">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.OutletBo</serializedValue>
+          <serializedValue>http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBo</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

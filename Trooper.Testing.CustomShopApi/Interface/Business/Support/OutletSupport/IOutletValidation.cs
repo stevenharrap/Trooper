@@ -1,8 +1,7 @@
-﻿namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Interface.Business.Support.OutletSupport
 {
-    using Trooper.Thorny.Interface.DataManager;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Model;
+    using Thorny.Interface.DataManager;
+    using ShopModel.Model;
 
     public interface IOutletValidation : IValidation<OutletEnt>
     {

@@ -1,14 +1,9 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Operation
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Operation
 {
-    using Trooper.Thorny.Business.Operation.Composite;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Business.Security;
-    using Trooper.Testing.CustomShopApi.Business.Model;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
+    using Thorny.Business.Operation.Composite;
+    using ShopPoco;
+    using ShopModel.Model;
+    using Interface.Business.Operation;
 
     public class OutletBo : BusinessAll<OutletEnt, Outlet>, IOutletBo
     {

@@ -1,9 +1,9 @@
-﻿using Trooper.Testing.ShopModel.Poco;
-using Trooper.Testing.ShopModel.Model;
-using Trooper.Thorny.Interface.DataManager;
-
-namespace Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport
+﻿namespace Trooper.Testing.CustomShop.Api.Interface.Business.Support.InventorySupport
 {
+    using ShopPoco;
+    using ShopModel.Model;
+    using Thorny.Interface.DataManager;
+
     public interface IInventoryFacade : IFacade<InventoryEnt, Inventory>
     {
     }

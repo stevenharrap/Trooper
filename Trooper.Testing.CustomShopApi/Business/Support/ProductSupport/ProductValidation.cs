@@ -1,10 +1,8 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.ProductSupport
 {
-    using Trooper.Thorny.DataManager;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support;
-    using Trooper.Testing.ShopModel;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
+    using ShopModel.Model;
+    using Thorny.DataManager;
+    using Interface.Business.Support.OutletSupport;
 
     public class ProductValidation : Validation<ProductEnt>, IProductValidation
     {

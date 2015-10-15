@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+  <xs:complexType name="RequestArgOfInventoryWWzxKLrE">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="RequestArgOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Thorny.Business.Security" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Inventory" Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopPoco" minOccurs="0" name="Items" nillable="true" type="q1:ArrayOfInventory" />
+      <xs:element minOccurs="0" name="Search" nillable="true" type="xs:anyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestArgOfInventoryWWzxKLrE" nillable="true" type="tns:RequestArgOfInventoryWWzxKLrE" />
+</xs:schema>

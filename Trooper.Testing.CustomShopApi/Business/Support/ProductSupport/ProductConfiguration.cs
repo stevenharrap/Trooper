@@ -1,16 +1,13 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.ProductSupport
 {
     using Autofac;
-    using Trooper.Testing.CustomShopApi.Business.Operation;
-    using Trooper.Testing.CustomShopApi.Business.Support.ProductSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.OutletSupport;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Thorny.Configuration;
-    using Trooper.Thorny.Interface;
-    using Trooper.Thorny.Interface.DataManager;
+    using ShopModel.Model;
+    using ShopPoco;
+    using Thorny.Configuration;
+    using Interface.Business.Support.ProductSupport;
+    using Interface.Business.Support.OutletSupport;
+    using Operation;
+    using Interface.Business.Operation;
 
     public class ProductConfiguration
     {

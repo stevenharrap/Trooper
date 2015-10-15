@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trooper.Testing.ShopModel.Poco;
-
-namespace Trooper.Testing.CustomShopApi.Business.Model
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Model
 {
+    using ShopPoco;
+
     public class ProductInOutlet
     {
         public int Quantity { get; set; }

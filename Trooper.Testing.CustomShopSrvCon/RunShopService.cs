@@ -1,14 +1,20 @@
-﻿using System;
-using Trooper.Testing.CustomShopApi;
-using Trooper.Thorny.Configuration;
-
-namespace Trooper.Testing.CustomShopSrvCon
+﻿namespace Trooper.Testing.CustomShopSrvCon
 {
+    using System;
+    using System.Linq;
+    using CustomShopApi;
+    using Thorny.Configuration;
+
     public class RunShopService
     {
         public static void Main(string[] args)
         {
             var container = BusinessModule.Start<ShopAppModule>();
+
+            foreach (var service in BusinessModule.GetAllServices(container))
+            {
+                Console.WriteLine("Service: {0}", service.ServiceHost.BaseAddresses.First());
+            }
 
             Console.WriteLine("ShopApp-started");
             Console.ReadLine();

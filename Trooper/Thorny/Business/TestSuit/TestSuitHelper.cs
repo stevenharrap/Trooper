@@ -8,11 +8,12 @@ using Trooper.Interface.Thorny.Business.Operation.Single;
 using Trooper.Interface.Thorny.Business.Response;
 using Trooper.Interface.Thorny.Business.Security;
 using Trooper.Interface.Thorny.TestSuit;
+using Trooper.Thorny.Business.Security;
 
 namespace Trooper.Thorny.Business.TestSuit
 {
     public abstract class TestSuitHelper<TPoco> : ITestSuitHelper<TPoco>
-        where TPoco : class
+        where TPoco : class, new()
     {
         private int counter = 0;
 
@@ -32,15 +33,77 @@ namespace Trooper.Thorny.Business.TestSuit
             return this.counter++;
         }
 
+        #region item manipulation
+
         public abstract TPoco MakeValidItem();
 
-        public abstract TPoco MakeInvalidItem();
+        public abstract TPoco MakeInvalidItem();        
 
-        public abstract TPoco CopyItem(TPoco item);
+        public virtual bool AreEqual(TPoco itemA, TPoco itemB)
+        {
+            return this.IdentifiersAreEqual(itemA, itemB) && this.NonIdentifersAreEqual(itemA, itemB);
+        }
 
-        public abstract IIdentity MakeValidIdentity();
+        public abstract bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
 
-        public abstract IIdentity MakeInvalidIdentity();
+        public abstract bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
+
+        public TPoco Copy(TPoco item)
+        {
+            var result = new TPoco();
+
+            this.CopyIdentifiers(item, result);
+            this.CopyNonIdentifiers(item, result);
+
+            return result;
+        }
+
+        public void Copy(TPoco source, TPoco destination)
+        {
+            this.CopyIdentifiers(source, destination);
+            this.CopyNonIdentifiers(source, destination);
+        }
+
+        public TPoco CopyIdentifiers(TPoco item)
+        {
+            var result = new TPoco();
+
+            this.CopyIdentifiers(item, result);
+
+            return result;
+        }
+        
+        public abstract void CopyIdentifiers(TPoco source, TPoco destination);
+
+        public TPoco CopyNonIdentifiers(TPoco item)
+        {
+            var result = new TPoco();
+
+            this.CopyIdentifiers(item, result);
+
+            return result;
+        }
+
+        public abstract void ChangeNonIdentifiers(TPoco item);
+
+        public abstract void CopyNonIdentifiers(TPoco source, TPoco destination);
+
+        #endregion
+
+        #region identity manipulation
+
+        public abstract IIdentity MakeAllowedIdentity();
+
+        public abstract IIdentity MakeDeniedIdentity();
+
+        public virtual IIdentity MakeInvalidIdentity()
+        {
+            return new Identity();
+        }
+
+        #endregion
+
+        #region crud operations
 
         public virtual IList<TPoco> AddItems(List<TPoco> validItems, IIdentity validIdentity)
         {
@@ -59,7 +122,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public IList<TPoco> AddItems(List<TPoco> validItems)
         {
-            return this.AddItems(validItems, this.MakeValidIdentity());
+            return this.AddItems(validItems, this.MakeAllowedIdentity());
         }
 
         public virtual TPoco AddItem(TPoco validItem, IIdentity validIdentity)
@@ -77,7 +140,19 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public TPoco AddItem(TPoco validItem)
         {
-            return this.AddItem(validItem, this.MakeValidIdentity());
+            return this.AddItem(validItem, this.MakeAllowedIdentity());
+        }
+
+        public TPoco AddItem(IIdentity validIdentity)
+        {
+            var response = boCreater.Add(this.MakeValidItem(), validIdentity);
+
+            return response.Item;
+        }
+
+        public TPoco AddItem()
+        {
+            return this.AddItem(this.MakeAllowedIdentity());
         }
 
         public virtual TPoco GetItem(TPoco exitingItem, IIdentity validIdentity)
@@ -92,7 +167,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public TPoco GetItem(TPoco existingItem)
         {
-            return this.GetItem(existingItem, this.MakeValidIdentity());
+            return this.GetItem(existingItem, this.MakeAllowedIdentity());
         }
 
         public virtual bool ItemExists(TPoco validItem, IIdentity validIdentity)
@@ -106,7 +181,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public bool ItemExists(TPoco validItem)
         {
-            return ItemExists(validItem, this.MakeValidIdentity());
+            return ItemExists(validItem, this.MakeAllowedIdentity());
         }
 
         public virtual void RemoveAllItems(IIdentity validIdentity)
@@ -123,7 +198,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public void RemoveAllItems()
         {
-            this.RemoveAllItems(this.MakeValidIdentity());
+            this.RemoveAllItems(this.MakeAllowedIdentity());
         }
 
         public virtual IList<TPoco> GetAllItems(IIdentity validIdentity)
@@ -138,7 +213,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public IList<TPoco> GetAllItems()
         {
-            return this.GetAllItems(this.MakeValidIdentity());
+            return this.GetAllItems(this.MakeAllowedIdentity());
         }
 
         public virtual bool ItemCountIs(int count, IIdentity validIdentity)
@@ -148,7 +223,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public bool ItemCountIs(int count)
         {
-            return this.ItemCountIs(count, this.MakeValidIdentity());
+            return this.ItemCountIs(count, this.MakeAllowedIdentity());
         }
 
         public virtual bool StoredItemsAreEqualTo(IList<TPoco> items, IIdentity validIdentity)
@@ -165,7 +240,7 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public bool StoredItemsAreEqualTo(IList<TPoco> items)
         {
-            return this.StoredItemsAreEqualTo(items, this.MakeValidIdentity());
+            return this.StoredItemsAreEqualTo(items, this.MakeAllowedIdentity());
         }
 
         public virtual bool NoItemsExist(IIdentity validIdentity)
@@ -179,27 +254,12 @@ namespace Trooper.Thorny.Business.TestSuit
 
         public bool NoItemsExist()
         {
-            return this.NoItemsExist(this.MakeValidIdentity());
+            return this.NoItemsExist(this.MakeAllowedIdentity());
         }
 
-        public virtual bool AreEqual(TPoco itemA, TPoco itemB)
-        {
-            return this.IdentifiersAreEqual(itemA, itemB) && this.NonIdentifersAreEqual(itemA, itemB);            
-        }
+        #endregion
 
-        public abstract bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
-
-        public abstract bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
-
-        public abstract void ChangeNonIdentifiers(TPoco item);
-
-        public TPoco CopyAndChangeItemNonIdentifiers(TPoco item)
-        {
-            var copy = this.CopyItem(item);
-            this.ChangeNonIdentifiers(item);
-
-            return copy;
-        }
+        #region response investigatoin
 
         public bool ResponseIsOk(IResponse response)
         {
@@ -241,42 +301,49 @@ namespace Trooper.Thorny.Business.TestSuit
                 && response.Messages.Any(m => m.Code == code && m.Level == MessageAlertLevel.Error);
         }
 
+        #endregion
+
+        #region self testing
+
         public void SelfTestHelper()
         {           
             this.NonIdentifiersAreDifferentWhenChanged();
             this.AnItemIsNewAndIdenticalWhenCopied();
             this.AnItemIsCopiedAndItsNonIdentifiersChanged();
-        }
+        }        
 
         public virtual void NonIdentifiersAreDifferentWhenChanged()
         {
             var item1 = this.MakeValidItem();
-            var item2 = this.CopyItem(item1);
+            var item2 = this.Copy(item1);
 
             this.ChangeNonIdentifiers(item2);
 
-            Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
-            Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
+            Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should not change the identifier properties");
+            Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
         }
 
         public virtual void AnItemIsNewAndIdenticalWhenCopied()
         {
             var item1 = this.MakeValidItem();
-            var item2 = this.CopyItem(item1);
+            var item2 = this.Copy(item1);
 
-            Assert.That(this.AreEqual(item1, item2), "The CopyItem method did not correctly copy all the properties of the item.");
-            Assert.That(!Object.ReferenceEquals(item1, item2), "The CopyItem should return a new instance not the provided instance.");
+            Assert.That(this.AreEqual(item1, item2), "The Copy method did not correctly copy all the properties of the item.");
+            Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
         }               
 
         public virtual void AnItemIsCopiedAndItsNonIdentifiersChanged()
         {
-            var item1 = this.MakeInvalidItem();
-            var item2 = this.CopyAndChangeItemNonIdentifiers(item1);
+            var item1 = this.MakeValidItem();
+            var item2 = this.CopyNonIdentifiers(item1);
+            this.ChangeNonIdentifiers(item2);
 
             Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
             Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
-            Assert.That(!Object.ReferenceEquals(item1, item2), "The CopyItem should return a new instance not the provided instance.");
+            Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
         }
+
+        #endregion
 
     }
 }

@@ -1,15 +1,12 @@
-﻿namespace Trooper.Testing.CustomShopApi.Business.Support.InventorySupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.InventorySupport
 {
     using Autofac;
-    using System.Collections.Generic;
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Testing.CustomShopApi.Business.Operation;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
-    using Trooper.Testing.CustomShopApi.Interface.Business.Support.InventorySupport;
-    using Trooper.Testing.ShopModel.Model;
-    using Trooper.Testing.ShopModel.Poco;
-    using Trooper.Thorny.Business.Response;
-    using Trooper.Thorny.Configuration;
+    using ShopModel.Model;
+    using ShopPoco;
+    using Thorny.Configuration;
+    using Interface.Business.Support.InventorySupport;
+    using Operation;
+    using Interface.Business.Operation;
 
     public class InventoryConfiguration
     {

@@ -1,10 +1,10 @@
-﻿using Trooper.Thorny.Business.Operation.Core;
-using Trooper.Testing.ShopModel.Poco;
-using Trooper.Testing.ShopModel.Model;
-using Trooper.Testing.CustomShopApi.Interface.Business.Support.ProductSupport;
-
-namespace Trooper.Testing.CustomShopApi.Business.Support.OutletSupport
+﻿namespace Trooper.Testing.CustomShop.Api.Business.Support.ProductSupport
 {
+    using Thorny.Business.Operation.Core;
+    using ShopPoco;
+    using ShopModel.Model;
+    using Interface.Business.Support.ProductSupport;
+
     public class ProductBusinessCore : BusinessCore<ProductEnt, Product>, IProductBusinessCore
     {
     }

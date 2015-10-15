@@ -62,6 +62,11 @@
                 service.Stop();
             }
         }
+
+        public static IEnumerable<IBusinessDynamicOperationService> GetAllServices(IComponentContext container)
+        {
+            return container.Resolve<IEnumerable<IBusinessDynamicOperationService>>();
+        }
     }
 
     public class BusinessComponent<TEnt, TPoco>
@@ -180,6 +185,7 @@
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IManyResponse<TPoco>, ManyResponse<TPoco>>());
                 businessHostInfo.Mappings.Add(ClassMapping.Make<ISearch, Search>(commonType: true));
                 businessHostInfo.Mappings.Add(ClassMapping.Make<IIdentity, Identity>(commonType: true));
+                businessHostInfo.Mappings.Add(ClassMapping.Make<IResponse, Response>(commonType: true));
             }
             
             this.builder.Register(c =>

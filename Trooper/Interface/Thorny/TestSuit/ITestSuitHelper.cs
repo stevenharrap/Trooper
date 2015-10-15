@@ -14,9 +14,23 @@ using Trooper.Interface.Thorny.Business.Security;
 
         TPoco MakeInvalidItem();
 
-        TPoco CopyItem(TPoco item);
+        TPoco Copy(TPoco item);
 
-        IIdentity MakeValidIdentity();
+        void Copy(TPoco source, TPoco destination);
+
+        TPoco CopyIdentifiers(TPoco item);
+
+        void CopyIdentifiers(TPoco source, TPoco destination);
+
+        TPoco CopyNonIdentifiers(TPoco item);
+
+        void ChangeNonIdentifiers(TPoco item);
+
+        void CopyNonIdentifiers(TPoco source, TPoco destination);
+
+        IIdentity MakeAllowedIdentity();
+
+        IIdentity MakeDeniedIdentity();
 
         IIdentity MakeInvalidIdentity();
 
@@ -27,6 +41,10 @@ using Trooper.Interface.Thorny.Business.Security;
         TPoco AddItem(TPoco validItem, IIdentity validIdentity);
 
         TPoco AddItem(TPoco validItem);
+
+        TPoco AddItem(IIdentity validIdentity);
+
+        TPoco AddItem();
 
         TPoco GetItem(TPoco exitingItem, IIdentity validIdentity);
 
@@ -56,11 +74,7 @@ using Trooper.Interface.Thorny.Business.Security;
 
         bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
 
-        bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
-
-        void ChangeNonIdentifiers(TPoco item);
-
-        TPoco CopyAndChangeItemNonIdentifiers(TPoco item);
+        bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);        
 
         bool ResponseIsOk(IResponse response);
 

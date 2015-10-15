@@ -8,162 +8,83 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Trooper.Testing.CustomShopTestWs.ProductBoServiceReference {
-    using System.Runtime.Serialization;
-    using System;
+namespace Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference {
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Product", Namespace="http://schemas.datacontract.org/2004/07/Trooper.Testing.ShopModel.Poco")]
-    [System.SerializableAttribute()]
-    public partial class Product : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ColourField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ProductIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Colour {
-            get {
-                return this.ColourField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ColourField, value) != true)) {
-                    this.ColourField = value;
-                    this.RaisePropertyChanged("Colour");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ProductId {
-            get {
-                return this.ProductIdField;
-            }
-            set {
-                if ((this.ProductIdField.Equals(value) != true)) {
-                    this.ProductIdField = value;
-                    this.RaisePropertyChanged("ProductId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-        "s", ConfigurationName="ProductBoServiceReference.IProductBo")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+        "Ns", ConfigurationName="ProductBoServiceReference.IProductBo")]
     public interface IProductBo {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetAll", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetAllResponse")]
-        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> GetAll(Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetAll", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetAllResponse")]
+        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product> GetAll(Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetAll", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetAllResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>> GetAllAsync(Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetAll", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetAllResponse")]
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product>> GetAllAsync(Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetByKeyResponse")]
-        Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> GetByKey(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetByKeyResponse")]
+        Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.ShopPoco.Product> GetByKey(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetByKeyResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>> GetByKeyAsync(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetByKeyResponse")]
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.ShopPoco.Product>> GetByKeyAsync(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/ExistsByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/ExistsByKeyResponse")]
-        Trooper.Thorny.Business.Response.SingleResponse<bool> ExistsByKey(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/ExistsByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/ExistsByKeyResponse")]
+        Trooper.Thorny.Business.Response.SingleResponse<bool> ExistsByKey(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/ExistsByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/ExistsByKeyResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> ExistsByKeyAsync(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/ExistsByKey", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/ExistsByKeyResponse")]
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> ExistsByKeyAsync(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/IsAllowed", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/IsAllowedResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Operation.Core.Search))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.Identity))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>))]
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/IsAllowed", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/IsAllowedResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Response))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Message[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.Message))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.ShopPoco.Product>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Response.SingleResponse<bool>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.MessageAlertLevel))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product))]
-        Trooper.Thorny.Business.Response.SingleResponse<bool> IsAllowed(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> argument, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.Identity))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Operation.Core.Search))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.ShopPoco.Product[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.ShopPoco.Product))]
+        Trooper.Thorny.Business.Response.SingleResponse<bool> IsAllowed(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Product> argument, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/IsAllowed", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/IsAllowedResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> IsAllowedAsync(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> argument, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/IsAllowed", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/IsAllowedResponse")]
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> IsAllowedAsync(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Product> argument, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetSomeBySearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetSomeBySearchResponse")]
-        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> GetSomeBySearch(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetSomeBySearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetSomeBySearchResponse")]
+        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product> GetSomeBySearch(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetSomeBySearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShopApi.Business.Operation.ProductBoN" +
-            "s/IProductBo/GetSomeBySearchResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>> GetSomeBySearchAsync(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity);
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetSomeBySearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.ProductBo" +
+            "Ns/IProductBo/GetSomeBySearchResponse")]
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product>> GetSomeBySearchAsync(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IProductBoChannel : Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.IProductBo, System.ServiceModel.IClientChannel {
+    public interface IProductBoChannel : Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference.IProductBo, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ProductBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.IProductBo>, Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.IProductBo {
+    public partial class ProductBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference.IProductBo>, Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference.IProductBo {
         
         public ProductBoClient() {
         }
@@ -184,43 +105,43 @@ namespace Trooper.Testing.CustomShopTestWs.ProductBoServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> GetAll(Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product> GetAll(Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetAll(identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>> GetAllAsync(Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product>> GetAllAsync(Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetAllAsync(identity);
         }
         
-        public Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> GetByKey(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.ShopPoco.Product> GetByKey(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetByKey(item, identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>> GetByKeyAsync(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<Trooper.Testing.ShopPoco.Product>> GetByKeyAsync(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetByKeyAsync(item, identity);
         }
         
-        public Trooper.Thorny.Business.Response.SingleResponse<bool> ExistsByKey(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.SingleResponse<bool> ExistsByKey(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.ExistsByKey(item, identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> ExistsByKeyAsync(Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product item, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> ExistsByKeyAsync(Trooper.Testing.ShopPoco.Product item, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.ExistsByKeyAsync(item, identity);
         }
         
-        public Trooper.Thorny.Business.Response.SingleResponse<bool> IsAllowed(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> argument, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.SingleResponse<bool> IsAllowed(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Product> argument, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.IsAllowed(argument, identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> IsAllowedAsync(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> argument, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.SingleResponse<bool>> IsAllowedAsync(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Product> argument, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.IsAllowedAsync(argument, identity);
         }
         
-        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product> GetSomeBySearch(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product> GetSomeBySearch(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetSomeBySearch(search, identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.CustomShopTestWs.ProductBoServiceReference.Product>> GetSomeBySearchAsync(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Product>> GetSomeBySearchAsync(Trooper.Thorny.Business.Operation.Core.Search search, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetSomeBySearchAsync(search, identity);
         }
     }
