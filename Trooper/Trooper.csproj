@@ -420,6 +420,7 @@
     <Folder Include="Interface\Thorny\TestSuit\AuthorizationTestSuit\" />
     <Folder Include="Interface\Thorny\TestSuit\FacadeTestSuit\" />
     <Folder Include="Interface\Thorny\TestSuit\ValidationTestSuit\" />
+    <Folder Include="Thorny\Business\TestSuit\TestMethodGeneration\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Trooper.Testing.CustomShopWeb</RootNamespace>
-    <AssemblyName>Trooper.Testing.CustomShopWeb</AssemblyName>
+    <RootNamespace>Trooper.Testing.CustomShop.Web</RootNamespace>
+    <AssemblyName>Trooper.Testing.CustomShop.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -21,6 +21,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -120,9 +121,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShopApi.csproj">
+    <ProjectReference Include="..\Trooper.Testing.CustomShop.Api\Trooper.Testing.CustomShop.Api.csproj">
       <Project>{8c65ebf3-0012-44d0-8447-a808706dacd4}</Project>
-      <Name>Trooper.Testing.CustomShopApi</Name>
+      <Name>Trooper.Testing.CustomShop.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trooper.Testing.ShopModel\Trooper.Testing.ShopModel.csproj">
       <Project>{e5c177a6-5e8c-4e72-a1dd-ab511d053abd}</Project>

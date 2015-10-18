@@ -1,17 +1,11 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Web;
-using System.Web.Mvc;
-using Trooper.Testing.CustomShopApi.Interface.Business.Operation;
-using Trooper.Testing.CustomShopWeb.Models;
-using Trooper.Thorny.Business.Security;
-using Trooper.Thorny.Configuration;
-
-namespace Trooper.Testing.CustomShopWeb.Controllers
+﻿namespace Trooper.Testing.CustomShopWeb.Controllers
 {
+    using Autofac;
+    using System.ServiceModel;
+    using System.Web.Mvc;
+    using Trooper.Testing.CustomShopWeb.Models;
+    using Trooper.Thorny.Business.Security;
+
     public class HomeController : Controller
     {
         // GET: Home

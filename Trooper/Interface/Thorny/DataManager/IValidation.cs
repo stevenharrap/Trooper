@@ -13,6 +13,6 @@
 
         IResponse Validate(TEnt item);
 
-        IResponse Validate(TEnt item, IResponse response);        
+        bool Validate(TEnt item, IResponse response);
     }
 }

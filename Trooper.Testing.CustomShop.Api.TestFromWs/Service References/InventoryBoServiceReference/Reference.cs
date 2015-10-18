@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Trooper.Testing.CustomShop.TestWs.InventoryBoServiceReference {
+namespace Trooper.Testing.CustomShop.Api.TestFromWs.InventoryBoServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -79,12 +79,12 @@ namespace Trooper.Testing.CustomShop.TestWs.InventoryBoServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IInventoryBoChannel : Trooper.Testing.CustomShop.TestWs.InventoryBoServiceReference.IInventoryBo, System.ServiceModel.IClientChannel {
+    public interface IInventoryBoChannel : Trooper.Testing.CustomShop.Api.TestFromWs.InventoryBoServiceReference.IInventoryBo, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class InventoryBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.TestWs.InventoryBoServiceReference.IInventoryBo>, Trooper.Testing.CustomShop.TestWs.InventoryBoServiceReference.IInventoryBo {
+    public partial class InventoryBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.Api.TestFromWs.InventoryBoServiceReference.IInventoryBo>, Trooper.Testing.CustomShop.Api.TestFromWs.InventoryBoServiceReference.IInventoryBo {
         
         public InventoryBoClient() {
         }

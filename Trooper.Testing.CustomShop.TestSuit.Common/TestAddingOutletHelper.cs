@@ -84,7 +84,8 @@
         {
             return new Identity
             {
-                Username = "ValidTestUser"
+                Username = "ValidTestUser",
+                Password = "1234"
             };
         }
 
@@ -92,7 +93,8 @@
         {
             return new Identity
             {
-                Username = "InvalidTestUser"
+                Username = "InvalidTestUser",
+                Password = "6543"
             };
         }
     }

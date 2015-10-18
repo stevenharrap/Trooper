@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference {
+namespace Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -150,8 +150,8 @@ namespace Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.ShopPoco.Outlet))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.ShopPoco.Outlet[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch))]
         Trooper.Thorny.Business.Response.SingleResponse<bool> IsAllowed(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Outlet> argument, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
@@ -180,8 +180,8 @@ namespace Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.ShopPoco.Outlet[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch))]
         object GetSession(Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
@@ -303,8 +303,8 @@ namespace Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.ShopPoco.Outlet[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Thorny.Business.Security.RequestArg<Trooper.Testing.ShopPoco.Outlet>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch))]
         Trooper.Thorny.Business.Response.SaveSomeResponse<Trooper.Testing.ShopPoco.Outlet> SaveSome(Trooper.Testing.ShopPoco.Outlet[] items, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
@@ -315,31 +315,31 @@ namespace Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletAddressSearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletAddressSearchResponse")]
-        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletAddressSearch(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity);
+        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletAddressSearch(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletAddressSearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletAddressSearchResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletAddressSearchAsync(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity);
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletAddressSearchAsync(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletNameSearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletNameSearchResponse")]
-        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletNameSearch(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity);
+        Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletNameSearch(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletNameSearch", ReplyAction="http://localhost:8000/Trooper.Testing.CustomShop.Api.Business.Operation.OutletBoN" +
             "s/IOutletBo/GetSomeByOutletNameSearchResponse")]
-        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletNameSearchAsync(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity);
+        System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletNameSearchAsync(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IOutletBoChannel : Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.IOutletBo, System.ServiceModel.IClientChannel {
+    public interface IOutletBoChannel : Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.IOutletBo, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class OutletBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.IOutletBo>, Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.IOutletBo {
+    public partial class OutletBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.IOutletBo>, Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.IOutletBo {
         
         public OutletBoClient() {
         }
@@ -464,19 +464,19 @@ namespace Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference {
             return base.Channel.SaveSomeAsync(items, identity);
         }
         
-        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletAddressSearch(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletAddressSearch(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetSomeByOutletAddressSearch(search, identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletAddressSearchAsync(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletAddressSearchAsync(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletAddressSearch search, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetSomeByOutletAddressSearchAsync(search, identity);
         }
         
-        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletNameSearch(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity) {
+        public Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet> GetSomeByOutletNameSearch(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetSomeByOutletNameSearch(search, identity);
         }
         
-        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletNameSearchAsync(Trooper.Testing.CustomShop.TestWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity) {
+        public System.Threading.Tasks.Task<Trooper.Thorny.Business.Response.ManyResponse<Trooper.Testing.ShopPoco.Outlet>> GetSomeByOutletNameSearchAsync(Trooper.Testing.CustomShop.Api.TestFromWs.OutletBoServiceReference.OutletNameSearch search, Trooper.Thorny.Business.Security.Identity identity) {
             return base.Channel.GetSomeByOutletNameSearchAsync(search, identity);
         }
     }

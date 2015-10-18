@@ -25,7 +25,11 @@ namespace Trooper.Interface.Thorny.Business.Security
 
         bool IsReadAction(string action);
 
-		bool IsAllowed(IRequestArg<TPoco> arg, IIdentity identity);
+        bool IsValid(IIdentity identity);
+
+        bool IsValid(IIdentity identity, IResponse response);
+
+        bool IsAllowed(IRequestArg<TPoco> arg, IIdentity identity);
 
         bool IsAllowed(IRequestArg<TPoco> arg, ICredential credential);
 

@@ -1,14 +1,14 @@
-﻿namespace Trooper.Testing.CustomShopTestWs.TestOutlet
+﻿namespace Trooper.Testing.CustomShop.Api.TestFromWs
 {
     using NUnit.Framework;
     using System;
     using System.Diagnostics;
     using System.IO;
-    using CustomShop.TestWs.OutletBoServiceReference;
     using Thorny.Business.TestSuit;
     using Thorny.Business.TestSuit.Adding;
-    using CustomShop.TestSuit.Common;
+    using TestSuit.Common;
     using ShopPoco;
+    using OutletBoServiceReference;
 
     [TestFixture]
     public class TestAddingOutlet : Adding<Outlet>
@@ -33,7 +33,7 @@
                 };
             }
         }
-
+                
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
@@ -44,15 +44,23 @@
 
             var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
             directory = directory.Parent.Parent.Parent;
-            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShopSrvCon", "bin", "Debug", "Trooper.Testing.CustomShopSrvCon.exe");
+            var path = Path.Combine(directory.FullName, "Trooper.Testing.CustomShop.Api.SrvCon", "bin", "Debug", "Trooper.Testing.CustomShop.Api.SrvCon.exe");
 
-            Assert.That(File.Exists(path), Is.True);
+            Assert.That(File.Exists(path), Is.True, $"The path: '{path}' does not exist.");
 
             startInfo.FileName = path;
             this.srvCon = Process.Start(startInfo);
 
-            var output = this.srvCon.StandardOutput.ReadLine();
-            Assert.IsTrue(output.Contains("ShopApp-started"));
+            var output = string.Empty;
+            var count = 0;
+
+            while (output != "ShopApp-started" && count < 100)
+            {
+                output = this.srvCon.StandardOutput.ReadLine();
+                count++;
+            }
+
+            Assert.That(count, Is.LessThan(100), "The ShopApp Console did not start.");
 
             this.client = new OutletBoClient();
             this.client.Open();

@@ -1,4 +1,4 @@
-﻿namespace Trooper.Testing.CustomShop.TestApi.TestOutlet
+﻿namespace Trooper.Testing.CustomShop.Api.TestSuit
 {
     using NUnit.Framework;
     using System;
@@ -7,8 +7,8 @@
     using Thorny.Configuration;
     using Autofac;
     using Thorny.Business.TestSuit.Adding;
-    using Api.Interface.Business.Operation;
-    using TestSuit.Common;
+    using Interface.Business.Operation;
+    using CustomShop.TestSuit.Common;
 
     [TestFixture]
     public class TestAddingOutlet : Adding<Outlet>

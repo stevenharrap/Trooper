@@ -7,8 +7,8 @@
     <ProjectGuid>{F3EC911F-48A7-4037-9CAD-D316AB81DD83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Trooper.Testing.CustomShop.TestWs</RootNamespace>
-    <AssemblyName>Trooper.Testing.CustomShop.TestWs</AssemblyName>
+    <RootNamespace>Trooper.Testing.CustomShop.Api.TestFromWs</RootNamespace>
+    <AssemblyName>Trooper.Testing.CustomShop.Api.TestFromWs</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

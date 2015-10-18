@@ -1,4 +1,4 @@
-﻿namespace Trooper.Testing.CustomShopSrvCon
+﻿namespace Trooper.Testing.CustomShop.Api.SrvCon
 {
     using System;
     using System.Linq;

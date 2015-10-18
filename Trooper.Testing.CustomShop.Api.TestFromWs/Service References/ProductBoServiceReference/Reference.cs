@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference {
+namespace Trooper.Testing.CustomShop.Api.TestFromWs.ProductBoServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -79,12 +79,12 @@ namespace Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IProductBoChannel : Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference.IProductBo, System.ServiceModel.IClientChannel {
+    public interface IProductBoChannel : Trooper.Testing.CustomShop.Api.TestFromWs.ProductBoServiceReference.IProductBo, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ProductBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference.IProductBo>, Trooper.Testing.CustomShop.TestWs.ProductBoServiceReference.IProductBo {
+    public partial class ProductBoClient : System.ServiceModel.ClientBase<Trooper.Testing.CustomShop.Api.TestFromWs.ProductBoServiceReference.IProductBo>, Trooper.Testing.CustomShop.Api.TestFromWs.ProductBoServiceReference.IProductBo {
         
         public ProductBoClient() {
         }

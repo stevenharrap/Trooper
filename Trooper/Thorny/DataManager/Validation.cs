@@ -13,28 +13,26 @@
 
         public bool IsValid(TEnt item)
         {
-            var result = this.Validate(item, new Response());
-
-            return result.Ok;
+            return this.Validate(item, new Response());
         }
 
         public bool IsValid(TEnt item, IResponse response)
         {
-            var result = this.Validate(item, response);
-
-            return result.Ok;
+            return  this.Validate(item, response);
         }
 
         public IResponse Validate(TEnt item)
         {
             var response = new Response();
-            var result = this.Validate(item, response);
+            this.Validate(item, response);
 
-            return result;
+            return response;
         }
 
-        public virtual IResponse Validate(TEnt item, IResponse response)
+        public virtual bool Validate(TEnt item, IResponse response)
         {
+            //Todo: implement default validation
+
             //var vr = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(item);
 
             //foreach (var v in vr)
@@ -42,7 +40,7 @@
             //    MessageUtility.Errors.Add(v.Message, InvalidPropertyCode, v.Target, v.Key, response);
             //}
 
-            return response;
+            return response.Ok;
         }
     }
 }

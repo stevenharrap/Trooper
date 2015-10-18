@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C2D4C80-D4F8-4E63-9FBC-9F7DEF5B1A7B}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1BC43D0A-D444-4941-83E8-673EC212AEAA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Trooper.Testing.CustomShop.TestApi</RootNamespace>
-    <AssemblyName>Trooper.Testing.CustomShop.TestApi</AssemblyName>
+    <RootNamespace>Trooper.Testing.CustomShop.Api.SrvCon</RootNamespace>
+    <AssemblyName>Trooper.Testing.CustomShop.Api.SrvCon</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -16,6 +16,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,12 +26,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -49,10 +54,6 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,6 +61,8 @@
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,15 +70,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RunShopService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestOutlet\TestAddingOutlet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Trooper.Testing.CustomShop.TestSuit.Common\Trooper.Testing.CustomShop.TestSuit.Common.csproj">
-      <Project>{34af3438-2cfe-49ef-a3eb-dde8f9bed6d4}</Project>
-      <Name>Trooper.Testing.CustomShop.TestSuit.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Trooper.Testing.CustomShopApi\Trooper.Testing.CustomShop.Api.csproj">
+    <None Include="App.config" />
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Trooper.Testing.CustomShop.Api\Trooper.Testing.CustomShop.Api.csproj">
       <Project>{8c65ebf3-0012-44d0-8447-a808706dacd4}</Project>
       <Name>Trooper.Testing.CustomShop.Api</Name>
     </ProjectReference>
@@ -91,10 +95,6 @@
       <Project>{27f46f59-c7c9-4e02-93b9-91f7041a7980}</Project>
       <Name>Trooper</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

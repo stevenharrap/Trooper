@@ -89,6 +89,27 @@ namespace Trooper.Thorny.Business.Security
                 || action == OperationAction.ExistsByKeyAction;
         }
 
+        public bool IsValid(IIdentity identity)
+        {
+            var response = new Response();
+
+            return this.IsValid(identity, response);
+        }
+
+        public virtual bool IsValid(IIdentity identity, IResponse response)
+        {
+            var valid = identity != null
+                && !string.IsNullOrWhiteSpace(identity.Username) 
+                && !string.IsNullOrWhiteSpace(identity.Password);
+
+            if (!valid)
+            {
+                MessageUtility.Errors.Add("The identity is invalid", BusinessCore.InvalidIdentityCode, response);
+            }
+
+            return valid;
+        }
+
         public bool IsAllowed(IRequestArg<TPoco> arg, IIdentity identity)
         {
             return this.IsAllowed(arg, this.ResolveCredential(identity));
