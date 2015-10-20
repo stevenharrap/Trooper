@@ -36,10 +36,8 @@ where
 		'HasItems_ItemIsValidExists_IdentityIsAllowed_IsAdded',
 		'HasItems_ItemIsValidExists_IdentityIsAllowed_OthersUnchanged',
 		'HasItems_ItemIsValidExists_IdentityIsAllowed_ReportsOk',
-		'HasItems_ItemIsValidNew_IdentityIsAllowed_NoChange',
-		'HasItems_ItemIsValidNew_IdentityIsAllowed_ReportsError',
-		'IsEmpty_ItemIsValidNew_IdentityIsAllowed_NoChange',
-		'IsEmpty_ItemIsValidNew_IdentityIsAllowed_ReportsError',
+		'HasItems_ItemIsValidNew_IdentityIsAllowed_ReportsErrorAndNoChange',
+		'IsEmpty_ItemIsValidNew_IdentityIsAllowed_ReportsErrorAndNoChange',
 		'IsEmpty_ItemIsValidNew_IdentityIsAllowed_OthersUnchanged'
 	)
 order by [Entry]
