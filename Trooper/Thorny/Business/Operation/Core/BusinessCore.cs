@@ -87,9 +87,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.AddAction };
 
             return new List<Action>
-            {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(item, response),
+            {                
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, item, response),
@@ -170,8 +168,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(items, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, items, response)
@@ -223,8 +219,6 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(argument, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response)
             };
@@ -277,8 +271,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var arg = new RequestArg<TPoco> { Action = OperationAction.GetSession };
 
             return new List<Action>
-            {
-                () => this.IsIdentityNull(identity, response),
+            {                
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, arg, identity, response)
             };
@@ -340,8 +333,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(item, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, arg, identity, response)
             }; 
@@ -402,8 +393,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(items, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, arg, identity, response)
             };
@@ -465,7 +454,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, arg, identity, response)
             };
@@ -522,11 +510,11 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         protected virtual IEnumerable<Action> GetSomeMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse response)
         {
+            //Todo: validate search method
             var argument = new RequestArg<TPoco> { Action = OperationAction.GetSomeAction, Search = search };
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
                 () => {
                     if (search == null)
                     {
@@ -603,8 +591,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(item, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, item, response)
@@ -666,8 +652,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(items, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, items, response)
@@ -718,8 +702,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(item, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, item, response)
@@ -781,8 +763,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(item, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, item, response),
@@ -857,8 +837,6 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(items, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => 
                 {
@@ -955,8 +933,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(item, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () => this.IsIdentityAllowed(businessPack, argument, identity, response),
                 () => this.IsDataValid(businessPack, item, response)
@@ -1028,8 +1004,6 @@ namespace Trooper.Thorny.Business.Operation.Core
             //Todo: prevent multiple lookups to see that the item exists
             return new List<Action>
             {
-                () => this.IsIdentityNull(identity, response),
-                () => this.IsDataNull(items, response),
                 () => this.IsIdentityValid(businessPack, identity, response),
                 () =>
                 {
@@ -1102,40 +1076,8 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
 
             return true; 
-        }
-
-        protected void IsIdentityNull(IIdentity identity, IResponse response)
-        {
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
-            }
-        }
-
-        protected void IsDataNull(TEnt item, IResponse response)
-        {
-            if (item == null)
-            {
-                MessageUtility.Errors.Add("The item(s) have not been supplied.", NullDataCode, response);
-            }
-        }
-
-        protected void IsDataNull(IRequestArg<TPoco> argument, IResponse response)
-        {
-            if (argument == null)
-            {
-                MessageUtility.Errors.Add("The item(s) have not been supplied.", NullDataCode, response);
-            }
-        }
-
-        protected void IsDataNull(IEnumerable<TEnt> items, IResponse response)
-        {
-            if (items == null || items.Any(i => i == null))
-            {
-                MessageUtility.Errors.Add("The item(s) have not been supplied.", NullDataCode, response);
-            }
-        }
-
+        }        
+        
         protected void IsIdentityValid(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse response)
         {
             businessPack.Authorization.IsValid(identity, response);

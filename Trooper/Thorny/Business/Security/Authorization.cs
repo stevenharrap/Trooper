@@ -98,9 +98,13 @@ namespace Trooper.Thorny.Business.Security
 
         public virtual bool IsValid(IIdentity identity, IResponse response)
         {
-            var valid = identity != null
-                && !string.IsNullOrWhiteSpace(identity.Username) 
-                && !string.IsNullOrWhiteSpace(identity.Password);
+            if (identity == null)
+            {
+                MessageUtility.Errors.Add("The identity is invalid", BusinessCore.NullIdentityCode, response);
+                return response.Ok;
+            }
+
+            var valid = !string.IsNullOrWhiteSpace(identity.Username) && !string.IsNullOrWhiteSpace(identity.Password);
 
             if (!valid)
             {

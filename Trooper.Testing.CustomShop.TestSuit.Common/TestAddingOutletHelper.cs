@@ -7,35 +7,35 @@
     using Thorny.Business.Security;
     using Thorny.Business.TestSuit;
     using System;
+    using System.Collections.Generic;
 
     public class TestAddingOutletHelper : TestSuitHelper<Outlet>
     {
         public TestAddingOutletHelper(IBusinessCreate<Outlet> boCreater, IBusinessRead<Outlet> boReader, IBusinessDelete<Outlet> boDeleter) 
             : base(boCreater, boReader, boDeleter) { }
 
-        public override Outlet MakeValidItem()
+        public override IEnumerable<Outlet> MakeValidItems()
         {
-            return new Outlet
+            return new List<Outlet>
             {
-                Address = "42 Trooper St",
-                Name = "TopCop"
+                new Outlet
+                {
+                    Address = "42 Trooper St",
+                    Name = "TopCop"
+                }
             };
         }
 
-        public override Outlet MakeInvalidItem()
+        public override IEnumerable<Outlet> MakeInvalidItems()
         {
-            return new Outlet
+            return new List<Outlet>
             {
-                Address = "42 Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St",
-                Name = "TopCop"
-            };
-        }
-               
-
-        public override IIdentity MakeInvalidIdentity()
-        {
-            return new Identity
-            {
+                new Outlet
+                {
+                    Address = "42 Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St",
+                    Name = "TopCop"
+                },
+                null
             };
         }
 
@@ -80,21 +80,36 @@
             destination.Name = source.Name;
         }
 
-        public override IIdentity MakeAllowedIdentity()
+        public override IEnumerable<IIdentity> MakeAllowedIdentities()
+        {
+            return new List<IIdentity>
+            {
+                new Identity
+                {
+                    Username = "ValidTestUser",
+                    Password = "1234"
+                }
+            };  
+        }
+
+        public override IEnumerable<IIdentity> MakeDeniedIdentities()
+        {
+            return new List<IIdentity>
+            {
+                new Identity
+                {
+                    Username = "InvalidTestUser",
+                    Password = "6543"
+                }
+            };
+        }
+
+        public override IIdentity GetAdminIdentity()
         {
             return new Identity
             {
                 Username = "ValidTestUser",
                 Password = "1234"
-            };
-        }
-
-        public override IIdentity MakeDeniedIdentity()
-        {
-            return new Identity
-            {
-                Username = "InvalidTestUser",
-                Password = "6543"
             };
         }
     }

@@ -6,6 +6,8 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
     using NUnit.Framework;
     using Trooper.Interface.Thorny.TestSuit.BusinessCoreTestSuit;
     using Operation.Core;
+    using System.Collections.Generic;
+    using Trooper.Interface.Thorny.Business.Security;
 
     public abstract class Adding<TPoco>
         where TPoco : class
@@ -13,1133 +15,408 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
 
         [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsAllowed_NoChange()
+        public virtual void HasItems_ItemIsInvalidExists_IdentityIsAllowed_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                        foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
+                            requirement.Helper.CopyIdentifiers(item2, invalidItem);
 
-                requirement.Creater.Add(item3, identity);
+                            var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
+                        }
             }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsAllowed_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsDenied_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsDenied_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsInvalid_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsInvalid_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsNull_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                requirement.Creater.Add(item3, null);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidExists_IdentityIsNull_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                requirement.Helper.CopyIdentifiers(item2, item3);
-
-                var response = requirement.Creater.Add(item3, null);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsAllowed_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();                
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsAllowed_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsDenied_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsDenied_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsInvalid_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsInvalid_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsNull_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsNull_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var item3 = requirement.Helper.MakeInvalidItem();
-
-                var response = requirement.Creater.Add(item3, null);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsAllowed_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                requirement.Creater.Add(null, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsAllowed_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                var response = requirement.Creater.Add(null, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsDenied_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                requirement.Creater.Add(null, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsDenied_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                var response = requirement.Creater.Add(null, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsInvalid_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                requirement.Creater.Add(null, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsInvalid_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                var response = requirement.Creater.Add(null, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsNull_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-
-                requirement.Creater.Add(null, null);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsNull_IdentityIsNull_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-
-                var response = requirement.Creater.Add(null, null);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsAllowed_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();                
-                var identity = requirement.Helper.MakeAllowedIdentity();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                requirement.Creater.Add(item2, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsAllowed_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                var response = requirement.Creater.Add(item2, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsDenied_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                requirement.Creater.Add(item2, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsDenied_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                var response = requirement.Creater.Add(item2, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsInvalid_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                requirement.Creater.Add(item2, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsInvalid_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                var response = requirement.Creater.Add(item2, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsNull_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                requirement.Creater.Add(item2, null);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsNull_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                requirement.Helper.ChangeNonIdentifiers(item2);
-
-                var response = requirement.Creater.Add(item2, null);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsAllowed_IsAdded()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-                var item3 = requirement.Helper.MakeValidItem();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                Assert.IsNotNull(response);
-                Assert.IsNotNull(response.Item);
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(new TPoco[] { item1, item2, response.Item }));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsAllowed_OthersUnchanged()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();               
-                var item3 = requirement.Helper.MakeValidItem();
-                requirement.Helper.ChangeNonIdentifiers(item3);
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                Assert.IsNotNull(response);
-                Assert.IsNotNull(response.Item);
-                Assert.That(requirement.Helper.AreEqual(item1, requirement.Helper.GetItem(item1)));
-                Assert.That(requirement.Helper.AreEqual(item2, requirement.Helper.GetItem(item2)));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsAllowed_ReportsOk()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-                var item3 = requirement.Helper.MakeValidItem();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                Assert.IsNotNull(response);
-                Assert.That(response.Ok);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsDenied_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();                
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsDenied_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsInvalid_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                requirement.Creater.Add(item3, identity);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsInvalid_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
-
-                var response = requirement.Creater.Add(item3, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsNull_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeValidItem();
-
-                requirement.Creater.Add(item3, null);
-
-                Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-            }
-        }
-
-        [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsNull_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item1 = requirement.Helper.AddItem();
-                var item2 = requirement.Helper.AddItem();
-                var state = requirement.Helper.GetAllItems();
-                var item3 = requirement.Helper.MakeValidItem();
-
-                var response = requirement.Creater.Add(item3, null);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode);
-            }
-        }
-
-        [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsAllowed_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-                
-                var item = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                requirement.Creater.Add(item, identity);
-
-                Assert.That(requirement.Helper.ItemCountIs(0));
-            }
-        }
-
-        [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsAllowed_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                var response = requirement.Creater.Add(item, identity);
-
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode);
-            }
-        }
-
-        [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsDenied_NoChange()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-
-                var item = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
-
-                requirement.Creater.Add(item, identity);
-
-                Assert.That(requirement.Helper.ItemCountIs(0));
-            }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsDenied_ReportsError()
+        public virtual void HasItems_ItemIsInvalidExists_IdentityIsDenied_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                        foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
+                            requirement.Helper.CopyIdentifiers(item2, invalidItem);
 
-                var response = requirement.Creater.Add(item, identity);
+                            var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                        }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsInvalid_NoChange()
+        public virtual void HasItems_ItemIsInvalidExists_IdentityIsInvalid_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                        foreach (var deniedIdentity in requirement.Helper.MakeInvalidIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
+                            requirement.Helper.CopyIdentifiers(item2, invalidItem);
 
-                requirement.Creater.Add(item, identity);
+                            var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
-                Assert.That(requirement.Helper.ItemCountIs(0));
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                        }
             }
-        }
-
+        }        
+        
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsInvalid_ReportsError()
+        public virtual void HasItems_ItemIsInvalidNew_IdentityIsAllowed_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                        foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeInvalidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
 
-                var response = requirement.Creater.Add(item, identity);
+                            var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
+                        }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsNull_NoChange()
-        {
+        public virtual void HasItems_ItemIsInvalidNew_IdentityIsDenied_NoChangeAndReportsError()
+        {            
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                        foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeInvalidItem();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
 
-                requirement.Creater.Add(item, null);
+                            var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
-                Assert.That(requirement.Helper.ItemCountIs(0));
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                        }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsNull_ReportsError()
+        public virtual void HasItems_ItemIsInvalidNew_IdentityIsInvalid_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                        foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeInvalidItem();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
 
-                var response = requirement.Creater.Add(item, null);
+                            var response = requirement.Creater.Add(invalidItem, invalidIdentity);
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                        }
             }
         }
 
         [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsAllowed_NoChange()
+        public virtual void HasItems_ItemIsValidExists_IdentityIsAllowed_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
-                
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                requirement.Creater.Add(null, identity);
-
-                Assert.That(requirement.Helper.ItemCountIs(0));
-            }
-        }
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var existingValidItem in requirement.Helper.MakeValidItems())
+                        foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-        [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsAllowed_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
-                
-                var identity = requirement.Helper.MakeAllowedIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
+                            requirement.Helper.CopyIdentifiers(item2, existingValidItem);
+                            requirement.Helper.ChangeNonIdentifiers(existingValidItem);
 
-                var response = requirement.Creater.Add(null, identity);
+                            var response = requirement.Creater.Add(existingValidItem, allowedIdentity);
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode));
+                        }
             }
-        }
+        }       
 
         [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsDenied_NoChange()
+        public virtual void HasItems_ItemIsValidExists_IdentityIsDenied_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var existingValidItem in requirement.Helper.MakeValidItems())
+                        foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var identity = requirement.Helper.MakeAllowedIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
+                            requirement.Helper.CopyIdentifiers(item2, existingValidItem);
+                            requirement.Helper.ChangeNonIdentifiers(existingValidItem);
 
-                var response = requirement.Creater.Add(null, identity);
+                            var response = requirement.Creater.Add(existingValidItem, deniedIdentity);
 
-                Assert.That(requirement.Helper.ItemCountIs(0));
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                        }
             }
         }
-
+        
         [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsDenied_ReportsError()
+        public virtual void HasItems_ItemIsValidExists_IdentityIsInvalid_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var existingValidItem in requirement.Helper.MakeValidItems())
+                        foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var identity = requirement.Helper.MakeDeniedIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
+                            requirement.Helper.CopyIdentifiers(item2, existingValidItem);
+                            requirement.Helper.ChangeNonIdentifiers(existingValidItem);
 
-                var response = requirement.Creater.Add(null, identity);
+                            var response = requirement.Creater.Add(existingValidItem, invalidIdentity);
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                        }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsInvalid_NoChange()
+        public virtual void HasItems_ItemIsValidNew_IdentityIsAllowed_IsAddedAndOthersUnchangedAndReportsOk()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var newValidItem in requirement.Helper.MakeValidItems())
+                        foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                var identity = requirement.Helper.MakeInvalidIdentity();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var preState = requirement.Helper.GetAllItems();                                                        
 
-                var response = requirement.Creater.Add(null, identity);
-
-                Assert.That(requirement.Helper.ItemCountIs(0));
-            }
-        }
+                            var response = requirement.Creater.Add(newValidItem, allowedIdentity);
 
-        [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsInvalid_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
+                            Assert.That(response, Is.Not.Null);
+                            Assert.That(response.Item, Is.Not.Null);
+                            Assert.That(requirement.Helper.ItemCountIs(3));
+                            Assert.That(requirement.Helper.NonIdentifersAreEqual(newValidItem, response.Item));
 
-                var identity = requirement.Helper.MakeInvalidIdentity();
+                            var postState = requirement.Helper.GetAllItems();
 
-                var response = requirement.Creater.Add(null, identity);
+                            Assert.That(postState.Any(i => requirement.Helper.AreEqual(i, item1)));
+                            Assert.That(postState.Any(i => requirement.Helper.AreEqual(i, item2)));
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
+                            Assert.That(response.Ok);
+                        }
             }
-        }
+        }                
 
         [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsNull_NoChange()
+        public virtual void HasItems_ItemIsValidNew_IdentityIsDenied_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
-
-                var response = requirement.Creater.Add(null, null);
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var newValidItem in requirement.Helper.MakeValidItems())
+                        foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-                Assert.That(requirement.Helper.ItemCountIs(0));
-            }
-        }
-
-        [Test]
-        public virtual void IsEmpty_ItemIsNull_IdentityIsNull_ReportsError()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
 
-                var response = requirement.Creater.Add(null, null);
+                            var response = requirement.Creater.Add(newValidItem, deniedIdentity);
 
-                requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                        }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsAllowed_IsAdded()
+        public virtual void HasItems_ItemIsValidNew_IdentityIsInvalid_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
-
-                var item = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
-
-                var response = requirement.Creater.Add(item, identity);
-                var items = requirement.Helper.GetAllItems();
-
-                Assert.IsNotNull(response);
-                Assert.IsNotNull(response.Item);
-                Assert.That(response.Ok);
-                Assert.That(items.Count == 1);
-                Assert.That(requirement.Helper.AreEqual(items.First(), response.Item));
-            }
-        }
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var newValidItem in requirement.Helper.MakeValidItems())
+                        foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                        {
+                            requirement.Helper.RemoveAllItems();
 
-        [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsAllowed_ReportsOk()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
+                            var item1 = requirement.Helper.AddItem(validItem);
+                            var item2 = requirement.Helper.AddItem(validItem);
+                            var state = requirement.Helper.GetAllItems();
 
-                var item = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeAllowedIdentity();
+                            var response = requirement.Creater.Add(newValidItem, invalidIdentity);
 
-                var response = requirement.Creater.Add(item, identity);
-                                
-                Assert.That(response.Ok);
+                            Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                        }
             }
-        }
-
+        }        
+        
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsDenied_NoChange()
+        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsAllowed_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
-            {
-                requirement.Helper.RemoveAllItems();
+            {                
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                    foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                    {
+                        requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
+                        var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
-                requirement.Creater.Add(item, identity);
-
-                Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
+                    }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsDenied_ReportsError()
+        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsDenied_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                    foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                    {
+                        requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeDeniedIdentity();
+                        var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
-                var response = requirement.Creater.Add(item, identity);
-
-                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                        Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                    }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsInvalid_NoChange()
+        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsInvalid_NoChangeAndReportsError()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                    foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                    {
+                        requirement.Helper.RemoveAllItems();
 
-                var item = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
+                        var response = requirement.Creater.Add(invalidItem, invalidIdentity);
 
-                requirement.Creater.Add(item, identity);
-
-                Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                    }
             }
         }
 
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsInvalid_ReportsError()
+        public virtual void IsEmpty_ItemIsValidNew_IdentityIsAllowed_ReportsOkAndIsAdded()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
-
-                var item = requirement.Helper.MakeValidItem();
-                var identity = requirement.Helper.MakeInvalidIdentity();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var validIdentity in requirement.Helper.MakeAllowedIdentities())
+                    {
+                        requirement.Helper.RemoveAllItems();
 
-                var response = requirement.Creater.Add(item, identity);
+                        var response = requirement.Creater.Add(validItem, validIdentity);
+                        var items = requirement.Helper.GetAllItems();
 
-                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-            }
+                        Assert.That(response, Is.Not.Null);
+                        Assert.That(response.Item, Is.Not.Null);
+                        Assert.That(response.Ok);
+                        Assert.That(items.Count, Is.EqualTo(1));
+                        Assert.That(requirement.Helper.AreEqual(items.First(), response.Item));
+                    }
+            }            
         }
 
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsNull_NoChange()
+        public virtual void IsEmpty_ItemIsValidNew_IdentityIsDenied_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
-
-                var item = requirement.Helper.MakeValidItem();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                    {
+                        requirement.Helper.RemoveAllItems();
 
-                requirement.Creater.Add(item, null);
+                        var response = requirement.Creater.Add(validItem, deniedIdentity);
 
-                Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                    }
             }
-        }
+        }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsValidNew_IdentityIsNull_ReportsError()
+        public virtual void IsEmpty_ItemIsValidNew_IdentityIsInvalid_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
-                requirement.Helper.RemoveAllItems();
-
-                var item = requirement.Helper.MakeValidItem();
+                foreach (var validItem in requirement.Helper.MakeValidItems())
+                    foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                    {
+                        requirement.Helper.RemoveAllItems();
 
-                var response = requirement.Creater.Add(item, null);
+                        var response = requirement.Creater.Add(validItem, invalidIdentity);
 
-                Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                        Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                    }
             }
         }
 
