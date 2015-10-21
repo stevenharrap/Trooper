@@ -87,7 +87,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
         
         [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsAllowed_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsInvalidNew_IdentityIsAllowed_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -110,7 +110,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
 
         [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsDenied_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsInvalidNew_IdentityIsDenied_ReportsErrorAndNoChange()
         {            
             using (var requirement = this.Requirement())
             {
@@ -133,7 +133,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
 
         [Test]
-        public virtual void HasItems_ItemIsInvalidNew_IdentityIsInvalid_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsInvalidNew_IdentityIsInvalid_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -156,7 +156,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }
 
         [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsAllowed_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsValidExists_IdentityIsAllowed_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -181,7 +181,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }       
 
         [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsDenied_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsValidExists_IdentityIsDenied_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -206,7 +206,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }
         
         [Test]
-        public virtual void HasItems_ItemIsValidExists_IdentityIsInvalid_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsValidExists_IdentityIsInvalid_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -231,7 +231,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
 
         [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsAllowed_IsAddedAndOthersUnchangedAndReportsOk()
+        public virtual void HasItems_ItemIsValidNew_IdentityIsAllowed_ReportsOkAndIsAddedAndOthersUnchanged()
         {
             using (var requirement = this.Requirement())
             {
@@ -263,7 +263,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }                
 
         [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsDenied_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsValidNew_IdentityIsDenied_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -286,7 +286,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
 
         [Test]
-        public virtual void HasItems_ItemIsValidNew_IdentityIsInvalid_NoChangeAndReportsError()
+        public virtual void HasItems_ItemIsValidNew_IdentityIsInvalid_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -309,7 +309,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
         
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsAllowed_NoChangeAndReportsError()
+        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsAllowed_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {                
@@ -327,7 +327,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsDenied_NoChangeAndReportsError()
+        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsDenied_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {
@@ -345,7 +345,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         }        
 
         [Test]
-        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsInvalid_NoChangeAndReportsError()
+        public virtual void IsEmpty_ItemIsInvalidNew_IdentityIsInvalid_ReportsErrorAndNoChange()
         {
             using (var requirement = this.Requirement())
             {

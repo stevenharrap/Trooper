@@ -255,45 +255,61 @@
         #endregion
 
         #region self testing
-
-        //Todo: make these tests work again
+        
         public void SelfTestHelper()
         {           
-            //this.NonIdentifiersAreDifferentWhenChanged();
-            //this.AnItemIsNewAndIdenticalWhenCopied();
-            //this.AnItemIsCopiedAndItsNonIdentifiersChanged();
-        }        
+            this.NonIdentifiersAreDifferentWhenChanged();
+            this.AnItemIsNewAndIdenticalWhenCopied();
+            this.AnItemIsCopiedAndItsNonIdentifiersChanged();
+        }
 
-        //public virtual void NonIdentifiersAreDifferentWhenChanged()
-        //{
-        //    var item1 = this.MakeValidItem();
-        //    var item2 = this.Copy(item1);
+        public virtual void NonIdentifiersAreDifferentWhenChanged()
+        {
+            foreach (var item1 in this.MakeValidItems())
+            {
+                var item2 = this.Copy(item1);
 
-        //    this.ChangeNonIdentifiers(item2);
+                this.ChangeNonIdentifiers(item2);
 
-        //    Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should not change the identifier properties");
-        //    Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
-        //}
+                Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should not change the identifier properties");
+                Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
+            }
+        }
 
-        //public virtual void AnItemIsNewAndIdenticalWhenCopied()
-        //{
-        //    var item1 = this.MakeValidItem();
-        //    var item2 = this.Copy(item1);
+        public virtual void AnItemIsNewAndIdenticalWhenCopied()
+        {
+            foreach (var item1 in this.MakeValidItems())
+            {
+                var item2 = this.Copy(item1);
 
-        //    Assert.That(this.AreEqual(item1, item2), "The Copy method did not correctly copy all the properties of the item.");
-        //    Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
-        //}               
+                Assert.That(this.AreEqual(item1, item2), "The Copy method did not correctly copy all the properties of the item.");
+                Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
+            }
+        }
 
-        //public virtual void AnItemIsCopiedAndItsNonIdentifiersChanged()
-        //{
-        //    var item1 = this.MakeValidItem();
-        //    var item2 = this.CopyNonIdentifiers(item1);
-        //    this.ChangeNonIdentifiers(item2);
+        public virtual void AnItemIsCopiedAndItsNonIdentifiersChanged()
+        {
+            foreach (var item1 in this.MakeValidItems())
+            {
+                var item2 = this.CopyNonIdentifiers(item1);
+                this.ChangeNonIdentifiers(item2);
 
-        //    Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
-        //    Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
-        //    Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
-        //}
+                Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
+                Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
+                Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
+            }
+        }
+
+        public virtual void InvalidItemsIncludNull()
+        {
+            var invalidItems = this.MakeInvalidIdentities();
+
+            Assert.That(invalidItems != null);
+            Assert.That(invalidItems.Count() > 1);
+            Assert.That(invalidItems.Count(i => i == null) > 0);
+        }
+
+
 
         #endregion
 
