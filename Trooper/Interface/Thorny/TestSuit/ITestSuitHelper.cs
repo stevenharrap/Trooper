@@ -14,7 +14,7 @@
         TPoco Copy(TPoco item);
 
         void Copy(TPoco source, TPoco destination);
-
+        
         TPoco CopyIdentifiers(TPoco item);
 
         void CopyIdentifiers(TPoco source, TPoco destination);
@@ -34,6 +34,8 @@
         IIdentity GetAdminIdentity();
 
         IList<TPoco> AddItems(List<TPoco> validItems);
+
+        IList<TPoco> AddValidItems();
 
         TPoco AddItem(TPoco validItem);
 

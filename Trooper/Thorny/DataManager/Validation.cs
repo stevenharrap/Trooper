@@ -56,7 +56,14 @@
             if (item == null)
             {
                 MessageUtility.Errors.Add("The item in null", BusinessCore.NullDataCode, response);
+                return response.Ok;
             }
+
+            var validationResult = this.Uow.GetValidationResult(item);
+
+            MessageUtility.Add(validationResult, response);
+
+            return response.Ok;
 
             //Todo: implement default validation
 
@@ -66,8 +73,6 @@
             //{
             //    MessageUtility.Errors.Add(v.Message, InvalidPropertyCode, v.Target, v.Key, response);
             //}
-
-            return response.Ok;
         }
 
         public virtual bool Validate(IEnumerable<TEnt> items, IResponse response)

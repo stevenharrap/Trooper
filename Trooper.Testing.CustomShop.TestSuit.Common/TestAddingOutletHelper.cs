@@ -22,6 +22,11 @@
                 {
                     Address = "42 Trooper St",
                     Name = "TopCop"
+                },
+                new Outlet
+                {
+                    Address = "38 Bouncer Rd",
+                    Name = "DogHouse"
                 }
             };
         }

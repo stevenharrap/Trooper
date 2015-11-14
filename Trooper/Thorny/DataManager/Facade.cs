@@ -226,7 +226,7 @@
             {
                 return result as TEnt;
             }
-
+            
             return null;
         }        
 

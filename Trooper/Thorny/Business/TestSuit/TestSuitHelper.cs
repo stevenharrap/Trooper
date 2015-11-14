@@ -32,7 +32,7 @@
         }
 
         #region item manipulation
-
+        
         public abstract IEnumerable<TPoco> MakeValidItems();
 
         public abstract IEnumerable<TPoco> MakeInvalidItems();        
@@ -44,7 +44,7 @@
 
         public abstract bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
 
-        public abstract bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);
+        public abstract bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);       
 
         public TPoco Copy(TPoco item)
         {
@@ -120,6 +120,13 @@
 
             return response.Items.ToList();
         }        
+
+        public IList<TPoco> AddValidItems()
+        {
+            var validItems = this.MakeValidItems();
+
+            return this.AddItems(validItems.ToList());
+        }
 
         public virtual TPoco AddItem(TPoco validItem)
         {
@@ -261,6 +268,12 @@
             this.NonIdentifiersAreDifferentWhenChanged();
             this.AnItemIsNewAndIdenticalWhenCopied();
             this.AnItemIsCopiedAndItsNonIdentifiersChanged();
+
+            this.ValidItemsAreOk();
+            this.InvalidItemsAreOk();
+            this.AllowedIdentitiesAreOk();
+            this.DeniedIdentitiesAreOk();
+            this.InvalidIdentitiesAreOk();
         }
 
         public virtual void NonIdentifiersAreDifferentWhenChanged()
@@ -300,13 +313,49 @@
             }
         }
 
-        public virtual void InvalidItemsIncludNull()
+        public void ValidItemsAreOk()
         {
-            var invalidItems = this.MakeInvalidIdentities();
+            var validItems = this.MakeValidItems();
 
-            Assert.That(invalidItems != null);
-            Assert.That(invalidItems.Count() > 1);
-            Assert.That(invalidItems.Count(i => i == null) > 0);
+            Assert.That(validItems, Is.Not.Null);
+            Assert.That(validItems.Count(), Is.GreaterThan(1));
+            Assert.That(validItems.Count(i => i == null), Is.EqualTo(0));
+        }
+
+        public void InvalidItemsAreOk()
+        {
+            var invalidItems = this.MakeInvalidItems();
+
+            Assert.That(invalidItems, Is.Not.Null);
+            Assert.That(invalidItems.Count(), Is.GreaterThan(1));
+            Assert.That(invalidItems.Count(i => i == null), Is.EqualTo(1));
+        }
+
+        public void AllowedIdentitiesAreOk()
+        {
+            var allowedIdentities = this.MakeAllowedIdentities();
+
+            Assert.That(allowedIdentities, Is.Not.Null);
+            Assert.That(allowedIdentities.Count(), Is.GreaterThan(0));
+            Assert.That(allowedIdentities.Count(i => i == null), Is.EqualTo(0));
+        }
+
+        public void DeniedIdentitiesAreOk()
+        {
+            var deniedIdentities = this.MakeDeniedIdentities();
+
+            Assert.That(deniedIdentities, Is.Not.Null);
+            Assert.That(deniedIdentities.Count(), Is.GreaterThan(0));
+            Assert.That(deniedIdentities.Count(i => i == null), Is.EqualTo(0));
+        }
+
+        public void InvalidIdentitiesAreOk()
+        {
+            var invalidIdentities = this.MakeInvalidIdentities();
+
+            Assert.That(invalidIdentities, Is.Not.Null);
+            Assert.That(invalidIdentities.Count(), Is.GreaterThan(1));
+            Assert.That(invalidIdentities.Count(i => i == null), Is.EqualTo(1));
         }
 
 

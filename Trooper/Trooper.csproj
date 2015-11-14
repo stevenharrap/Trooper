@@ -179,6 +179,7 @@
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessPack.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessPackEventArgs.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\Process.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Search.cs" />
     <Compile Include="Thorny\Business\Operation\Single\BusinessCreate.cs" />
     <Compile Include="Thorny\Business\Operation\Single\BusinessRequest.cs" />

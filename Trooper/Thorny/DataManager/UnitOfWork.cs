@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Data.Entity.Core;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Validation;
     using System.Linq;
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Thorny.Business.Operation.Core;
+    using Business.Response;
     using Trooper.Thorny.DataManager;
     using Trooper.Thorny.Interface.DataManager;
     using Trooper.Thorny.Utility;
@@ -44,6 +46,30 @@
 
             return repository;
         }
+                
+        public IResponse GetValidationResult<T>(T item)
+            where T : class
+        {
+            //ToDo: this sucks being here!! Validation should be in Validation class.
+
+            var dbContext = this._ctx as DbContext;
+
+            if (dbContext == null)
+            {
+                throw new Exception(string.Format("The generic type {0} could not be cast to {1}.", nameof(TContext), nameof(DbContext)));
+            }
+
+            var response = new Response();
+            var validationResult = dbContext.Entry(item).GetValidationResult();
+            
+            foreach (var error in validationResult.ValidationErrors)
+            {
+                MessageUtility.Errors.Add(error.ErrorMessage, BusinessCore.InvalidDataCode, error.PropertyName, response);
+            }
+
+            return response;
+        }
+
 
         public bool Save(IResponse response)
         {
