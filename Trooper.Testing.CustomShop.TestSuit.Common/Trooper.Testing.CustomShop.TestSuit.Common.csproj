@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestAddingOutletHelper.cs" />
+    <Compile Include="TestOutletHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Trooper.Testing.ShopPoco\Trooper.Testing.ShopPoco.csproj">

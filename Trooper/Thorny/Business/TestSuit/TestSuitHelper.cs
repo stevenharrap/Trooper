@@ -276,7 +276,7 @@
             this.InvalidIdentitiesAreOk();
         }
 
-        public virtual void NonIdentifiersAreDifferentWhenChanged()
+        public void NonIdentifiersAreDifferentWhenChanged()
         {
             foreach (var item1 in this.MakeValidItems())
             {
@@ -288,8 +288,8 @@
                 Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
             }
         }
-
-        public virtual void AnItemIsNewAndIdenticalWhenCopied()
+                
+        public void AnItemIsNewAndIdenticalWhenCopied()
         {
             foreach (var item1 in this.MakeValidItems())
             {
@@ -300,7 +300,7 @@
             }
         }
 
-        public virtual void AnItemIsCopiedAndItsNonIdentifiersChanged()
+        public void AnItemIsCopiedAndItsNonIdentifiersChanged()
         {
             foreach (var item1 in this.MakeValidItems())
             {

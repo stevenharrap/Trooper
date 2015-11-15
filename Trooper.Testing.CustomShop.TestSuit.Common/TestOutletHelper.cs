@@ -6,12 +6,11 @@
     using ShopPoco;
     using Thorny.Business.Security;
     using Thorny.Business.TestSuit;
-    using System;
     using System.Collections.Generic;
 
-    public class TestAddingOutletHelper : TestSuitHelper<Outlet>
+    public class TestOutletHelper : TestSuitHelper<Outlet>
     {
-        public TestAddingOutletHelper(IBusinessCreate<Outlet> boCreater, IBusinessRead<Outlet> boReader, IBusinessDelete<Outlet> boDeleter) 
+        public TestOutletHelper(IBusinessCreate<Outlet> boCreater, IBusinessRead<Outlet> boReader, IBusinessDelete<Outlet> boDeleter) 
             : base(boCreater, boReader, boDeleter) { }
 
         public override IEnumerable<Outlet> MakeValidItems()

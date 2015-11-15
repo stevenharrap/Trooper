@@ -11,7 +11,7 @@
     using CustomShop.TestSuit.Common;
 
     [TestFixture]
-    public class TestAddingOutlet : TestAdding<Outlet>
+    public class TestAddingSomeOutlet : TestAddingSome<Outlet>
     {
         private IContainer container;
         private AddingRequirment<Outlet> addingRequirement;

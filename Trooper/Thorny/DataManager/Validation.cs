@@ -10,6 +10,10 @@
     using Business.Operation.Core;
     using System.Linq;
 
+    /// <summary>
+    ///     Should read: http://blogs.msdn.com/b/adonet/archive/2010/12/15/ef-feature-ctp5-validation.aspx
+    /// </summary>
+    /// <typeparam name="TEnt"></typeparam>
     public class Validation<TEnt> : IValidation<TEnt> 
         where TEnt : class, new()
     {

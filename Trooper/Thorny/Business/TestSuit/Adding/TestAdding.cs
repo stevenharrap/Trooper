@@ -9,7 +9,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
     using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Security;
 
-    public abstract class Adding<TPoco>
+    public abstract class TestAdding<TPoco>
         where TPoco : class
     {
         public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
