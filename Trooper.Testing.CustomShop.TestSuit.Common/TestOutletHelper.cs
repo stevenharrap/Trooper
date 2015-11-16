@@ -13,34 +13,33 @@
         public TestOutletHelper(IBusinessCreate<Outlet> boCreater, IBusinessRead<Outlet> boReader, IBusinessDelete<Outlet> boDeleter) 
             : base(boCreater, boReader, boDeleter) { }
 
-        public override IEnumerable<Outlet> MakeValidItems()
+        public override IEnumerable<Outlet> MakeValidItems(int required)
         {
-            return new List<Outlet>
+            for (var i = 1; i <= required; i++)
             {
-                new Outlet
+                yield return new Outlet
                 {
-                    Address = "42 Trooper St",
-                    Name = "TopCop"
-                },
-                new Outlet
-                {
-                    Address = "38 Bouncer Rd",
-                    Name = "DogHouse"
-                }
-            };
+                    Address = $"{i} Trooper St",
+                    Name = $"TopCop-{i}"
+                };
+            }
         }
 
-        public override IEnumerable<Outlet> MakeInvalidItems()
+        public override IEnumerable<Outlet> MakeInvalidItems(int required, bool incNull)
         {
-            return new List<Outlet>
+            for (var i = 1; i <= required - (incNull ? 1 : 0); i++)
             {
-                new Outlet
+                yield return new Outlet
                 {
-                    Address = "42 Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St",
-                    Name = "TopCop"
-                },
-                null
-            };
+                    Address = $"{i} Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St",
+                    Name = $"TopCop-{i}"
+                };
+            }
+
+            if (incNull)
+            {
+                yield return null;
+            }            
         }
 
         public override bool IdentifiersAreEqual(Outlet itemA, Outlet itemB)

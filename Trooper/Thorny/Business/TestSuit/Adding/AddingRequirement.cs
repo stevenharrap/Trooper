@@ -11,12 +11,12 @@ using Trooper.Thorny.Configuration;
 namespace Trooper.Thorny.Business.TestSuit.Adding
 {
     public class AddingRequirment<TPoco> : BaseRequirment<TPoco>
-        where TPoco : class
+        where TPoco : class, new()
     {
         public IBusinessCreate<TPoco> Creater { get; }        
 
         public AddingRequirment(
-            ITestSuitHelper<TPoco> helper,
+            TestSuitHelper<TPoco> helper,
             IBusinessCreate<TPoco> creater)
             : base(helper)
         {

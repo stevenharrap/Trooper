@@ -11,14 +11,14 @@
     using OutletBoServiceReference;
 
     [TestFixture]
-    public class TestAddingOutlet : Adding<Outlet>
+    public class TestAddingOutlet : TestAdding<Outlet>
     {
         private Process srvCon;
         private OutletBoClient client;
         private WebServiceReaderMapper<Outlet> reader;
         private WebServiceCreaterMapper<Outlet> creater;
         private WebServiceDeleterMapper<Outlet> deleter;
-        private TestAddingOutletHelper helper;
+        private TestOutletHelper helper;
         private AddingRequirment<Outlet> addingRequirement;
 
         public override Func<AddingRequirment<Outlet>> Requirement
@@ -67,7 +67,7 @@
             this.reader = new WebServiceReaderMapper<Outlet>(this.client);
             this.creater = new WebServiceCreaterMapper<Outlet>(this.client);
             this.deleter = new WebServiceDeleterMapper<Outlet>(this.client);
-            this.helper = new TestAddingOutletHelper(creater, reader, deleter);
+            this.helper = new TestOutletHelper(creater, reader, deleter);
             this.addingRequirement = new AddingRequirment<Outlet>(helper, creater);
         }
 

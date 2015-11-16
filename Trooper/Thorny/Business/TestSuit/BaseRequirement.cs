@@ -11,16 +11,15 @@ using Trooper.Thorny.Configuration;
 namespace Trooper.Thorny.Business.TestSuit.Adding
 {
     public class BaseRequirment<TPoco> : IDisposable
-        where TPoco : class
+        where TPoco : class, new()
     {
-        public ITestSuitHelper<TPoco> Helper { get; private set; }
+        public TestSuitHelper<TPoco> Helper { get; private set; }
 
         public delegate void Disposing(BaseRequirment<TPoco> br);
 
         public event Disposing OnDisposing;       
 
-        public BaseRequirment(
-            ITestSuitHelper<TPoco> helper)
+        public BaseRequirment(TestSuitHelper<TPoco> helper)
         {
             this.Helper = helper;
         }        

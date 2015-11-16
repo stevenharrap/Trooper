@@ -10,7 +10,7 @@
     using Trooper.Interface.Thorny.TestSuit;
     using Security;
 
-    public abstract class TestSuitHelper<TPoco> : ITestSuitHelper<TPoco>
+    public abstract class TestSuitHelper<TPoco>
         where TPoco : class, new()
     {
         private int counter = 0;
@@ -31,11 +31,37 @@
             return this.counter++;
         }
 
-        #region item manipulation
-        
-        public abstract IEnumerable<TPoco> MakeValidItems();
+        public virtual int DefaultRequiredValidItems
+        {
+            get
+            {
+                return 2;
+            }
+        }
 
-        public abstract IEnumerable<TPoco> MakeInvalidItems();        
+        public virtual int DefaultRequiredInvalidItems
+        {
+            get
+            {
+                return 2;
+            }
+        }
+
+        #region item manipulation
+
+        public IEnumerable<TPoco> MakeValidItems()
+        {
+            return this.MakeValidItems(this.DefaultRequiredValidItems);
+        }
+
+        public abstract IEnumerable<TPoco> MakeValidItems(int required);
+
+        public IEnumerable<TPoco> MakeInvalidItems()
+        {
+            return this.MakeInvalidItems(this.DefaultRequiredInvalidItems, true);
+        }
+        
+        public abstract IEnumerable<TPoco> MakeInvalidItems(int required, bool incNull);
 
         public virtual bool AreEqual(TPoco itemA, TPoco itemB)
         {
@@ -123,7 +149,12 @@
 
         public IList<TPoco> AddValidItems()
         {
-            var validItems = this.MakeValidItems();
+            return this.AddValidItems(this.DefaultRequiredValidItems);
+        }
+
+        public IList<TPoco> AddValidItems(int required)
+        {
+            var validItems = this.MakeValidItems(required);
 
             return this.AddItems(validItems.ToList());
         }
