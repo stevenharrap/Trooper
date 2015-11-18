@@ -10,7 +10,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
     using Trooper.Interface.Thorny.Business.Security;
 
     public abstract class TestAdding<TPoco>
-        where TPoco : class
+        where TPoco : class, new()
     {
         public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
 
@@ -33,6 +33,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                     }
             }
@@ -58,6 +59,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
                     }
             }
@@ -82,6 +84,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, invalidIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidIdentity == null)
                         {
@@ -111,6 +114,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidItem == null)
                         {
@@ -140,6 +144,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));                        
                     }
             }
@@ -160,7 +165,8 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         var response = requirement.Creater.Add(invalidItem, invalidIdentity);
 
-                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));                        
+                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidIdentity == null)
                         {
@@ -194,6 +200,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(existingValidItem, allowedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode));
                     }
             }
@@ -219,6 +226,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(existingValidItem, deniedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
                     }
             }
@@ -244,6 +252,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(existingValidItem, invalidIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidIdentity == null)
                         {
@@ -310,6 +319,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(newValidItem, deniedIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
                     }
             }
@@ -331,6 +341,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(newValidItem, invalidIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidIdentity == null)
                         {
@@ -357,7 +368,8 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
                         Assert.That(requirement.Helper.ItemCountIs(0));
-                        
+                        Assert.That(response.Item, Is.Null);
+
                         if (invalidItem == null)
                         {
                             Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
@@ -383,6 +395,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, deniedIdentity);
 
                         Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
                     }
             }
@@ -401,6 +414,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(invalidItem, invalidIdentity);
 
                         Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidIdentity == null)
                         {
@@ -449,6 +463,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(validItem, deniedIdentity);
 
                         Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(response.Item, Is.Null);
                         Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
                     }
             }
@@ -467,6 +482,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var response = requirement.Creater.Add(validItem, invalidIdentity);
 
                         Assert.That(requirement.Helper.ItemCountIs(0));
+                        Assert.That(response.Item, Is.Null);
 
                         if (invalidIdentity == null)
                         {

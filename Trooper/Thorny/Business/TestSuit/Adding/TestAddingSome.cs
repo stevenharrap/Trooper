@@ -6,7 +6,7 @@
     using Operation.Core;
 
     public abstract class TestAddingSome<TPoco>
-        where TPoco : class
+        where TPoco : class, new()
     {
         public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
 
