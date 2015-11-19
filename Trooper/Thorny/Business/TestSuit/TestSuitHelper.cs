@@ -60,7 +60,12 @@
         {
             return this.MakeInvalidItems(this.DefaultRequiredInvalidItems, true);
         }
-        
+
+        public IEnumerable<TPoco> MakeInvalidItems(bool incNull)
+        {
+            return this.MakeInvalidItems(this.DefaultRequiredInvalidItems, incNull);
+        }
+
         public abstract IEnumerable<TPoco> MakeInvalidItems(int required, bool incNull);
 
         public virtual bool AreEqual(TPoco itemA, TPoco itemB)

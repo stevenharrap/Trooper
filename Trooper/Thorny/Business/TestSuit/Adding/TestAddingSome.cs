@@ -4,6 +4,7 @@
     using System;
     using System.Linq;
     using Operation.Core;
+    using System.Collections.Generic;
 
     public abstract class TestAddingSome<TPoco>
         where TPoco : class, new()
@@ -426,22 +427,121 @@
         }
 
         [Test]
-        [Ignore("Todo")]
         public virtual void HasItems_ItemsAllValidSomeExist_IdentityIsAllowed_ReportsErrorAndNoChange()
         {
+            using (var requirement = this.Requirement())
+            {
+                foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
+
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
+                    var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
+
+                    firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
+                    var state = requirement.Helper.GetAllItems();
+                    var toAdd = new List<TPoco>(firstHalf);
+                    toAdd.AddRange(secondHalf);
+                    
+                    var response = requirement.Creater.AddSome(toAdd, allowedIdentity);
+
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
+                    Assert.That(response.Items, Is.Null);
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.AddFailedCode));
+                }
+            }
         }
 
         [Test]
-        [Ignore("Todo")]
-        public virtual void HasItems_ItemsAllValidSomeExist_IdentityIsDenied_ReportsErrorAndNoChange() {  }
+        public virtual void HasItems_ItemsAllValidSomeExist_IdentityIsDenied_ReportsErrorAndNoChange()
+        {
+            using (var requirement = this.Requirement())
+            {
+                foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
+
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
+                    var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
+
+                    firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
+                    var state = requirement.Helper.GetAllItems();
+                    var toAdd = new List<TPoco>(firstHalf);
+                    toAdd.AddRange(secondHalf);
+
+                    var response = requirement.Creater.AddSome(toAdd, deniedIdentity);
+
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
+                    Assert.That(response.Items, Is.Null);
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                }
+            }
+        }
 
         [Test]
-        [Ignore("Todo")]
-        public virtual void HasItems_ItemsAllValidSomeExist_IdentityIsInvalid_ReportsErrorAndNoChange() {  }
+        public virtual void HasItems_ItemsAllValidSomeExist_IdentityIsInvalid_ReportsErrorAndNoChange()
+        {
+            using (var requirement = this.Requirement())
+            {
+                foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
+
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
+                    var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
+
+                    firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
+                    var state = requirement.Helper.GetAllItems();
+                    var toAdd = new List<TPoco>(firstHalf);
+                    toAdd.AddRange(secondHalf);
+
+                    var response = requirement.Creater.AddSome(toAdd, invalidIdentity);
+
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
+                    Assert.That(response.Items, Is.Null);
+
+                    if (invalidIdentity == null)
+                    {
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
+                    }
+                    else
+                    {
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                    }
+                }
+            }
+        }
 
         [Test]
-        [Ignore("Todo")]
-        public virtual void HasItems_ItemsSomeValidAllExist_IdentityIsAllowed_ReportsErrorAndNoChange() {  }
+        public virtual void HasItems_ItemsSomeValidAllExist_IdentityIsAllowed_ReportsErrorAndNoChange()
+        {
+            using (var requirement = this.Requirement())
+            {
+                foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
+
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false).ToList();
+                    var items = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredValidItems + invalidItems.Count());
+                    var state = requirement.Helper.GetAllItems();
+
+                    for (var i = 0; i <items.Count(); i++)
+                    {
+                        requirement.Helper.CopyNonIdentifiers(invalidItems[i], items[i]);
+                    }                    
+
+                    var response = requirement.Creater.AddSome(items, allowedIdentity);
+
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
+                    Assert.That(response.Items, Is.Null);                    
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
+                }
+            }
+        }
+
 
         [Test]
         [Ignore("Todo")]
