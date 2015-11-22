@@ -25,21 +25,17 @@
             }
         }
 
-        public override IEnumerable<Outlet> MakeInvalidItems(int required, bool incNull)
+        public override void MakeInvalidItems(List<Outlet> validItems)
         {
-            for (var i = 1; i <= required - (incNull ? 1 : 0); i++)
-            {
-                yield return new Outlet
-                {
-                    Address = $"{i} Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St",
-                    Name = $"TopCop-{i}"
-                };
-            }
+            var i = 0;
 
-            if (incNull)
+            foreach (var item in validItems)
             {
-                yield return null;
-            }            
+                item.Address = $"{i} Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St";
+                item.Name = $"TopCop-{i}";
+
+                i++;
+            }
         }
 
         public override bool IdentifiersAreEqual(Outlet itemA, Outlet itemB)
@@ -50,7 +46,7 @@
             return itemA.OutletId == itemB.OutletId;
         }
 
-        public override bool NonIdentifersAreEqual(Outlet itemA, Outlet itemB)
+        public override bool NonIdentifiersAreEqual(Outlet itemA, Outlet itemB)
         {
             Assert.IsNotNull(itemA);
             Assert.IsNotNull(itemB);

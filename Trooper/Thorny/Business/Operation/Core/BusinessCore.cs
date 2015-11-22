@@ -50,7 +50,7 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
-                var responseEnt = this.Add(bp, bp.Facade.ToEnt(item), identity);
+                var responseEnt = this.Add(bp, item == null ? null : bp.Facade.ToEnt(item), identity);
 
                 if (!responseEnt.Ok || !bp.Uow.Save(responseEnt))
                 {
@@ -59,7 +59,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var responsePoco = new AddResponse<TPoco>(responseEnt)
                 {
-                    Item = bp.Facade.ToPoco(responseEnt.Item)
+                    Item = responseEnt.Item == null ? null : bp.Facade.ToPoco(responseEnt.Item)
                 };                
 
                 return responsePoco;
@@ -139,7 +139,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 var responsePoco = new AddSomeResponse<TPoco>(responseEnt)
                 {
-                    Items = bp.Facade.ToPocos(responseEnt.Items)
+                    Items = responseEnt.Items == null ? null : bp.Facade.ToPocos(responseEnt.Items)
                 };
 
                 return responsePoco;
@@ -170,7 +170,17 @@ namespace Trooper.Thorny.Business.Operation.Core
             {
                 new Process(nameof(IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
                 new Process(nameof(IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(IsDataValid), () => this.IsDataValid(businessPack, items, response))
+                new Process(nameof(IsDataValid), () => this.IsDataValid(businessPack, items, response)),
+                new Process(nameof(businessPack.Facade.Exists), () =>
+                {
+                    if (items.Any(item => businessPack.Facade.Exists(item)))
+                    {
+                        var errorMessage = string.Format("The item ({0}) already exists.", typeof(TEnt));
+
+                        MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
+                    }
+                }),
+                
             };
         }
 

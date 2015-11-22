@@ -1,16 +1,14 @@
 ﻿namespace Trooper.Thorny.Interface
 {
-    //using AutoMapper;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Core;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Reflection;
-    using Trooper.Thorny.Business.Operation.Core;
-    using Trooper.Thorny.Interface.DataManager;
+    using Business.Operation.Core;
+    using DataManager;
     using Trooper.Utility;    
 
     public class Facade<TEnt, TPoco> : IFacade<TEnt, TPoco> 
@@ -22,9 +20,6 @@
 
         static Facade()
         {
-            //Mapper.CreateMap<TPoco, TEnt>().IgnorePropertiesOfType(typeof(ICollection));
-            //Mapper.CreateMap<TEnt, TPoco>();
-
             var result = new TPoco();
 
             var mappings = from pocoProp in typeof(TPoco).GetProperties()
@@ -72,7 +67,15 @@
 			    return this.uow;
 		    }
 
-		    set { this.uow = value; }
+		    set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.uow = value;
+            }
 	    }
 
 	    public PropertyInfo[] KeyProperties
@@ -176,7 +179,7 @@
         {
             if (search == null)
             {
-                return false;
+                throw new ArgumentNullException(nameof(search));
             }
 
             var searchType = search.GetType();
@@ -186,6 +189,11 @@
 
         public virtual IEnumerable<TEnt> GetSome(ISearch search)
         {
+            if (search == null)
+            {
+                throw new ArgumentNullException(nameof(search));
+            }
+
             if (!this.IsSearchAllowed(search))
             {
                 return new List<TEnt>();
@@ -196,6 +204,16 @@
 
         public IEnumerable<TEnt> Limit(IEnumerable<TEnt> items, ISearch search)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            if (search == null)
+            {
+                throw new ArgumentNullException(nameof(search));
+            }
+
             if (search.SkipItems > 0)
             {
                 items = items.Skip(search.SkipItems);
@@ -206,6 +224,11 @@
 
         public virtual TEnt GetByKey(TEnt item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             var oc = this.ObjectContextAdapter.ObjectContext;
             var os = oc.CreateObjectSet<TEnt>();
             var es = os.EntitySet;
@@ -232,6 +255,11 @@
 
         public virtual IEnumerable<TEnt> GetSomeByKey(IEnumerable<TEnt> items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
             foreach (var item in items)
             {
                 yield return this.GetByKey(item);
@@ -240,17 +268,22 @@
 
         public bool Exists(TEnt item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             return this.GetByKey(item) != null;
         }
         
 	    public bool IsDefault(TEnt item)
 	    {
-			if (item == null)
-			{
-				return true;
-			}
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
 
-			foreach (var p in this.KeyProperties)
+            foreach (var p in this.KeyProperties)
 			{
 				var defaultValue = Activator.CreateInstance(p.PropertyType);
 
@@ -265,11 +298,16 @@
 
         public bool AreEqual(TEnt item1, TEnt item2)
         {
-            if (item1 == null || item2 == null)
+            if (item1 == null)
             {
-                return false;
+                throw new ArgumentNullException(nameof(item1));
             }
 
+            if (item2 == null)
+            {
+                throw new ArgumentNullException(nameof(item2));
+            }
+            
             foreach (var p in this.KeyProperties)
             {
                 if (!p.GetValue(item1).Equals(p.GetValue(item2)))
@@ -283,11 +321,21 @@
 
         public virtual TEnt Add(TEnt item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             return this.Repository.DbSet.Add(item);
         }
 
         public IList<TEnt> AddSome(IEnumerable<TEnt> items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
             var result = from i in items
                          select this.Add(i);
 
@@ -296,7 +344,12 @@
 
         public virtual bool Delete(TEnt item)
         {
-	        if (this.IsDefault(item))
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            if (this.IsDefault(item))
 	        {
 		        return false;
 	        }
@@ -317,7 +370,12 @@
 
         public bool DeleteSome(IEnumerable<TEnt> items)
         {
-	        var result = true;
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            var result = true;
 
             foreach (var item in items)
             {
@@ -332,6 +390,11 @@
 
         public virtual TEnt Update(TEnt item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             var local = this.FindLocal(item);
 
             if (local == null)
@@ -357,7 +420,10 @@
 
         public TPoco ToPoco(TEnt item)
         {
-            if (item == null) { return null; }
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
 
             var result = new TPoco();
 
@@ -371,6 +437,11 @@
 
         public IEnumerable<TPoco> ToPocos(IEnumerable<TEnt> items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
             foreach (var item in items ?? Enumerable.Empty<TEnt>())
             {
                 yield return this.ToPoco(item);
@@ -379,7 +450,10 @@
 
         public TEnt ToEnt(TPoco item)
         {
-            if (item == null) { return null; }
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
 
             var result = new TEnt();
 
@@ -393,6 +467,11 @@
 
         public IEnumerable<TEnt> ToEnts(IEnumerable<TPoco> items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
             foreach (var item in items ?? Enumerable.Empty<TPoco>())
             {
                 yield return this.ToEnt(item);
@@ -405,6 +484,11 @@
 
         private TEnt FindLocal(TEnt item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             return this.Repository.DbContext.Set<TEnt>().Local.FirstOrDefault(i => this.AreEqual(i, item));
         }
 
@@ -412,6 +496,16 @@
         {
             public Mapping(MethodInfo getter, MethodInfo setter)
             {
+                if (getter == null)
+                {
+                    throw new ArgumentNullException(nameof(getter));
+                }
+
+                if (setter == null)
+                {
+                    throw new ArgumentNullException(nameof(setter));
+                }
+
                 this.GetterMethod = getter;
                 this.SetterMethod = setter;
             }

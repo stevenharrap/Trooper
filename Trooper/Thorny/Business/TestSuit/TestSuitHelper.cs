@@ -47,7 +47,22 @@
             }
         }
 
+        public int DefaultRequiredItems
+        {
+            get
+            {
+                if (this.DefaultRequiredInvalidItems >= this.DefaultRequiredValidItems)
+                {
+                    return this.DefaultRequiredInvalidItems;
+                }
+
+                return this.DefaultRequiredValidItems;
+            }
+        }
+
         #region item manipulation
+
+        #region valid item generation
 
         public IEnumerable<TPoco> MakeValidItems()
         {
@@ -55,6 +70,10 @@
         }
 
         public abstract IEnumerable<TPoco> MakeValidItems(int required);
+
+        #endregion
+
+        #region invalid item generation
 
         public IEnumerable<TPoco> MakeInvalidItems()
         {
@@ -66,16 +85,163 @@
             return this.MakeInvalidItems(this.DefaultRequiredInvalidItems, incNull);
         }
 
-        public abstract IEnumerable<TPoco> MakeInvalidItems(int required, bool incNull);
+        public IEnumerable<TPoco> MakeInvalidItems(int required, bool incNull)
+        {
+            var items = this.MakeValidItems(required - (incNull ? 1 : 0)).ToList();
+
+            this.MakeInvalidItems(items);            
+
+            if (!incNull)
+            {
+                return items;
+            }
+
+            var withNull = items.ToList();
+            withNull.Add(null);
+
+            return withNull;
+        }
+
+        public void MakeInvalidItem(TPoco validItem)
+        {
+            this.MakeInvalidItems(new List<TPoco> { validItem });
+        }
+
+        public abstract void MakeInvalidItems(List<TPoco> validItems);
+
+        #endregion
 
         public virtual bool AreEqual(TPoco itemA, TPoco itemB)
         {
-            return this.IdentifiersAreEqual(itemA, itemB) && this.NonIdentifersAreEqual(itemA, itemB);
+            return this.IdentifiersAreEqual(itemA, itemB) && this.NonIdentifiersAreEqual(itemA, itemB);
+        }
+
+        public bool AreEqual(IEnumerable<TPoco> itemsA, IEnumerable<TPoco> itemsB)
+        {
+            if (itemsA == null)
+            {
+                throw new ArgumentNullException(nameof(itemsA));
+            }
+
+            if (itemsB == null)
+            {
+                throw new ArgumentNullException(nameof(itemsB));
+            }
+
+            if (itemsA.Count() != itemsB.Count())
+            {
+                return false;
+            }
+
+            return itemsA.All(a => itemsB.Any(b => this.AreEqual(a, b)))
+                && itemsB.All(b => itemsA.Any(a => this.AreEqual(a, b)));
+        }
+
+        public bool Contains(IEnumerable<TPoco> superSet, IEnumerable<TPoco> subSet)
+        {
+            if (superSet == null)
+            {
+                throw new ArgumentNullException(nameof(superSet));
+            }
+
+            if (subSet == null)
+            {
+                throw new ArgumentNullException(nameof(subSet));
+            }
+
+            if (subSet.Count() > subSet.Count())
+            {
+                return false;
+            }
+
+            return subSet.All(a => superSet.Any(b => this.AreEqual(a, b)));
         }
 
         public abstract bool IdentifiersAreEqual(TPoco itemA, TPoco itemB);
 
-        public abstract bool NonIdentifersAreEqual(TPoco itemA, TPoco itemB);       
+        public bool IdentifiersAreEqual(IEnumerable<TPoco> itemsA, IEnumerable<TPoco> itemsB)
+        {
+            if (itemsA == null)
+            {
+                throw new ArgumentNullException(nameof(itemsA));
+            }
+
+            if (itemsB == null)
+            {
+                throw new ArgumentNullException(nameof(itemsB));
+            }
+
+            if (itemsA.Count() != itemsB.Count())
+            {
+                return false;
+            }
+
+            return itemsA.All(a => itemsB.Any(b => this.IdentifiersAreEqual(a, b)))
+                && itemsB.All(b => itemsA.Any(a => this.IdentifiersAreEqual(a, b)));
+        }
+
+        public bool ContainsIdentifiers(IEnumerable<TPoco> superSet, IEnumerable<TPoco> subSet)
+        {
+            if (superSet == null)
+            {
+                throw new ArgumentNullException(nameof(superSet));
+            }
+
+            if (subSet == null)
+            {
+                throw new ArgumentNullException(nameof(subSet));
+            }
+
+            if (subSet.Count() > subSet.Count())
+            {
+                return false;
+            }
+
+            return subSet.All(a => superSet.Any(b => this.IdentifiersAreEqual(a, b)));
+        }
+
+        public abstract bool NonIdentifiersAreEqual(TPoco itemA, TPoco itemB);
+
+        public bool NonIdentifiersAreEqual(IEnumerable<TPoco> itemsA, IEnumerable<TPoco> itemsB)
+        {
+            if (itemsA == null)
+            {
+                throw new ArgumentNullException(nameof(itemsA));
+            }
+
+            if (itemsB == null)
+            {
+                throw new ArgumentNullException(nameof(itemsB));
+            }
+
+            if (itemsA.Count() != itemsB.Count())
+            {
+                return false;
+            }
+
+            return itemsA.All(a => itemsB.Any(b => this.NonIdentifiersAreEqual(a, b))) 
+                && itemsB.All(b => itemsA.Any(a => this.NonIdentifiersAreEqual(a, b)));
+        }
+
+        public bool ContainsNonIdentifiers(IEnumerable<TPoco> superSet, IEnumerable<TPoco> subSet)
+        {
+            if (superSet == null)
+            {
+                throw new ArgumentNullException(nameof(superSet));
+            }
+
+            if (subSet == null)
+            {
+                throw new ArgumentNullException(nameof(subSet));
+            }
+
+            if (subSet.Count() > subSet.Count())
+            {
+                return false;
+            }
+
+            return subSet.All(a => superSet.Any(b => this.NonIdentifiersAreEqual(a, b)));
+        }
 
         public TPoco Copy(TPoco item)
         {
@@ -85,6 +251,19 @@
             this.CopyNonIdentifiers(item, result);
 
             return result;
+        }
+
+        public IEnumerable<TPoco> Copy(IEnumerable<TPoco> items)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            foreach (var item in items)
+            {
+                yield return this.Copy(item);
+            }
         }
 
         public void Copy(TPoco source, TPoco destination)
@@ -171,7 +350,7 @@
 
             Assert.That(this.ResponseIsOk(response));
             Assert.IsNotNull(response.Item);
-            Assert.That(this.NonIdentifersAreEqual(validItem, response.Item));
+            Assert.That(this.NonIdentifiersAreEqual(validItem, response.Item));
             Assert.That(!this.IdentifiersAreEqual(validItem, response.Item));
             Assert.That(this.ItemExists(response.Item));
 
@@ -224,11 +403,16 @@
             return allResponse.Items;
         }        
 
-        public virtual bool ItemCountIs(int count)
+        public bool ItemCountIs(int count)
         {
             return this.GetAllItems().Count() == count;
         }
-        
+
+        public bool HasNoItems()
+        {
+            return this.ItemCountIs(0);
+        }
+
         public virtual bool StoredItemsAreEqualTo(IList<TPoco> items)
         {
             var storedItems = this.GetAllItems();
@@ -321,7 +505,7 @@
                 this.ChangeNonIdentifiers(item2);
 
                 Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should not change the identifier properties");
-                Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
+                Assert.That(!this.NonIdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
             }
         }
                 
@@ -344,7 +528,7 @@
                 this.ChangeNonIdentifiers(item2);
 
                 Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
-                Assert.That(!this.NonIdentifersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
+                Assert.That(!this.NonIdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
                 Assert.That(!Object.ReferenceEquals(item1, item2), "The Copy method should return a new instance not the provided instance.");
             }
         }
