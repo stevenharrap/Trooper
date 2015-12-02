@@ -198,7 +198,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var state = requirement.Helper.GetAllItems();
 
                         requirement.Helper.CopyIdentifiers(item, existingValidItem);
-                        requirement.Helper.ChangeNonIdentifiers(existingValidItem);
+                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems, true);
 
                         var response = requirement.Creater.Add(existingValidItem, allowedIdentity);
 
@@ -224,7 +224,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var state = requirement.Helper.GetAllItems();
 
                         requirement.Helper.CopyIdentifiers(item, existingValidItem);
-                        requirement.Helper.ChangeNonIdentifiers(existingValidItem);
+                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems, true);
 
                         var response = requirement.Creater.Add(existingValidItem, deniedIdentity);
 
@@ -250,7 +250,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var state = requirement.Helper.GetAllItems();
 
                         requirement.Helper.CopyIdentifiers(item, existingValidItem);
-                        requirement.Helper.ChangeNonIdentifiers(existingValidItem);
+                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems, true);
 
                         var response = requirement.Creater.Add(existingValidItem, invalidIdentity);
 

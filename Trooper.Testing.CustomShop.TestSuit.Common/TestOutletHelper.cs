@@ -7,6 +7,7 @@
     using Thorny.Business.Security;
     using Thorny.Business.TestSuit;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class TestOutletHelper : TestSuitHelper<Outlet>
     {
@@ -54,12 +55,12 @@
             return itemA.Name == itemB.Name && itemA.Address == itemB.Address;
         }
 
-        public override void ChangeNonIdentifiers(Outlet item)
+        public override void ChangeNonIdentifiers(Outlet item, IEnumerable<Outlet> otherItems)
         {
             Assert.IsNotNull(item);
 
-            item.Address = item.Address + "1";
-            item.Name = item.Name + "1";
+            item.Address = this.ChangeProperty(item.Address, otherItems.Select(i => i.Address), "{0} Thingo St");
+            item.Name = this.ChangeProperty(item.Name, otherItems.Select(i => i.Name), "Stuff{0}");
         }        
 
         public override void CopyIdentifiers(Outlet source, Outlet destination)

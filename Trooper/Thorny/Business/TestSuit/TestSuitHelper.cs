@@ -111,6 +111,12 @@
 
         #endregion
 
+        /// <summary>
+        ///     Idenitifers and non-identifiers should be equal
+        /// </summary>
+        /// <param name="itemA"></param>
+        /// <param name="itemB"></param>
+        /// <returns></returns>
         public virtual bool AreEqual(TPoco itemA, TPoco itemB)
         {
             return this.IdentifiersAreEqual(itemA, itemB) && this.NonIdentifiersAreEqual(itemA, itemB);
@@ -292,7 +298,42 @@
             return result;
         }
 
-        public abstract void ChangeNonIdentifiers(TPoco item);
+        /// <summary>
+        ///     item must be changed so that its non-identifers fields do not match any of the same fields on otherItems
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="otherItems"></param>
+        public abstract void ChangeNonIdentifiers(TPoco item, IEnumerable<TPoco> otherItems);
+
+        public void ChangeNonIdentifiers(TPoco item, IEnumerable<TPoco> otherItems, bool filterIdentityMatch)
+        {
+            this.ChangeNonIdentifiers(item, filterIdentityMatch ? otherItems.Where(i => this.IdentifiersAreEqual(i, item)) : otherItems);
+        }
+
+        public void ChangeNonIdentifiers(IEnumerable<TPoco> items, IEnumerable<TPoco> otherItems)
+        {
+            if (items == null) throw new ArgumentNullException(nameof(items));
+            if (otherItems == null) throw new ArgumentNullException(nameof(otherItems));
+
+            if (items.Any(i => otherItems.Any(oi => ReferenceEquals(oi, oi))))
+            {
+                throw new Exception($"No element in {nameof(items)} can reference anything in {nameof(otherItems)}");
+            }
+        }
+
+        public string ChangeProperty(string currentValue, IEnumerable<string> otherValues, string pattern)
+        {
+            var i = 1;
+            var newValue = string.Format(pattern, i);
+
+            while (currentValue == newValue || otherValues.Any(value => value == newValue))
+            {
+                i++;
+                newValue = string.Format(pattern, i);
+            }
+
+            return newValue;
+        }
 
         public abstract void CopyNonIdentifiers(TPoco source, TPoco destination);
 
@@ -498,14 +539,32 @@
 
         public void NonIdentifiersAreDifferentWhenChanged()
         {
-            foreach (var item1 in this.MakeValidItems())
+            var validItems = this.MakeValidItems().ToList();
+
+            for (var t = 0; t<validItems.Count(); t++)
             {
-                var item2 = this.Copy(item1);
+                var others = new List<TPoco>();
+                var target = validItems[t];
+                var original = this.Copy(validItems[t]);
 
-                this.ChangeNonIdentifiers(item2);
 
-                Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should not change the identifier properties");
-                Assert.That(!this.NonIdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) method should change the none-identifer properties of the item to different values.");
+                for (var i = 0; i<validItems.Count(); i++)
+                {
+                    if (i != t)
+                    {
+                        others.Add(validItems[i]);
+                    }
+                }
+                
+                this.ChangeNonIdentifiers(target, others);
+
+                Assert.That(this.IdentifiersAreEqual(target, original), $"The {nameof(this.ChangeNonIdentifiers)} method should not change the identifier properties");
+                Assert.That(!this.NonIdentifiersAreEqual(target, original), $"The {nameof(this.ChangeNonIdentifiers)} method should change the none-identifer properties of the item to different values.");
+
+                foreach (var item in others)
+                {
+                    Assert.That(this.AreEqual(target, item), Is.Not.True, "The target item should not be Equal to any other item");
+                }        
             }
         }
                 
@@ -522,10 +581,12 @@
 
         public void AnItemIsCopiedAndItsNonIdentifiersChanged()
         {
-            foreach (var item1 in this.MakeValidItems())
+            var validItems = this.MakeValidItems();
+
+            foreach (var item1 in validItems)
             {
                 var item2 = this.CopyNonIdentifiers(item1);
-                this.ChangeNonIdentifiers(item2);
+                this.ChangeNonIdentifiers(item2, validItems.Where(i => !this.AreEqual(i, item2)));
 
                 Assert.That(this.IdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should not change the identifier properties");
                 Assert.That(!this.NonIdentifiersAreEqual(item1, item2), "The ChangeNonIdentifiers(item) should change the none-identifer properties of the item to different values.");
@@ -577,7 +638,6 @@
             Assert.That(invalidIdentities.Count(), Is.GreaterThan(1));
             Assert.That(invalidIdentities.Count(i => i == null), Is.EqualTo(1));
         }
-
 
 
         #endregion

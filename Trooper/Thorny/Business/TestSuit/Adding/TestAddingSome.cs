@@ -182,7 +182,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredItems, requirement.Helper.DefaultRequiredItems);
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
@@ -210,7 +210,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredItems, requirement.Helper.DefaultRequiredItems);
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
@@ -238,7 +238,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredItems, requirement.Helper.DefaultRequiredItems);
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
@@ -605,8 +605,9 @@
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                    Assert.That(
+                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode) 
+                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
                 }
             }
         }
@@ -689,8 +690,9 @@
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                    Assert.That(
+                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode)
+                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
                 }
             }
         }
@@ -750,7 +752,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeInvalidItems();
+                    var validItems = requirement.Helper.MakeValidItems();
                     var response = requirement.Creater.AddSome(validItems, allowedIdentity);
                     var stored = requirement.Helper.GetAllItems();
 
@@ -826,8 +828,8 @@
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode)
+                         || requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                 }
             }
         }
