@@ -305,9 +305,19 @@
         /// <param name="otherItems"></param>
         public abstract void ChangeNonIdentifiers(TPoco item, IEnumerable<TPoco> otherItems);
 
+        public void ChangeNonIdentifiers(IEnumerable<TPoco> items)
+        {
+            foreach (var item in items)
+            {
+                var otherItems = items.Where(i => !ReferenceEquals(i, item));
+
+                ChangeNonIdentifiers(item, otherItems);
+            }
+        }
+
         public void ChangeNonIdentifiers(TPoco item, IEnumerable<TPoco> otherItems, bool filterIdentityMatch)
         {
-            this.ChangeNonIdentifiers(item, filterIdentityMatch ? otherItems.Where(i => this.IdentifiersAreEqual(i, item)) : otherItems);
+            this.ChangeNonIdentifiers(item, filterIdentityMatch ? otherItems.Where(i => !this.IdentifiersAreEqual(i, item)) : otherItems);
         }
 
         public void ChangeNonIdentifiers(IEnumerable<TPoco> items, IEnumerable<TPoco> otherItems)

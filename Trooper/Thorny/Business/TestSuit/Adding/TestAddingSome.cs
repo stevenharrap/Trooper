@@ -16,25 +16,23 @@
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems().Where(i => i != null))
-                    foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
-                    {
-                        requirement.Helper.RemoveAllItems();
+                foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
 
-                        var willBeInvalidItems = requirement.Helper.AddValidItems();
-                        var state = requirement.Helper.GetAllItems();
+                    var willBeInvalidItems = requirement.Helper.AddValidItems().ToList();
+                    var state = requirement.Helper.GetAllItems();
 
-                        foreach (var item in willBeInvalidItems)
-                        {
-                            requirement.Helper.CopyNonIdentifiers(invalidItem, item);
-                        }
+                    requirement.Helper.MakeInvalidItems(willBeInvalidItems);
 
-                        var response = requirement.Creater.AddSome(willBeInvalidItems, allowedIdentity);
+                    var response = requirement.Creater.AddSome(willBeInvalidItems, allowedIdentity);
 
-                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-                        Assert.That(response.Items, Is.Null);
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
-                    }
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                    Assert.That(response.Items, Is.Null);
+                    Assert.That(
+                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode)
+                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                }
             }
         }
 
@@ -43,25 +41,21 @@
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems().Where(i => i != null))
-                    foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
-                    {
-                        requirement.Helper.RemoveAllItems();
+                foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
 
-                        var willBeInvalidItems = requirement.Helper.AddValidItems();
-                        var state = requirement.Helper.GetAllItems();
+                    var willBeInvalidItems = requirement.Helper.AddValidItems().ToList();
+                    var state = requirement.Helper.GetAllItems();
 
-                        foreach (var item in willBeInvalidItems)
-                        {
-                            requirement.Helper.CopyNonIdentifiers(invalidItem, item);
-                        }
+                    requirement.Helper.MakeInvalidItems(willBeInvalidItems);
 
-                        var response = requirement.Creater.AddSome(willBeInvalidItems, deniedIdentity);
+                    var response = requirement.Creater.AddSome(willBeInvalidItems, deniedIdentity);
 
-                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-                        Assert.That(response.Items, Is.Null);
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
-                    }
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                    Assert.That(response.Items, Is.Null);
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
+                }
             }
         }
 
@@ -70,33 +64,29 @@
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems().Where(i => i != null))
-                    foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
+                {
+                    requirement.Helper.RemoveAllItems();
+
+                    var willBeInvalidItems = requirement.Helper.AddValidItems().ToList();
+                    var state = requirement.Helper.GetAllItems();
+
+                    requirement.Helper.MakeInvalidItems(willBeInvalidItems);
+
+                    var response = requirement.Creater.AddSome(willBeInvalidItems, invalidIdentity);
+
+                    Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                    Assert.That(response.Items, Is.Null);
+
+                    if (invalidIdentity == null)
                     {
-                        requirement.Helper.RemoveAllItems();
-
-                        var willBeInvalidItems = requirement.Helper.AddValidItems();
-                        var state = requirement.Helper.GetAllItems();
-
-                        foreach (var item in willBeInvalidItems)
-                        {
-                            requirement.Helper.CopyNonIdentifiers(invalidItem, item);
-                        }
-
-                        var response = requirement.Creater.AddSome(willBeInvalidItems, invalidIdentity);
-
-                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-                        Assert.That(response.Items, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }                        
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
                     }
+                    else
+                    {
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
+                    }
+                }
             }
         }
 
@@ -276,6 +266,7 @@
 
                     var validItems = requirement.Helper.AddValidItems();
                     var state = requirement.Helper.GetAllItems();
+                    requirement.Helper.ChangeNonIdentifiers(validItems);
                     var response = requirement.Creater.AddSome(validItems, allowedIdentity);
 
                     Assert.That(response.Items, Is.Null);
@@ -296,8 +287,9 @@
 
                     var validItems = requirement.Helper.AddValidItems();
                     var state = requirement.Helper.GetAllItems();
-
+                    requirement.Helper.ChangeNonIdentifiers(validItems);
                     var response = requirement.Creater.AddSome(validItems, deniedIdentity);
+
                     Assert.That(response.Items, Is.Null);
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                     Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.UserDeniedCode));
@@ -316,8 +308,9 @@
 
                     var validItems = requirement.Helper.AddValidItems();
                     var state = requirement.Helper.GetAllItems();
-
+                    requirement.Helper.ChangeNonIdentifiers(validItems);
                     var response = requirement.Creater.AddSome(validItems, invalidIdentity);
+
                     Assert.That(response.Items, Is.Null);
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
 
@@ -432,6 +425,7 @@
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
+                    requirement.Helper.ChangeNonIdentifiers(firstHalf);
                     var state = requirement.Helper.GetAllItems();
                     var toAdd = new List<TPoco>(firstHalf);
                     toAdd.AddRange(secondHalf);
@@ -459,6 +453,7 @@
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
+                    requirement.Helper.ChangeNonIdentifiers(firstHalf);
                     var state = requirement.Helper.GetAllItems();
                     var toAdd = new List<TPoco>(firstHalf);
                     toAdd.AddRange(secondHalf);
@@ -486,6 +481,7 @@
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
+                    requirement.Helper.ChangeNonIdentifiers(firstHalf);
                     var state = requirement.Helper.GetAllItems();
                     var toAdd = new List<TPoco>(firstHalf);
                     toAdd.AddRange(secondHalf);
