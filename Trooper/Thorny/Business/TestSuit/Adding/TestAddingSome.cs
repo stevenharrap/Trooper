@@ -29,9 +29,7 @@
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(
-                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode)
-                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                 }
             }
         }
@@ -77,15 +75,7 @@
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                 }
             }
         }
@@ -99,16 +89,14 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl);
                     var state = requirement.Helper.GetAllItems();
 
                     var response = requirement.Creater.AddSome(invalidItems, allowedIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(
-                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode)
-                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                 }
             }
         }
@@ -122,7 +110,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var state = requirement.Helper.GetAllItems();
 
                     var response = requirement.Creater.AddSome(invalidItems, deniedIdentity);
@@ -143,22 +131,14 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var state = requirement.Helper.GetAllItems();
 
                     var response = requirement.Creater.AddSome(invalidItems, invalidIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                 }
             }
         }
@@ -172,7 +152,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredItems, requirement.Helper.DefaultRequiredItems);
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
@@ -200,7 +180,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredItems, requirement.Helper.DefaultRequiredItems);
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
@@ -228,7 +208,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredItems, requirement.Helper.DefaultRequiredItems);
                     firstHalf = requirement.Helper.AddItems(firstHalf).ToList();
@@ -242,15 +222,7 @@
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                 }
             }
         }
@@ -313,15 +285,7 @@
 
                     Assert.That(response.Items, Is.Null);
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                 }
             }
         }
@@ -335,7 +299,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
                     
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
@@ -362,7 +326,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
@@ -387,7 +351,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
@@ -398,15 +362,7 @@
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(preState), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                 }
             }
         }
@@ -420,7 +376,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
@@ -448,7 +404,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
@@ -476,7 +432,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
 
@@ -490,15 +446,7 @@
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                    
                 }
             }
         }
@@ -514,9 +462,14 @@
 
                     var items = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredValidItems * 2).ToList();
                     var state = requirement.Helper.GetAllItems();
-                    requirement.Helper.MakeInvalidItems(items.GetRange(0, requirement.Helper.DefaultRequiredValidItems));                                 
+                    var firstHalf = items.GetRange(0, requirement.Helper.DefaultRequiredValidItems);
+                    var secondHalf = items.GetRange(requirement.Helper.DefaultRequiredValidItems, requirement.Helper.DefaultRequiredValidItems);
+                    requirement.Helper.MakeInvalidItems(firstHalf);
+                    requirement.Helper.ChangeNonIdentifiers(secondHalf);
+                    var toAdd = new List<TPoco>(firstHalf);
+                    toAdd.AddRange(secondHalf);
 
-                    var response = requirement.Creater.AddSome(items, allowedIdentity);
+                    var response = requirement.Creater.AddSome(toAdd, allowedIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);                    
@@ -524,7 +477,6 @@
                 }
             }
         }
-
 
         [Test]
         public virtual void HasItems_ItemsSomeValidAllExist_IdentityIsDenied_ReportsErrorAndNoChange()
@@ -537,9 +489,14 @@
 
                     var items = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredValidItems * 2).ToList();
                     var state = requirement.Helper.GetAllItems();
-                    requirement.Helper.MakeInvalidItems(items.GetRange(0, requirement.Helper.DefaultRequiredValidItems));
+                    var firstHalf = items.GetRange(0, requirement.Helper.DefaultRequiredValidItems);
+                    var secondHalf = items.GetRange(requirement.Helper.DefaultRequiredValidItems, requirement.Helper.DefaultRequiredValidItems);
+                    requirement.Helper.MakeInvalidItems(firstHalf);
+                    requirement.Helper.ChangeNonIdentifiers(secondHalf);
+                    var toAdd = new List<TPoco>(firstHalf);
+                    toAdd.AddRange(secondHalf);
 
-                    var response = requirement.Creater.AddSome(items, deniedIdentity);
+                    var response = requirement.Creater.AddSome(toAdd, deniedIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);
@@ -559,21 +516,18 @@
 
                     var items = requirement.Helper.AddValidItems(requirement.Helper.DefaultRequiredValidItems * 2).ToList();
                     var state = requirement.Helper.GetAllItems();
-                    requirement.Helper.MakeInvalidItems(items.GetRange(0, requirement.Helper.DefaultRequiredValidItems));
+                    var firstHalf = items.GetRange(0, requirement.Helper.DefaultRequiredValidItems);
+                    var secondHalf = items.GetRange(requirement.Helper.DefaultRequiredValidItems, requirement.Helper.DefaultRequiredValidItems);
+                    requirement.Helper.MakeInvalidItems(firstHalf);
+                    requirement.Helper.ChangeNonIdentifiers(secondHalf);
+                    var toAdd = new List<TPoco>(firstHalf);
+                    toAdd.AddRange(secondHalf);
 
-                    var response = requirement.Creater.AddSome(items, invalidIdentity);
+                    var response = requirement.Creater.AddSome(toAdd, invalidIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                    
                 }
             }
         }
@@ -587,23 +541,20 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl);
+                    requirement.Helper.AddItems(firstHalf);
                     var toAdd = new List<TPoco>(secondHalf);
                     toAdd.AddRange(invalidItems);
-
-                    requirement.Helper.AddItems(firstHalf);
-                    var state = requirement.Helper.GetAllItems();                    
+                    var state = requirement.Helper.GetAllItems();
 
                     var response = requirement.Creater.AddSome(toAdd, allowedIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(
-                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode) 
-                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                 }
             }
         }
@@ -617,14 +568,13 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
+                    requirement.Helper.AddItems(firstHalf);
                     var toAdd = new List<TPoco>(secondHalf);
                     toAdd.AddRange(invalidItems);
-
-                    requirement.Helper.AddItems(firstHalf);
                     var state = requirement.Helper.GetAllItems();
 
                     var response = requirement.Creater.AddSome(toAdd, deniedIdentity);
@@ -645,29 +595,20 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2).ToList();
+                    var validItems = requirement.Helper.MakeValidItems(requirement.Helper.DefaultRequiredInvalidItems * 2, TestSuitHelper.Keys.GenIfMnl).ToList();
                     var firstHalf = validItems.GetRange(0, requirement.Helper.DefaultRequiredInvalidItems);
                     var secondHalf = validItems.GetRange(requirement.Helper.DefaultRequiredInvalidItems, requirement.Helper.DefaultRequiredInvalidItems);
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
+                    requirement.Helper.AddItems(firstHalf);
                     var toAdd = new List<TPoco>(secondHalf);
                     toAdd.AddRange(invalidItems);
-
-                    requirement.Helper.AddItems(firstHalf);
                     var state = requirement.Helper.GetAllItems();
 
                     var response = requirement.Creater.AddSome(toAdd, invalidIdentity);
 
                     Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                    
                 }
             }
         }
@@ -681,14 +622,12 @@
                 {
                     requirement.Helper.RemoveAllItems();
                     
-                    var invalidItems = requirement.Helper.MakeInvalidItems();                    
+                    var invalidItems = requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl);                    
                     var response = requirement.Creater.AddSome(invalidItems, allowedIdentity);
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(
-                        requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode)
-                        || requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                 }
             }
         }
@@ -702,7 +641,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var response = requirement.Creater.AddSome(invalidItems, deniedIdentity);
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
@@ -721,20 +660,12 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var response = requirement.Creater.AddSome(invalidItems, invalidIdentity);
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                    
                 }
             }
         }
@@ -748,7 +679,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems();
+                    var validItems = requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl);
                     var response = requirement.Creater.AddSome(validItems, allowedIdentity);
                     var stored = requirement.Helper.GetAllItems();
 
@@ -769,7 +700,7 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeInvalidItems();
+                    var validItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var response = requirement.Creater.AddSome(validItems, deniedIdentity);
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
@@ -788,20 +719,12 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeInvalidItems();
+                    var validItems = requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl);
                     var response = requirement.Creater.AddSome(validItems, invalidIdentity);
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                   
                 }
             }
         }
@@ -815,8 +738,8 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems();
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var validItems = requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl);
+                    var invalidItems = requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl);
                     var toAdd = new List<TPoco>(validItems);
                     toAdd.AddRange(invalidItems);
                     
@@ -824,8 +747,7 @@
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode)
-                         || requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                 }
             }
         }
@@ -839,8 +761,8 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems();
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var validItems = requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl);
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var toAdd = new List<TPoco>(validItems);
                     toAdd.AddRange(invalidItems);
 
@@ -862,8 +784,8 @@
                 {
                     requirement.Helper.RemoveAllItems();
 
-                    var validItems = requirement.Helper.MakeValidItems();
-                    var invalidItems = requirement.Helper.MakeInvalidItems();
+                    var validItems = requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl);
+                    var invalidItems = requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl);
                     var toAdd = new List<TPoco>(validItems);
                     toAdd.AddRange(invalidItems);
 
@@ -871,15 +793,7 @@
 
                     Assert.That(requirement.Helper.HasNoItems(), Is.True);
                     Assert.That(response.Items, Is.Null);
-
-                    if (invalidIdentity == null)
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                    }
-                    else
-                    {
-                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                    }
+                    Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                    
                 }
             }
         }

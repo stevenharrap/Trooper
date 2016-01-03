@@ -529,7 +529,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 new Process("IsSearchNull", () => {
                     if (search == null)
                     {
-                        MessageUtility.Errors.Add("The search has not been supplied.", NullSearchCode, response);
+                        MessageUtility.Errors.Add("The search has not been supplied.", InvalidSearchCode, response);
                     }
                 }),
                 new Process(nameof(businessPack.Facade.IsSearchAllowed), () =>
@@ -1130,12 +1130,12 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             if (data == null)
             {
-                MessageUtility.Errors.Add("The item(s) have not been supplied.", NullDataCode, response);
+                MessageUtility.Errors.Add("The item(s) have not been supplied.", InvalidDataCode, response);
             }
 
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity has not been supplied.", NullIdentityCode, response);
+                MessageUtility.Errors.Add("The identity has not been supplied.", InvalidIdentityCode, response);
             }
 
             return response.Ok;
@@ -1148,17 +1148,11 @@ namespace Trooper.Thorny.Business.Operation.Core
 
     public class BusinessCore
     {
-        public const string NullDataCode = Constants.BusinessCoreErrorCodeRoot + ".NullData";
-
-        public const string NullIdentityCode = Constants.BusinessCoreErrorCodeRoot + ".NullIdentity";
-
         public const string InvalidIdentityCode = Constants.BusinessCoreErrorCodeRoot + ".InvalidIdentity";
-
-        public const string NullArgumentCode = Constants.BusinessCoreErrorCodeRoot + ".:NullArgument";
 
         public const string AddFailedCode = Constants.BusinessCoreErrorCodeRoot + ".AddFailed";
 
-        public const string NullSearchCode = Constants.BusinessCoreErrorCodeRoot + ".NullSearch";
+        public const string InvalidSearchCode = Constants.BusinessCoreErrorCodeRoot + ".InvalidSearch";
 
         public const string DeniedSearchCode = Constants.BusinessCoreErrorCodeRoot + ".DeniedSearch";
 

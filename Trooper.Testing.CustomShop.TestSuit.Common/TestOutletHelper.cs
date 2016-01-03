@@ -8,76 +8,62 @@
     using Thorny.Business.TestSuit;
     using System.Collections.Generic;
     using System.Linq;
+    using System;
 
     public class TestOutletHelper : TestSuitHelper<Outlet>
-    {
+    {        
         public TestOutletHelper(IBusinessCreate<Outlet> boCreater, IBusinessRead<Outlet> boReader, IBusinessDelete<Outlet> boDeleter) 
             : base(boCreater, boReader, boDeleter) { }
 
-        public override IEnumerable<Outlet> MakeValidItems(int required)
+        public override int DefaultRequiredInvalidItems
         {
-            for (var i = 1; i <= required; i++)
+            get
             {
-                yield return new Outlet
-                {
-                    Address = $"{i} Trooper St",
-                    Name = $"TopCop-{i}"
-                };
+                return 3;
             }
-        }
-
-        public override void MakeInvalidItems(List<Outlet> validItems)
-        {
-            var i = 0;
-
-            foreach (var item in validItems)
-            {
-                item.Address = $"{i} Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St";
-                item.Name = $"TopCop-{i}";
-
-                i++;
-            }
-        }
-
-        public override bool IdentifiersAreEqual(Outlet itemA, Outlet itemB)
-        {
-            Assert.IsNotNull(itemA);
-            Assert.IsNotNull(itemB);
-
-            return itemA.OutletId == itemB.OutletId;
-        }
-
-        public override bool NonIdentifiersAreEqual(Outlet itemA, Outlet itemB)
-        {
-            Assert.IsNotNull(itemA);
-            Assert.IsNotNull(itemB);
-
-            return itemA.Name == itemB.Name && itemA.Address == itemB.Address;
-        }
+        }        
 
         public override void ChangeNonIdentifiers(Outlet item, IEnumerable<Outlet> otherItems)
         {
-            Assert.IsNotNull(item);
+            if (item == null) throw new ArgumentNullException(nameof(item));
+            if (item == null) throw new ArgumentNullException(nameof(otherItems));
 
             item.Address = this.ChangeProperty(item.Address, otherItems.Select(i => i.Address), "{0} Thingo St");
             item.Name = this.ChangeProperty(item.Name, otherItems.Select(i => i.Name), "Stuff{0}");
-        }        
+        }
 
         public override void CopyIdentifiers(Outlet source, Outlet destination)
         {
-            Assert.IsNotNull(source);
-            Assert.IsNotNull(destination);
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (destination == null) throw new ArgumentNullException(nameof(destination));
 
             destination.OutletId = source.OutletId;
         }
 
         public override void CopyNonIdentifiers(Outlet source, Outlet destination)
         {
-            Assert.IsNotNull(source);
-            Assert.IsNotNull(destination);
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (destination == null) throw new ArgumentNullException(nameof(destination));
 
             destination.Address = source.Address;
             destination.Name = source.Name;
+        }
+
+        public override IIdentity GetAdminIdentity()
+        {
+            return new Identity
+            {
+                Username = "ValidTestUser",
+                Password = "1234"
+            };
+        }
+
+        public override bool IdentifiersAreEqual(Outlet itemA, Outlet itemB)
+        {
+            if (itemA == null) throw new ArgumentNullException(nameof(itemA));
+            if (itemB == null) throw new ArgumentNullException(nameof(itemB));
+
+            return itemA.OutletId == itemB.OutletId;
         }
 
         public override IEnumerable<IIdentity> MakeAllowedIdentities()
@@ -89,7 +75,7 @@
                     Username = "ValidTestUser",
                     Password = "1234"
                 }
-            };  
+            };
         }
 
         public override IEnumerable<IIdentity> MakeDeniedIdentities()
@@ -104,13 +90,80 @@
             };
         }
 
-        public override IIdentity GetAdminIdentity()
+        public override void MakeInvalidItems(List<Outlet> items, IEnumerable<Outlet> otherItems)
         {
-            return new Identity
+            if (items == null) throw new ArgumentNullException(nameof(items));
+            if (otherItems == null) throw new ArgumentNullException(nameof(otherItems));
+
+            const string badAddressFormat = "{0} Verylongstreetnamewhichisfartoolongtofitinanyreasonablestreetaddress St";
+            const string badNameFormat = "Topcop-Topcop-Topcop-Topcop-Topcop-Topcop-Topcop-Topcop-{0}";
+
+            for (var c = 0; c < items.Count(); c++)
             {
-                Username = "ValidTestUser",
-                Password = "1234"
-            };
+                var item = items[c];
+
+                switch (c)
+                {
+                    case 0:
+                        item.Address = this.ChangeProperty(item.Address, otherItems.Select(i => i.Address), badAddressFormat);
+                        break;
+                    case 1:
+                        item.Name = this.ChangeProperty(item.Name, otherItems.Select(i => i.Name), badNameFormat);
+                        break;
+                    case 2:
+                        item.Name = this.ChangeProperty(item.Name, otherItems.Select(i => i.Name), badNameFormat);
+                        item.Address = this.ChangeProperty(item.Address, otherItems.Select(i => i.Address), badAddressFormat);
+                        break;
+                }
+            }
         }
+
+        public override IEnumerable<Outlet> MakeValidItems(int? required, Keys keyBehavious, IEnumerable<Outlet> otherItems)
+        {
+            var newOutletIds = new List<int?>();
+
+            for (var i = 0; i < (required == null ? 3 : (int)required); i++)
+            {
+                var outletId = this.MakeKeyValue(keyBehavious, true, otherItems.Select(o => o?.OutletId).Concat(newOutletIds));
+                newOutletIds.Add(outletId);
+
+                switch (i)
+                {
+                    case 0:
+                    default:
+                        yield return new Outlet
+                        {
+                            OutletId = outletId,
+                            Address = this.ChangeProperty(otherItems.Select(o => o?.Address), "{0} Trooper St"),
+                            Name = this.ChangeProperty(otherItems.Select(o => o?.Name), "TopCop-{0}")
+                        };
+                        break;
+                    case 1:
+                        yield return new Outlet
+                        {
+                            OutletId = outletId,
+                            Address = this.ChangeProperty(otherItems.Select(o => o?.Address), "{0} Trooper St"),
+                            Name = null
+                        };
+                        break;
+                    case 2:
+                        yield return new Outlet
+                        {
+                            OutletId = outletId,
+                            Address = null,
+                            Name = this.ChangeProperty(otherItems.Select(o => o?.Name), "TopCop-{0}")
+                        };
+                        break;
+                }
+            }
+        }
+
+        public override bool NonIdentifiersAreEqual(Outlet itemA, Outlet itemB)
+        {
+            if (itemA == null) throw new ArgumentNullException(nameof(itemA));
+            if (itemB == null) throw new ArgumentNullException(nameof(itemB));
+
+            return itemA.Name == itemB.Name && itemA.Address == itemB.Address;
+        }        
     }
 }

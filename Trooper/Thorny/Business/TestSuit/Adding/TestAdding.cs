@@ -86,15 +86,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                     }
                 }
                 
@@ -106,7 +98,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl))
                     foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -116,17 +108,9 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         var response = requirement.Creater.Add(invalidItem, allowedIdentity);
 
-                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
+                        Assert.That(requirement.Helper.StoredItemsAreEqualTo(state), Is.True);
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidItem == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
-                        }                        
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode), Is.True);
                     }
             }
         }        
@@ -136,7 +120,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl))
                     foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -158,7 +142,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl))
                     foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -170,15 +154,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                     }
             }
         }
@@ -188,7 +164,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var existingValidItem in requirement.Helper.MakeValidItems())
+                foreach (var existingValidItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -198,7 +174,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var state = requirement.Helper.GetAllItems();
 
                         requirement.Helper.CopyIdentifiers(item, existingValidItem);
-                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems, true);
+                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems.Where(i => !requirement.Helper.IdentifiersAreEqual(i, existingValidItem)));
 
                         var response = requirement.Creater.Add(existingValidItem, allowedIdentity);
 
@@ -214,7 +190,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var existingValidItem in requirement.Helper.MakeValidItems())
+                foreach (var existingValidItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -224,7 +200,9 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var state = requirement.Helper.GetAllItems();
 
                         requirement.Helper.CopyIdentifiers(item, existingValidItem);
-                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems, true);
+                        requirement.Helper.ChangeNonIdentifiers(
+                            existingValidItem, 
+                            validItems.Where(i => !requirement.Helper.IdentifiersAreEqual(i, existingValidItem)));
 
                         var response = requirement.Creater.Add(existingValidItem, deniedIdentity);
 
@@ -240,7 +218,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var existingValidItem in requirement.Helper.MakeValidItems())
+                foreach (var existingValidItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -250,21 +228,15 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
                         var state = requirement.Helper.GetAllItems();
 
                         requirement.Helper.CopyIdentifiers(item, existingValidItem);
-                        requirement.Helper.ChangeNonIdentifiers(existingValidItem, validItems, true);
+                        requirement.Helper.ChangeNonIdentifiers(
+                            existingValidItem,
+                            validItems.Where(i => !requirement.Helper.IdentifiersAreEqual(i, existingValidItem)));
 
                         var response = requirement.Creater.Add(existingValidItem, invalidIdentity);
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                     }
             }
         }        
@@ -274,7 +246,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                var validItems = requirement.Helper.MakeValidItems().ToList();
+                var validItems = requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl).ToList();
                 
                 for (var target = 0; target<validItems.Count(); target++)
                     foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
@@ -310,7 +282,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var newValidItem in requirement.Helper.MakeValidItems())
+                foreach (var newValidItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -332,7 +304,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var newValidItem in requirement.Helper.MakeValidItems())
+                foreach (var newValidItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -344,15 +316,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         Assert.That(requirement.Helper.StoredItemsAreEqualTo(state));
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                     }
             }
         }        
@@ -362,7 +326,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {                
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl))
                     foreach (var allowedIdentity in requirement.Helper.MakeAllowedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -371,15 +335,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         Assert.That(requirement.Helper.HasNoItems(), Is.True);
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidItem == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullDataCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidDataCode));
                     }
             }
         }        
@@ -389,7 +345,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems(false, TestSuitHelper.Keys.GenIfMnl))
                     foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -408,7 +364,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var invalidItem in requirement.Helper.MakeInvalidItems())
+                foreach (var invalidItem in requirement.Helper.MakeInvalidItems(true, TestSuitHelper.Keys.GenIfMnl))
                     foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -417,15 +373,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         Assert.That(requirement.Helper.HasNoItems(), Is.True);
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                     }
             }
         }
@@ -435,7 +383,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var validItem in requirement.Helper.MakeValidItems())
+                foreach (var validItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var validIdentity in requirement.Helper.MakeAllowedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -457,7 +405,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var validItem in requirement.Helper.MakeValidItems())
+                foreach (var validItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var deniedIdentity in requirement.Helper.MakeDeniedIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -476,7 +424,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
         {
             using (var requirement = this.Requirement())
             {
-                foreach (var validItem in requirement.Helper.MakeValidItems())
+                foreach (var validItem in requirement.Helper.MakeValidItems(TestSuitHelper.Keys.GenIfMnl))
                     foreach (var invalidIdentity in requirement.Helper.MakeInvalidIdentities())
                     {
                         requirement.Helper.RemoveAllItems();
@@ -485,15 +433,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
 
                         Assert.That(requirement.Helper.HasNoItems(), Is.True);
                         Assert.That(response.Item, Is.Null);
-
-                        if (invalidIdentity == null)
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.NullIdentityCode));
-                        }
-                        else
-                        {
-                            Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
-                        }
+                        Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));
                     }
             }
         }

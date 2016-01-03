@@ -59,7 +59,7 @@
         {
             if (item == null)
             {
-                MessageUtility.Errors.Add("The item in null", BusinessCore.NullDataCode, response);
+                MessageUtility.Errors.Add("The item in null", BusinessCore.InvalidDataCode, response);
                 return response.Ok;
             }
 
@@ -68,35 +68,17 @@
             MessageUtility.Add(validationResult, response);
 
             return response.Ok;
-
-            //Todo: implement default validation
-
-            //var vr = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(item);
-
-            //foreach (var v in vr)
-            //{
-            //    MessageUtility.Errors.Add(v.Message, InvalidPropertyCode, v.Target, v.Key, response);
-            //}
         }
 
         public virtual bool Validate(IEnumerable<TEnt> items, IResponse response)
         {
             if (items == null)
             {
-                MessageUtility.Errors.Add("The item in null", BusinessCore.NullDataCode, response);
+                MessageUtility.Errors.Add("The item in null", BusinessCore.InvalidDataCode, response);
                 return response.Ok;
             }
             
             items.All((i) => { this.Validate(i, response); return response.Ok; });
-                 
-            //Todo: implement default validation
-
-            //var vr = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(item);
-
-            //foreach (var v in vr)
-            //{
-            //    MessageUtility.Errors.Add(v.Message, InvalidPropertyCode, v.Target, v.Key, response);
-            //}
 
             return response.Ok;
         }

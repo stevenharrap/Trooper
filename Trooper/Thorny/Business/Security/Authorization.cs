@@ -100,7 +100,7 @@ namespace Trooper.Thorny.Business.Security
         {
             if (identity == null)
             {
-                MessageUtility.Errors.Add("The identity is invalid", BusinessCore.NullIdentityCode, response);
+                MessageUtility.Errors.Add("The identity is invalid", BusinessCore.InvalidIdentityCode, response);
                 return response.Ok;
             }
 
