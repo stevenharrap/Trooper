@@ -17,6 +17,7 @@
     {
         private static Mapping[] entToPocoMap;
         private static Mapping[] pocoToEntMap;
+        private static Mapping[] entToEntMap;
 
         static Facade()
         {
@@ -36,6 +37,7 @@
 
             entToPocoMap = mappings.Select(m => new Mapping(m.entGetter, m.pocoSetter)).ToArray();
             pocoToEntMap = mappings.Select(m => new Mapping(m.pocoGetter, m.entSetter)).ToArray();
+            entToEntMap = mappings.Select(m => new Mapping(m.entGetter, m.entSetter)).ToArray();
         }
 
         public Facade()
@@ -408,7 +410,7 @@
             {
                 var entry = this.Repository.DbContext.Entry(local);
                 entry.State = EntityState.Modified;
-                AutoMapper.Mapper.Map(item, local);
+                this.CopyEnt(item, local);
                 return local;
             }                        
         }
@@ -450,10 +452,7 @@
 
         public TEnt ToEnt(TPoco item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
+            if (item == null) throw new ArgumentNullException(nameof(item));
 
             var result = new TEnt();
 
@@ -490,6 +489,17 @@
             }
 
             return this.Repository.DbContext.Set<TEnt>().Local.FirstOrDefault(i => this.AreEqual(i, item));
+        }
+
+        private void CopyEnt(TEnt source, TEnt destination)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (destination == null) throw new ArgumentNullException(nameof(destination));
+
+            foreach (var m in entToEntMap)
+            {
+                m.SetterMethod.Invoke(destination, new object[] { m.GetterMethod.Invoke(source, null) });
+            }
         }
 
         private class Mapping

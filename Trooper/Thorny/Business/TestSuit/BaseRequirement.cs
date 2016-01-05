@@ -8,7 +8,7 @@ using Trooper.Interface.Thorny.Business.Operation.Single;
 using Trooper.Interface.Thorny.TestSuit;
 using Trooper.Thorny.Configuration;
 
-namespace Trooper.Thorny.Business.TestSuit.Adding
+namespace Trooper.Thorny.Business.TestSuit
 {
     public class BaseRequirment<TPoco> : IDisposable
         where TPoco : class, new()

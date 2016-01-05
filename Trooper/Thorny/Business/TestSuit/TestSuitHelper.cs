@@ -689,7 +689,27 @@
             if (after != before + validItems.Count()) throw new Exception($"{nameof(AddItems)} failed to all the provided items.");
 
             return response.Items.ToList();
-        }        
+        }
+
+        /// <summary>
+        /// [Tested]
+        /// </summary>
+        public IList<TPoco> AddValidItems(IEnumerable<TPoco> otherItems)
+        {
+            var validItems = this.MakeValidItems(Keys.GenIfMnl, otherItems);
+
+            return this.AddItems(validItems.ToList());
+        }
+
+        /// <summary>
+        /// [Tested]
+        /// </summary>
+        public IList<TPoco> AddValidItems(TPoco otherItem)
+        {
+            var validItems = this.MakeValidItems(Keys.GenIfMnl, new List<TPoco> { otherItem });
+
+            return this.AddItems(validItems.ToList());
+        }
 
         /// <summary>
         /// [Tested]
@@ -1515,21 +1535,52 @@
 
         public void Test_AddValidItems()
         {
-            this.RemoveAllItems();            
+            this.RemoveAllItems();
 
-            var items = this.AddValidItems();
-                    
-            Assert.That(items, Is.Not.Null);
-            Assert.That(items.Count(), Is.GreaterThan(1));
-            Assert.That(items.Count(i => i == null), Is.EqualTo(0));
-            Assert.That(items.Count(), Is.EqualTo(this.DefaultRequiredValidItems));
+            {
+                var items = this.AddValidItems();
 
-            var required = this.DefaultRequiredValidItems * 2;
-            items = this.AddValidItems(required);
+                Assert.That(items, Is.Not.Null);
+                Assert.That(items.Count(), Is.GreaterThan(1));
+                Assert.That(items.Count(i => i == null), Is.EqualTo(0));
+                Assert.That(items.Count(), Is.EqualTo(this.DefaultRequiredValidItems));
+            }
 
-            Assert.That(items, Is.Not.Null);
-            Assert.That(items.Count(), Is.EqualTo(required));
-            Assert.That(items.Count(i => i == null), Is.EqualTo(0));
+            {
+                var required = this.DefaultRequiredValidItems * 2;
+                var items = this.AddValidItems(required);
+
+                Assert.That(items, Is.Not.Null);
+                Assert.That(items.Count(), Is.EqualTo(required));
+                Assert.That(items.Count(i => i == null), Is.EqualTo(0));
+            }
+
+            foreach (var item in this.MakeValidItems(Keys.GenIfMnl))
+            {
+                this.RemoveAllItems();
+
+                var items = this.AddValidItems(item);
+
+                Assert.That(items, Is.Not.Null);
+                Assert.That(items.Count(), Is.GreaterThan(1));
+                Assert.That(items.Count(i => i == null), Is.EqualTo(0));
+                Assert.That(items.Count(), Is.EqualTo(this.DefaultRequiredValidItems));
+                Assert.That(items.All(i => !this.AreEqual(i, item)), Is.True);
+            }
+
+            {
+                this.RemoveAllItems();
+
+                var otherItems = this.MakeValidItems(Keys.GenIfMnl);
+                var items = this.AddValidItems(otherItems);
+
+                Assert.That(items, Is.Not.Null);
+                Assert.That(items.Count(), Is.GreaterThan(1));
+                Assert.That(items.Count(i => i == null), Is.EqualTo(0));
+                Assert.That(items.Count(), Is.EqualTo(this.DefaultRequiredValidItems));
+                Assert.That(items.All(i => otherItems.All(o => !this.AreEqual(i, o))), Is.True);
+
+            }
         }
 
         public void Test_AddItem()

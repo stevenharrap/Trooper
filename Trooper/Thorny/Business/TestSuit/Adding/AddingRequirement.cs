@@ -1,15 +1,7 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trooper.Interface.Thorny.Business.Operation.Single;
-using Trooper.Interface.Thorny.TestSuit;
-using Trooper.Thorny.Configuration;
-
-namespace Trooper.Thorny.Business.TestSuit.Adding
+﻿namespace Trooper.Thorny.Business.TestSuit.Adding
 {
+    using Trooper.Interface.Thorny.Business.Operation.Single;
+
     public class AddingRequirment<TPoco> : BaseRequirment<TPoco>
         where TPoco : class, new()
     {

@@ -44,14 +44,6 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="dotless.Core, Version=1.4.2.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\dotless.1.4.2.0\lib\dotless.Core.dll</HintPath>
@@ -206,6 +198,8 @@
     <Compile Include="Thorny\Business\TestSuit\Adding\AddingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\TestAdding.cs" />
     <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Updating\TestUpdating.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Updating\UpdatingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\WebServiceDeleterMapper.cs" />
     <Compile Include="Thorny\Business\TestSuit\WebServiceReaderMapper.cs" />
     <Compile Include="Thorny\Business\TestSuit\WebServiceCreaterMapper.cs" />
@@ -253,11 +247,11 @@
     <Compile Include="Interface\Thorny\Business\Response\IResponse.cs" />
     <Compile Include="Interface\Thorny\UnitTestBase\IItemGenerator.cs" />
     <Compile Include="Thorny\Business\Response\Message.cs" />
-    <Compile Include="Thorny\UnitTestBase\ItemGenerator.cs" />
-    <Compile Include="Thorny\UnitTestBase\TestDefaultBusinsessOperation.cs" />
-    <Compile Include="Thorny\UnitTestBase\TestBase.cs" />
-    <Compile Include="Thorny\UnitTestBase\TestBusinessOperationBase.cs" />
-    <Compile Include="Thorny\UnitTestBase\TestFacadeBase.cs" />
+    <None Include="Thorny\UnitTestBase\ItemGenerator.cs.bad" />
+    <None Include="Thorny\UnitTestBase\TestDefaultBusinsessOperation.cs.bad" />
+    <None Include="Thorny\UnitTestBase\TestBase.cs.bad" />
+    <None Include="Thorny\UnitTestBase\TestBusinessOperationBase.cs.bad" />
+    <None Include="Thorny\UnitTestBase\TestFacadeBase.cs.bad" />
     <Compile Include="Thorny\Utility\MessageUtility.cs" />
     <Content Include="Docs\StdDocument-HowTo\Model\Document.cs.txt" />
     <Content Include="Docs\StdDocument-HowTo\Model\DocumentContent.cs.txt" />
@@ -369,7 +363,6 @@
     <Compile Include="DynamicServiceHost\MethodInput.cs" />
     <Compile Include="DynamicServiceHost\Paramater.cs" />
     <Compile Include="Utility\Logging.cs" />
-    <Compile Include="Utility\MappingExpressionExtensions.cs" />
     <Compile Include="Utility\ReflectionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
