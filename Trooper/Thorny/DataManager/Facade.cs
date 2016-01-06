@@ -473,7 +473,7 @@
 
             foreach (var item in items ?? Enumerable.Empty<TPoco>())
             {
-                yield return this.ToEnt(item);
+                yield return item == null ? null : this.ToEnt(item);
             }
         }
 

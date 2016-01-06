@@ -814,7 +814,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 		{
 			using (var bp = this.GetBusinessPack())
 			{
-				var responseEnt = this.UpdateSome(bp, bp.Facade.ToEnts(items), identity);
+				var responseEnt = this.UpdateSome(bp, items ==  null ?  null : bp.Facade.ToEnts(items), identity);
 
                 if (!responseEnt.Ok || !bp.Uow.Save(responseEnt))
                 {
@@ -823,7 +823,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
                 return new ManyResponse<TPoco>(responseEnt)
                 {
-                    Items = bp.Facade.ToPocos(responseEnt.Items).ToList()
+                    Items = responseEnt.Items == null ? null : bp.Facade.ToPocos(responseEnt.Items).ToList()
                 };
 			}
 		}
