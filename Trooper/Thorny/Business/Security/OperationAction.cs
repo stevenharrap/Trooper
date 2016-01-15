@@ -30,11 +30,13 @@ namespace Trooper.Thorny.Business.Security
         /// <summary>
         /// Represents all actions that result in change. Testing against this action implies that
         /// you want to know if the user can access any action that results in change. The supplied method
-        /// tests against Add, AddSome, Update, DeleteByKey DeleteSomeByKey
+        /// tests against Add, AddSome, Update, Save, SaveSome, DeleteByKey and DeleteSomeByKey
         /// </summary>
         public const string AllChangeActions = "*Change";
 
 		public const string AllUpdateActions = "*Update";
+
+        public const string AllSaveActions = "*Save";
 
         /// <summary>
         /// Represents all actions that result in reads. Testing against this action implies that
@@ -59,6 +61,10 @@ namespace Trooper.Thorny.Business.Security
         public const string UpdateAction = "Update";
 
 		public const string UpdateSomeAction = "UpdateSome";
+
+        public const string SaveAction = "Save";
+
+        public const string SaveSomeAction = "SaveSome";
 
         /// <summary>
         /// The delete by key action.

@@ -87,9 +87,9 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
 
         IManyResponse<TPoco> GetSome(ISearch search, IIdentity identity);
 
-        IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, bool limit);
+        IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity);
 
-        IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit);
+        IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse);
 
         #endregion
 

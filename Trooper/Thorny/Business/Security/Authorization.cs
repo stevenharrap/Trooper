@@ -1,17 +1,13 @@
-﻿using System.Web.WebPages;
-using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
-using Trooper.Interface.Thorny.Business.Security;
-
-namespace Trooper.Thorny.Business.Security
+﻿namespace Trooper.Thorny.Business.Security
 {
+    using Interface.DataManager;
+    using Operation.Core;
+    using Response;
     using System.Collections.Generic;
     using System.Linq;
-    using Trooper.Thorny.Interface.DataManager;
-    
-    using Trooper.Thorny.Utility;
-    using Trooper.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Thorny.Business.Response;
+    using Trooper.Interface.Thorny.Business.Security;
+    using Utility;
 
     public class Authorization<TPoco> : IAuthorization<TPoco>
         where TPoco : class
@@ -41,7 +37,9 @@ namespace Trooper.Thorny.Business.Security
 					OperationAction.GetSomeAction,
 					OperationAction.IsAllowedAction, 
 					OperationAction.UpdateAction,
-					OperationAction.UpdateSomeAction
+					OperationAction.UpdateSomeAction,
+                    OperationAction.SaveAction,
+                    OperationAction.SaveSomeAction
 				};
             }
         }
@@ -74,10 +72,17 @@ namespace Trooper.Thorny.Business.Security
                 || action == OperationAction.UpdateSomeAction;
         }
 
+        public virtual bool IsSaveAction(string action)
+        {
+            return action == OperationAction.SaveAction
+                || action == OperationAction.SaveSomeAction;
+        }
+
         public virtual bool IsChangeAction(string action)
         {
             return this.IsAddDataAction(action)
                 || this.IsUpdateAction(action)
+                || this.IsSaveAction(action)
                 || this.IsRemoveDataAction(action);
         }
 
@@ -164,6 +169,10 @@ namespace Trooper.Thorny.Business.Security
                         behaviours.Where(action => this.IsUpdateAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
                         break;
+                    case OperationAction.AllSaveActions:
+                        behaviours.Where(action => this.IsSaveAction(action.Action)).ToList()
+                            .ForEach(action => action.Allow = behaviour.Allow);
+                        break;
                     case OperationAction.AllReadActions:
                         behaviours.Where(action => this.IsReadAction(action.Action)).ToList()
                             .ForEach(action => action.Allow = behaviour.Allow);
@@ -186,13 +195,10 @@ namespace Trooper.Thorny.Business.Security
                 response.Messages = new List<Message>();
 
                 MessageUtility.Errors.Add(
-                string.Format(
-                    "The user {0} is not allowed to perform action {1}.",
-                    credential.Username,
-                    arg.Action),
-                BusinessCore.UserDeniedCode,
-                null,
-                response);
+                    $"The user {credential.Username} is not allowed to perform action {arg.Action}.",
+                    BusinessCore.UserDeniedCode,
+                    null,
+                    response);
             }
 
             return allowed;

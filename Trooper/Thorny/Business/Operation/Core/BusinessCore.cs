@@ -6,31 +6,282 @@
 
 namespace Trooper.Thorny.Business.Operation.Core
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using Response;
-	using Security;
-	using Interface.DataManager;
-	using Utility;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Response;
+    using Security;
+    using Interface.DataManager;
+    using Utility;
     using System;
     using Trooper.Utility;
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Interface.Thorny.Business.Security;
+    using Step;
 
     public class BusinessCore<TEnt, TPoco> : BusinessCore, IBusinessCore<TEnt, TPoco> 
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        private static List<Guid> sessions = new List<Guid>();
+        #region private fields ==========================================================
+        
+        private static List<IBusinessProcessStep<TEnt, TPoco>> addingPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new IsIdentityValidStep<TEnt, TPoco>(),
+            new IsIdentityAllowedStep<TEnt, TPoco>(),
+            new IsDataValidStep<TEnt, TPoco>(),
+            new DataExistsStep<TEnt, TPoco>()
+        };
 
-        public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;        
+        private static List<IBusinessProcessStep<TEnt, TPoco>> addingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new AddDataStep<TEnt, TPoco>()
+        };
 
-        #region Methods
+        private static List<IBusinessProcessStep<TEnt, TPoco>> defaultAllowedPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new IsIdentityValidStep<TEnt, TPoco>(),
+            new IsIdentityAllowedStep<TEnt, TPoco>()
+        };
 
-        #region public
+        private static List<IBusinessProcessStep<TEnt, TPoco>> defaultAllowedAndDataValidPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new IsIdentityValidStep<TEnt, TPoco>(),
+            new IsIdentityAllowedStep<TEnt, TPoco>(),
+            new IsDataValidStep<TEnt, TPoco>(),
+        };
 
-        #region GetBusinessPack
+        private static List<IBusinessProcessStep<TEnt, TPoco>> isAllowedSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new IsAllowedStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> getSessionSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new GetSessionStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> deletingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new DeleteDataStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingAllSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new GetAllDataStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingSomePreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new IsIdentityValidStep<TEnt, TPoco>(),
+            new IsIdentityAllowedStep<TEnt, TPoco>(),
+            new IsSearchValidStep<TEnt, TPoco>(),
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingSomeSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new GetSomeStep<TEnt, TPoco>()
+        };
+        
+        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingByKeySteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new GetDataByKeyStep<TEnt, TPoco>()
+        };        
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> existsByKeySteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new ExistsByKeyStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> updatingPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new IsIdentityValidStep<TEnt, TPoco>(),
+            new IsIdentityAllowedStep<TEnt, TPoco>(),
+            new IsDataValidStep<TEnt, TPoco>(),
+            new NoDataExistsStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> updatingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new UpdatingDataStep<TEnt, TPoco>()
+        };
+
+        private static List<IBusinessProcessStep<TEnt, TPoco>> savingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        {
+            new SaveDataStep<TEnt, TPoco>()
+        };
+
+        #endregion
+
+        #region public properties =======================================================
+
+        public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> AddingPreSteps
+        {
+            get
+            {
+                return addingPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> AddingSteps
+        {
+            get
+            {
+                return addingSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> IsAllowedPreSteps
+        {
+            get
+            {
+                return defaultAllowedPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> IsAllowedSteps
+        {
+            get
+            {
+                return isAllowedSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GetSessionPreSteps
+        {
+            get
+            {
+                return defaultAllowedPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GetSessionSteps
+        {
+            get
+            {
+                return getSessionSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> DeletingPreSteps
+        {
+            get
+            {
+                return defaultAllowedPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> DeletingSteps
+        {
+            get
+            {
+                return deletingSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingAllPreSteps
+        {
+            get
+            {
+                return defaultAllowedPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingAllSteps
+        {
+            get
+            {
+                return gettingAllSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingSomePreSteps
+        {
+            get
+            {
+                return gettingSomePreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingByKeySteps
+        {
+            get
+            {
+                return gettingByKeySteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingByKeyPreSteps
+        {
+            get
+            {
+                return defaultAllowedAndDataValidPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingSomeSteps
+        {
+            get
+            {
+                return gettingSomeSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> ExistsByKeyPreSteps
+        {
+            get
+            {
+                return defaultAllowedAndDataValidPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> ExistsByKeySteps
+        {
+            get
+            {
+                return existsByKeySteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> UpdatingPreSteps
+        {
+            get
+            {
+                return updatingPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> UpdatingSteps
+        {
+            get
+            {
+                return updatingSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> SavingPreSteps
+        {
+            get
+            {
+                return defaultAllowedAndDataValidPreSteps;
+            }
+        }
+
+        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> SavingSteps
+        {
+            get
+            {
+                return savingSteps;
+            }
+        }
+
+        #endregion
+
+        #region public Methos ===========================================================
+
+        #region GetBusinessPack -----------------------------------------------------------
 
         public IBusinessPack<TEnt, TPoco> GetBusinessPack()
         {
@@ -44,7 +295,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #endregion
 
-        #region Add
+        #region Add -----------------------------------------------------------------------
 
         public IAddResponse<TPoco> Add(TPoco item, IIdentity identity)
         {
@@ -74,57 +325,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IAddResponse<TEnt> Add(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<AddResponse<TEnt>>(priorResponse);
-            var prepocessors = this.AddMethodPreprocessors(businessPack, item, identity, response);
-            var processors = this.AddMethodProcessors(businessPack, item, response);
-
-            this.InvokeProcessors(response, prepocessors, processors);
+            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.AddAction };
+            
+            this.InvokeSteps(
+                businessPack, argument, item, identity, response,
+                this.AddingPreSteps, this.AddingSteps);
 
             return response;
-        }
-
-        protected virtual IEnumerable<Process> AddMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse response)
-        {
-            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.AddAction };
-
-            return new List<Process>
-            {                
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, item, response)),
-                new Process(nameof(businessPack.Facade.Exists), () =>
-                {
-                    if (businessPack.Facade.Exists(item))
-                    {
-                        var errorMessage = string.Format("The item ({0}) already exists.", typeof(TEnt));
-
-                        MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
-                    }
-                })
-            };
-        }
-
-        protected virtual IEnumerable<Process> AddMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, AddResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.Add), () => {
-                    var added = businessPack.Facade.Add(item);
-
-                    if (added == null)
-                    {
-                        var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(TEnt));
-
-                        MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
-                    }
-
-                    response.Item = added;
-                })
-            };
-        }
+        }        
 
         #endregion
 
-        #region AddSome
+        #region AddSome -------------------------------------------------------------------
 
         public IAddSomeResponse<TPoco> AddSome(IEnumerable<TPoco> items, IIdentity identity)
         {
@@ -154,52 +366,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IAddSomeResponse<TEnt> AddSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<AddSomeResponse<TEnt>>(priorResponse);
-            var prepocessors = this.AddSomeMethodPreprocessors(businessPack, items, identity, response);
-            var processors = this.AddSomeMethodProcessors(businessPack, items, response);
-
-            this.InvokeProcessors(response, prepocessors, processors);
-
-            return response;
-        }
-
-        protected virtual IEnumerable<Process> AddSomeMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
             var argument = new RequestArg<TPoco>(items) { Action = OperationAction.AddSomeAction };
 
-            return new List<Process>
-            {
-                new Process(nameof(IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(IsDataValid), () => this.IsDataValid(businessPack, items, response)),
-                new Process(nameof(businessPack.Facade.Exists), () =>
-                {
-                    if (items.Any(item => businessPack.Facade.Exists(item)))
-                    {
-                        var errorMessage = string.Format("The item ({0}) already exists.", typeof(TEnt));
+            this.InvokeSteps(
+                businessPack, argument, items, identity, response,
+                this.AddingPreSteps, this.AddingSteps);
 
-                        MessageUtility.Errors.Add(errorMessage, AddFailedCode, response);
-                    }
-                }),
-                
-            };
-        }
-
-        protected virtual IEnumerable<Process> AddSomeMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, AddSomeResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.AddSome), () => 
-                {
-                    var added = businessPack.Facade.AddSome(items);
-
-                    response.Items = added;
-                })
-            };
-        }
+            return response;
+        }        
 
         #endregion
 
-        #region IsAllowed
+        #region IsAllowed -----------------------------------------------------------------
 
         public ISingleResponse<bool> IsAllowed(IRequestArg<TPoco> argument, IIdentity identity)
         {
@@ -217,40 +395,17 @@ namespace Trooper.Thorny.Business.Operation.Core
         public ISingleResponse<bool> IsAllowed(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SingleResponse<bool>>(priorResponse);
-            var prepocessors = this.GetIsAllowedPreprocessors(businessPack, argument, identity, response);
-            var processors = this.GetIsAllowedProcessors(businessPack, argument, identity, response);
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, identity, response,
+                this.IsAllowedPreSteps, this.IsAllowedSteps);
 
             return response;
         }
 
-        protected virtual IEnumerable<Process> GetIsAllowedPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> GetIsAllowedProcessors(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, SingleResponse<bool> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Authorization.IsAllowed), () =>
-                {
-                    var testArg = new RequestArg<TPoco> { Action = argument.Action };
-                    var testOutcome = businessPack.Authorization.IsAllowed(testArg, identity);
-
-                    response.Item = testOutcome;
-                })
-            };
-        }
-        
         #endregion
 
-        #region GetSession
+        #region GetSession ----------------------------------------------------------------
 
         public ISingleResponse<Guid> GetSession(IIdentity identity)
         {
@@ -268,44 +423,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public virtual ISingleResponse<Guid> GetSession(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse) 
         {
             var response = MakeResponse<SingleResponse<Guid>>(priorResponse);
-            var prepocessors = this.GetSessionMethodPreprocessors(businessPack, identity, response);
-            var processors = this.GetSessionMethodProcessors(businessPack, response);
+            var argument = new RequestArg<TPoco> { Action = OperationAction.GetSession };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, identity, response,
+                this.GetSessionPreSteps, this.GetSessionSteps);
 
             return response;
         }
 
-        protected virtual IEnumerable<Process> GetSessionMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse response)
-        {
-            var arg = new RequestArg<TPoco> { Action = OperationAction.GetSession };
-
-            return new List<Process>
-            {                
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, arg, identity, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> GetSessionMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, SingleResponse<Guid> response)
-        {
-            //Todo: implement this properly!!
-            return new List<Process>
-            {
-                new Process("???", () =>
-                {
-                    var session = System.Guid.NewGuid();
-
-                    sessions.Add(session);
-                    response.Item = session;
-                })
-            };
-        }
-
-
         #endregion
 
-        #region DeleteByKey
+        #region DeleteByKey ---------------------------------------------------------------
 
         public IResponse DeleteByKey(TPoco item, IIdentity identity)
         {
@@ -330,43 +459,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IResponse DeleteByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<Response>(priorResponse);
-            var prepocessors = this.DeleteByKeyMethodPreprocessors(businessPack, item, identity, response);
-            var processors = this.DeleteByKeyMethodProcessors(businessPack, item, response);
+            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.DeleteByKeyAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, item, identity, response,
+                this.DeletingPreSteps, this.DeletingSteps);
 
             return response;
-        }
-
-        protected virtual IEnumerable<Process> DeleteByKeyMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse response)
-        {
-            var arg = new RequestArg<TPoco>(item) { Action = OperationAction.DeleteByKeyAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, arg, identity, response))
-            }; 
-        }
-
-        protected virtual IEnumerable<Process> DeleteByKeyMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, Response response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.Delete), () => 
-                {
-                    if (!businessPack.Facade.Delete(item))
-                    {
-                        var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
-                        MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
-                    }
-                })
-            };
-        }
+        }       
 
         #endregion
 
-        #region DeleteSomeByKey
+        #region DeleteSomeByKey -----------------------------------------------------------
 
         public IResponse DeleteSomeByKey(IEnumerable<TPoco> items, IIdentity identity)
         {
@@ -390,43 +494,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IResponse DeleteSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<Response>(priorResponse);
-            var prepocessors = this.DeleteSomeByKeyMethodPreprocessors(businessPack, items, identity, response);
-            var processors = this.DeleteSomeByKeyMethodProcessors(businessPack, items, response);
+            var argument = new RequestArg<TPoco>(items) { Action = OperationAction.DeleteSomeByKeyAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, items, identity, response,
+                this.DeletingPreSteps, this.DeletingSteps);
 
             return response;
-        }
-
-        protected virtual IEnumerable<Process> DeleteSomeByKeyMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            var arg = new RequestArg<TPoco>(items) { Action = OperationAction.DeleteSomeByKeyAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, arg, identity, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> DeleteSomeByKeyMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, Response response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.DeleteSome), () =>
-                {
-                    if (!businessPack.Facade.DeleteSome(items))
-                    {
-                        var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));
-                        MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
-                    }
-                })
-            };
-        }
+        }        
 
         #endregion
 
-        #region GetAll
+        #region GetAll --------------------------------------------------------------------
 
         public IManyResponse<TPoco> GetAll(IIdentity identity)
         {
@@ -451,38 +530,19 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IManyResponse<TEnt> GetAll(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<ManyResponse<TEnt>>(priorResponse);
-            var prepocessors = this.GetAllMethodPreprocessors(businessPack, identity, response);
-            var processors = this.GetAllMethodProcessors(businessPack, response);
+            var argument = new RequestArg<TPoco> { Action = OperationAction.GetAllAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, identity, response,
+                this.GettingAllPreSteps, this.GettingAllSteps);
 
-            return response;            
+            return response;
         }
 
-        protected virtual IEnumerable<Process> GetAllMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse response)
-        {
-            var arg = new RequestArg<TPoco> { Action = OperationAction.GetAllAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, arg, identity, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> GetAllMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, ManyResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.GetAll), () => {
-                    response.Items = businessPack.Facade.GetAll().ToList();
-                })
-            };
-        }
 
         #endregion
 
-        #region GetSome        
+        #region GetSome -------------------------------------------------------------------   
 
         public IEnumerable<ClassMapping> GetSearches(IBusinessPack<TEnt, TPoco> businessPack)
         {
@@ -493,7 +553,7 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             using (var bp = this.GetBusinessPack())
             {
-                var responseEnt = this.GetSome(bp, search, identity, true);
+                var responseEnt = this.GetSome(bp, search, identity);
                 var responsePoco = new ManyResponse<TPoco>(responseEnt)
                 {
                     Items = bp.Facade.ToPocos(responseEnt.Items).ToList()
@@ -503,69 +563,27 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        public IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, bool limit)
+        public IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity)
         {
-            return this.GetSome(businessPack, search, identity, null, limit);
+            return this.GetSome(businessPack, search, identity, null);
         }
 
-        public IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse, bool limit)
+        public IManyResponse<TEnt> GetSome(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<ManyResponse<TEnt>>(priorResponse);
-            var prepocessors = this.GetSomeMethodPreprocessors(businessPack, search, identity, response);
-            var processors = this.GetSomeMethodProcessors(businessPack, search, response, limit);
-
-            this.InvokeProcessors(response, prepocessors, processors);
-
-            return response;
-        }
-
-        protected virtual IEnumerable<Process> GetSomeMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, IIdentity identity, IResponse response)
-        {
             //Todo: validate search method
             var argument = new RequestArg<TPoco> { Action = OperationAction.GetSomeAction, Search = search };
 
-            return new List<Process>
-            {
-                new Process("IsSearchNull", () => {
-                    if (search == null)
-                    {
-                        MessageUtility.Errors.Add("The search has not been supplied.", InvalidSearchCode, response);
-                    }
-                }),
-                new Process(nameof(businessPack.Facade.IsSearchAllowed), () =>
-                {
-                    if (!businessPack.Facade.IsSearchAllowed(search))
-                    {
-                        MessageUtility.Errors.Add("The search type cannot be used for searching.", DeniedSearchCode, response);
-                    }
-                }),
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response))
-            };            
+            this.InvokeSteps(
+                businessPack, argument, search, identity, response,
+                this.GettingSomePreSteps, this.GettingSomeSteps);
+
+            return response;
         }
-
-        protected virtual IEnumerable<Process> GetSomeMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, ISearch search, ManyResponse<TEnt> response, bool limit)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.GetSome), () => {
-                    var some = businessPack.Facade.GetSome(search);
-
-                    if (limit)
-                    {
-                        response.Items = businessPack.Facade.Limit(some, search).ToList();
-                    }
-                    else
-                    {
-                        response.Items = some.ToList();
-                    }
-                })
-            };
-        }
-
+        
         #endregion
 
-        #region GetByKey
+        #region GetByKey ------------------------------------------------------------------
 
         public ISingleResponse<TPoco> GetByKey(TPoco item, IIdentity identity)
         {
@@ -588,45 +606,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public ISingleResponse<TEnt> GetByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SingleResponse<TEnt>>(priorResponse);
-            var prepocessors = this.GetByKeyMethodPreprocessors(businessPack, item, identity, response);
-            var processors = this.GetByKeyMethodProcessors(businessPack, item, response);
-
-            this.InvokeProcessors(response, prepocessors, processors);
-
-            return response;
-        }
-
-        protected virtual IEnumerable<Process> GetByKeyMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse response)
-        {
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.GetSomeAction };
 
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, item, response))
-            };
-        }
+            this.InvokeSteps(
+                businessPack, argument, item, identity, response,
+                this.GettingByKeyPreSteps, this.GettingByKeySteps);
 
-        protected virtual IEnumerable<Process> GetByKeyMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, SingleResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.GetByKey), () => {
-                    response.Item = businessPack.Facade.GetByKey(item);
-
-                    if (response.Item == null)
-                    {
-                        var errorMessage = string.Format("The ({0}) could not be found.", typeof(TEnt));
-                        MessageUtility.Errors.Add(errorMessage, NoRecordCode, item, null, response);
-                    }
-                })
-            };
-        }
+            return response;
+        }        
 
         #endregion
 
-        #region GetSomeByKey
+        #region GetSomeByKey --------------------------------------------------------------
 
         public IManyResponse<TPoco> GetSomeByKey(IEnumerable<TPoco> items, IIdentity identity)
 		{
@@ -649,39 +640,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IManyResponse<TEnt> GetSomeByKey(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<ManyResponse<TEnt>>(priorResponse);
-            var prepocessors = this.GetSomeByKeyMethodPreprocessors(businessPack, items, identity, response);
-            var processors = this.GetSomeByKeyMethodProcessors(businessPack, items, response);
+            var argument = new RequestArg<TPoco>(items) { Action = OperationAction.GetSomeByKeyAction };            
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, items, identity, response,
+                this.GettingByKeyPreSteps, this.GettingByKeySteps);
 
             return response;
-        }
-
-        protected virtual IEnumerable<Process> GetSomeByKeyMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            var argument = new RequestArg<TPoco>(items) { Action = OperationAction.GetSomeByKeyAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, items, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> GetSomeByKeyMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, ManyResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.GetSomeByKey), () => {
-                    response.Items = businessPack.Facade.GetSomeByKey(items).ToList();
-                })
-            };
         }
         
         #endregion
 
-        #region ExistsByKey
+        #region ExistsByKey ---------------------------------------------------------------
 
         public ISingleResponse<bool> ExistsByKey(TPoco item, IIdentity identity)
         {
@@ -699,40 +669,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public ISingleResponse<bool> ExistsByKey(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SingleResponse<bool>>(priorResponse);
-            var prepocessors = this.ExistsByKeyMethodPreprocessors(businessPack, item, identity, response);
-            var processors = this.ExistsByKeyMethodProcessors(businessPack, item, response);
+            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.ExistsByKeyAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, item, identity, response,
+                this.ExistsByKeyPreSteps, this.ExistsByKeySteps);
 
-            return response;
-        }
-
-        protected virtual IEnumerable<Process> ExistsByKeyMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse response)
-        {
-            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.GetSomeAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, item, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> ExistsByKeyMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, SingleResponse<bool> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.GetByKey), () => {
-                    var result = businessPack.Facade.GetByKey(item);
-                    response.Item = result != null;
-                })
-            };
-        }
+            return response;            
+        }        
 
         #endregion
 
-        #region Update
+        #region Update --------------------------------------------------------------------
 
         public ISingleResponse<TPoco> Update(TPoco item, IIdentity identity)
         {
@@ -760,55 +708,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public ISingleResponse<TEnt> Update(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SingleResponse<TEnt>>(priorResponse);
-            var prepocessors = this.UpdateMethodPreprocessors(businessPack, item, identity, response);
-            var processors = this.UpdateMethodProcessors(businessPack, item, response);
+            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.UpdateAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, item, identity, response,
+                this.UpdatingPreSteps, this.UpdatingSteps);
 
             return response;
         }
 
-        protected virtual IEnumerable<Process> UpdateMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse response)
-        {
-            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.UpdateAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, item, response)),
-                new Process(nameof(businessPack.Facade.Exists), () =>
-                {
-                    if (!businessPack.Facade.Exists(item))
-                    {
-                        var errorMessage = string.Format("The item ({0}) does not exist.", typeof(TEnt));
-
-                        MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
-                    }
-                })
-            };
-        }
-
-        protected virtual IEnumerable<Process> UpdateMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, SingleResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.Update), () => {
-                    response.Item = businessPack.Facade.Update(item);
-
-                    if (response.Item == null)
-                    {
-                        var errorMessage = string.Format("The item ({0}) could not be updated.", typeof(TEnt));
-
-                        MessageUtility.Errors.Add(errorMessage, UpdatFailedCode, response);
-                    }
-                })
-            };
-        }
-
         #endregion
 
-        #region UpdateSome
+        #region UpdateSome ----------------------------------------------------------------
 
         public IManyResponse<TPoco> UpdateSome(IEnumerable<TPoco> items, IIdentity identity)
 		{
@@ -836,76 +747,24 @@ namespace Trooper.Thorny.Business.Operation.Core
         public IManyResponse<TEnt> UpdateSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<ManyResponse<TEnt>>(priorResponse);
-            var prepocessors = this.UpdateSomeMethodPreprocessors(businessPack, items, identity, response);
-            var processors = this.UpdateSomeMethodProcessors(businessPack, items, response);
+            var argument = new RequestArg<TPoco>(items) { Action = OperationAction.UpdateAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, items, identity, response,
+                this.UpdatingPreSteps, this.UpdatingSteps);
 
             return response;
         }
-
-        protected virtual IEnumerable<Process> UpdateSomeMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => 
-                {
-                        items.All(i => {
-                            var argument = new RequestArg<TPoco>(i) { Action = OperationAction.UpdateAction };
-                            this.IsIdentityAllowed(businessPack, argument, identity, response);
-                            return response.Ok; });
-                }),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, items, response)),
-                new Process(nameof(businessPack.Facade.Exists), () => 
-                {
-                    items.All(i => {
-                        if (!businessPack.Facade.Exists(i))
-                        {
-                            var errorMessage = string.Format("The item ({0}) does not exist.", typeof(TEnt));
-
-                            MessageUtility.Errors.Add(errorMessage, NoRecordCode, response);
-                            return false;
-                        }
-
-                        return true;
-                    });
-                })
-            };
-        }
-
-        protected virtual IEnumerable<Process> UpdateSomeMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, ManyResponse<TEnt> response)
-        {
-            return new List<Process>
-            {
-                new Process(nameof(businessPack.Facade.Update), () => 
-                {
-                    response.Items = items.Select(i => 
-                    {
-                        var item = businessPack.Facade.Update(i);
-
-                        if (item == null)
-                        {
-                            var errorMessage = string.Format("The item ({0}) could not be updated.", typeof(TEnt));
-
-                            MessageUtility.Errors.Add(errorMessage, UpdatFailedCode, response);
-                        }
-
-                        return item;
-                    }).ToList();
-                })
-            };
-        }
-
+        
         #endregion
 
-        #region Save
+        #region Save ----------------------------------------------------------------------
 
         public ISaveResponse<TPoco> Save(TPoco item, IIdentity identity)
         {
             using (var bp = this.GetBusinessPack())
             {
-                var responseEnt = this.Save(bp, bp.Facade.ToEnt(item), identity);
+                var responseEnt = this.Save(bp, item == null ? null : bp.Facade.ToEnt(item), identity);
 
                 if (!responseEnt.Ok || !bp.Uow.Save(responseEnt))
                 {
@@ -916,7 +775,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 return new SaveResponse<TPoco>(responseEnt)
                 {
                     Change = responseEnt.Change,
-                    Item = bp.Facade.ToPoco(responseEnt.Item)
+                    Item = responseEnt.Item == null ? null : bp.Facade.ToPoco(responseEnt.Item)
                 };
             }
         }
@@ -929,52 +788,18 @@ namespace Trooper.Thorny.Business.Operation.Core
         public ISaveResponse<TEnt> Save(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SaveResponse<TEnt>>(priorResponse);
-            var exists = item == null ? false : businessPack.Facade.Exists(item);
-            var prepocessors = this.SaveMethodPreprocessors(businessPack, item, identity, response, exists);
-            var processors = this.SaveMethodProcessors(businessPack, item, response, exists);
+            var argument = new RequestArg<TPoco>(item) { Action = OperationAction.SaveAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, item, identity, response,
+                this.SavingPreSteps, this.SavingSteps);
 
             return response;
         }
-
-        protected virtual IEnumerable<Process> SaveMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IIdentity identity, IResponse response, bool exists)
-        {            
-            var argument = new RequestArg<TPoco>(item) { Action = exists ? OperationAction.UpdateAction : OperationAction.AddAction };
-
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () => this.IsIdentityAllowed(businessPack, argument, identity, response)),
-                new Process(nameof(this.IsDataValid), () => this.IsDataValid(businessPack, item, response))
-            };
-        }
-
-        protected virtual IEnumerable<Process> SaveMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, SaveResponse<TEnt> response, bool exists)
-        {
-            return new List<Process>
-            {
-                new Process(string.Format("{0}or{1}", nameof(businessPack.Facade.Update), nameof(businessPack.Facade.Add)), () => {
-                    response.Item = exists ? businessPack.Facade.Update(item) : businessPack.Facade.Add(item);
-
-                    if (response.Item == null)
-                    {
-                        var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));
-
-                        MessageUtility.Errors.Add(errorMessage, SaveFailedCode, response);
-                        response.Change = SaveChangeType.None;
-                    }
-                    else
-                    {
-                        response.Change = exists ? SaveChangeType.Update : SaveChangeType.Add;
-                    }
-                })
-            };
-        }
-
+        
         #endregion
 
-        #region SaveSome
+        #region SaveSome ------------------------------------------------------------------
 
         public ISaveSomeResponse<TPoco> SaveSome(IEnumerable<TPoco> items, IIdentity identity)
         {
@@ -1002,116 +827,107 @@ namespace Trooper.Thorny.Business.Operation.Core
         public ISaveSomeResponse<TEnt> SaveSome(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse priorResponse)
         {
             var response = MakeResponse<SaveSomeResponse<TEnt>>(priorResponse);
-            var prepocessors = this.SaveSomeMethodPreprocessors(businessPack, items, identity, response);
-            var processors = this.SaveSomeMethodProcessors(businessPack, items, response);
+            var argument = new RequestArg<TPoco>(items) { Action = OperationAction.SaveSomeAction };
 
-            this.InvokeProcessors(response, prepocessors, processors);
+            this.InvokeSteps(
+                businessPack, argument, items, identity, response,
+                this.SavingPreSteps, this.SavingSteps);
 
-            return response;            
+            return response;
         }
-
-        protected virtual IEnumerable<Process> SaveSomeMethodPreprocessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            //Todo: prevent multiple lookups to see that the item exists
-            return new List<Process>
-            {
-                new Process(nameof(this.IsIdentityValid), () => this.IsIdentityValid(businessPack, identity, response)),
-                new Process(nameof(this.IsIdentityAllowed), () =>
-                {
-                    items.All(i => {
-                        var exists = businessPack.Facade.Exists(i);
-                        var argument = new RequestArg<TPoco>(i) { Action = exists ? OperationAction.UpdateAction : OperationAction.AddAction };
-                        this.IsIdentityAllowed(businessPack, argument, identity, response);
-                        return response.Ok; });
-                }),
-                new Process(nameof(this.IsDataValid), () => items.All(i =>
-                {
-                    this.IsDataValid(businessPack, i, response);
-                    return response.Ok;
-                }))
-            };
-        }
-
-        protected virtual IEnumerable<Process> SaveSomeMethodProcessors(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, SaveSomeResponse<TEnt> response)
-        {
-            //Todo: prevent multiple lookups to see that the item exists
-            return new List<Process>
-            {
-                new Process(string.Format("{0}or{1}", nameof(businessPack.Facade.Update), nameof(businessPack.Facade.Add)), () => {
-                    var saved = new List<SaveSomeItem<TEnt>>();
-
-                    items.All(i =>
-                    {
-                        var exists = businessPack.Facade.Exists(i);
-                        var result = new SaveSomeItem<TEnt>
-                        {
-                            Item = exists ? businessPack.Facade.Update(i) : businessPack.Facade.Add(i),
-                            Change = exists ? SaveChangeType.Update : SaveChangeType.Add
-                        };                        
-
-                        if (result.Item == null)
-                        {
-                            var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));
-
-                            MessageUtility.Errors.Add(errorMessage, SaveFailedCode, response);
-                            result.Change = SaveChangeType.None;
-                        }
-
-                        saved.Add(result);                        
-
-                        return response.Ok;
-                    });
-
-                    response.Items = saved; 
-                })
-            };
-        }
-
 
         #endregion
 
-        #endregion
+        #endregion       
 
-        #region protected        
-
-        protected bool InvokeProcessors(IResponse response, params IEnumerable<Process>[] processorList)
-        {
-            foreach (var list in processorList)
-            {
-                list.All(p => { p.Action.Invoke(); return response.Ok; });
-
-                if (!response.Ok)
-                {
-                    return false;
-                }
-            }
-
-            return true; 
-        }        
+        #region private =================================================================
         
-        protected void IsIdentityValid(IBusinessPack<TEnt, TPoco> businessPack, IIdentity identity, IResponse response)
+        private bool InvokeSteps(
+            IBusinessPack<TEnt, TPoco> businessPack,
+            IRequestArg<TPoco> argument,
+            TEnt item,
+            IIdentity identity,
+            IResponse response,
+            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
         {
-            businessPack.Authorization.IsValid(identity, response);
+            foreach (var list in steps)
+                foreach (var step in list)
+                {
+                    step.Execute(businessPack, argument, item, identity, response);
+
+                    if (!response.Ok)
+                    {
+                        return false;
+                    }
+                }
+
+            return true;
         }
 
-        protected void IsIdentityAllowed(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse response)
+        private bool InvokeSteps(
+            IBusinessPack<TEnt, TPoco> businessPack,
+            IRequestArg<TPoco> argument,
+            IEnumerable<TEnt> items,
+            IIdentity identity,
+            IResponse response,
+            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
         {
-            businessPack.Authorization.IsAllowed(argument, identity, response);
-        }        
+            foreach (var list in steps)
+                foreach (var step in list)
+                {
+                    step.Execute(businessPack, argument, items, identity, response);
 
-        protected void IsDataValid(IBusinessPack<TEnt, TPoco> businessPack, TEnt item, IResponse response)
-        {
-            businessPack.Validation.Validate(item, response);
+                    if (!response.Ok)
+                    {
+                        return false;
+                    }
+                }
+
+            return true;
         }
 
-        protected void IsDataValid(IBusinessPack<TEnt, TPoco> businessPack, IEnumerable<TEnt> items, IResponse response)
+        private bool InvokeSteps(
+            IBusinessPack<TEnt, TPoco> businessPack,
+            IRequestArg<TPoco> argument,
+            IIdentity identity,
+            IResponse response,
+            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
         {
-            items.All(i => businessPack.Validation.IsValid(i, response));
+            foreach (var list in steps)
+                foreach (var step in list)
+                {
+                    step.Execute(businessPack, argument, identity, response);
+
+                    if (!response.Ok)
+                    {
+                        return false;
+                    }
+                }
+
+            return true;
         }
 
-        #endregion
+        private bool InvokeSteps(
+            IBusinessPack<TEnt, TPoco> businessPack,
+            IRequestArg<TPoco> argument,
+            ISearch search,
+            IIdentity identity,
+            IResponse response,
+            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
+        {
+            foreach (var list in steps)
+                foreach (var step in list)
+                {
+                    step.Execute(businessPack, argument, search, identity, response);
 
-        #region private
+                    if (!response.Ok)
+                    {
+                        return false;
+                    }
+                }
+
+            return true;
+        }
 
         private static TResponse MakeResponse<TResponse>(IResponse priorResponse)
             where TResponse : class, IResponse, new()
@@ -1126,22 +942,20 @@ namespace Trooper.Thorny.Business.Operation.Core
             return response;
         }
 
-        private static bool ParameterCheck(object data, IIdentity identity, IResponse response)
-        {
-            if (data == null)
-            {
-                MessageUtility.Errors.Add("The item(s) have not been supplied.", InvalidDataCode, response);
-            }
+        //private static bool ParameterCheck(object data, IIdentity identity, IResponse response)
+        //{
+        //    if (data == null)
+        //    {
+        //        MessageUtility.Errors.Add("The item(s) have not been supplied.", InvalidDataCode, response);
+        //    }
 
-            if (identity == null)
-            {
-                MessageUtility.Errors.Add("The identity has not been supplied.", InvalidIdentityCode, response);
-            }
+        //    if (identity == null)
+        //    {
+        //        MessageUtility.Errors.Add("The identity has not been supplied.", InvalidIdentityCode, response);
+        //    }
 
-            return response.Ok;
-        }
-
-        #endregion
+        //    return response.Ok;
+        //}
 
         #endregion
     }
@@ -1158,7 +972,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public const string NoRecordCode = Constants.BusinessCoreErrorCodeRoot + ".NoReocrd";
 
-        public const string UpdatFailedCode = Constants.BusinessCoreErrorCodeRoot + ".UpdateFailed";
+        public const string UpdateFailedCode = Constants.BusinessCoreErrorCodeRoot + ".UpdateFailed";
 
         public const string SaveFailedCode = Constants.BusinessCoreErrorCodeRoot + ".SaveFailed";
 

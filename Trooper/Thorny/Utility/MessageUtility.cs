@@ -27,6 +27,11 @@ namespace Trooper.Thorny.Utility
 
         public static MessageUtility Notes { get; private set; }
 
+        internal void Add(string v, object invalidSearchCode, IResponse response)
+        {
+            throw new NotImplementedException();
+        }
+
         public static MessageUtility Success { get; private set; }
 
         public static MessageUtility Messages(MessageAlertLevel level)
