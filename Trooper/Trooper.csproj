@@ -213,6 +213,8 @@
     <Compile Include="Thorny\Business\TestSuit\BaseRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\AddingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\TestAdding.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Deleting\DeletingRequirement.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Deleting\TestDeleting.cs" />
     <Compile Include="Thorny\Business\TestSuit\Saving\SavingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Saving\TestSaving.cs" />
     <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />

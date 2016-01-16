@@ -14,9 +14,9 @@
     public class TestAddingSomeOutlet : TestAddingSome<Outlet>
     {
         private IContainer container;
-        private AddingRequirment<Outlet> addingRequirement;
+        private AddingRequirement<Outlet> addingRequirement;
 
-        public override Func<AddingRequirment<Outlet>> Requirement
+        public override Func<AddingRequirement<Outlet>> Requirement
         {
             get
             {
@@ -38,7 +38,7 @@
             var deleter = container.Resolve<IOutletBo>();
             var helper = new TestOutletHelper(creater, creater, deleter);
 
-            this.addingRequirement = new AddingRequirment<Outlet>(helper, creater);
+            this.addingRequirement = new AddingRequirement<Outlet>(helper, creater);
         }
 
         [TestFixtureTearDown]

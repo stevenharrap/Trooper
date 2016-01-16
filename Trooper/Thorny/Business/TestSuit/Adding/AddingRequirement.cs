@@ -2,12 +2,12 @@
 {
     using Trooper.Interface.Thorny.Business.Operation.Single;
 
-    public class AddingRequirment<TPoco> : BaseRequirment<TPoco>
+    public class AddingRequirement<TPoco> : BaseRequirment<TPoco>
         where TPoco : class, new()
     {
         public IBusinessCreate<TPoco> Creater { get; }        
 
-        public AddingRequirment(
+        public AddingRequirement(
             TestSuitHelper<TPoco> helper,
             IBusinessCreate<TPoco> creater)
             : base(helper)

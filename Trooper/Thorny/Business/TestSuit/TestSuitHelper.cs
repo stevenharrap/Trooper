@@ -228,7 +228,7 @@
             var items = this.MakeValidItems(required, keyBehavious).ToList();
 
             this.MakeInvalidItems(incNull, items, new List<TPoco>());
-
+            
             return items;
         }
 

@@ -9,7 +9,7 @@
     public abstract class TestAddingSome<TPoco>
         where TPoco : class, new()
     {
-        public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
+        public abstract Func<AddingRequirement<TPoco>> Requirement { get; }
 
         [Test]
         public virtual void HasItems_ItemsAllInvalidAllExist_IdentityIsAllowed_ReportsErrorAndNoChange()

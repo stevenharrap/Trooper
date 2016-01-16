@@ -10,7 +10,7 @@ namespace Trooper.Thorny.Business.TestSuit.Adding
     public abstract class TestAdding<TPoco>
         where TPoco : class, new()
     {
-        public abstract Func<AddingRequirment<TPoco>> Requirement { get; }
+        public abstract Func<AddingRequirement<TPoco>> Requirement { get; }
 
         [Test]
         public virtual void HasItems_ItemIsInvalidExists_IdentityIsAllowed_ReportsErrorAndNoChange()

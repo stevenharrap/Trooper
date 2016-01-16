@@ -9,20 +9,21 @@
     using Thorny.Business.TestSuit.Adding;
     using Interface.Business.Operation;
     using CustomShop.TestSuit.Common;
+    using Thorny.Business.TestSuit.Deleting;
 
     [TestFixture]
-    public class TestAddingOutlet : TestAdding<Outlet>
+    public class TestDeletingOutlet : TestDeleting<Outlet>
     {
         private IContainer container;
-        private AddingRequirement<Outlet> addingRequirement;
+        private DeletingRequirement<Outlet> deletingRequirement;
 
-        public override Func<AddingRequirement<Outlet>> Requirement
+        public override Func<DeletingRequirement<Outlet>> Requirement
         {
             get
             {
                 return () =>
                 {
-                    return this.addingRequirement;
+                    return this.deletingRequirement;
                 };
             }
         }        
@@ -38,7 +39,7 @@
             var deleter = container.Resolve<IOutletBo>();
             var helper = new TestOutletHelper(creater, creater, deleter);
 
-            this.addingRequirement = new AddingRequirement<Outlet>(helper, creater);
+            this.deletingRequirement = new DeletingRequirement<Outlet>(helper, deleter);
         }
 
         [TestFixtureTearDown]
