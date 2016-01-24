@@ -68,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestOutlet\TestGettingAllOutlet.cs" />
+    <Compile Include="TestOutlet\TestSelfOutlet.cs" />
+    <Compile Include="TestOutlet\TestDeletingSomeOutlet.cs" />
     <Compile Include="TestOutlet\TestDeletingOutlet.cs" />
     <Compile Include="TestOutlet\TestSavingOutle.cs" />
     <Compile Include="TestOutlet\TestUpdatingSomeOutlet.cs" />

@@ -20,6 +20,7 @@
     using Trooper.Thorny.Business.Response;
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Utility;
+    using Trooper.Interface.Thorny.DataManager;
 
     public class BusinessModule    
     {
@@ -115,6 +116,15 @@
                 .As<TiValidation>()
                 .As<IValidation<TEnt>>();
             this.validationRegistered = true;
+        }
+
+        public void RegisterCache<TcCache, TiCache>()
+            where TcCache : TiCache, ICache<TEnt, TPoco>, new()
+            where TiCache : ICache<TEnt, TPoco>
+        {
+            builder.Register(c => new TcCache())
+                .As<TiCache>()
+                .As<ICache<TEnt, TPoco>>();
         }
 
         public void RegisterBusinessCore<TcBusinessCore, TiBusinessCore>()
@@ -239,9 +249,17 @@
             var authorization = container.Resolve<IAuthorization<TPoco>>();
             var validation = container.Resolve<IValidation<TEnt>>();
 
+            ICache<TEnt, TPoco> cache = null;
+            container.TryResolve(out cache);
+
             facade.Uow = uow;
             authorization.Uow = uow;
             validation.Uow = uow;
+
+            if (cache != null)
+            {
+                cache.Uow = uow;
+            }
 
             return new BusinessPack<TEnt, TPoco>
             {
@@ -250,7 +268,8 @@
                 Facade = facade,
                 Uow = uow,
                 Validation = validation,
-                Container = container
+                Container = container,
+                Cache = cache
             };
         }
 

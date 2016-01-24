@@ -796,15 +796,6 @@
                     Assert.That(requirement.Helper.ResponseFailsWithError(response, BusinessCore.InvalidIdentityCode));                    
                 }
             }
-        }
-
-        [Test]
-        public void SelfTestHelper()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.SelfTestHelper();
-            }
-        }
+        }        
     }
 }

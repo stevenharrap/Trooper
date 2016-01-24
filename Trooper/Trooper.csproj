@@ -151,6 +151,7 @@
     <Compile Include="Interface\Thorny\Configuration\IBusinessModuleStartParameters.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicOperationService.cs" />
+    <Compile Include="Interface\Thorny\DataManager\ICache.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IHelping.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISavingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISaving.cs" />
@@ -214,9 +215,15 @@
     <Compile Include="Thorny\Business\TestSuit\Adding\AddingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Adding\TestAdding.cs" />
     <Compile Include="Thorny\Business\TestSuit\Deleting\DeletingRequirement.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Deleting\TestDeletingSome.cs" />
     <Compile Include="Thorny\Business\TestSuit\Deleting\TestDeleting.cs" />
     <Compile Include="Thorny\Business\TestSuit\Saving\SavingRequirement.cs" />
     <Compile Include="Thorny\Business\TestSuit\Saving\TestSaving.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Selecting\SelectingRequirement.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Selecting\TestGettingByKey.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Selecting\TestGettingAll.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Self\SelfRequirement.cs" />
+    <Compile Include="Thorny\Business\TestSuit\Self\TestSelf.cs" />
     <Compile Include="Thorny\Business\TestSuit\TestSuitHelper.cs" />
     <Compile Include="Thorny\Business\TestSuit\Updating\TestUpdating.cs" />
     <Compile Include="Thorny\Business\TestSuit\Updating\TestUpdatingSome.cs" />

@@ -480,14 +480,5 @@
                     }
             }
         }
-
-        [Test]
-        public void SelfTestHelper()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.SelfTestHelper();
-            }
-        }
     }
 }

@@ -406,14 +406,5 @@ namespace Trooper.Thorny.Business.TestSuit.Updating
                     }
             }
         }
-
-        [Test]
-        public void SelfTestHelper()
-        {
-            using (var requirement = this.Requirement())
-            {
-                requirement.Helper.SelfTestHelper();
-            }
-        }
     }
 }

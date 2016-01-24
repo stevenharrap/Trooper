@@ -1,11 +1,12 @@
-﻿using System;
-using Trooper.Thorny.Interface.DataManager;
-using Trooper.Interface.Thorny.Business.Security;
-using Autofac;
-
-namespace Trooper.Interface.Thorny.Business.Operation.Core
+﻿namespace Trooper.Interface.Thorny.Business.Operation.Core
 {
-	public interface IBusinessPack<TEnt, TPoco> : IDisposable
+    using System;
+    using Trooper.Thorny.Interface.DataManager;
+    using Security;
+    using Autofac;
+    using DataManager;
+
+    public interface IBusinessPack<TEnt, TPoco> : IDisposable
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
@@ -16,6 +17,8 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         IValidation<TEnt> Validation { get; set; }
 
         IFacade<TEnt, TPoco> Facade { get; set; }
+
+        ICache<TEnt, TPoco> Cache { get; set; }
 
         IUnitOfWork Uow { get; set; }
 

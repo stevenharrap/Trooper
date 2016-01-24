@@ -514,7 +514,7 @@ namespace Trooper.Thorny.Business.Operation.Core
                 var responseEnt = this.GetAll(bp, identity);
                 var responsePoco = new ManyResponse<TPoco>(responseEnt)
                 {
-                    Items = bp.Facade.ToPocos(responseEnt.Items).ToList()
+                    Items = responseEnt.Items == null ? null : bp.Facade.ToPocos(responseEnt.Items).ToList()
                 };
                 
 

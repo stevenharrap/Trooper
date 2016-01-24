@@ -1,15 +1,10 @@
-﻿using Trooper.Interface.Thorny.Business.Operation.Core;
-using Trooper.Interface.Thorny.Business.Security;
-
-namespace Trooper.Thorny.Business.Operation.Core
+﻿namespace Trooper.Thorny.Business.Operation.Core
 {
     using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trooper.Thorny.Interface.DataManager;
+    using Trooper.Interface.Thorny.DataManager;
+    using Interface.DataManager;
+    using Trooper.Interface.Thorny.Business.Operation.Core;
+    using Trooper.Interface.Thorny.Business.Security;
 
     public class BusinessPack<TEnt, TPoco> : IBusinessPack<TEnt, TPoco>
         where TEnt : class, TPoco, new()
@@ -22,6 +17,8 @@ using Trooper.Thorny.Interface.DataManager;
         public IValidation<TEnt> Validation { get; set; }
 
         public IFacade<TEnt, TPoco> Facade { get; set; }
+
+        public ICache<TEnt, TPoco> Cache { get; set; }
 
         public IUnitOfWork Uow { get; set; }
 
