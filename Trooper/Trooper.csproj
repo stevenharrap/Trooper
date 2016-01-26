@@ -143,7 +143,8 @@
     <Compile Include="DynamicServiceHost\Exceptions\HostBuilderValidateHostInfoException.cs" />
     <Compile Include="DynamicServiceHost\Property.cs" />
     <Compile Include="Interface\DynamicServiceHost\IDynamicHostInfo.cs" />
-    <Compile Include="Interface\Thorny\Business\Operation\Core\IBusinessProcessStep.cs" />
+    <Compile Include="Interface\Thorny\Business\Operation\Core\IStepInfo.cs" />
+    <Compile Include="Interface\Thorny\Business\Operation\Core\IStep.cs" />
     <Compile Include="Interface\Thorny\Business\Operation\Single\IBusinessSave.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IBehaviour.cs" />
     <Compile Include="Interface\Thorny\Business\Security\IRole.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Thorny\Business\Operation\Core\BusinessPackEventArgs.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\NoDataExistsStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\SaveDataStep.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\Step\StepInfo.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\UpdatingDataStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\ExistsByKeyStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\GetDataByKeyStep.cs" />

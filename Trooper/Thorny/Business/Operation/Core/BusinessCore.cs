@@ -25,7 +25,7 @@ namespace Trooper.Thorny.Business.Operation.Core
     {
         #region private fields ==========================================================
         
-        private static List<IBusinessProcessStep<TEnt, TPoco>> addingPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> addingPreSteps = new List<IStep<TEnt, TPoco>>
         {
             new IsIdentityValidStep<TEnt, TPoco>(),
             new IsIdentityAllowedStep<TEnt, TPoco>(),
@@ -33,67 +33,67 @@ namespace Trooper.Thorny.Business.Operation.Core
             new DataExistsStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> addingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> addingSteps = new List<IStep<TEnt, TPoco>>
         {
             new AddDataStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> defaultAllowedPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> defaultAllowedPreSteps = new List<IStep<TEnt, TPoco>>
         {
             new IsIdentityValidStep<TEnt, TPoco>(),
             new IsIdentityAllowedStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> defaultAllowedAndDataValidPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> defaultAllowedAndDataValidPreSteps = new List<IStep<TEnt, TPoco>>
         {
             new IsIdentityValidStep<TEnt, TPoco>(),
             new IsIdentityAllowedStep<TEnt, TPoco>(),
             new IsDataValidStep<TEnt, TPoco>(),
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> isAllowedSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> isAllowedSteps = new List<IStep<TEnt, TPoco>>
         {
             new IsAllowedStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> getSessionSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> getSessionSteps = new List<IStep<TEnt, TPoco>>
         {
             new GetSessionStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> deletingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> deletingSteps = new List<IStep<TEnt, TPoco>>
         {
             new DeleteDataStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingAllSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> gettingAllSteps = new List<IStep<TEnt, TPoco>>
         {
             new GetAllDataStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingSomePreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> gettingSomePreSteps = new List<IStep<TEnt, TPoco>>
         {
             new IsIdentityValidStep<TEnt, TPoco>(),
             new IsIdentityAllowedStep<TEnt, TPoco>(),
             new IsSearchValidStep<TEnt, TPoco>(),
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingSomeSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> gettingSomeSteps = new List<IStep<TEnt, TPoco>>
         {
             new GetSomeStep<TEnt, TPoco>()
         };
         
-        private static List<IBusinessProcessStep<TEnt, TPoco>> gettingByKeySteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> gettingByKeySteps = new List<IStep<TEnt, TPoco>>
         {
             new GetDataByKeyStep<TEnt, TPoco>()
         };        
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> existsByKeySteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> existsByKeySteps = new List<IStep<TEnt, TPoco>>
         {
             new ExistsByKeyStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> updatingPreSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> updatingPreSteps = new List<IStep<TEnt, TPoco>>
         {
             new IsIdentityValidStep<TEnt, TPoco>(),
             new IsIdentityAllowedStep<TEnt, TPoco>(),
@@ -101,12 +101,12 @@ namespace Trooper.Thorny.Business.Operation.Core
             new NoDataExistsStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> updatingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> updatingSteps = new List<IStep<TEnt, TPoco>>
         {
             new UpdatingDataStep<TEnt, TPoco>()
         };
 
-        private static List<IBusinessProcessStep<TEnt, TPoco>> savingSteps = new List<IBusinessProcessStep<TEnt, TPoco>>
+        private static List<IStep<TEnt, TPoco>> savingSteps = new List<IStep<TEnt, TPoco>>
         {
             new SaveDataStep<TEnt, TPoco>()
         };
@@ -117,7 +117,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         public event BusinessPackHandler<TEnt, TPoco> OnRequestBusinessPack;
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> AddingPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> AddingPreSteps
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> AddingSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> AddingSteps
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> IsAllowedPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> IsAllowedPreSteps
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> IsAllowedSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> IsAllowedSteps
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GetSessionPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GetSessionPreSteps
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GetSessionSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GetSessionSteps
         {
             get
             {
@@ -165,7 +165,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> DeletingPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> DeletingPreSteps
         {
             get
             {
@@ -173,7 +173,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> DeletingSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> DeletingSteps
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingAllPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GettingAllPreSteps
         {
             get
             {
@@ -189,7 +189,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingAllSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GettingAllSteps
         {
             get
             {
@@ -197,7 +197,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingSomePreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GettingSomePreSteps
         {
             get
             {
@@ -205,7 +205,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingByKeySteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GettingByKeySteps
         {
             get
             {
@@ -213,7 +213,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingByKeyPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GettingByKeyPreSteps
         {
             get
             {
@@ -221,7 +221,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> GettingSomeSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> GettingSomeSteps
         {
             get
             {
@@ -229,7 +229,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> ExistsByKeyPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> ExistsByKeyPreSteps
         {
             get
             {
@@ -237,7 +237,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> ExistsByKeySteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> ExistsByKeySteps
         {
             get
             {
@@ -245,7 +245,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> UpdatingPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> UpdatingPreSteps
         {
             get
             {
@@ -253,7 +253,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> UpdatingSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> UpdatingSteps
         {
             get
             {
@@ -261,7 +261,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> SavingPreSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> SavingPreSteps
         {
             get
             {
@@ -269,7 +269,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             }
         }
 
-        protected virtual IEnumerable<IBusinessProcessStep<TEnt, TPoco>> SavingSteps
+        protected virtual IEnumerable<IStep<TEnt, TPoco>> SavingSteps
         {
             get
             {
@@ -328,7 +328,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.AddAction };
             
             this.InvokeSteps(
-                businessPack, argument, item, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
                 this.AddingPreSteps, this.AddingSteps);
 
             return response;
@@ -369,7 +369,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(items) { Action = OperationAction.AddSomeAction };
 
             this.InvokeSteps(
-                businessPack, argument, items, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, items = items, identity = identity, response = response },
                 this.AddingPreSteps, this.AddingSteps);
 
             return response;
@@ -397,7 +397,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var response = MakeResponse<SingleResponse<bool>>(priorResponse);
 
             this.InvokeSteps(
-                businessPack, argument, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, identity = identity, response = response },
                 this.IsAllowedPreSteps, this.IsAllowedSteps);
 
             return response;
@@ -426,7 +426,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco> { Action = OperationAction.GetSession };
 
             this.InvokeSteps(
-                businessPack, argument, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, identity = identity, response = response },
                 this.GetSessionPreSteps, this.GetSessionSteps);
 
             return response;
@@ -462,7 +462,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.DeleteByKeyAction };
 
             this.InvokeSteps(
-                businessPack, argument, item, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
                 this.DeletingPreSteps, this.DeletingSteps);
 
             return response;
@@ -497,7 +497,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(items) { Action = OperationAction.DeleteSomeByKeyAction };
 
             this.InvokeSteps(
-                businessPack, argument, items, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, items = items, identity = identity, response = response },
                 this.DeletingPreSteps, this.DeletingSteps);
 
             return response;
@@ -533,7 +533,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco> { Action = OperationAction.GetAllAction };
 
             this.InvokeSteps(
-                businessPack, argument, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, identity = identity, response = response },
                 this.GettingAllPreSteps, this.GettingAllSteps);
 
             return response;
@@ -575,7 +575,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco> { Action = OperationAction.GetSomeAction, Search = search };
 
             this.InvokeSteps(
-                businessPack, argument, search, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, search = search, identity = identity, response = response },
                 this.GettingSomePreSteps, this.GettingSomeSteps);
 
             return response;
@@ -609,7 +609,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.GetSomeAction };
 
             this.InvokeSteps(
-                businessPack, argument, item, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
                 this.GettingByKeyPreSteps, this.GettingByKeySteps);
 
             return response;
@@ -643,7 +643,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(items) { Action = OperationAction.GetSomeByKeyAction };            
 
             this.InvokeSteps(
-                businessPack, argument, items, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, items = items, identity = identity, response = response },
                 this.GettingByKeyPreSteps, this.GettingByKeySteps);
 
             return response;
@@ -672,7 +672,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.ExistsByKeyAction };
 
             this.InvokeSteps(
-                businessPack, argument, item, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
                 this.ExistsByKeyPreSteps, this.ExistsByKeySteps);
 
             return response;            
@@ -711,7 +711,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.UpdateAction };
 
             this.InvokeSteps(
-                businessPack, argument, item, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
                 this.UpdatingPreSteps, this.UpdatingSteps);
 
             return response;
@@ -750,7 +750,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(items) { Action = OperationAction.UpdateAction };
 
             this.InvokeSteps(
-                businessPack, argument, items, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, items = items, identity = identity, response = response },
                 this.UpdatingPreSteps, this.UpdatingSteps);
 
             return response;
@@ -791,7 +791,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.SaveAction };
 
             this.InvokeSteps(
-                businessPack, argument, item, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
                 this.SavingPreSteps, this.SavingSteps);
 
             return response;
@@ -830,7 +830,7 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(items) { Action = OperationAction.SaveSomeAction };
 
             this.InvokeSteps(
-                businessPack, argument, items, identity, response,
+                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, items = items, identity = identity, response = response },
                 this.SavingPreSteps, this.SavingSteps);
 
             return response;
@@ -842,92 +842,21 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #region private =================================================================
         
-        private bool InvokeSteps(
-            IBusinessPack<TEnt, TPoco> businessPack,
-            IRequestArg<TPoco> argument,
-            TEnt item,
-            IIdentity identity,
-            IResponse response,
-            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
+        private bool InvokeSteps(IStepInfo<TEnt, TPoco> stepInfo, params IEnumerable<IStep<TEnt, TPoco>>[] steps)
         {
             foreach (var list in steps)
                 foreach (var step in list)
                 {
-                    step.Execute(businessPack, argument, item, identity, response);
+                    step.Execute(stepInfo);
 
-                    if (!response.Ok)
+                    if (!stepInfo.response.Ok)
                     {
                         return false;
                     }
                 }
 
             return true;
-        }
-
-        private bool InvokeSteps(
-            IBusinessPack<TEnt, TPoco> businessPack,
-            IRequestArg<TPoco> argument,
-            IEnumerable<TEnt> items,
-            IIdentity identity,
-            IResponse response,
-            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
-        {
-            foreach (var list in steps)
-                foreach (var step in list)
-                {
-                    step.Execute(businessPack, argument, items, identity, response);
-
-                    if (!response.Ok)
-                    {
-                        return false;
-                    }
-                }
-
-            return true;
-        }
-
-        private bool InvokeSteps(
-            IBusinessPack<TEnt, TPoco> businessPack,
-            IRequestArg<TPoco> argument,
-            IIdentity identity,
-            IResponse response,
-            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
-        {
-            foreach (var list in steps)
-                foreach (var step in list)
-                {
-                    step.Execute(businessPack, argument, identity, response);
-
-                    if (!response.Ok)
-                    {
-                        return false;
-                    }
-                }
-
-            return true;
-        }
-
-        private bool InvokeSteps(
-            IBusinessPack<TEnt, TPoco> businessPack,
-            IRequestArg<TPoco> argument,
-            ISearch search,
-            IIdentity identity,
-            IResponse response,
-            params IEnumerable<IBusinessProcessStep<TEnt, TPoco>>[] steps)
-        {
-            foreach (var list in steps)
-                foreach (var step in list)
-                {
-                    step.Execute(businessPack, argument, search, identity, response);
-
-                    if (!response.Ok)
-                    {
-                        return false;
-                    }
-                }
-
-            return true;
-        }
+        }        
 
         private static TResponse MakeResponse<TResponse>(IResponse priorResponse)
             where TResponse : class, IResponse, new()
@@ -941,21 +870,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
             return response;
         }
-
-        //private static bool ParameterCheck(object data, IIdentity identity, IResponse response)
-        //{
-        //    if (data == null)
-        //    {
-        //        MessageUtility.Errors.Add("The item(s) have not been supplied.", InvalidDataCode, response);
-        //    }
-
-        //    if (identity == null)
-        //    {
-        //        MessageUtility.Errors.Add("The identity has not been supplied.", InvalidIdentityCode, response);
-        //    }
-
-        //    return response.Ok;
-        //}
 
         #endregion
     }

@@ -1,58 +1,37 @@
 ﻿namespace Trooper.Thorny.Business.Operation.Core.Step
 {
-    using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Core;
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Business.Security;
     using Utility;
     using Response;
     using System;
-    using Interface.DataManager;
 
-    public sealed class DeleteDataStep<TEnt, TPoco> : IBusinessProcessStep<TEnt, TPoco>
+    public sealed class DeleteDataStep<TEnt, TPoco> : IStep<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse response)
+        public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
-            throw new NotImplementedException();
-        }
+            if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
+            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
+            if (!(stepInfo.response is Response)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(Response)}");
 
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, ISearch search, IIdentity identity, IResponse response)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is Response)) throw new ArgumentException($"{nameof(response)} is not a {nameof(Response)}");
-
-            if (!businessPack.Facade.DeleteSome(items))
+            if (stepInfo.items != null)
             {
-                var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+                if (!stepInfo.businessPack.Facade.DeleteSome(stepInfo.items))
+                {
+                    var errorMessage = string.Format("At least one of the entities ({0}) could not be deleted.", typeof(TEnt));
+                    MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);
+                }
             }
-        }
-
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, TEnt item, IIdentity identity, IResponse response)
-        {
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is Response)) throw new ArgumentException($"{nameof(response)} is not a {nameof(Response)}");
-
-            if (!businessPack.Facade.Delete(item))
+            else
             {
-                var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, response);
+                if (!stepInfo.businessPack.Facade.Delete(stepInfo.item))
+                {
+                    var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
+                    MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);
+                }
             }
-        }
+        }        
     }
 }

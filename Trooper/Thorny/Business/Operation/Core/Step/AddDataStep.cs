@@ -1,70 +1,63 @@
 ﻿namespace Trooper.Thorny.Business.Operation.Core.Step
 {
-    using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Core;
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Business.Security;
     using Utility;
     using Response;
     using System;
-    using Interface.DataManager;
 
-    public sealed class AddDataStep<TEnt, TPoco> : IBusinessProcessStep<TEnt, TPoco>
+    public sealed class AddDataStep<TEnt, TPoco> : IStep<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse response)
+        public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, ISearch search, IIdentity identity, IResponse response)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is AddSomeResponse<TEnt>)) throw new ArgumentException($"{nameof(response)} is not a {nameof(AddSomeResponse<TEnt>)}");
-
-            var addResponse = response as AddSomeResponse<TEnt>;
-            var added = businessPack.Facade.AddSome(items);
-
-            if (added == null)
+            if (stepInfo == null) throw new ArgumentNullException(nameof(stepInfo));
+            if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
+            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));    
+            
+            if (stepInfo.items != null)
             {
-                var errorMessage = string.Format("The entities ({0}) could not be added.", typeof(TEnt));
-
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.AddFailedCode, response);
+                this.ExecuteAddSome(stepInfo);
             }
-
-            addResponse.Items = added;
+            else
+            {
+                this.ExecuteAdd(stepInfo);
+            }
         }
 
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, TEnt item, IIdentity identity, IResponse response)
+        private void ExecuteAdd(IStepInfo<TEnt, TPoco> stepInfo)
         {
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is AddResponse<TEnt>)) throw new ArgumentException($"{nameof(response)} is not a {nameof(AddResponse<TEnt>)}");
+            if (!(stepInfo.response is AddResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(AddResponse<TEnt>)}");
 
-            var addResponse = response as AddResponse<TEnt>;
-            var added = businessPack.Facade.Add(item);
+            var addResponse = stepInfo.response as AddResponse<TEnt>;
+            var added = stepInfo.businessPack.Facade.Add(stepInfo.item);
 
             if (added == null)
             {
                 var errorMessage = string.Format("The entity ({0}) could not be added.", typeof(TEnt));
 
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.AddFailedCode, response);
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.AddFailedCode, stepInfo.response);
             }
 
             addResponse.Item = added;
         }
+
+        private void ExecuteAddSome(IStepInfo<TEnt, TPoco> stepInfo)
+        {
+            if (!(stepInfo.response is AddSomeResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(AddSomeResponse<TEnt>)}");
+
+            var addResponse = stepInfo.response as AddSomeResponse<TEnt>;
+            var added = stepInfo.businessPack.Facade.AddSome(stepInfo.items);
+
+            if (added == null)
+            {
+                var errorMessage = string.Format("The entities ({0}) could not be added.", typeof(TEnt));
+
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.AddFailedCode, stepInfo.response);
+            }
+
+            addResponse.Items = added;
+        }        
     }
 }

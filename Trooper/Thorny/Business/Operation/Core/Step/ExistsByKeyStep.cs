@@ -1,44 +1,23 @@
 ﻿namespace Trooper.Thorny.Business.Operation.Core.Step
 {
-    using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Core;
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Business.Security;
     using System;
-    using Interface.DataManager;
     using Response;
 
-    public sealed class ExistsByKeyStep<TEnt, TPoco> : IBusinessProcessStep<TEnt, TPoco>
+    public sealed class ExistsByKeyStep<TEnt, TPoco> : IStep<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse response)
+        public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
-            throw new NotImplementedException();
-        }
+            if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
+            if (stepInfo.item == null) throw new ArgumentNullException(nameof(stepInfo.item));
+            if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
+            if (!(stepInfo.response is SingleResponse<bool>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(SingleResponse<bool>)}");
 
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, ISearch search, IIdentity identity, IResponse response)
-        {
-            throw new NotImplementedException();
-        }
+            var boolResponse = stepInfo.response as SingleResponse<bool>;
 
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, TEnt item, IIdentity identity, IResponse response)
-        {
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is SingleResponse<bool>)) throw new ArgumentException($"{nameof(response)} is not a {nameof(SingleResponse<bool>)}");
-
-            var boolResponse = response as SingleResponse<bool>;
-
-            var result = businessPack.Facade.GetByKey(item);
+            var result = stepInfo.businessPack.Facade.GetByKey(stepInfo.item);
             boolResponse.Item = result != null;
         }
     }

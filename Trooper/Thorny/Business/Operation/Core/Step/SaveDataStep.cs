@@ -2,48 +2,46 @@
 {
     using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Core;
-    using Trooper.Interface.Thorny.Business.Response;
-    using Trooper.Interface.Thorny.Business.Security;
     using System.Linq;
     using Utility;
     using Response;
     using System;
-    using Interface.DataManager;
 
-    public sealed class SaveDataStep<TEnt, TPoco> : IBusinessProcessStep<TEnt, TPoco>
+    public sealed class SaveDataStep<TEnt, TPoco> : IStep<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class
     {
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IIdentity identity, IResponse response)
+        public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
-            throw new NotImplementedException();
+            if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
+            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
+
+            if (stepInfo.items != null)
+            {
+                this.ExecuteSaveSome(stepInfo);
+            }
+            else
+            {
+                this.ExecuteSave(stepInfo);
+            }
         }
 
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, ISearch search, IIdentity identity, IResponse response)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, IEnumerable<TEnt> items, IIdentity identity, IResponse response)
+        private void ExecuteSaveSome(IStepInfo<TEnt, TPoco> stepInfo)
         {
             //Todo: prevent multiple lookups to see that the item exists
+            
+            if (!(stepInfo.response is SaveSomeResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(SaveSomeResponse<TEnt>)}");
 
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is SaveSomeResponse<TEnt>)) throw new ArgumentException($"{nameof(response)} is not a {nameof(SaveSomeResponse<TEnt>)}");
-
-            var saveResponse = response as SaveSomeResponse<TEnt>;
+            var saveResponse = stepInfo.response as SaveSomeResponse<TEnt>;
             var saved = new List<SaveSomeItem<TEnt>>();
 
-            items.All(i =>
+            stepInfo.items.All(i =>
             {
-                var exists = businessPack.Facade.Exists(i);
+                var exists = stepInfo.businessPack.Facade.Exists(i);
                 var result = new SaveSomeItem<TEnt>
                 {
-                    Item = exists ? businessPack.Facade.Update(i) : businessPack.Facade.Add(i),
+                    Item = exists ? stepInfo.businessPack.Facade.Update(i) : stepInfo.businessPack.Facade.Add(i),
                     Change = exists ? SaveChangeType.Update : SaveChangeType.Add
                 };
 
@@ -51,37 +49,32 @@
                 {
                     var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));
 
-                    MessageUtility.Errors.Add(errorMessage, BusinessCore.SaveFailedCode, response);
+                    MessageUtility.Errors.Add(errorMessage, BusinessCore.SaveFailedCode, stepInfo.response);
                     result.Change = SaveChangeType.None;
                 }
 
                 saved.Add(result);
 
-                return response.Ok;
+                return stepInfo.response.Ok;
             });
 
             saveResponse.Items = saved;
         }
 
-        public void Execute(IBusinessPack<TEnt, TPoco> businessPack, IRequestArg<TPoco> argument, TEnt item, IIdentity identity, IResponse response)
+        private void ExecuteSave(IStepInfo<TEnt, TPoco> stepInfo)
         {
-            if (businessPack == null) throw new ArgumentNullException(nameof(businessPack));
-            if (argument == null) throw new ArgumentNullException(nameof(argument));
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            if (!(response is SaveResponse<TEnt>)) throw new ArgumentException($"{nameof(response)} is not a {nameof(SaveResponse<TEnt>)}");
+            if (!(stepInfo.response is SaveResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(SaveResponse<TEnt>)}");
 
-            var saveResponse = response as SaveResponse<TEnt>;
-            var exists = businessPack.Facade.Exists(item);
+            var saveResponse = stepInfo.response as SaveResponse<TEnt>;
+            var exists = stepInfo.businessPack.Facade.Exists(stepInfo.item);
 
-            saveResponse.Item = exists ? businessPack.Facade.Update(item) : businessPack.Facade.Add(item);
+            saveResponse.Item = exists ? stepInfo.businessPack.Facade.Update(stepInfo.item) : stepInfo.businessPack.Facade.Add(stepInfo.item);
 
             if (saveResponse.Item == null)
             {
                 var errorMessage = string.Format("The ({0}) could not be saved.", typeof(TEnt));
 
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.SaveFailedCode, response);
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.SaveFailedCode, stepInfo.response);
                 saveResponse.Change = SaveChangeType.None;
             }
             else
