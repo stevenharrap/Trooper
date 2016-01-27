@@ -4,6 +4,7 @@
     using Utility;
     using Response;
     using System;
+    using System.Linq;
 
     public sealed class DeleteDataStep<TEnt, TPoco> : IStep<TEnt, TPoco>
         where TEnt : class, TPoco, new()
@@ -12,11 +13,11 @@
         public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
-            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.items == null) throw new ArgumentNullException(nameof(stepInfo.items));
             if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
             if (!(stepInfo.response is Response)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(Response)}");
 
-            if (stepInfo.items != null)
+            if (stepInfo.items.Count() > 1)
             {
                 if (!stepInfo.businessPack.Facade.DeleteSome(stepInfo.items))
                 {
@@ -24,9 +25,9 @@
                     MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);
                 }
             }
-            else
+            else if (stepInfo.items.Any())
             {
-                if (!stepInfo.businessPack.Facade.Delete(stepInfo.item))
+                if (!stepInfo.businessPack.Facade.Delete(stepInfo.items.First()))
                 {
                     var errorMessage = string.Format("The entity ({0}) could not be deleted.", typeof(TEnt));
                     MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);

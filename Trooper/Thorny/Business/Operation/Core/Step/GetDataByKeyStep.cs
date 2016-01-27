@@ -13,16 +13,16 @@
         public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
-            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.items == null || !stepInfo.items.Any()) throw new ArgumentException($"{nameof(stepInfo.items)} is null or empty");
             if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
 
-            if (stepInfo.item != null)
+            if (stepInfo.items.Count() >  1)
             {
-                this.ExecuteGetByKey(stepInfo);
+                this.ExecuteGetSomeByKey(stepInfo);                
             }
             else
             {
-                this.ExecuteGetSomeByKey(stepInfo);
+                this.ExecuteGetByKey(stepInfo);
             }
         }
 
@@ -41,12 +41,12 @@
 
             var singleResponse = stepInfo.response as SingleResponse<TEnt>;
 
-            singleResponse.Item = stepInfo.businessPack.Facade.GetByKey(stepInfo.item);
+            singleResponse.Item = stepInfo.businessPack.Facade.GetByKey(stepInfo.items.First());
 
             if (singleResponse.Item == null)
             {
                 var errorMessage = string.Format("The ({0}) could not be found.", typeof(TEnt));
-                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.item, null, stepInfo.response);
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.items.First(), null, stepInfo.response);
             }
         }   
     }

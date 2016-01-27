@@ -14,10 +14,10 @@
         public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
-            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.items == null || !stepInfo.items.Any()) throw new ArgumentException($"{nameof(stepInfo.items)} is null or empty");
             if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
 
-            if (stepInfo.items != null)
+            if (stepInfo.items.Count() > 1)
             {
                 this.ExecuteSaveSome(stepInfo);
             }
@@ -66,9 +66,11 @@
             if (!(stepInfo.response is SaveResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(SaveResponse<TEnt>)}");
 
             var saveResponse = stepInfo.response as SaveResponse<TEnt>;
-            var exists = stepInfo.businessPack.Facade.Exists(stepInfo.item);
+            var exists = stepInfo.businessPack.Facade.Exists(stepInfo.items.First());
 
-            saveResponse.Item = exists ? stepInfo.businessPack.Facade.Update(stepInfo.item) : stepInfo.businessPack.Facade.Add(stepInfo.item);
+            saveResponse.Item = exists 
+                ? stepInfo.businessPack.Facade.Update(stepInfo.items.First()) 
+                : stepInfo.businessPack.Facade.Add(stepInfo.items.First());
 
             if (saveResponse.Item == null)
             {

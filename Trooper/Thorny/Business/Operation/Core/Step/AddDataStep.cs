@@ -4,6 +4,7 @@
     using Utility;
     using Response;
     using System;
+    using System.Linq;
 
     public sealed class AddDataStep<TEnt, TPoco> : IStep<TEnt, TPoco>
         where TEnt : class, TPoco, new()
@@ -13,10 +14,10 @@
         {
             if (stepInfo == null) throw new ArgumentNullException(nameof(stepInfo));
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
-            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
-            if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));    
-            
-            if (stepInfo.items != null)
+            if (stepInfo.items == null || !stepInfo.items.Any()) throw new ArgumentException($"{nameof(stepInfo.items)} is null or empty");
+            if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
+
+            if (stepInfo.items.Count() > 1)
             {
                 this.ExecuteAddSome(stepInfo);
             }
@@ -31,7 +32,7 @@
             if (!(stepInfo.response is AddResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(AddResponse<TEnt>)}");
 
             var addResponse = stepInfo.response as AddResponse<TEnt>;
-            var added = stepInfo.businessPack.Facade.Add(stepInfo.item);
+            var added = stepInfo.businessPack.Facade.Add(stepInfo.items.First());
 
             if (added == null)
             {

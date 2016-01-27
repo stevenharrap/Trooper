@@ -152,7 +152,8 @@
     <Compile Include="Interface\Thorny\Configuration\IBusinessModuleStartParameters.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicHostInfo.cs" />
     <Compile Include="Interface\Thorny\Configuration\IBusinessDynamicOperationService.cs" />
-    <Compile Include="Interface\Thorny\DataManager\ICache.cs" />
+    <Compile Include="Interface\Thorny\Business\Operation\Core\ICacheHit.cs" />
+    <Compile Include="Interface\Thorny\Business\Operation\Core\ICache.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\IHelping.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISavingSome.cs" />
     <Compile Include="Interface\Thorny\TestSuit\BusinessCoreTestSuit\ISaving.cs" />
@@ -174,6 +175,9 @@
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessPack.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessPackEventArgs.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\Step\DeleteCacheDataStep.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\Step\PutCacheDataStep.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\Step\GetCacheDataStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\NoDataExistsStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\SaveDataStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\StepInfo.cs" />

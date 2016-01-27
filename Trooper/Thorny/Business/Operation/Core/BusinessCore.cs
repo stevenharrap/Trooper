@@ -35,7 +35,8 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> addingSteps = new List<IStep<TEnt, TPoco>>
         {
-            new AddDataStep<TEnt, TPoco>()
+            new AddDataStep<TEnt, TPoco>(),
+            new PutCacheDataStep<TEnt, TPoco>()
         };
 
         private static List<IStep<TEnt, TPoco>> defaultAllowedPreSteps = new List<IStep<TEnt, TPoco>>
@@ -63,12 +64,15 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> deletingSteps = new List<IStep<TEnt, TPoco>>
         {
-            new DeleteDataStep<TEnt, TPoco>()
+            new DeleteDataStep<TEnt, TPoco>(),
+            new DeleteCacheDataStep<TEnt, TPoco>()
         };
 
         private static List<IStep<TEnt, TPoco>> gettingAllSteps = new List<IStep<TEnt, TPoco>>
         {
-            new GetAllDataStep<TEnt, TPoco>()
+            new GetCacheDataStep<TEnt, TPoco>(),
+            new GetAllDataStep<TEnt, TPoco>(),
+            new PutCacheDataStep<TEnt, TPoco>()
         };
 
         private static List<IStep<TEnt, TPoco>> gettingSomePreSteps = new List<IStep<TEnt, TPoco>>
@@ -80,16 +84,21 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> gettingSomeSteps = new List<IStep<TEnt, TPoco>>
         {
-            new GetSomeStep<TEnt, TPoco>()
+            new GetCacheDataStep<TEnt, TPoco>(),
+            new GetSomeStep<TEnt, TPoco>(),
+            new PutCacheDataStep<TEnt, TPoco>()
         };
         
         private static List<IStep<TEnt, TPoco>> gettingByKeySteps = new List<IStep<TEnt, TPoco>>
         {
-            new GetDataByKeyStep<TEnt, TPoco>()
+            new GetCacheDataStep<TEnt, TPoco>(),
+            new GetDataByKeyStep<TEnt, TPoco>(),
+            new PutCacheDataStep<TEnt, TPoco>()
         };        
 
         private static List<IStep<TEnt, TPoco>> existsByKeySteps = new List<IStep<TEnt, TPoco>>
         {
+            new GetCacheDataStep<TEnt, TPoco>(),
             new ExistsByKeyStep<TEnt, TPoco>()
         };
 
@@ -103,12 +112,14 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> updatingSteps = new List<IStep<TEnt, TPoco>>
         {
-            new UpdatingDataStep<TEnt, TPoco>()
+            new UpdatingDataStep<TEnt, TPoco>(),
+            new PutCacheDataStep<TEnt, TPoco>()
         };
 
         private static List<IStep<TEnt, TPoco>> savingSteps = new List<IStep<TEnt, TPoco>>
         {
-            new SaveDataStep<TEnt, TPoco>()
+            new SaveDataStep<TEnt, TPoco>(),
+            new PutCacheDataStep<TEnt, TPoco>()
         };
 
         #endregion
@@ -326,9 +337,16 @@ namespace Trooper.Thorny.Business.Operation.Core
         {
             var response = MakeResponse<AddResponse<TEnt>>(priorResponse);
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.AddAction };
-            
+
             this.InvokeSteps(
-                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
+                new StepInfo<TEnt, TPoco>
+                {
+                    businessPack = businessPack,
+                    argument = argument,
+                    items = new TEnt[] { item },
+                    identity = identity,
+                    response = response
+                },
                 this.AddingPreSteps, this.AddingSteps);
 
             return response;
@@ -462,7 +480,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.DeleteByKeyAction };
 
             this.InvokeSteps(
-                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
+                new StepInfo<TEnt, TPoco>
+                {
+                    businessPack = businessPack,
+                    argument = argument,
+                    items = new TEnt[] { item },
+                    identity = identity,
+                    response = response
+                },
                 this.DeletingPreSteps, this.DeletingSteps);
 
             return response;
@@ -609,7 +634,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.GetSomeAction };
 
             this.InvokeSteps(
-                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
+                new StepInfo<TEnt, TPoco>
+                {
+                    businessPack = businessPack,
+                    argument = argument,
+                    items = new TEnt[] { item },
+                    identity = identity,
+                    response = response
+                },
                 this.GettingByKeyPreSteps, this.GettingByKeySteps);
 
             return response;
@@ -672,7 +704,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.ExistsByKeyAction };
 
             this.InvokeSteps(
-                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
+                new StepInfo<TEnt, TPoco>
+                {
+                    businessPack = businessPack,
+                    argument = argument,
+                    items = new TEnt[] { item },
+                    identity = identity,
+                    response = response
+                },
                 this.ExistsByKeyPreSteps, this.ExistsByKeySteps);
 
             return response;            
@@ -711,7 +750,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.UpdateAction };
 
             this.InvokeSteps(
-                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
+                new StepInfo<TEnt, TPoco>
+                {
+                    businessPack = businessPack,
+                    argument = argument,
+                    items = new TEnt[] { item },
+                    identity = identity,
+                    response = response
+                },
                 this.UpdatingPreSteps, this.UpdatingSteps);
 
             return response;
@@ -791,7 +837,14 @@ namespace Trooper.Thorny.Business.Operation.Core
             var argument = new RequestArg<TPoco>(item) { Action = OperationAction.SaveAction };
 
             this.InvokeSteps(
-                new StepInfo<TEnt, TPoco> { businessPack = businessPack, argument = argument, item = item, identity = identity, response = response },
+                new StepInfo<TEnt, TPoco>
+                {
+                    businessPack = businessPack,
+                    argument = argument,
+                    items = new TEnt[] { item },
+                    identity = identity,
+                    response = response
+                },
                 this.SavingPreSteps, this.SavingSteps);
 
             return response;

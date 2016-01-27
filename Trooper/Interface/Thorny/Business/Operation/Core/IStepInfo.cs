@@ -12,9 +12,7 @@
         IBusinessPack<TEnt, TPoco> businessPack { get; set; }
 
         IRequestArg<TPoco> argument { get; set; }
-
-        TEnt item { get; set; }
-
+        
         IEnumerable<TEnt> items { get; set; }
 
         IIdentity identity { get; set; }
@@ -22,5 +20,7 @@
         IResponse response { get; set; }
 
         ISearch search { get; set; }
+
+        IEnumerable<ICacheHit<TPoco>> cacheHits { get; set; }
     }
 }

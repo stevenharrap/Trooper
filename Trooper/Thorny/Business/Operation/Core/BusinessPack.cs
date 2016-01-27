@@ -1,7 +1,6 @@
 ﻿namespace Trooper.Thorny.Business.Operation.Core
 {
     using Autofac;
-    using Trooper.Interface.Thorny.DataManager;
     using Interface.DataManager;
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Security;

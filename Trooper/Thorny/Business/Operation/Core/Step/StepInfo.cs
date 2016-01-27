@@ -14,8 +14,6 @@
 
         public IRequestArg<TPoco> argument { get; set; }
 
-        public TEnt item { get; set; }
-
         public IEnumerable<TEnt> items { get; set; }
 
         public IIdentity identity { get; set; }
@@ -23,5 +21,7 @@
         public IResponse response { get; set; }
 
         public ISearch search { get; set; }
+
+        public IEnumerable<ICacheHit<TPoco>> cacheHits { get; set; }
     }
 }

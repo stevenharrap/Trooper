@@ -4,7 +4,6 @@
     using Trooper.Thorny.Interface.DataManager;
     using Security;
     using Autofac;
-    using DataManager;
 
     public interface IBusinessPack<TEnt, TPoco> : IDisposable
         where TEnt : class, TPoco, new()

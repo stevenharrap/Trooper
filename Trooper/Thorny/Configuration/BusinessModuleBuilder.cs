@@ -1,26 +1,23 @@
 ﻿namespace Trooper.Thorny.Configuration
 {
     using Autofac;
-    using Trooper.Thorny.Business.Operation.Composite;
-    using Trooper.Thorny.Business.Operation.Core;
-    using Trooper.Thorny.Business.Security;
-    using Trooper.Thorny.DataManager;
-    using Trooper.Thorny.Interface;
-    using Trooper.Thorny.Interface.DataManager;
+    using Business.Operation.Composite;
+    using Business.Operation.Core;
+    using Business.Security;
+    using DataManager;
+    using Interface;
+    using Interface.DataManager;
     using Trooper.Interface.Thorny.Business.Operation.Composite;
     using System;
     using System.Linq;
-    using System.ServiceModel;
     using Trooper.Interface.Thorny.Configuration;
     using System.Collections.Generic;
     using Trooper.Interface.Thorny.Business.Operation.Core;
     using Trooper.Interface.Thorny.Business.Security;
-    using Trooper.DynamicServiceHost;
-    using Trooper.Interface.DynamicServiceHost;
-    using Trooper.Thorny.Business.Response;
+    using DynamicServiceHost;
+    using Business.Response;
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Utility;
-    using Trooper.Interface.Thorny.DataManager;
 
     public class BusinessModule    
     {
@@ -254,12 +251,7 @@
 
             facade.Uow = uow;
             authorization.Uow = uow;
-            validation.Uow = uow;
-
-            if (cache != null)
-            {
-                cache.Uow = uow;
-            }
+            validation.Uow = uow;            
 
             return new BusinessPack<TEnt, TPoco>
             {

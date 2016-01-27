@@ -12,26 +12,14 @@
         public void Execute(IStepInfo<TEnt, TPoco> stepInfo)
         {
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
-            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.items == null || !stepInfo.items.Any()) throw new ArgumentException($"{nameof(stepInfo.items)} is null or empty");
             if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
 
-            if (stepInfo.items != null)
+            if (stepInfo.items.Any(item => !stepInfo.businessPack.Facade.Exists(item)))
             {
-                if (stepInfo.items.Any(item => !stepInfo.businessPack.Facade.Exists(item)))
-                {
-                    var errorMessage = string.Format("The item ({0}) does not exist.", typeof(TEnt));
+                var errorMessage = string.Format("The item ({0}) does not exist.", typeof(TEnt));
 
-                    MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);
-                }
-            }
-            else
-            {
-                if (!stepInfo.businessPack.Facade.Exists(stepInfo.item))
-                {
-                    var errorMessage = string.Format("The item ({0}) does not exists.", typeof(TEnt));
-
-                    MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);
-                }
+                MessageUtility.Errors.Add(errorMessage, BusinessCore.NoRecordCode, stepInfo.response);
             }
         }        
     }

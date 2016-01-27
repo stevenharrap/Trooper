@@ -16,10 +16,6 @@
             {
                 stepInfo.businessPack.Validation.Validate(stepInfo.items, stepInfo.response);
             }
-            else if (stepInfo.item != null)
-            {
-                stepInfo.businessPack.Validation.Validate(stepInfo.item, stepInfo.response);
-            }
             else
             {
                 stepInfo.businessPack.Validation.Validate((TEnt)null, stepInfo.response);

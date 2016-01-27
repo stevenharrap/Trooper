@@ -14,11 +14,11 @@
         {
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
             if (stepInfo.argument == null) throw new ArgumentNullException(nameof(stepInfo.argument));
-            if (stepInfo.items == null && stepInfo.item == null) throw new ArgumentNullException($"{nameof(stepInfo.items)} and {nameof(stepInfo.items)}");
+            if (stepInfo.items == null || !stepInfo.items.Any()) throw new ArgumentException($"{nameof(stepInfo.items)} is null or empty");
             if (stepInfo.identity == null) throw new ArgumentNullException(nameof(stepInfo.identity));
             if (stepInfo.response == null) throw new ArgumentNullException(nameof(stepInfo.response));
 
-            if (stepInfo.items != null)
+            if (stepInfo.items.Count() > 1)
             {
                 this.UpdateSome(stepInfo);
             }
@@ -54,7 +54,7 @@
             if (!(stepInfo.response is SingleResponse<TEnt>)) throw new ArgumentException($"{nameof(stepInfo.response)} is not a {nameof(SingleResponse<TEnt>)}");
 
             var singleResponse = stepInfo.response as SingleResponse<TEnt>;
-            singleResponse.Item = stepInfo.businessPack.Facade.Update(stepInfo.item);
+            singleResponse.Item = stepInfo.businessPack.Facade.Update(stepInfo.items.First());
 
             if (singleResponse.Item == null)
             {
