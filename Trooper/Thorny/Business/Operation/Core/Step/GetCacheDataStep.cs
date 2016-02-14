@@ -12,14 +12,12 @@
             if (stepInfo == null) throw new ArgumentNullException(nameof(stepInfo));
             if (stepInfo.businessPack == null) throw new ArgumentNullException(nameof(stepInfo.businessPack));
 
-            if (stepInfo.businessPack.Cache == null)
+            if (stepInfo.businessPack.Cache == null || stepInfo.items == null)
             {
                 return;
             }
 
             stepInfo.businessPack.Cache.Get(stepInfo);
-
-            throw new NotImplementedException();
         }
     }
 }

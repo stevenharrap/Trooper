@@ -18,7 +18,7 @@ namespace Trooper.Thorny.Business.Operation.Core
     using Trooper.Interface.Thorny.Business.Response;
     using Trooper.Interface.Thorny.Business.Security;
     using Step;
-
+    
     public class BusinessCore<TEnt, TPoco> : BusinessCore, IBusinessCore<TEnt, TPoco> 
         where TEnt : class, TPoco, new()
         where TPoco : class
@@ -70,7 +70,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> gettingAllSteps = new List<IStep<TEnt, TPoco>>
         {
-            new GetCacheDataStep<TEnt, TPoco>(),
             new GetAllDataStep<TEnt, TPoco>(),
             new PutCacheDataStep<TEnt, TPoco>()
         };
@@ -84,7 +83,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> gettingSomeSteps = new List<IStep<TEnt, TPoco>>
         {
-            new GetCacheDataStep<TEnt, TPoco>(),
             new GetSomeStep<TEnt, TPoco>(),
             new PutCacheDataStep<TEnt, TPoco>()
         };
@@ -98,7 +96,6 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         private static List<IStep<TEnt, TPoco>> existsByKeySteps = new List<IStep<TEnt, TPoco>>
         {
-            new GetCacheDataStep<TEnt, TPoco>(),
             new ExistsByKeyStep<TEnt, TPoco>()
         };
 
@@ -290,7 +287,7 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #endregion
 
-        #region public Methos ===========================================================
+        #region public Methods ==========================================================
 
         #region GetBusinessPack -----------------------------------------------------------
 
@@ -926,6 +923,10 @@ namespace Trooper.Thorny.Business.Operation.Core
 
         #endregion
     }
+
+    public class BusinessCore<TPoco> : BusinessCore<TPoco, TPoco>, IBusinessCore<TPoco>
+        where TPoco : class, new()
+    { }
 
     public class BusinessCore
     {

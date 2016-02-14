@@ -14,8 +14,6 @@
 
         IEnumerable<ClassMapping> Searches { get; }
 
-        PropertyInfo[] KeyProperties { get; }
-
         IUnitOfWork Uow { get; set; }
 
         TEnt GetByKey(TEnt item);
@@ -27,6 +25,8 @@
 	    bool IsDefault(TEnt item);
 
         bool AreEqual(TEnt item1, TEnt item2);
+
+        bool AreEqual(TPoco item1, TPoco item2);
 
         IQueryable<TEnt> GetAll();
 
@@ -57,9 +57,13 @@
 
         TPoco ToPoco(TEnt item);
 
+        TPoco ToPoco(TPoco item);
+
         TEnt ToEnt(TPoco item);
 
         IEnumerable<TPoco> ToPocos(IEnumerable<TEnt> items);
+
+        IEnumerable<TPoco> ToPocos(IEnumerable<TPoco> items);
 
         IEnumerable<TEnt> ToEnts(IEnumerable<TPoco> items);
     }

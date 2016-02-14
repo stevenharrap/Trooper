@@ -175,6 +175,8 @@
     <Compile Include="Thorny\Business\Operation\Composite\BusinessCr.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessPack.cs" />
     <Compile Include="Thorny\Business\Operation\Core\BusinessPackEventArgs.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\CacheHit.cs" />
+    <Compile Include="Thorny\Business\Operation\Core\SimpleCache.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\DeleteCacheDataStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\PutCacheDataStep.cs" />
     <Compile Include="Thorny\Business\Operation\Core\Step\GetCacheDataStep.cs" />
@@ -286,6 +288,7 @@
     <None Include="Thorny\UnitTestBase\TestBase.cs.bad" />
     <None Include="Thorny\UnitTestBase\TestBusinessOperationBase.cs.bad" />
     <None Include="Thorny\UnitTestBase\TestFacadeBase.cs.bad" />
+    <Compile Include="Thorny\Utility\BusinessUtility.cs" />
     <Compile Include="Thorny\Utility\MessageUtility.cs" />
     <Content Include="Docs\StdDocument-HowTo\Model\Document.cs.txt" />
     <Content Include="Docs\StdDocument-HowTo\Model\DocumentContent.cs.txt" />

@@ -68,26 +68,12 @@
 
         public override IEnumerable<IIdentity> MakeAllowedIdentities()
         {
-            return new List<IIdentity>
-            {
-                new Identity
-                {
-                    Username = "ValidTestUser",
-                    Password = "1234"
-                }
-            };
+            yield return TestIdentities.AllowedIdentity1();
         }
 
         public override IEnumerable<IIdentity> MakeDeniedIdentities()
         {
-            return new List<IIdentity>
-            {
-                new Identity
-                {
-                    Username = "InvalidTestUser",
-                    Password = "6543"
-                }
-            };
+            yield return TestIdentities.DeniedIdentity1();
         }
 
         public override void MakeInvalidItems(List<Outlet> items, IEnumerable<Outlet> otherItems)

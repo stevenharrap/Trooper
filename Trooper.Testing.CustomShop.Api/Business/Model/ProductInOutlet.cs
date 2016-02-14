@@ -33,7 +33,7 @@
                 Bin = this.Bin,
                 ProductId = this.ProductId,
                 Quantity = this.Quantity,
-                ShopId = this.ShopId
+                OutletIdId = this.ShopId
             };
         }
     }

@@ -17,6 +17,7 @@
     {
         private static Mapping[] entToPocoMap;
         private static Mapping[] pocoToEntMap;
+        private static Mapping[] pocoToPocoMap;
         private static Mapping[] entToEntMap;
 
         static Facade()
@@ -38,6 +39,7 @@
             entToPocoMap = mappings.Select(m => new Mapping(m.entGetter, m.pocoSetter)).ToArray();
             pocoToEntMap = mappings.Select(m => new Mapping(m.pocoGetter, m.entSetter)).ToArray();
             entToEntMap = mappings.Select(m => new Mapping(m.entGetter, m.entSetter)).ToArray();
+            pocoToPocoMap = mappings.Select(m => new Mapping(m.pocoGetter, m.pocoSetter)).ToArray();
         }
 
         public Facade()
@@ -80,7 +82,7 @@
             }
 	    }
 
-	    public PropertyInfo[] KeyProperties
+	    private PropertyInfo[] KeyProperties
         {
             get
             {
@@ -300,15 +302,8 @@
 
         public bool AreEqual(TEnt item1, TEnt item2)
         {
-            if (item1 == null)
-            {
-                throw new ArgumentNullException(nameof(item1));
-            }
-
-            if (item2 == null)
-            {
-                throw new ArgumentNullException(nameof(item2));
-            }
+            if (item1 == null) throw new ArgumentNullException(nameof(item1));
+            if (item2 == null) throw new ArgumentNullException(nameof(item2));
             
             foreach (var p in this.KeyProperties)
             {
@@ -319,7 +314,26 @@
             }
 
             return true;
-        }        
+        }
+
+        public bool AreEqual(TPoco item1, TPoco item2)
+        {
+            if (item1 == null) throw new ArgumentNullException(nameof(item1));
+            if (item2 == null) throw new ArgumentNullException(nameof(item2));
+
+            var poco1 = this.ToEnt(item1);
+            var poco2 = this.ToEnt(item2);
+
+            foreach (var p in this.KeyProperties)
+            {
+                if (!p.GetValue(poco1).Equals(p.GetValue(poco2)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         public virtual TEnt Add(TEnt item)
         {
@@ -422,10 +436,7 @@
 
         public TPoco ToPoco(TEnt item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
+            if (item == null) throw new ArgumentNullException(nameof(item));
 
             var result = new TPoco();
 
@@ -433,6 +444,20 @@
             {
                 m.SetterMethod.Invoke(result, new object[] { m.GetterMethod.Invoke(item, null) });
             }           
+
+            return result;
+        }
+
+        public TPoco ToPoco(TPoco item)
+        {
+            if (item == null) throw new ArgumentNullException(nameof(item));
+
+            var result = new TPoco();
+
+            foreach (var m in pocoToPocoMap)
+            {
+                m.SetterMethod.Invoke(result, new object[] { m.GetterMethod.Invoke(item, null) });
+            }
 
             return result;
         }
@@ -445,6 +470,19 @@
             }
 
             foreach (var item in items ?? Enumerable.Empty<TEnt>())
+            {
+                yield return this.ToPoco(item);
+            }
+        }
+
+        public IEnumerable<TPoco> ToPocos(IEnumerable<TPoco> items)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            foreach (var item in items ?? Enumerable.Empty<TPoco>())
             {
                 yield return this.ToPoco(item);
             }

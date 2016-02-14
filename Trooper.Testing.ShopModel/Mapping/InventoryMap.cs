@@ -9,10 +9,10 @@
         public InventoryMap()
         {
             // Primary Key          
-            this.HasKey(t => new { t.ShopId, t.ProductId });
+            this.HasKey(t => new { t.OutletIdId, t.ProductId });
 
             // Properties
-            this.Property(t => t.ShopId)
+            this.Property(t => t.OutletIdId)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             this.Property(t => t.ProductId)
@@ -29,9 +29,9 @@
             this.HasRequired(t => t.Product)
                 .WithMany(t => t.Inventories)
                 .HasForeignKey(d => d.ProductId);
-            this.HasRequired(t => t.Shop)
+            this.HasRequired(t => t.Outlet)
                 .WithMany(t => t.Inventories)
-                .HasForeignKey(d => d.ShopId);
+                .HasForeignKey(d => d.OutletIdId);
         }
     }
 }

@@ -5,7 +5,7 @@
     using ShopPoco;
 
     [ServiceContract]
-    public interface IInventoryBo : IBusinessRead<Inventory>
+    public interface IInventoryBo : IBusinessRead<Inventory>, IBusinessCreate<Inventory>
     {
     }
 }

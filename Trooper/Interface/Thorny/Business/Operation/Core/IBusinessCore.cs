@@ -17,6 +17,11 @@ namespace Trooper.Interface.Thorny.Business.Operation.Core
         where TEnt : class, TPoco, new()
         where TPoco : class;
 
+    public interface IBusinessCore<TPoco> : IBusinessCore<TPoco, TPoco>
+        where TPoco : class, new()
+    {
+    }
+
     public interface IBusinessCore<TEnt, TPoco>
         where TEnt : class, TPoco, new()
         where TPoco : class

@@ -5,7 +5,7 @@
     using ShopPoco;
 
     [ServiceContract]
-    public interface IProductBo : IBusinessRead<Product>
+    public interface IProductBo : IBusinessRead<Product>, IBusinessCreate<Product>
     {
     }
 }

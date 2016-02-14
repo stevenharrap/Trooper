@@ -9,6 +9,6 @@ namespace Trooper.Testing.ShopPoco
 
         public int Quantity { get; set; }
 
-        public int ShopId { get; set; }
+        public int OutletIdId { get; set; }
     }
 }

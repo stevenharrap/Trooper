@@ -77,6 +77,7 @@
     <Compile Include="TestOutlet\TestUpdatingOutlet.cs" />
     <Compile Include="TestOutlet\TestAddingSomeOutlet.cs" />
     <Compile Include="TestOutlet\TestAddingOutlet.cs" />
+    <Compile Include="TestSystem\Scenario001.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Trooper.Testing.CustomShop.TestSuit.Common\Trooper.Testing.CustomShop.TestSuit.Common.csproj">
@@ -103,6 +104,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

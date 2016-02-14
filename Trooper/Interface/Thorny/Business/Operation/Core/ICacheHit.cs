@@ -3,8 +3,8 @@
     public interface ICacheHit<TPoco>        
         where TPoco : class
     {
-        bool Hit { get; }
+        bool Hit { get; set; }
 
-        TPoco Item { get; }
+        TPoco Item { get; set; }
     }
 }

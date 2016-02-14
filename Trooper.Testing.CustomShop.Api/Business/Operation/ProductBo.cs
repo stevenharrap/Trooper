@@ -4,8 +4,9 @@
     using ShopModel.Model;
     using Thorny.Business.Operation.Single;
     using Interface.Business.Operation;
+    using Thorny.Business.Operation.Composite;
 
-    public class ProductBo : BusinessRead<ProductEnt, Product>, IProductBo
+    public class ProductBo : BusinessCr<ProductEnt, Product>, IProductBo
     {
     }
 }

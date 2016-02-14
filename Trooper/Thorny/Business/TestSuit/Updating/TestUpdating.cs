@@ -101,7 +101,7 @@ namespace Trooper.Thorny.Business.TestSuit.Updating
                     {
                         requirement.Helper.RemoveAllItems();
 
-                        requirement.Helper.AddValidItems();
+                        requirement.Helper.AddValidItems(invalidItem);
                         var state = requirement.Helper.GetAllItems();
 
                         var response = requirement.Updater.Update(invalidItem, allowedIdentity);
